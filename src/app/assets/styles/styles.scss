@@ -1,0 +1,216 @@
+// Souse Color Palette
+$primaryColorAlt: #DDAEAA;
+$secondaryColor: #C45758;
+$primaryColor: #E4D1D1;
+$white: #FFFFFF;
+$softBlack: #272727;
+body {
+    display: table;
+    width: 100%;
+    height: auto;
+    background: no-repeat bottom center scroll;
+    background-color: $primaryColor;
+    background-blend-mode: multiply;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    color: $softBlack;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+h1 {
+    color: $softBlack;
+}
+
+nav {
+    background-color: $primaryColor;
+    border: 1px solid $secondaryColor;
+    box-shadow: none;
+}
+
+nav ul a {
+    color: $secondaryColor;
+}
+
+.sidenav {
+    background-color: $primaryColor;
+    color: $secondaryColor;
+}
+
+.sidenav li>a {
+    color: $secondaryColor;
+}
+
+.souseFooter {
+    color: $secondaryColor;
+}
+
+// Links
+/* ---------------------------------------------------- */
+
+.btn-large {
+    background-color: $secondaryColor;
+}
+
+.btn-large:visited {
+    background-color: $secondaryColor;
+}
+
+.btn-large:hover {
+    background-color: $primaryColorAlt;
+}
+
+.btn-large:active {
+    background-color: $secondaryColor;
+}
+
+.btn-large:focus {
+    background-color: $secondaryColor;
+}
+
+/* ---------------------------------------------------- */
+
+// Links
+/* ---------------------------------------------------- */
+
+/* unvisited link */
+
+a:link {
+    color: $secondaryColor;
+}
+
+/* visited link */
+
+a:visited {
+    color: $secondaryColor;
+}
+
+/* mouse over link */
+
+a:hover {
+    color: $secondaryColor;
+}
+
+/* selected link */
+
+a:active {
+    color: $secondaryColor;
+}
+
+/* ---------------------------------------------------- */
+
+// Forms
+/* ---------------------------------------------------- */
+
+/* label focus color */
+
+.input-field input:focus+label {
+    color: $secondaryColor !important;
+}
+
+/* label underline focus color */
+
+.row .input-field input:focus {
+    border-bottom: 1px solid $secondaryColor !important;
+    box-shadow: 0 1px 0 0 $secondaryColor !important
+}
+
+input:not([type]),
+input[type=text]:not(.browser-default),
+input[type=password]:not(.browser-default),
+input[type=email]:not(.browser-default),
+input[type=url]:not(.browser-default),
+input[type=time]:not(.browser-default),
+input[type=date]:not(.browser-default),
+input[type=datetime]:not(.browser-default),
+input[type=datetime-local]:not(.browser-default),
+input[type=tel]:not(.browser-default),
+input[type=number]:not(.browser-default),
+input[type=search]:not(.browser-default),
+textarea.materialize-textarea {
+    // Focused input style
+    &:focus:not([readonly]) {
+        border-bottom: 1px solid $secondaryColor;
+        box-shadow: 0 1px 0 0 $secondaryColor;
+    } // Focused label style
+    &:focus:not([readonly])+label {
+        color: $secondaryColor;
+    }
+}
+
+// Google Autocomplete Styling
+input:-internal-autofill-previewed,
+input:-internal-autofill-selected,
+textarea:-internal-autofill-previewed,
+textarea:-internal-autofill-selected,
+select:-internal-autofill-previewed,
+select:-internal-autofill-selected {
+    background-color: $primaryColor !important;
+    background-image: none !important;
+    color: rgb(0, 0, 0) !important;
+}
+
+/* ---------------------------------------------------- */
+
+.souseFooter,
+.addPostButton {
+    text-align: center;
+}
+
+.form-control-plaintext {
+    outline: none;
+}
+
+/* ---------------------------------------------------- */
+
+// Media Queries
+/* ---------------------------------------------------- */
+
+/* Small devices (Phones, 768px) */
+
+@media (max-width: 767px) and (orientation: portrait) {}
+
+@media (max-width: 767px) and (orientation: landscape) {}
+
+@media (max-width: 766px) and (orientation: landscape) {}
+
+/* ---------------------------------------------------- */
+
+/* IPhone X and Pixel XL 2 */
+
+@media (min-width: 812px) and (max-width: 823px) and (orientation: portrait) {}
+
+@media (min-width: 812px) and (max-width: 823px) and (orientation: landscape) {}
+
+/* ---------------------------------------------------- */
+
+/* Ipad */
+
+@media (min-width: 768px) and (max-width: 811px) and (orientation: portrait) {}
+
+@media (min-width: 824px) and (max-width: 1024px) and (orientation: landscape) {}
+
+/* Ipad Pro */
+
+@media (min-width: 813px) and (max-width: 1024px) and (orientation: portrait) {}
+
+@media (min-width: 1025px) and (max-width: 1439px) and (orientation: landscape) {}
+
+/* ---------------------------------------------------- */
+
+/* MDPI Screens (Computers, 1440px and up) */
+
+@media (min-width: 1280px) and (max-width: 1280px) and (orientation: landscape) {}
+
+/* ---------------------------------------------------- */
+
+/* Large devices (Computers, 1440px and up) */
+
+@media (min-width: 1440px) and (orientation: landscape) {}
+
+/* ---------------------------------------------------- */
