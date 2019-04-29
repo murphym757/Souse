@@ -19,7 +19,7 @@ app.use(webpackMiddleware(webpack(webpackConfig), {
   publicPath: '/'
 }));
 mongoose.Promise = global.Promise;
-mongoose.connect(config.DB, {
+mongoose.connect(config.DATABASE_URL, {
   useNewUrlParser: true
 }).then(function () {
   console.log('Database is connected');

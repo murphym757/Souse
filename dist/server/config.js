@@ -1,7 +1,10 @@
 "use strict";
 
+var dotenv = require('dotenv');
+
+dotenv.config();
 module.exports = {
-  DB: 'mongodb://localhost:27017/sousedb',
+  DATABASE_URL: process.env.DATABASE_URL,
   AWS_BUCKET_NAME: '',
   AWS_ACCESS_KEY_ID: '',
   AWS_SECRET_ACCESS_KEY: '',

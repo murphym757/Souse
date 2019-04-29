@@ -52,6 +52,9 @@ module.exports = {
             }
         ]
     },
+    node: {
+        fs: "empty"
+    },
     plugins: [htmlWebpackPlugin],
     resolve: {
         extensions: [".js", ".jsx"]
