@@ -28,23 +28,23 @@ require("./app/assets/styles/styles.scss");
 
 var _fonts = _interopRequireDefault(require("./app/assets/styles/fonts.scss"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 if (localStorage.jwtToken) {
-  (0, _setAuthToken.default)(localStorage.jwtToken);
-  var decoded = (0, _jwtDecode.default)(localStorage.jwtToken);
+  (0, _setAuthToken["default"])(localStorage.jwtToken);
+  var decoded = (0, _jwtDecode["default"])(localStorage.jwtToken);
 
-  _store.default.dispatch((0, _authentication.setCurrentUser)(decoded));
+  _store["default"].dispatch((0, _authentication.setCurrentUser)(decoded));
 
   var currentTime = Date.now() / 1000;
 
   if (decoded.exp < currentTime) {
-    _store.default.dispatch((0, _authentication.logoutUser)());
+    _store["default"].dispatch((0, _authentication.logoutUser)());
 
     window.location.href = '/login';
   }
 }
 
-(0, _reactDom.render)(_react.default.createElement(_reactRedux.Provider, {
-  store: _store.default
-}, _react.default.createElement(_main.default, null)), document.getElementById("app"));
+(0, _reactDom.render)(_react["default"].createElement(_reactRedux.Provider, {
+  store: _store["default"]
+}, _react["default"].createElement(_main["default"], null)), document.getElementById("app"));

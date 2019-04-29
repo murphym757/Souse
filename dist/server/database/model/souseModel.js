@@ -8,42 +8,42 @@ var UserSchema = new mongoose.Schema({
     unique: true,
     required: true,
     trim: true,
-    default: ''
+    "default": ''
   },
   username: {
     type: String,
     unique: true,
     required: true,
     trim: true,
-    default: ''
+    "default": ''
   },
   firstName: {
     type: String,
     required: true,
     trim: true,
-    default: ''
+    "default": ''
   },
   lastName: {
     type: String,
     required: true,
     trim: true,
-    default: ''
+    "default": ''
   },
   password: {
     type: String,
     required: true,
-    default: ''
+    "default": ''
   },
   isDeleted: {
     type: Boolean,
-    default: false
+    "default": false
   },
   avatar: {
     type: String
   },
   signUpDate: {
     type: Date,
-    default: Date.now()
+    "default": Date.now()
   },
   posts: [{
     type: mongoose.Schema.Types.ObjectId,
@@ -60,26 +60,26 @@ var PostSchema = new mongoose.Schema({
     postCaption: {
       type: String,
       trim: true,
-      default: ''
+      "default": ''
     },
     postCreatedDate: {
       type: Date,
-      default: Date.now()
+      "default": Date.now()
     },
     postUnixTimestamp: {
       type: String,
       trim: true,
-      default: ''
+      "default": ''
     },
     postImageFileType: {
       type: String,
       trim: true,
-      default: ''
+      "default": ''
     },
     postImageURL: {
       type: String,
       trim: true,
-      default: ''
+      "default": ''
     }
   }
 });

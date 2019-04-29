@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -15,9 +15,9 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _reactRedux = require("react-redux");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -31,11 +31,11 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 var PostEdit =
 /*#__PURE__*/
@@ -65,7 +65,7 @@ function (_Component) {
       var updateRoute = "/p/update";
       var postId = _this.state.originalPostId;
 
-      _axios.default.post(apiRoute + updateRoute + "/" + postId, postData).then(function (res) {
+      _axios["default"].post(apiRoute + updateRoute + "/" + postId, postData).then(function (res) {
         return console.log(res.data);
       });
 
@@ -86,8 +86,8 @@ function (_Component) {
       postCreatorId: '',
       postCaption: ''
     };
-    _this.onChangepostCaption = _this.onChangepostCaption.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.onChangepostCaption = _this.onChangepostCaption.bind(_assertThisInitialized(_this));
+    _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -103,12 +103,12 @@ function (_Component) {
       var editRoute = "/p/edit";
       var postId = this.state.originalPostId;
 
-      _axios.default.get(apiRoute + editRoute + "/" + postId).then(function (res) {
+      _axios["default"].get(apiRoute + editRoute + "/" + postId).then(function (res) {
         _this2.setState({
           postCaption: res.data.sousePosts.postCaption,
           postCreatorId: res.data.postCreator
         });
-      }).catch(function (error) {
+      })["catch"](function (error) {
         console.log(error);
       });
     }
@@ -120,28 +120,28 @@ function (_Component) {
           user = _this$props$auth2.user;
       var loggedInUser = "" + user.id + "";
       var postCreatorId = this.state.postCreatorId;
-      return _react.default.createElement("div", null, isAuthenticated && postCreatorId == loggedInUser ? _react.default.createElement("div", {
-        class: "container"
-      }, _react.default.createElement("form", {
+      return _react["default"].createElement("div", null, isAuthenticated && postCreatorId == loggedInUser ? _react["default"].createElement("div", {
+        "class": "container"
+      }, _react["default"].createElement("form", {
         onSubmit: this.onSubmit
-      }, _react.default.createElement("div", {
-        class: "input-field"
-      }, _react.default.createElement("textarea", {
-        class: "materialize-textarea",
+      }, _react["default"].createElement("div", {
+        "class": "input-field"
+      }, _react["default"].createElement("textarea", {
+        "class": "materialize-textarea",
         name: "postCaption",
         id: "souseCaptionPost",
         rows: "1",
         value: this.state.postCaption,
         onChange: this.onChangepostCaption
-      }), _react.default.createElement("label", {
-        class: "active",
-        for: "souseCaptionPost"
-      }, "Caption")), _react.default.createElement("div", {
-        class: "form-group"
-      }, _react.default.createElement("button", {
+      }), _react["default"].createElement("label", {
+        "class": "active",
+        "for": "souseCaptionPost"
+      }, "Caption")), _react["default"].createElement("div", {
+        "class": "form-group"
+      }, _react["default"].createElement("button", {
         type: "submit",
-        class: "waves-effect waves-light btn-large"
-      }, "Update")))) : _react.default.createElement("div", null));
+        "class": "waves-effect waves-light btn-large"
+      }, "Update")))) : _react["default"].createElement("div", null));
     }
   }]);
 
@@ -149,7 +149,7 @@ function (_Component) {
 }(_react.Component);
 
 PostEdit.propTypes = {
-  auth: _propTypes.default.object.isRequired
+  auth: _propTypes["default"].object.isRequired
 };
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -160,4 +160,4 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(PostEdit);
 
-exports.default = _default;
+exports["default"] = _default;

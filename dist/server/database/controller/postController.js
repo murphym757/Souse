@@ -70,13 +70,13 @@ exports.update_post = function (req, res, next) {
     }
   };
   var updatepost = {
-    new: true
+    "new": true
   };
   Post.findByIdAndUpdate(req.params.id, newerPost, updatepost, function (err, post) {
     if (!post) res.status(404).send("Post could not be found");else {
       post.save().then(function (post) {
         res.json('Update complete');
-      }).catch(function (err) {
+      })["catch"](function (err) {
         res.status(400).send("Unable to update post");
       });
     }

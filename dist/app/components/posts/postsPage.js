@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -17,9 +17,9 @@ var _reactRedux = require("react-redux");
 
 var _postsGrid = _interopRequireDefault(require("../posts/postsGrid"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -77,14 +77,14 @@ function (_Component) {
       var apiRoute = "/souseAPI";
       var findPostRoute = "/p";
 
-      _axios.default.get(apiRoute + findPostRoute).then(function (res) {
+      _axios["default"].get(apiRoute + findPostRoute).then(function (res) {
         var posts = res.data;
         console.log(posts);
 
         _this2.setState({
           posts: posts
         });
-      }).catch(function (error) {
+      })["catch"](function (error) {
         console.log(error);
       });
     }
@@ -109,7 +109,7 @@ function (_Component) {
         return sousePostsList.has(sousePost._id);
       });
       var userData = souseFilterPosts.map(function (object, i) {
-        return _react.default.createElement(_postsGrid.default, {
+        return _react["default"].createElement(_postsGrid["default"], {
           obj: object,
           key: i
         });
@@ -122,9 +122,9 @@ function (_Component) {
       var _this$props$auth2 = this.props.auth,
           isAuthenticated = _this$props$auth2.isAuthenticated,
           user = _this$props$auth2.user;
-      return _react.default.createElement("div", {
-        class: "container"
-      }, isAuthenticated ? _react.default.createElement("div", null, this.postFinder()) : _react.default.createElement("div", null, this.postFinder()));
+      return _react["default"].createElement("div", {
+        "class": "container"
+      }, isAuthenticated ? _react["default"].createElement("div", null, this.postFinder()) : _react["default"].createElement("div", null, this.postFinder()));
     }
   }]);
 
@@ -132,7 +132,7 @@ function (_Component) {
 }(_react.Component);
 
 PostPage.propTypes = {
-  auth: _propTypes.default.object.isRequired
+  auth: _propTypes["default"].object.isRequired
 };
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -143,4 +143,4 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(PostPage);
 
-exports.default = _default;
+exports["default"] = _default;

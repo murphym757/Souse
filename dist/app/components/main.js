@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -31,9 +31,9 @@ var _postsPage = _interopRequireDefault(require("./posts/postsPage"));
 
 var _postEditForm = _interopRequireDefault(require("./posts/postEditForm"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -70,37 +70,37 @@ function (_Component) {
       var _this$props$auth = this.props.auth,
           isAuthenticated = _this$props$auth.isAuthenticated,
           user = _this$props$auth.user;
-      return _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement("div", null, _react.default.createElement(_navbar.default, null), _react.default.createElement("div", {
-        class: "container"
-      }, _react.default.createElement(_reactRouterDom.Switch, null, _react.default.createElement(_reactRouterDom.Route, {
+      return _react["default"].createElement(_reactRouterDom.BrowserRouter, null, _react["default"].createElement("div", null, _react["default"].createElement(_navbar["default"], null), _react["default"].createElement("div", {
+        "class": "container"
+      }, _react["default"].createElement(_reactRouterDom.Switch, null, _react["default"].createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/",
-        component: _LandingPage.default
-      }), _react.default.createElement(_reactRouterDom.Route, {
+        component: _LandingPage["default"]
+      }), _react["default"].createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/signup",
-        component: _signUpForm.default
-      }), _react.default.createElement(_reactRouterDom.Route, {
+        component: _signUpForm["default"]
+      }), _react["default"].createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/login",
-        component: _loginForm.default
-      }), _react.default.createElement(_reactRouterDom.Route, {
+        component: _loginForm["default"]
+      }), _react["default"].createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/:username",
-        component: _userProfile.default
-      }), _react.default.createElement(_reactRouterDom.Route, {
+        component: _userProfile["default"]
+      }), _react["default"].createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/p/:id",
-        component: _postsPage.default
-      }), _react.default.createElement(_reactRouterDom.Route, {
+        component: _postsPage["default"]
+      }), _react["default"].createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/p/edit/:id",
-        component: _postEditForm.default
-      }), _react.default.createElement(_reactRouterDom.Route, {
-        component: _Page.default
-      })), _react.default.createElement("div", {
-        class: "fixed-bottom"
-      }, _react.default.createElement(_footer.default, null)))));
+        component: _postEditForm["default"]
+      }), _react["default"].createElement(_reactRouterDom.Route, {
+        component: _Page["default"]
+      })), _react["default"].createElement("div", {
+        "class": "fixed-bottom"
+      }, _react["default"].createElement(_footer["default"], null)))));
     }
   }]);
 
@@ -108,7 +108,7 @@ function (_Component) {
 }(_react.Component);
 
 MainSource.propTypes = {
-  auth: _propTypes.default.object.isRequired
+  auth: _propTypes["default"].object.isRequired
 };
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -119,4 +119,4 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(MainSource);
 
-exports.default = _default;
+exports["default"] = _default;

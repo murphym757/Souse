@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -17,9 +17,9 @@ var _authentication = require("../../../server/actions/authentication");
 
 var _materializeCss = _interopRequireDefault(require("materialize-css"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -69,7 +69,7 @@ function (_Component) {
   _createClass(Navbar, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      _materializeCss.default.AutoInit();
+      _materializeCss["default"].AutoInit();
     }
   }, {
     key: "render",
@@ -78,49 +78,49 @@ function (_Component) {
           isAuthenticated = _this$props$auth.isAuthenticated,
           user = _this$props$auth.user;
 
-      var loggedInLinks = _react.default.createElement("div", null, _react.default.createElement("li", null, _react.default.createElement("a", {
-        class: "sidenav-close logoutClose",
+      var loggedInLinks = _react["default"].createElement("div", null, _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        "class": "sidenav-close logoutClose",
         onClick: this.onLogout.bind(this)
       }, "Log Out")));
 
-      var guestLinks = _react.default.createElement("div", null, _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.Link, {
-        class: "sidenav-close",
+      var guestLinks = _react["default"].createElement("div", null, _react["default"].createElement("li", null, _react["default"].createElement(_reactRouterDom.Link, {
+        "class": "sidenav-close",
         to: "/signup"
-      }, "Sign Up")), _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.Link, {
-        class: "sidenav-close",
+      }, "Sign Up")), _react["default"].createElement("li", null, _react["default"].createElement(_reactRouterDom.Link, {
+        "class": "sidenav-close",
         to: "/login"
       }, "Login")));
 
-      return _react.default.createElement("div", null, _react.default.createElement("nav", {
-        class: "z-depth-0"
-      }, _react.default.createElement("div", {
-        class: "nav-wrapper container-fluid"
-      }, _react.default.createElement(_reactRouterDom.Link, {
-        class: "brand-logo d-md-none py-3",
+      return _react["default"].createElement("div", null, _react["default"].createElement("nav", {
+        "class": "z-depth-0"
+      }, _react["default"].createElement("div", {
+        "class": "nav-wrapper container-fluid"
+      }, _react["default"].createElement(_reactRouterDom.Link, {
+        "class": "brand-logo d-md-none py-3",
         to: "/"
-      }, _react.default.createElement("img", {
-        class: "souseHomeLogo-navbar",
+      }, _react["default"].createElement("img", {
+        "class": "souseHomeLogo-navbar",
         src: "../../src/app/assets/images/souseBigLogo.svg",
         width: "125",
         alt: "logo"
-      })), _react.default.createElement(_reactRouterDom.Link, {
-        class: "brand-logo d-none d-md-block pl-3 py-3 px-4",
+      })), _react["default"].createElement(_reactRouterDom.Link, {
+        "class": "brand-logo d-none d-md-block pl-3 py-3 px-4",
         to: "/"
-      }, _react.default.createElement("img", {
-        class: "souseHomeLogo-navbar",
+      }, _react["default"].createElement("img", {
+        "class": "souseHomeLogo-navbar",
         src: "../../src/app/assets/images/souseBigLogo.svg",
         width: "125",
         alt: "logo"
-      })), _react.default.createElement("a", {
+      })), _react["default"].createElement("a", {
         href: "#",
         "data-target": "slide-out",
-        class: "sidenav-trigger"
-      }, _react.default.createElement("span", null, _react.default.createElement("i", {
-        class: "fas fa-ellipsis-h"
-      }))), _react.default.createElement("ul", {
-        class: "right hide-on-med-and-down"
-      }, isAuthenticated ? loggedInLinks : guestLinks))), _react.default.createElement("ul", {
-        class: "sidenav",
+        "class": "sidenav-trigger"
+      }, _react["default"].createElement("span", null, _react["default"].createElement("i", {
+        "class": "fas fa-ellipsis-h"
+      }))), _react["default"].createElement("ul", {
+        "class": "right hide-on-med-and-down"
+      }, isAuthenticated ? loggedInLinks : guestLinks))), _react["default"].createElement("ul", {
+        "class": "sidenav",
         id: "slide-out"
       }, isAuthenticated ? loggedInLinks : guestLinks));
     }
@@ -130,8 +130,8 @@ function (_Component) {
 }(_react.Component);
 
 Navbar.propTypes = {
-  logoutUser: _propTypes.default.func.isRequired,
-  auth: _propTypes.default.object.isRequired
+  logoutUser: _propTypes["default"].func.isRequired,
+  auth: _propTypes["default"].object.isRequired
 };
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -144,4 +144,4 @@ var _default = (0, _reactRedux.connect)(mapStateToProps, {
   logoutUser: _authentication.logoutUser
 })((0, _reactRouterDom.withRouter)(Navbar));
 
-exports.default = _default;
+exports["default"] = _default;

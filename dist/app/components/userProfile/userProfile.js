@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -17,9 +17,9 @@ var _reactRedux = require("react-redux");
 
 var _postIndex = _interopRequireDefault(require("../posts/postIndex"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -78,14 +78,14 @@ function (_Component) {
       var apiRoute = "/souseAPI";
       var findPostRoute = "/p";
 
-      _axios.default.get(apiRoute + findPostRoute).then(function (res) {
+      _axios["default"].get(apiRoute + findPostRoute).then(function (res) {
         var posts = res.data;
         console.log(posts);
 
         _this2.setState({
           posts: posts
         });
-      }).catch(function (error) {
+      })["catch"](function (error) {
         console.log(error);
       });
 
@@ -94,14 +94,14 @@ function (_Component) {
       }
       var findUserRoute = "/u";
 
-      _axios.default.get(apiRoute + findUserRoute).then(function (res) {
+      _axios["default"].get(apiRoute + findUserRoute).then(function (res) {
         var users = res.data;
         console.log(users);
 
         _this2.setState({
           users: users
         });
-      }).catch(function (error) {
+      })["catch"](function (error) {
         console.log(error);
       });
     }
@@ -134,10 +134,10 @@ function (_Component) {
       var _this4 = this;
 
       var postFilterDisplay = Object.keys(this.postFinder()).map(function (object, i) {
-        return _react.default.createElement("div", {
+        return _react["default"].createElement("div", {
           obj: object,
           key: i
-        }, _react.default.createElement("h6", null, _react.default.createElement(_reactRouterDom.Link, {
+        }, _react["default"].createElement("h6", null, _react["default"].createElement(_reactRouterDom.Link, {
           to: "/p/".concat(_this4.postFinder()[i]._id)
         }, _this4.postFinder()[i]._id)));
       });
@@ -152,11 +152,11 @@ function (_Component) {
       var loggedInUsername = user.username;
       var usernamePage = this.props.match.params.username;
       var postsTotal = "" + this.postFinder().length + "";
-      return _react.default.createElement("div", {
-        class: "container"
-      }, isAuthenticated ? _react.default.createElement("div", null, _react.default.createElement("h2", null, "lope"), _react.default.createElement("h2", null, "Welcome, ", this.state.postCreatorUsername)) : _react.default.createElement("h2", null, "Welcome Guest"), _react.default.createElement("div", {
-        class: "usersPosts"
-      }, _react.default.createElement("h6", null, _react.default.createElement(_postIndex.default, null)), this.state.postTotalDisplay === postsTotal ? _react.default.createElement("h6", null, postsTotal, " post") : _react.default.createElement("h6", null, postsTotal, " posts"), this.postFilterDisplay()));
+      return _react["default"].createElement("div", {
+        "class": "container"
+      }, isAuthenticated ? _react["default"].createElement("div", null, _react["default"].createElement("h2", null, "lope"), _react["default"].createElement("h2", null, "Welcome, ", this.state.postCreatorUsername)) : _react["default"].createElement("h2", null, "Welcome Guest"), _react["default"].createElement("div", {
+        "class": "usersPosts"
+      }, _react["default"].createElement("h6", null, _react["default"].createElement(_postIndex["default"], null)), this.state.postTotalDisplay === postsTotal ? _react["default"].createElement("h6", null, postsTotal, " post") : _react["default"].createElement("h6", null, postsTotal, " posts"), this.postFilterDisplay()));
     }
   }]);
 
@@ -164,7 +164,7 @@ function (_Component) {
 }(_react.Component);
 
 UserProfile.propTypes = {
-  auth: _propTypes.default.object.isRequired
+  auth: _propTypes["default"].object.isRequired
 };
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -175,4 +175,4 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(UserProfile);
 
-exports.default = _default;
+exports["default"] = _default;

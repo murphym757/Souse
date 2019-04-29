@@ -3,11 +3,11 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -41,20 +41,20 @@ function (_Component) {
   _createClass(Footer, [{
     key: "render",
     value: function render() {
-      return _react.default.createElement("div", {
-        class: "container"
-      }, _react.default.createElement("div", {
-        class: "d-md-none"
-      }, " ", _react.default.createElement("div", {
-        class: "souseFooter float-left"
-      }, _react.default.createElement("h6", null, _react.default.createElement("i", {
-        class: "far fa-copyright"
-      }), " Footer"))), _react.default.createElement("div", {
-        class: "d-none d-md-block"
-      }, " ", _react.default.createElement("div", {
-        class: "souseFooter"
-      }, _react.default.createElement("h6", null, _react.default.createElement("i", {
-        class: "far fa-copyright"
+      return _react["default"].createElement("div", {
+        "class": "container"
+      }, _react["default"].createElement("div", {
+        "class": "d-md-none"
+      }, " ", _react["default"].createElement("div", {
+        "class": "souseFooter float-left"
+      }, _react["default"].createElement("h6", null, _react["default"].createElement("i", {
+        "class": "far fa-copyright"
+      }), " Footer"))), _react["default"].createElement("div", {
+        "class": "d-none d-md-block"
+      }, " ", _react["default"].createElement("div", {
+        "class": "souseFooter"
+      }, _react["default"].createElement("h6", null, _react["default"].createElement("i", {
+        "class": "far fa-copyright"
       }), " Souse"))));
     }
   }]);
@@ -62,4 +62,4 @@ function (_Component) {
   return Footer;
 }(_react.Component);
 
-exports.default = Footer;
+exports["default"] = Footer;

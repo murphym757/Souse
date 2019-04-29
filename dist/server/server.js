@@ -36,7 +36,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use('/souseAPI', routes);
-app.use(express.static(path.join(__dirname + './../../')));
+app.use(express["static"](path.join(__dirname + './../../')));
 app.get('*', function (req, res) {
   res.sendFile(path.resolve(__dirname + './../../src/index.html'));
 });

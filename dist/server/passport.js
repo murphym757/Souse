@@ -19,7 +19,7 @@ module.exports = function (passport) {
       }
 
       return done(null, false);
-    }).catch(function (err) {
+    })["catch"](function (err) {
       return console.error(err);
     });
   }));

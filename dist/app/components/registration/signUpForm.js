@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -17,9 +17,9 @@ var _authentication = require("../../../server/actions/authentication");
 
 var _classnames = _interopRequireDefault(require("classnames"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -35,11 +35,11 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 var SignUpForm =
 /*#__PURE__*/
@@ -80,8 +80,8 @@ function (_Component) {
       password_confirm: '',
       errors: {}
     };
-    _this.onChange = _this.onChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.onChange = _this.onChange.bind(_assertThisInitialized(_this));
+    _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -109,103 +109,103 @@ function (_Component) {
     key: "render",
     value: function render() {
       var errors = this.state.errors;
-      return _react.default.createElement("div", null, _react.default.createElement("form", {
+      return _react["default"].createElement("div", null, _react["default"].createElement("form", {
         onSubmit: this.onSubmit
-      }, _react.default.createElement("div", {
-        class: "input-field"
-      }, _react.default.createElement("input", {
+      }, _react["default"].createElement("div", {
+        "class": "input-field"
+      }, _react["default"].createElement("input", {
         type: "email",
         name: "email",
-        class: (0, _classnames.default)('form-control', {
+        "class": (0, _classnames["default"])('form-control', {
           'is-invalid': errors.email
         }),
         id: "souseEmail",
         value: this.state.email,
         onChange: this.onChange
-      }), _react.default.createElement("label", {
-        for: "souseEmail"
-      }, "Email"), errors.email && _react.default.createElement("div", {
-        class: "invalid-feedback"
-      }, errors.email)), _react.default.createElement("div", {
-        class: "input-field"
-      }, _react.default.createElement("input", {
+      }), _react["default"].createElement("label", {
+        "for": "souseEmail"
+      }, "Email"), errors.email && _react["default"].createElement("div", {
+        "class": "invalid-feedback"
+      }, errors.email)), _react["default"].createElement("div", {
+        "class": "input-field"
+      }, _react["default"].createElement("input", {
         type: "text",
         name: "username",
-        class: (0, _classnames.default)('form-control', {
+        "class": (0, _classnames["default"])('form-control', {
           'is-invalid': errors.username
         }),
         id: "souseUsername",
         value: this.state.usename,
         onChange: this.onChange
-      }), _react.default.createElement("label", {
-        for: "souseUsername"
-      }, "Username"), errors.username && _react.default.createElement("div", {
-        class: "invalid-feedback"
-      }, errors.username)), _react.default.createElement("div", {
-        class: "input-field"
-      }, _react.default.createElement("input", {
+      }), _react["default"].createElement("label", {
+        "for": "souseUsername"
+      }, "Username"), errors.username && _react["default"].createElement("div", {
+        "class": "invalid-feedback"
+      }, errors.username)), _react["default"].createElement("div", {
+        "class": "input-field"
+      }, _react["default"].createElement("input", {
         type: "text",
         name: "firstName",
-        class: (0, _classnames.default)('form-control', {
+        "class": (0, _classnames["default"])('form-control', {
           'is-invalid': errors.firstName
         }),
         id: "souseFirstName",
         value: this.state.firstName,
         onChange: this.onChange
-      }), _react.default.createElement("label", {
-        for: "souseFirstName"
-      }, "First Name"), errors.firstName && _react.default.createElement("div", {
-        class: "invalid-feedback"
-      }, errors.firstName)), _react.default.createElement("div", {
-        class: "input-field"
-      }, _react.default.createElement("input", {
+      }), _react["default"].createElement("label", {
+        "for": "souseFirstName"
+      }, "First Name"), errors.firstName && _react["default"].createElement("div", {
+        "class": "invalid-feedback"
+      }, errors.firstName)), _react["default"].createElement("div", {
+        "class": "input-field"
+      }, _react["default"].createElement("input", {
         type: "text",
         name: "lastName",
-        class: (0, _classnames.default)('form-control', {
+        "class": (0, _classnames["default"])('form-control', {
           'is-invalid': errors.lastName
         }),
         id: "souseLastName",
         value: this.state.lastName,
         onChange: this.onChange
-      }), _react.default.createElement("label", {
-        for: "souseLastName"
-      }, "Last Name"), errors.lastName && _react.default.createElement("div", {
-        class: "invalid-feedback"
-      }, errors.lastName)), _react.default.createElement("div", {
-        class: "input-field"
-      }, _react.default.createElement("input", {
+      }), _react["default"].createElement("label", {
+        "for": "souseLastName"
+      }, "Last Name"), errors.lastName && _react["default"].createElement("div", {
+        "class": "invalid-feedback"
+      }, errors.lastName)), _react["default"].createElement("div", {
+        "class": "input-field"
+      }, _react["default"].createElement("input", {
         type: "password",
         name: "password",
-        class: (0, _classnames.default)('form-control', {
+        "class": (0, _classnames["default"])('form-control', {
           'is-invalid': errors.password
         }),
         id: "sousePassword",
         value: this.state.password,
         onChange: this.onChange
-      }), _react.default.createElement("label", {
-        for: "sousePassword"
-      }, "Password"), errors.password && _react.default.createElement("div", {
-        class: "invalid-feedback"
-      }, errors.password)), _react.default.createElement("div", {
-        class: "input-field"
-      }, _react.default.createElement("input", {
+      }), _react["default"].createElement("label", {
+        "for": "sousePassword"
+      }, "Password"), errors.password && _react["default"].createElement("div", {
+        "class": "invalid-feedback"
+      }, errors.password)), _react["default"].createElement("div", {
+        "class": "input-field"
+      }, _react["default"].createElement("input", {
         type: "password",
         name: "password_confirm",
-        class: (0, _classnames.default)('form-control', {
+        "class": (0, _classnames["default"])('form-control', {
           'is-invalid': errors.password_confirm
         }),
         id: "sousePasswordConfirm",
         value: this.state.password_confirm,
         onChange: this.onChange
-      }), _react.default.createElement("label", {
-        for: "sousePasswordConfirm"
-      }, "Password Confirm"), errors.password_confirm && _react.default.createElement("div", {
-        class: "invalid-feedback"
-      }, errors.password_confirm)), _react.default.createElement("div", {
-        class: "form-group"
-      }, _react.default.createElement("button", {
+      }), _react["default"].createElement("label", {
+        "for": "sousePasswordConfirm"
+      }, "Password Confirm"), errors.password_confirm && _react["default"].createElement("div", {
+        "class": "invalid-feedback"
+      }, errors.password_confirm)), _react["default"].createElement("div", {
+        "class": "form-group"
+      }, _react["default"].createElement("button", {
         type: "submit",
-        class: "waves-effect waves-light btn-large"
+        "class": "waves-effect waves-light btn-large"
       }, "Sign Up"))));
     }
   }]);
@@ -214,8 +214,8 @@ function (_Component) {
 }(_react.Component);
 
 SignUpForm.propTypes = {
-  registerUser: _propTypes.default.func.isRequired,
-  auth: _propTypes.default.object.isRequired
+  registerUser: _propTypes["default"].func.isRequired,
+  auth: _propTypes["default"].object.isRequired
 };
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -229,4 +229,4 @@ var _default = (0, _reactRedux.connect)(mapStateToProps, {
   registerUser: _authentication.registerUser
 })((0, _reactRouterDom.withRouter)(SignUpForm));
 
-exports.default = _default;
+exports["default"] = _default;

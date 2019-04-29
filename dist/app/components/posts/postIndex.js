@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports["default"] = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
@@ -17,9 +17,9 @@ var _materializeCss = _interopRequireDefault(require("materialize-css"));
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -57,41 +57,41 @@ function (_Component) {
   _createClass(PostIndex, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      _materializeCss.default.AutoInit();
+      _materializeCss["default"].AutoInit();
     }
   }, {
     key: "render",
     value: function render() {
       // Styled Components
-      var BasicFontStyling = _styledComponents.default.h2.withConfig({
+      var BasicFontStyling = _styledComponents["default"].h2.withConfig({
         displayName: "postIndex__BasicFontStyling",
         componentId: "sc-159iftj-0"
       })(["  color:yellow;"]);
 
-      return _react.default.createElement("div", null, _react.default.createElement(BasicFontStyling, null, "List of posts display here"), _react.default.createElement("div", {
-        class: "collapse",
+      return _react["default"].createElement("div", null, _react["default"].createElement(BasicFontStyling, null, "List of posts display here"), _react["default"].createElement("div", {
+        "class": "collapse",
         id: "postCreateCollapse"
-      }, _react.default.createElement("div", {
-        class: "postCreateCollapse"
-      }, _react.default.createElement(_postForm.default, null))), _react.default.createElement("div", {
-        class: "fixed-action-btn"
-      }, _react.default.createElement("a", {
-        class: "btn-floating btn-large red"
-      }, _react.default.createElement("i", {
-        class: "fas fa-plus"
-      })), _react.default.createElement("ul", null, _react.default.createElement("li", null, _react.default.createElement("a", {
-        class: "btn-floating red addPostButton"
-      }, _react.default.createElement("i", {
-        class: "fas fa-pen fa-xs",
+      }, _react["default"].createElement("div", {
+        "class": "postCreateCollapse"
+      }, _react["default"].createElement(_postForm["default"], null))), _react["default"].createElement("div", {
+        "class": "fixed-action-btn"
+      }, _react["default"].createElement("a", {
+        "class": "btn-floating btn-large red"
+      }, _react["default"].createElement("i", {
+        "class": "fas fa-plus"
+      })), _react["default"].createElement("ul", null, _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        "class": "btn-floating red addPostButton"
+      }, _react["default"].createElement("i", {
+        "class": "fas fa-pen fa-xs",
         "data-toggle": "collapse",
         href: "#postCreateCollapse",
         role: "button",
         "aria-expanded": "false",
         "aria-controls": "postCreateCollapse"
-      }))), _react.default.createElement("li", null, _react.default.createElement("a", {
-        class: "btn-floating yellow darken-1"
-      }, _react.default.createElement("i", {
-        class: "fas fa-search fa-xs",
+      }))), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        "class": "btn-floating yellow darken-1"
+      }, _react["default"].createElement("i", {
+        "class": "fas fa-search fa-xs",
         "data-toggle": "collapse",
         href: "#collapseExample",
         role: "button",
@@ -105,7 +105,7 @@ function (_Component) {
 }(_react.Component);
 
 PostIndex.propTypes = {
-  auth: _propTypes.default.object.isRequired
+  auth: _propTypes["default"].object.isRequired
 };
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -116,4 +116,4 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(PostIndex);
 
-exports.default = _default;
+exports["default"] = _default;
