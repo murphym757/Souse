@@ -49,6 +49,10 @@ var UserSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     //Returns the entire post
     ref: 'Posts'
+  }],
+  comments: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Comments'
   }]
 });
 var PostSchema = new mongoose.Schema({
@@ -56,15 +60,15 @@ var PostSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Users'
   },
+  postCreatedDate: {
+    type: Date,
+    "default": Date.now
+  },
   sousePosts: {
     postCaption: {
       type: String,
       trim: true,
       "default": ''
-    },
-    postCreatedDate: {
-      type: Date,
-      "default": Date.now()
     },
     postUnixTimestamp: {
       type: String,
@@ -81,11 +85,32 @@ var PostSchema = new mongoose.Schema({
       trim: true,
       "default": ''
     }
+  },
+  comments: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Comments'
+  }]
+});
+var CommentSchema = new mongoose.Schema({
+  commentCreator: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Users'
+  },
+  commentCreatedDate: {
+    type: Date,
+    "default": Date.now
+  },
+  souseComment: {
+    type: String,
+    trim: true,
+    "default": ''
   }
 });
 var User = mongoose.model('Users', UserSchema);
 var Post = mongoose.model('Posts', PostSchema);
+var Comment = mongoose.model('Comments', CommentSchema);
 module.exports = {
   User: User,
-  Post: Post
+  Post: Post,
+  Comment: Comment
 };

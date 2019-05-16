@@ -149,6 +149,11 @@ function (_Component) {
   }
 
   _createClass(PostCreate, [{
+    key: "handleInit",
+    value: function handleInit() {
+      console.log('FilePond instance has initialised', this.pond);
+    }
+  }, {
     key: "render",
     value: function render() {
       var _React$createElement, _React$createElement2;

@@ -5,7 +5,8 @@ var mongoose = require('mongoose'),
     config = require('../../config'),
     jwt = require('jsonwebtoken'),
     passport = require('passport'),
-    Post = mongoose.model('Posts'); // Create Post
+    Post = mongoose.model('Posts'),
+    Comment = mongoose.model('Comments'); // Create Post
 
 
 exports.create_post = function (req, res, next) {
@@ -49,6 +50,8 @@ exports.find_post = function (req, res, next) {
     } else {
       res.json(posts);
     }
+  }).sort({
+    postCreatedDate: 'descending'
   });
 }; // Edit Post
 

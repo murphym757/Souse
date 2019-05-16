@@ -61,7 +61,8 @@ function (_Component) {
       posts: [],
       users: [],
       originalPostId: postIdFound,
-      postCreatorId: ''
+      postCreatorId: '',
+      postCreatorImage: "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg"
     };
     return _this;
   }
@@ -87,6 +88,22 @@ function (_Component) {
       })["catch"](function (error) {
         console.log(error);
       });
+
+      {
+        /* Users Collection */
+      }
+      var findUserRoute = "/u";
+
+      _axios["default"].get(apiRoute + findUserRoute).then(function (res) {
+        var users = res.data;
+        console.log(users);
+
+        _this2.setState({
+          users: users
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   }, {
     key: "postFinder",
@@ -95,6 +112,7 @@ function (_Component) {
 
       var sousePosts = this.state.posts;
       var filteredPostData = Object.keys(sousePosts).filter(function (i) {
+        // Finds Specific Post
         return sousePosts[i]._id === "" + _this3.state.originalPostId + "";
       }),
           postIdFinder = Object.keys(sousePosts).map(function (object, i) {
@@ -108,10 +126,35 @@ function (_Component) {
           souseFilterPosts = sousePosts.filter(function (sousePost) {
         return sousePostsList.has(sousePost._id);
       });
+      var filteredPostCreator = Object.keys(sousePosts).filter(function (i) {
+        // Finds Username of Specific Post
+        return sousePosts[i]._id === "" + _this3.state.originalPostId + "";
+      }),
+          postCreatorIdFinder = Object.keys(sousePosts).map(function (object, i) {
+        return sousePosts[filteredPostCreator].postCreator;
+      }),
+          postCreatorId = postCreatorIdFinder.find(function (i) {
+        return "" + postCreatorIdFinder[0] + "";
+      });
+      var souseUsers = this.state.users;
+      var filteredUsernameData = Object.keys(souseUsers).filter(function (i) {
+        // Finds Username in souseUsersDB and display data from it (Username)
+        return souseUsers[i]._id === "" + postCreatorId + "";
+      }),
+          postUserNameFinder = Object.keys(souseUsers).map(function (object, i) {
+        return souseUsers[filteredUsernameData].username;
+      }),
+          postUserName = postUserNameFinder.find(function (i) {
+        return "" + postUserNameFinder[0] + "";
+      });
+      var sousePostCreatorName = postUserName;
+      var sousePostCreatorImage = this.state.postCreatorImage;
       var userData = souseFilterPosts.map(function (object, i) {
         return _react["default"].createElement(_postsGrid["default"], {
           obj: object,
-          key: i
+          key: i,
+          postCreatorName: sousePostCreatorName,
+          postCreatorImage: sousePostCreatorImage
         });
       });
       return userData;
@@ -122,9 +165,7 @@ function (_Component) {
       var _this$props$auth2 = this.props.auth,
           isAuthenticated = _this$props$auth2.isAuthenticated,
           user = _this$props$auth2.user;
-      return _react["default"].createElement("div", {
-        "class": "container"
-      }, isAuthenticated ? _react["default"].createElement("div", null, this.postFinder()) : _react["default"].createElement("div", null, this.postFinder()));
+      return _react["default"].createElement("div", null, isAuthenticated ? _react["default"].createElement("div", null, this.postFinder()) : _react["default"].createElement("div", null, this.postFinder()));
     }
   }]);
 

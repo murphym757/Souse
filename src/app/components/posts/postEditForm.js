@@ -22,6 +22,7 @@ class PostEdit extends Component {
         };
         this.onChangepostCaption = this.onChangepostCaption.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.delete = this.delete.bind(this);
     }
 
     componentDidMount() {
@@ -29,6 +30,7 @@ class PostEdit extends Component {
         const apiRoute = "/souseAPI";
         const editRoute = "/p/edit";
         const postId = this.state.originalPostId;
+        console.log(postId);
         axios.get(apiRoute + editRoute + "/" + postId)
           .then(res => {
               this.setState({ 
@@ -39,6 +41,18 @@ class PostEdit extends Component {
           .catch(function (error) {
               console.log(error);
           })
+    }
+
+    delete() {
+        const {isAuthenticated, user} = this.props.auth;
+        const userName = user.username;
+        const postId = this.state.originalPostId;
+        const apiRoute = "/souseAPI";
+        const deleteRoute = "/p/delete";
+        axios.get(apiRoute + deleteRoute + "/" + postId)
+            .then(console.log('Deleted'))
+            .catch(err => console.log(err));
+        this.props.history.push("/" + userName);
     }
 
     onChangepostCaption = (e) => {
@@ -87,6 +101,9 @@ class PostEdit extends Component {
                                 <button type="submit" class="waves-effect waves-light btn-large">Update</button>
                             </div>
                         </form>
+                        <div class="form-group col d-flex justify-content-center">
+                            <button onClick={this.delete} class="waves-effect waves-light btn-large">Delete</button>
+                        </div>
                     </div>
                     : <div></div>
                 }

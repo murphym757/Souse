@@ -3,7 +3,8 @@ const mongoose = require('mongoose'),
     config = require('../../config'),
     jwt = require('jsonwebtoken'),
     passport = require('passport'),
-    Post = mongoose.model('Posts');
+    Post = mongoose.model('Posts'),
+    Comment = mongoose.model('Comments');
 
 // Create Post
 exports.create_post = (req, res, next) => {
@@ -42,13 +43,13 @@ exports.create_post = (req, res, next) => {
 
 // Get Post
 exports.find_post = (req, res, next) => {
-    Post.find(function(err, posts) {
+    Post.find((err, posts) => {
     if (err) {
       console.log(err);
     } else {
       res.json(posts);
     }
-  });
+  }).sort({postCreatedDate: 'descending'});
 }
 
 // Edit Post
@@ -87,9 +88,9 @@ exports.update_post = (req, res, next) => {
 exports.delete_post = (req, res, next) => {
     Post.findByIdAndRemove({_id: req.params.id}, (err, post) => {
         if(err) {
-        res.json(err);
+            res.json(err);
         } else {
-        res.json('Post ', {_id: req.params.id}, ' was successfully removed');
+            res.json('Post ', {_id: req.params.id}, ' was successfully removed');
         }
     });
 }

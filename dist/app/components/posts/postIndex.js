@@ -62,13 +62,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      // Styled Components
-      var BasicFontStyling = _styledComponents["default"].h2.withConfig({
-        displayName: "postIndex__BasicFontStyling",
-        componentId: "sc-159iftj-0"
-      })(["  color:yellow;"]);
-
-      return _react["default"].createElement("div", null, _react["default"].createElement(BasicFontStyling, null, "List of posts display here"), _react["default"].createElement("div", {
+      return _react["default"].createElement("div", null, _react["default"].createElement("div", {
         "class": "collapse",
         id: "postCreateCollapse"
       }, _react["default"].createElement("div", {

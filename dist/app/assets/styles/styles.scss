@@ -50,7 +50,111 @@ nav ul a {
     color: $secondaryColor;
 }
 
-// Links
+// Post Page (postGrid)
+/* ---------------------------------------------------- */
+.userData {
+    font-size: 1em; // 10px
+    font-weight: bold;
+    color: $white;
+
+}
+.locationData {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: $white;
+    font-size: 0.75em;
+}
+
+.followData {
+    font-weight: bold;
+    color: $white;
+    font-size: 0.75em;
+}
+
+.commentsHeader {
+    color: $secondaryColor
+}
+
+.profileImageRow,
+.userData,
+.locationData,
+.followData {
+    margin-bottom:0px !important;
+}
+
+// Comments Section
+/* ---------------------------------------------------- */
+.souseCommentRow {
+    position: relative;
+    top: 100%;
+    transform: translateY(-100%);
+}
+/* ---------------------------------------------------- */
+
+// Image Format
+/* ---------------------------------------------------- */
+.sousePostImage { //Img Tag
+    object-fit: cover;
+    width: 75vw;
+    height: 50vw;
+}
+
+.img-wrapper {
+    position: relative;
+}
+
+.img-responsive {
+    width: 100%;
+    height: auto;
+}
+
+.img-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.img-overlay:before {
+    content: ' ';
+    display: block;
+    /* adjust 'height' to position overlay content vertically */
+    height: 70%;
+}
+
+.souseUserIcon {
+    border-radius: 50%;
+    height: 7.1vw;
+    width: 7.1vw;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.souseUserIconUserHomePage {
+    border-radius: 50%;
+    height: 12vw;
+    width: 12vw;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.souseUserPostsUserHomePage {
+    object-fit: cover;
+    width: 15vw;
+    height: 15vw;
+}
+
+.souseUserPostsUserHomePage:hover {
+    border: 1px solid $secondaryColor;
+}
+/* ---------------------------------------------------- */
+
+// Buttons
 /* ---------------------------------------------------- */
 
 .btn-large {
@@ -72,6 +176,10 @@ nav ul a {
 .btn-large:focus {
     background-color: $secondaryColor;
 }
+.buttonFont {
+    text-transform: uppercase;
+    font-size: 0.696em; //10px
+}
 
 /* ---------------------------------------------------- */
 
@@ -82,24 +190,28 @@ nav ul a {
 
 a:link {
     color: $secondaryColor;
+    text-decoration: none;
 }
 
 /* visited link */
 
 a:visited {
     color: $secondaryColor;
+    text-decoration: none;
 }
 
 /* mouse over link */
 
 a:hover {
     color: $secondaryColor;
+    text-decoration: none;
 }
 
 /* selected link */
 
 a:active {
     color: $secondaryColor;
+    text-decoration: none;
 }
 
 /* ---------------------------------------------------- */

@@ -88,6 +88,7 @@ function (_Component) {
     };
     _this.onChangepostCaption = _this.onChangepostCaption.bind(_assertThisInitialized(_this));
     _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
+    _this["delete"] = _this["delete"].bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -102,6 +103,7 @@ function (_Component) {
       var apiRoute = "/souseAPI";
       var editRoute = "/p/edit";
       var postId = this.state.originalPostId;
+      console.log(postId);
 
       _axios["default"].get(apiRoute + editRoute + "/" + postId).then(function (res) {
         _this2.setState({
@@ -113,11 +115,28 @@ function (_Component) {
       });
     }
   }, {
-    key: "render",
-    value: function render() {
+    key: "delete",
+    value: function _delete() {
       var _this$props$auth2 = this.props.auth,
           isAuthenticated = _this$props$auth2.isAuthenticated,
           user = _this$props$auth2.user;
+      var userName = user.username;
+      var postId = this.state.originalPostId;
+      var apiRoute = "/souseAPI";
+      var deleteRoute = "/p/delete";
+
+      _axios["default"].get(apiRoute + deleteRoute + "/" + postId).then(console.log('Deleted'))["catch"](function (err) {
+        return console.log(err);
+      });
+
+      this.props.history.push("/" + userName);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props$auth3 = this.props.auth,
+          isAuthenticated = _this$props$auth3.isAuthenticated,
+          user = _this$props$auth3.user;
       var loggedInUser = "" + user.id + "";
       var postCreatorId = this.state.postCreatorId;
       return _react["default"].createElement("div", null, isAuthenticated && postCreatorId == loggedInUser ? _react["default"].createElement("div", {
@@ -141,7 +160,12 @@ function (_Component) {
       }, _react["default"].createElement("button", {
         type: "submit",
         "class": "waves-effect waves-light btn-large"
-      }, "Update")))) : _react["default"].createElement("div", null));
+      }, "Update"))), _react["default"].createElement("div", {
+        "class": "form-group col d-flex justify-content-center"
+      }, _react["default"].createElement("button", {
+        onClick: this["delete"],
+        "class": "waves-effect waves-light btn-large"
+      }, "Delete"))) : _react["default"].createElement("div", null));
     }
   }]);
 

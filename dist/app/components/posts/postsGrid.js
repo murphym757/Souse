@@ -15,6 +15,10 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _reactRedux = require("react-redux");
 
+var _styledComponents = _interopRequireDefault(require("styled-components"));
+
+var _commentsSection = _interopRequireDefault(require("../posts/commentsSection"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
@@ -53,7 +57,8 @@ function (_Component) {
         user = _this$props$auth.user;
     var loggedinUser = user.username;
     _this.state = {
-      postCreatorId: loggedinUser
+      postCreatorId: loggedinUser,
+      userIcon: "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg"
     };
     _this["delete"] = _this["delete"].bind(_assertThisInitialized(_this));
     return _this;
@@ -85,41 +90,90 @@ function (_Component) {
       var postCreatorId = this.props.obj.postCreator;
       var postCaption = this.props.obj.sousePosts.postCaption;
       var sousePostImage = this.props.obj.sousePosts.postImageURL;
+      var postCreatorName = this.props.postCreatorName;
+      var postCreatorImage = this.props.postCreatorImage;
       return _react["default"].createElement("div", {
-        "class": "container pt-5"
+        "class": "mx-auto d-block pt-1"
       }, _react["default"].createElement("div", {
-        "class": "row"
+        "class": "container-fluid d-none d-xl-block"
+      }, " ", _react["default"].createElement("div", {
+        "class": "row pt-5"
       }, _react["default"].createElement("div", {
-        "class": "col-9"
+        "class": "col-8"
+      }, _react["default"].createElement("div", {
+        "class": "img-wrapper"
+      }, _react["default"].createElement("div", {
+        "class": "img-responsive"
+      }, _react["default"].createElement("div", {
+        "class": "souseImageFormat"
       }, _react["default"].createElement("img", {
-        "class": "sousePostImage pb-2",
+        "class": "mx-auto d-block sousePostImage pb-2",
         src: sousePostImage,
         alt: "sousePostImage",
-        height: "1080",
-        width: "1080"
-      }), isAuthenticated && postCreatorId === loggedinUser ? _react["default"].createElement("div", {
-        "class": "row"
+        width: "1080px",
+        height: "1080px"
+      }))), isAuthenticated && postCreatorId === loggedinUser ? _react["default"].createElement("div", {
+        "class": "container-fluid img-overlay col justify-content-left"
       }, _react["default"].createElement("div", {
+        "class": "row profileImageRow"
+      }, " ", _react["default"].createElement("div", {
         "class": "col-6"
+      }), _react["default"].createElement("div", {
+        "class": "col-3 d-flex flex-row"
       }, _react["default"].createElement("div", {
-        "class": "form-group col d-flex justify-content-center"
+        "class": "buttonform-group"
+      }, _react["default"].createElement("img", {
+        "class": "souseUserIcon",
+        src: postCreatorImage,
+        alt: "souseUserIcon",
+        width: "85px",
+        height: "85px"
+      }))), _react["default"].createElement("div", {
+        "class": "col-3 d-flex flex-row-reverse"
+      }, _react["default"].createElement("div", {
+        "class": "form-group pt-4"
       }, _react["default"].createElement(_reactRouterDom.Link, {
         to: "/p/edit/" + this.props.obj._id
       }, _react["default"].createElement("button", {
         type: "submit",
         "class": "waves-effect waves-light btn-large"
-      }, "Edit")))), _react["default"].createElement("div", {
+      }, _react["default"].createElement("p", {
+        "class": "lead buttonFont"
+      }, "Edit Post")))))), _react["default"].createElement("div", {
+        "class": "row profileImageRow"
+      }, " ", _react["default"].createElement("div", {
         "class": "col-6"
-      }, _react["default"].createElement("div", {
-        "class": "form-group col d-flex justify-content-center"
-      }, _react["default"].createElement("button", {
-        onClick: this["delete"],
-        "class": "waves-effect waves-light btn-large"
-      }, "Delete")))) : _react["default"].createElement("div", null)), _react["default"].createElement("div", {
-        "class": "col-3"
+      }), _react["default"].createElement("div", {
+        "class": "col-3 d-flex flex-row"
+      }, _react["default"].createElement("p", {
+        "class": "userData"
+      }, this.props.postCreatorName)), _react["default"].createElement("div", {
+        "class": "col-3 d-flex flex-row-reverse"
+      }, _react["default"].createElement("p", {
+        "class": "followData"
+      }, "22.2k Followers"))), _react["default"].createElement("div", {
+        "class": "row profileImageRow"
+      }, " ", _react["default"].createElement("div", {
+        "class": "col-6"
+      }), _react["default"].createElement("div", {
+        "class": "col-3 d-flex flex-row"
+      }, _react["default"].createElement("p", {
+        "class": "locationData"
+      }, "Miami, Florida")), _react["default"].createElement("div", {
+        "class": "col-3 d-flex flex-row-reverse"
+      }, _react["default"].createElement("p", {
+        "class": "followData"
+      }, "1.2k Following")))) : _react["default"].createElement("div", null))), _react["default"].createElement("div", {
+        "class": "col-4"
       }, _react["default"].createElement("div", {
         "class": "container"
-      }, _react["default"].createElement("h6", null, postCaption)))));
+      }, _react["default"].createElement("h6", {
+        "class": "sousePostCreatorName pl-2"
+      }, postCreatorName), _react["default"].createElement("div", {
+        "class": "pre-scrollable"
+      }, _react["default"].createElement("h6", {
+        "class": "sousePostCaption pl-2"
+      }, postCaption)), _react["default"].createElement(_commentsSection["default"], null), " ")))));
     }
   }]);
 

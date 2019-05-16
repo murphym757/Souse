@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import S3 from 'aws-s3';
 import awsConfig from '../../../server/config';
 
-
 class PostCreate extends Component {
     constructor(props) {
         super(props);
@@ -23,7 +22,7 @@ class PostCreate extends Component {
             username: loggedinUsername,
             imageUploadOption: true,
             isLoading: true,
-            fullPostUploadLoader: true
+            fullPostUploadLoader: true,
         };
         this.onChangepostCaption = this.onChangepostCaption.bind(this);
         this.onImageUpload = this.onImageUpload.bind(this);
@@ -39,7 +38,7 @@ class PostCreate extends Component {
     onImageUpload = (e) => {
         const config = {
             bucketName: awsConfig.AWS_BUCKET_NAME,
-            dirName: "posts/" + "" + this.state.postCreatorId + "" ,
+            dirName: "posts/" + "" + this.state.postCreatorId + "",
             region: awsConfig.AWS_REGION,
             accessKeyId: awsConfig.AWS_ACCESS_KEY_ID,
             secretAccessKey: awsConfig.AWS_SECRET_ACCESS_KEY,
@@ -95,6 +94,10 @@ class PostCreate extends Component {
             postImageURL: ''
         });
         window.location.reload();
+    }
+
+    handleInit() {
+        console.log('FilePond instance has initialised', this.pond);
     }
 
     render() {

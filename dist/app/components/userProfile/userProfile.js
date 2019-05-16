@@ -17,6 +17,14 @@ var _reactRedux = require("react-redux");
 
 var _postIndex = _interopRequireDefault(require("../posts/postIndex"));
 
+var _styledComponents = _interopRequireDefault(require("styled-components"));
+
+var _Twitter = require("styled-icons/feather/Twitter");
+
+var _Facebook = require("styled-icons/feather/Facebook");
+
+var _Instagram = require("styled-icons/feather/Instagram");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
@@ -57,12 +65,25 @@ function (_Component) {
     var loggedInUserId = user.id;
     var usernameFinder = window.location.pathname;
     var usernameFound = usernameFinder.slice(1);
+    var twitterUsername = "SeaP305";
+    var twitterUsernameURL = "https://mobile.twitter.com/" + twitterUsername + "";
+    var facebookUsername = null;
+    var facebookUsernameURL = "https://www.facebook.com/" + facebookUsername + "/";
+    var instagramUsername = "seapanther_305";
+    var instagramUsernameURL = "https://www.instagram.com/" + instagramUsername + "/";
     _this.state = {
       posts: [],
       users: [],
       postCreatorUsername: usernameFound,
       postCreatorId: '',
-      postTotalDisplay: '1'
+      postTotalDisplay: '1',
+      postCreatorImage: "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg",
+      postCreatorTwitter: twitterUsername,
+      postCreatorTwitterURL: twitterUsernameURL,
+      postCreatorFacebook: facebookUsername,
+      postCreatorFacebookURL: facebookUsernameURL,
+      postCreatorInstagram: instagramUsername,
+      postCreatorInstagramURL: instagramUsernameURL
     };
     return _this;
   }
@@ -129,34 +150,110 @@ function (_Component) {
       return souseFilterData;
     }
   }, {
-    key: "postFilterDisplay",
-    value: function postFilterDisplay() {
-      var _this4 = this;
-
-      var postFilterDisplay = Object.keys(this.postFinder()).map(function (object, i) {
-        return _react["default"].createElement("div", {
-          obj: object,
-          key: i
-        }, _react["default"].createElement("h6", null, _react["default"].createElement(_reactRouterDom.Link, {
-          to: "/p/".concat(_this4.postFinder()[i]._id)
-        }, _this4.postFinder()[i]._id)));
-      });
-      return postFilterDisplay;
-    }
-  }, {
     key: "render",
     value: function render() {
+      var _this4 = this;
+
       var _this$props$auth2 = this.props.auth,
           isAuthenticated = _this$props$auth2.isAuthenticated,
           user = _this$props$auth2.user;
       var loggedInUsername = user.username;
       var usernamePage = this.props.match.params.username;
+      var postCreatorImage = this.state.postCreatorImage;
       var postsTotal = "" + this.postFinder().length + "";
+      var TwitterIcon = (0, _styledComponents["default"])(_Twitter.Twitter).withConfig({
+        displayName: "userProfile__TwitterIcon",
+        componentId: "sc-16lkwtc-0"
+      })(["color:blue;height:1.1em;width:1.5em;"]);
+      var FacebookIcon = (0, _styledComponents["default"])(_Facebook.Facebook).withConfig({
+        displayName: "userProfile__FacebookIcon",
+        componentId: "sc-16lkwtc-1"
+      })(["color:blue;height:1.1em;width:1.5em;"]);
+      var InstagramIcon = (0, _styledComponents["default"])(_Instagram.Instagram).withConfig({
+        displayName: "userProfile__InstagramIcon",
+        componentId: "sc-16lkwtc-2"
+      })(["color:blue;height:1.1em;width:1.5em;"]);
       return _react["default"].createElement("div", {
-        "class": "container"
-      }, isAuthenticated ? _react["default"].createElement("div", null, _react["default"].createElement("h2", null, "lope"), _react["default"].createElement("h2", null, "Welcome, ", this.state.postCreatorUsername)) : _react["default"].createElement("h2", null, "Welcome Guest"), _react["default"].createElement("div", {
-        "class": "usersPosts"
-      }, _react["default"].createElement("h6", null, _react["default"].createElement(_postIndex["default"], null)), this.state.postTotalDisplay === postsTotal ? _react["default"].createElement("h6", null, postsTotal, " post") : _react["default"].createElement("h6", null, postsTotal, " posts"), this.postFilterDisplay()));
+        "class": "container pt-5"
+      }, _react["default"].createElement("div", {
+        "class": "row userHeaderSection d-flex justify-content-center"
+      }, _react["default"].createElement("div", {
+        "class": "profilePageUserImage d-flex justify-content-center"
+      }, " ", _react["default"].createElement("div", {
+        "class": "souseUserCreatorPage col-6 d-flex"
+      }, _react["default"].createElement("div", {
+        "class": "container-fluid d-flex justify-content-center"
+      }, _react["default"].createElement("img", {
+        "class": "souseUserIconUserHomePage",
+        src: postCreatorImage,
+        alt: "souseUserIcon",
+        width: "85px",
+        height: "85px"
+      }))), _react["default"].createElement("div", {
+        "class": "profilePageUserData d-flex justify-content-center"
+      }, " ", _react["default"].createElement("div", {
+        "class": "container-fluid"
+      }, _react["default"].createElement("div", {
+        "class": "row col-12 userNameRow"
+      }, _react["default"].createElement("h2", {
+        "class": "d-flex justify-content-center"
+      }, this.state.postCreatorUsername)), _react["default"].createElement("div", {
+        "class": "row col-12 userNumericDataRow"
+      }, this.state.postTotalDisplay === postsTotal ? _react["default"].createElement("h6", {
+        "class": "col d-flex justify-content-center"
+      }, postsTotal, " post") : _react["default"].createElement("h6", {
+        "class": "col d-flex justify-content-center"
+      }, postsTotal, " posts")), _react["default"].createElement("div", {
+        "class": "row userAltContactRow"
+      }, _react["default"].createElement("div", {
+        "class": "container-fluid"
+      }, _react["default"].createElement("div", {
+        "class": "row"
+      }, this.state.postCreatorTwitter === null ? _react["default"].createElement("div", null) : _react["default"].createElement("h6", {
+        "class": "col-12 d-flex justify-content-center"
+      }, _react["default"].createElement("a", {
+        href: this.state.postCreatorTwitterURL,
+        target: "_blank"
+      }, _react["default"].createElement(TwitterIcon, null), " ", this.state.postCreatorTwitter)), this.state.postCreatorFacebook === null ? _react["default"].createElement("div", null) : _react["default"].createElement("h6", {
+        "class": "col-12 d-flex justify-content-center"
+      }, _react["default"].createElement("a", {
+        href: this.state.postCreatorFacebookURL,
+        target: "_blank"
+      }, _react["default"].createElement(FacebookIcon, null), " ", this.state.postCreatorFacebook)), this.state.postCreatorInstagram === null ? _react["default"].createElement("div", null) : _react["default"].createElement("h6", {
+        "class": "col-12 d-flex justify-content-center"
+      }, _react["default"].createElement("a", {
+        href: this.state.postCreatorInstagramURL,
+        target: "_blank"
+      }, _react["default"].createElement(InstagramIcon, null), " ", this.state.postCreatorInstagram)))))))), _react["default"].createElement("div", {
+        "class": "col-12"
+      }, isAuthenticated ? _react["default"].createElement("div", null, _react["default"].createElement(_postIndex["default"], null)) : _react["default"].createElement("div", null))), _react["default"].createElement("div", {
+        "class": "d-flex justify-content-center"
+      }, _react["default"].createElement("div", {
+        "class": "container-fluid"
+      }, _react["default"].createElement("div", {
+        "class": "row pb-2 col d-flex justify-content-center"
+      }, Object.keys(this.postFinder()).map(function (object, i) {
+        return _react["default"].createElement("div", {
+          obj: object,
+          key: i
+        }, _react["default"].createElement("div", {
+          "class": "col-12 pb-4"
+        }, _react["default"].createElement(_reactRouterDom.Link, {
+          to: "/p/".concat(_this4.postFinder()[i]._id)
+        }, _react["default"].createElement("div", {
+          "class": "img-wrapper"
+        }, _react["default"].createElement("div", {
+          "class": "img-responsive"
+        }, _react["default"].createElement("div", {
+          "class": "souseImageFormat"
+        }, _react["default"].createElement("img", {
+          "class": "souseUserPostsUserHomePage",
+          src: _this4.postFinder()[i].sousePosts.postImageURL,
+          alt: "souseUserPosts",
+          width: "200px",
+          height: "200px"
+        })))))));
+      })))));
     }
   }]);
 

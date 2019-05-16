@@ -18,7 +18,8 @@ class PostPage extends Component {
             posts: [],
             users: [],
             originalPostId: postIdFound,
-            postCreatorId: ''
+            postCreatorId: '',
+            postCreatorImage: "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg"
         };
     }
 
@@ -36,12 +37,25 @@ class PostPage extends Component {
             })
             .catch(function (error) {
                 console.log(error);
-            }) 
+            })
+        { /* Users Collection */ }
+        const findUserRoute = "/u";
+        axios.get(apiRoute + findUserRoute)
+            .then(res => {
+                const users = res.data;
+                console.log(users);
+                this.setState({
+                    users: users
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
     }
 
     postFinder() {
         const sousePosts = this.state.posts;
-        const filteredPostData = Object.keys(sousePosts).filter((i) => {
+        const filteredPostData = Object.keys(sousePosts).filter((i) => { // Finds Specific Post
             return sousePosts[i]._id === "" + this.state.originalPostId + ""
         }),
         postIdFinder = Object.keys(sousePosts).map((object, i) => {
@@ -53,8 +67,33 @@ class PostPage extends Component {
         const sousePostList = ["" + postId + ""],
             sousePostsList = new Set(sousePostList),
             souseFilterPosts = sousePosts.filter(sousePost => sousePostsList.has(sousePost._id));
+        const filteredPostCreator = Object.keys(sousePosts).filter((i) => { // Finds Username of Specific Post
+                return sousePosts[i]._id === "" + this.state.originalPostId + ""
+            }),
+            postCreatorIdFinder = Object.keys(sousePosts).map((object, i) => {
+                return sousePosts[filteredPostCreator].postCreator
+            }),
+            postCreatorId = postCreatorIdFinder.find((i) => {
+                return "" + postCreatorIdFinder[0] + ""
+            });
+        const souseUsers = this.state.users;
+        const filteredUsernameData = Object.keys(souseUsers).filter((i) => { // Finds Username in souseUsersDB and display data from it (Username)
+                return souseUsers[i]._id === "" + postCreatorId + ""
+            }),
+            postUserNameFinder = Object.keys(souseUsers).map((object, i) => {
+                return souseUsers[filteredUsernameData].username
+            }),
+            postUserName = postUserNameFinder.find((i) => {
+                return "" + postUserNameFinder[0] + ""
+            });         
+        const sousePostCreatorName = postUserName; 
+        const sousePostCreatorImage = this.state.postCreatorImage;
         const userData = souseFilterPosts.map((object, i) => {
-          return <PostsGrid obj={object} key={i} />;
+          return <PostsGrid 
+            obj={object} 
+            key={i} 
+            postCreatorName={sousePostCreatorName}
+            postCreatorImage={sousePostCreatorImage}/>;
       });
       return userData;
     }
@@ -62,7 +101,7 @@ class PostPage extends Component {
     render() {
         const {isAuthenticated, user} = this.props.auth;
         return (
-            <div class="container">
+            <div>
             {isAuthenticated 
                     ? <div>
                         {this.postFinder()}

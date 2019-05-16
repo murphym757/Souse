@@ -16,15 +16,8 @@ class PostIndex extends Component {
     }
 
     render() {
-         // Styled Components
-        const BasicFontStyling = styled.h2 ` /* Game Header */
-            color: yellow;
-        `;
         return (
             <div>
-                <BasicFontStyling>
-                    List of posts display here
-                </BasicFontStyling>
                 <div class="collapse" id="postCreateCollapse">
                     <div class="postCreateCollapse">
                         <PostCreate/>
