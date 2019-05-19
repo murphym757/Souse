@@ -8,38 +8,36 @@ const mongoose = require('mongoose'),
 
     // Create Comment
     exports.create_comment = (req, res, next) => {
-        const postId = req.params.id; // This is needed to fing the postId
-        const postCreatorId = req.params.postCreatorId;
-        const commentCreator = req.body.commentCreator;
-        User.findById(postCreatorId, (err, user) => { // Post Caption Upload
+        const originalPostId = req.body.originalPostId; // This is needed to fing the postId
+        const commentCreatorId = req.body.commentCreatorId;
+        Post.findById(originalPostId, (err, post) => { // Post Caption Upload
             if (err) throw new Error(err);
 
-            Post.findById(postId, (err, post) => {
+            User.findById(commentCreatorId, (err, user) => { // Post Caption Upload
+                if (err) throw new Error(err);
+
                 const newComment = new Comment({
-                    commentCreator: commentCreator,
-                    souseComment: req.body.souseComment
+                    commentCreatorId: commentCreatorId,
+                    souseComment: req.body.souseComment,
+                    originalPostId: originalPostId
                 });
 
                 Comment.create(newComment, (err, comment) => {
                     if (err) {
                         console.log(err);
                     }
-                    user.comment.push(newComment);
-                    user.save();
-                });
-            })
-        });
 
-        User.findById(commentCreator).populate({ // Sends Data to User Database
-            path: 'comments',
-            model: 'Users'
-        }).exec((err, user) => {
-            console.log(user.comments);
-        })
+                    user.comments.push(newComment);
+                    user.save();
+                    post.comments.push(newComment);
+                    post.save();
+                });
+            });
+        });
     }
 
-    // Get Post
-    exports.find_post = (req, res, next) => {
+    // Get Comment
+    exports.find_comment = (req, res, next) => {
         Comment.find((err, comments) => {
             if (err) {
                 console.log(err);

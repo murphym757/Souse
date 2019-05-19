@@ -31,9 +31,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -50,9 +50,51 @@ function (_Component) {
     _classCallCheck(this, CommentsSection);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(CommentsSection).call(this, props));
-    _this.state = {
-      users: []
+
+    _this.onChangePostComment = function (e) {
+      _this.setState({
+        postComment: e.target.value
+      });
     };
+
+    _this.onSubmitComment = function (e) {
+      e.preventDefault();
+      var postData = {
+        commentCreatorId: _this.state.commentCreatorId,
+        souseComment: _this.state.postComment,
+        originalPostId: _this.state.originalPostId
+      };
+      var apiRoute = "/souseAPI";
+      var createRoute = "/c/add";
+
+      _axios["default"].post(apiRoute + createRoute, postData).then(function (res) {
+        return console.log(res.data);
+      });
+
+      _this.setState({
+        commentCreatorId: '',
+        souseComment: '',
+        originalPostId: ''
+      });
+
+      window.location.reload();
+    };
+
+    var _this$props$auth = _this.props.auth,
+        isAuthenticated = _this$props$auth.isAuthenticated,
+        user = _this$props$auth.user;
+    var loggedinUser = user.id;
+    var loggedinUsername = user.username;
+    var originalPostId = _this.props.originalPostId;
+    _this.state = {
+      users: [],
+      commentCreatorId: loggedinUser,
+      commentCreatorUsername: loggedinUsername,
+      originalPostId: originalPostId,
+      postComment: ''
+    };
+    _this.onChangePostComment = _this.onChangePostComment.bind(_assertThisInitialized(_this));
+    _this.onSubmitComment = _this.onSubmitComment.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -78,16 +120,17 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$props$auth = this.props.auth,
-          isAuthenticated = _this$props$auth.isAuthenticated,
-          user = _this$props$auth.user;
+      var _this$props$auth2 = this.props.auth,
+          isAuthenticated = _this$props$auth2.isAuthenticated,
+          user = _this$props$auth2.user;
       var loggedinUser = user.username;
       return _react["default"].createElement("div", null, _react["default"].createElement("div", {
         "class": "souseCommentInput"
       }, " ", _react["default"].createElement("div", {
         "class": "row"
       }, _react["default"].createElement("form", {
-        "class": "col s12"
+        "class": "col s12",
+        onSubmit: this.onSubmitComment
       }, _react["default"].createElement("div", {
         "class": "row"
       }, _react["default"].createElement("div", {
@@ -95,7 +138,9 @@ function (_Component) {
       }, _react["default"].createElement("input", {
         id: "souse_comment",
         type: "text",
-        "class": "validate"
+        "class": "validate",
+        value: this.state.postComment,
+        onChange: this.onChangePostComment
       }), _react["default"].createElement("label", {
         "for": "souse_comment"
       }, "Add a Comment")))))));

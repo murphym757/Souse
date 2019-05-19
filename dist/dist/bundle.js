@@ -28651,11 +28651,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         }
       }), e && rt(n, e);
     }(e, r["Component"]), t = e, (i = [{
-      key: "handleInit",
-      value: function value() {
-        console.log("FilePond instance has initialised", this.pond);
-      }
-    }, {
       key: "render",
       value: function value() {
         var n,
@@ -29407,17 +29402,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }
   }
 
-  function Xt(n, e) {
-    return !e || "object" !== Yt(e) && "function" != typeof e ? function (n) {
-      if (void 0 === n) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-      return n;
-    }(n) : e;
+  function Xt(n) {
+    return (Xt = Object.setPrototypeOf ? Object.getPrototypeOf : function (n) {
+      return n.__proto__ || Object.getPrototypeOf(n);
+    })(n);
   }
 
   function Qt(n) {
-    return (Qt = Object.setPrototypeOf ? Object.getPrototypeOf : function (n) {
-      return n.__proto__ || Object.getPrototypeOf(n);
-    })(n);
+    if (void 0 === n) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    return n;
   }
 
   function Gt(n, e) {
@@ -29428,12 +29421,40 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
   var Jt = function (n) {
     function e(n) {
-      var t;
-      return function (n, e) {
+      var t, r, o;
+      !function (n, e) {
         if (!(n instanceof e)) throw new TypeError("Cannot call a class as a function");
-      }(this, e), (t = Xt(this, Qt(e).call(this, n))).state = {
-        users: []
-      }, t;
+      }(this, e), r = this, o = Xt(e).call(this, n), (t = !o || "object" !== Yt(o) && "function" != typeof o ? Qt(r) : o).onChangePostComment = function (n) {
+        t.setState({
+          postComment: n.target.value
+        });
+      }, t.onSubmitComment = function (n) {
+        n.preventDefault();
+        var e = {
+          commentCreatorId: t.state.commentCreatorId,
+          souseComment: t.state.postComment,
+          originalPostId: t.state.originalPostId
+        };
+        hn.a.post("/souseAPI/c/add", e).then(function (n) {
+          return console.log(n.data);
+        }), t.setState({
+          commentCreatorId: "",
+          souseComment: "",
+          originalPostId: ""
+        }), window.location.reload();
+      };
+      var i = t.props.auth,
+          a = (i.isAuthenticated, i.user),
+          l = a.id,
+          s = a.username,
+          c = t.props.originalPostId;
+      return t.state = {
+        users: [],
+        commentCreatorId: l,
+        commentCreatorUsername: s,
+        originalPostId: c,
+        postComment: ""
+      }, t.onChangePostComment = t.onChangePostComment.bind(Qt(t)), t.onSubmitComment = t.onSubmitComment.bind(Qt(t)), t;
     }
 
     var t, i, a;
@@ -29469,7 +29490,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         }, " ", o.a.createElement("div", {
           "class": "row"
         }, o.a.createElement("form", {
-          "class": "col s12"
+          "class": "col s12",
+          onSubmit: this.onSubmitComment
         }, o.a.createElement("div", {
           "class": "row"
         }, o.a.createElement("div", {
@@ -29477,7 +29499,9 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         }, o.a.createElement("input", {
           id: "souse_comment",
           type: "text",
-          "class": "validate"
+          "class": "validate",
+          value: this.state.postComment,
+          onChange: this.onChangePostComment
         }), o.a.createElement("label", {
           "for": "souse_comment"
         }, "Add a Comment")))))));
@@ -29565,11 +29589,12 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         var n = this.props.auth,
             e = n.isAuthenticated,
             t = n.user.id,
-            r = this.props.obj.postCreator,
-            i = this.props.obj.sousePosts.postCaption,
-            a = this.props.obj.sousePosts.postImageURL,
-            l = this.props.postCreatorName,
-            s = this.props.postCreatorImage;
+            r = this.props.obj._id,
+            i = this.props.obj.postCreator,
+            a = this.props.obj.sousePosts.postCaption,
+            l = this.props.obj.sousePosts.postImageURL,
+            s = this.props.postCreatorName,
+            c = this.props.postCreatorImage;
         return o.a.createElement("div", {
           "class": "mx-auto d-block pt-1"
         }, o.a.createElement("div", {
@@ -29586,11 +29611,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           "class": "souseImageFormat"
         }, o.a.createElement("img", {
           "class": "mx-auto d-block sousePostImage pb-2",
-          src: a,
+          src: l,
           alt: "sousePostImage",
           width: "1080px",
           height: "1080px"
-        }))), e && r === t ? o.a.createElement("div", {
+        }))), e && i === t ? o.a.createElement("div", {
           "class": "container-fluid img-overlay col justify-content-left"
         }, o.a.createElement("div", {
           "class": "row profileImageRow"
@@ -29602,7 +29627,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           "class": "buttonform-group"
         }, o.a.createElement("img", {
           "class": "souseUserIcon",
-          src: s,
+          src: c,
           alt: "souseUserIcon",
           width: "85px",
           height: "85px"
@@ -29647,11 +29672,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           "class": "container"
         }, o.a.createElement("h6", {
           "class": "sousePostCreatorName pl-2"
-        }, l), o.a.createElement("div", {
+        }, s), o.a.createElement("div", {
           "class": "pre-scrollable"
         }, o.a.createElement("h6", {
           "class": "sousePostCaption pl-2"
-        }, i)), o.a.createElement(Zt, null), " ")))));
+        }, a)), o.a.createElement(Zt, {
+          originalPostId: r
+        }), " ")))));
       }
     }]) && er(t.prototype, i), a && er(t, a), e;
   }();

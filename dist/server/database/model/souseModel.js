@@ -62,6 +62,10 @@ var PostSchema = new mongoose.Schema({
   },
   postCreatedDate: {
     type: Date,
+    "default": Date
+  },
+  postUpdateDate: {
+    type: Date,
     "default": Date.now
   },
   sousePosts: {
@@ -87,12 +91,12 @@ var PostSchema = new mongoose.Schema({
     }
   },
   comments: [{
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.Mixed,
     ref: 'Comments'
   }]
 });
 var CommentSchema = new mongoose.Schema({
-  commentCreator: {
+  commentCreatorId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Users'
   },
@@ -101,6 +105,11 @@ var CommentSchema = new mongoose.Schema({
     "default": Date.now
   },
   souseComment: {
+    type: String,
+    trim: true,
+    "default": ''
+  },
+  originalPostId: {
     type: String,
     trim: true,
     "default": ''

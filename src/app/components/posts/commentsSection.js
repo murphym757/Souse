@@ -8,9 +8,25 @@ import styled from 'styled-components';
 class CommentsSection extends Component {
     constructor(props) {
         super(props);
+        const {isAuthenticated, user} = this.props.auth;
+        const loggedinUser = user.id;
+        const loggedinUsername = user.username;
+        const originalPostId = this.props.originalPostId;
         this.state = {
-            users: []
+            users: [],
+            commentCreatorId: loggedinUser,
+            commentCreatorUsername: loggedinUsername,
+            originalPostId: originalPostId,
+            postComment: ''
         };
+        this.onChangePostComment = this.onChangePostComment.bind(this);
+        this.onSubmitComment = this.onSubmitComment.bind(this);
+    }
+
+    onChangePostComment = (e) => {
+        this.setState({
+            postComment: e.target.value
+        });
     }
 
     componentDidMount() {
@@ -29,6 +45,27 @@ class CommentsSection extends Component {
             })
         }
 
+    onSubmitComment = (e) => {
+        e.preventDefault();
+        const postData = {
+            commentCreatorId: this.state.commentCreatorId,
+            souseComment: this.state.postComment,
+            originalPostId: this.state.originalPostId
+        };
+        const apiRoute = "/souseAPI";
+        const createRoute = "/c/add";
+
+        axios.post(apiRoute + createRoute, postData)
+            .then(res => console.log(res.data));
+
+        this.setState({
+            commentCreatorId: '',
+            souseComment: '',
+            originalPostId: ''
+        });
+        window.location.reload();
+    }
+
     render() {
         const {isAuthenticated, user} = this.props.auth;
         const loggedinUser = user.username;
@@ -37,10 +74,15 @@ class CommentsSection extends Component {
             <div>
                 <div class="souseCommentInput"> {/* Should go on seperate comments page */}
                     <div class="row">
-                        <form class="col s12">
+                        <form class="col s12" onSubmit={this.onSubmitComment}>
                             <div class="row">
                                 <div class="input-field col s6">
-                                    <input id="souse_comment" type="text" class="validate" />
+                                    <input 
+                                        id="souse_comment" 
+                                        type="text" 
+                                        class="validate" 
+                                        value={this.state.postComment}
+                                        onChange={this.onChangePostComment} />
                                     <label for="souse_comment">Add a Comment</label>
                                 </div>
                             </div>

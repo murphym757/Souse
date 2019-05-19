@@ -87,6 +87,7 @@ function (_Component) {
           isAuthenticated = _this$props$auth3.isAuthenticated,
           user = _this$props$auth3.user;
       var loggedinUser = user.id;
+      var postId = this.props.obj._id;
       var postCreatorId = this.props.obj.postCreator;
       var postCaption = this.props.obj.sousePosts.postCaption;
       var sousePostImage = this.props.obj.sousePosts.postImageURL;
@@ -173,7 +174,9 @@ function (_Component) {
         "class": "pre-scrollable"
       }, _react["default"].createElement("h6", {
         "class": "sousePostCaption pl-2"
-      }, postCaption)), _react["default"].createElement(_commentsSection["default"], null), " ")))));
+      }, postCaption)), _react["default"].createElement(_commentsSection["default"], {
+        originalPostId: postId
+      }), " ")))));
     }
   }]);
 

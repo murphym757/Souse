@@ -10,39 +10,36 @@ var mongoose = require('mongoose'),
 
 
 exports.create_comment = function (req, res, next) {
-  var postId = req.params.id; // This is needed to fing the postId
+  var originalPostId = req.body.originalPostId; // This is needed to fing the postId
 
-  var postCreatorId = req.params.postCreatorId;
-  var commentCreator = req.body.commentCreator;
-  User.findById(postCreatorId, function (err, user) {
+  var commentCreatorId = req.body.commentCreatorId;
+  Post.findById(originalPostId, function (err, post) {
     // Post Caption Upload
     if (err) throw new Error(err);
-    Post.findById(postId, function (err, post) {
+    User.findById(commentCreatorId, function (err, user) {
+      // Post Caption Upload
+      if (err) throw new Error(err);
       var newComment = new Comment({
-        commentCreator: commentCreator,
-        souseComment: req.body.souseComment
+        commentCreatorId: commentCreatorId,
+        souseComment: req.body.souseComment,
+        originalPostId: originalPostId
       });
       Comment.create(newComment, function (err, comment) {
         if (err) {
           console.log(err);
         }
 
-        user.comment.push(newComment);
+        user.comments.push(newComment);
         user.save();
+        post.comments.push(newComment);
+        post.save();
       });
     });
   });
-  User.findById(commentCreator).populate({
-    // Sends Data to User Database
-    path: 'comments',
-    model: 'Users'
-  }).exec(function (err, user) {
-    console.log(user.comments);
-  });
-}; // Get Post
+}; // Get Comment
 
 
-exports.find_post = function (req, res, next) {
+exports.find_comment = function (req, res, next) {
   Comment.find(function (err, comments) {
     if (err) {
       console.log(err);

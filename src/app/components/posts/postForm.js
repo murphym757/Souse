@@ -96,10 +96,6 @@ class PostCreate extends Component {
         window.location.reload();
     }
 
-    handleInit() {
-        console.log('FilePond instance has initialised', this.pond);
-    }
-
     render() {
         const {isAuthenticated, user} = this.props.auth;
         return (
