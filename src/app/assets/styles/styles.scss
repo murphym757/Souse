@@ -16,6 +16,7 @@ body {
     background-attachment: fixed;
     background-size: cover;
     color: $softBlack;
+    font-family: 'Roboto-Regular';
 }
 
 img {
@@ -25,6 +26,10 @@ img {
 
 h1 {
     color: $softBlack;
+}
+
+span {
+    font-family: 'Futura-Bold';
 }
 
 nav {
@@ -89,6 +94,17 @@ nav ul a {
     top: 100%;
     transform: translateY(-100%);
 }
+
+.pre-scrollable {
+    max-height: 340px;
+    overflow-y: scroll;
+    overflow-x: hidden !important;
+}
+.commentTime,
+.replyLink {
+    font-size: 0.7em;
+}
+
 /* ---------------------------------------------------- */
 
 // Image Format
@@ -151,6 +167,15 @@ nav ul a {
 
 .souseUserPostsUserHomePage:hover {
     border: 1px solid $secondaryColor;
+}
+.souseUserIconComments {
+    border-radius: 50%;
+    width: 3vw;
+    height: 3vw;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 /* ---------------------------------------------------- */
 

@@ -13,7 +13,6 @@ class PostCreate extends Component {
         const loggedinUsername = user.username;
         const postsTotal = this.props.postsTotal;
         this.state = {
-            posts: [],
             postCreatorId: loggedinUser,
             postCaption: '',
             postUnixTimestamp: new Date().valueOf(),

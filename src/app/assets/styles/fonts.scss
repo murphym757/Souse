@@ -1,13 +1,23 @@
-// Lemon Milk
+// Futura
 @font-face {
-    font-family: 'LemonMilk';
-    src: url('../fonts/LemonMilk/LemonMilk.otf');
-    src: url('../fonts/LemonMilk/LemonMilk.otf') format('opentype');
+    font-family: 'Futura-Bold';
+    src: url('../fonts/Futura/Futura-Bold.ttf');
+    src: url('../fonts/Futura/Futura-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Futura-Medium';
+    src: url('../fonts/Futura/Futura-Medium.ttf');
+    src: url('../fonts/Futura/Futura-Medium.ttf') format('truetype');
 }
 
 // Roboto
 @font-face {
-    font-family: 'Roboto-BoldItalic';
-    src: url('../fonts/Roboto-BoldItalic.ttf');
-    src: url('../fonts/Roboto-BoldItalic.ttf') format('truetype');
+    font-family: 'Roboto-Regular';
+    src: url('../fonts/Roboto/Roboto-Regular.ttf');
+    src: url('../fonts/Roboto/Roboto-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Roboto-Light';
+    src: url('../fonts/Roboto/Roboto-Light.ttf');
+    src: url('../fonts/Roboto/Roboto-Light.ttf') format('truetype');
 }

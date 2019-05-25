@@ -72,8 +72,6 @@ function (_Component) {
     var instagramUsername = "seapanther_305";
     var instagramUsernameURL = "https://www.instagram.com/" + instagramUsername + "/";
     _this.state = {
-      posts: [],
-      users: [],
       postCreatorUsername: usernameFound,
       postCreatorId: '',
       postTotalDisplay: '1',
@@ -89,70 +87,32 @@ function (_Component) {
   }
 
   _createClass(UserProfile, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      {
-        /* Posts Collection */
-      }
-      var apiRoute = "/souseAPI";
-      var findPostRoute = "/p";
-
-      _axios["default"].get(apiRoute + findPostRoute).then(function (res) {
-        var posts = res.data;
-        console.log(posts);
-
-        _this2.setState({
-          posts: posts
-        });
-      })["catch"](function (error) {
-        console.log(error);
-      });
-
-      {
-        /* Users Collection */
-      }
-      var findUserRoute = "/u";
-
-      _axios["default"].get(apiRoute + findUserRoute).then(function (res) {
-        var users = res.data;
-        console.log(users);
-
-        _this2.setState({
-          users: users
-        });
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    }
-  }, {
     key: "postFinder",
     value: function postFinder() {
-      var _this3 = this;
+      var _this2 = this;
 
-      var souseUsers = this.state.users;
-      var filteredUsernameData = Object.keys(souseUsers).filter(function (i) {
-        return souseUsers[i].username === "" + _this3.state.postCreatorUsername + "";
+      var souseUserData = this.props.souseUserData;
+      var filteredUsernameData = Object.keys(souseUserData).filter(function (i) {
+        return souseUserData[i].username === "" + _this2.state.postCreatorUsername + "";
       }),
-          userIdFinder = Object.keys(souseUsers).map(function (object, i) {
-        return souseUsers[filteredUsernameData]._id;
+          userIdFinder = Object.keys(souseUserData).map(function (object, i) {
+        return souseUserData[filteredUsernameData]._id;
       }),
           userId = userIdFinder.find(function (i) {
         return "" + userIdFinder[0] + "";
       });
-      var sousePosts = this.state.posts;
+      var sousePostData = this.props.sousePostData;
       var souseUserList = ["" + userId + ""],
           sousePostsList = new Set(souseUserList),
-          souseFilterData = sousePosts.filter(function (sousePost) {
-        return sousePostsList.has(sousePost.postCreator);
+          souseFilterData = sousePostData.filter(function (sousePostData) {
+        return sousePostsList.has(sousePostData.postCreator);
       });
       return souseFilterData;
     }
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this3 = this;
 
       var _this$props$auth2 = this.props.auth,
           isAuthenticated = _this$props$auth2.isAuthenticated,
@@ -239,7 +199,7 @@ function (_Component) {
         }, _react["default"].createElement("div", {
           "class": "col-12 pb-4"
         }, _react["default"].createElement(_reactRouterDom.Link, {
-          to: "/p/".concat(_this4.postFinder()[i]._id)
+          to: "/p/".concat(_this3.postFinder()[i]._id)
         }, _react["default"].createElement("div", {
           "class": "img-wrapper"
         }, _react["default"].createElement("div", {
@@ -248,7 +208,7 @@ function (_Component) {
           "class": "souseImageFormat"
         }, _react["default"].createElement("img", {
           "class": "souseUserPostsUserHomePage",
-          src: _this4.postFinder()[i].sousePosts.postImageURL,
+          src: _this3.postFinder()[i].sousePosts.postImageURL,
           alt: "souseUserPosts",
           width: "200px",
           height: "200px"

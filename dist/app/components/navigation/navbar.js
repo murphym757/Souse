@@ -77,6 +77,7 @@ function (_Component) {
       var _this$props$auth = this.props.auth,
           isAuthenticated = _this$props$auth.isAuthenticated,
           user = _this$props$auth.user;
+      var loggedinUser = user.username;
 
       var loggedInLinks = _react["default"].createElement("div", null, _react["default"].createElement("li", null, _react["default"].createElement("a", {
         "class": "sidenav-close logoutClose",

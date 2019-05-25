@@ -11,4 +11,3 @@ module.exports = {
   AWS_REGION: process.env.AWS_REGION,
   AWS_Uploaded_File_URL_LINK: process.env.AWS_Uploaded_File_URL_LINK
 };
-console.log(process.env.AWS_BUCKET_NAME);

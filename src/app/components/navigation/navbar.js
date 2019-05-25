@@ -6,7 +6,6 @@ import { logoutUser } from '../../../server/actions/authentication';
 import M from 'materialize-css';
 
 class Navbar extends Component {
-
   onLogout = (e) => {
     e.preventDefault();
     this.props.logoutUser(this.props.history);
@@ -18,6 +17,7 @@ class Navbar extends Component {
   
     render() {
       const {isAuthenticated, user} = this.props.auth;
+      const loggedinUser = user.username;
       const loggedInLinks = (
         <div>
           <li><a class="sidenav-close logoutClose" onClick={this.onLogout.bind(this)}>Log Out</a></li>

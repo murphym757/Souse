@@ -9,6 +9,8 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _reactRouterDom = require("react-router-dom");
 
+var _axios = _interopRequireDefault(require("axios"));
+
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _reactRedux = require("react-redux");
@@ -31,11 +33,15 @@ var _postsPage = _interopRequireDefault(require("./posts/postsPage"));
 
 var _postEditForm = _interopRequireDefault(require("./posts/postEditForm"));
 
+var _commentDeleteSection = _interopRequireDefault(require("./posts/commentDeleteSection"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -58,24 +64,96 @@ var MainSource =
 function (_Component) {
   _inherits(MainSource, _Component);
 
-  function MainSource() {
+  function MainSource(props) {
+    var _this;
+
     _classCallCheck(this, MainSource);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(MainSource).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(MainSource).call(this, props));
+    _this.state = {
+      posts: [],
+      users: [],
+      comments: []
+    };
+    return _this;
   }
 
   _createClass(MainSource, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      {
+        /* Posts Collection */
+      }
+      var apiRoute = "/souseAPI";
+      var findPostRoute = "/p";
+
+      _axios["default"].get(apiRoute + findPostRoute).then(function (res) {
+        var posts = res.data;
+        console.log(posts);
+
+        _this2.setState({
+          posts: posts
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
+
+      {
+        /* Users Collection */
+      }
+      var findUserRoute = "/u";
+
+      _axios["default"].get(apiRoute + findUserRoute).then(function (res) {
+        var users = res.data;
+        console.log(users);
+
+        _this2.setState({
+          users: users
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
+
+      {
+        /* Comments Collection */
+      }
+      var findCommentRoute = "/c";
+
+      _axios["default"].get(apiRoute + findCommentRoute).then(function (res) {
+        var comments = res.data;
+        console.log(comments);
+
+        _this2.setState({
+          comments: comments
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this$props$auth = this.props.auth,
           isAuthenticated = _this$props$auth.isAuthenticated,
           user = _this$props$auth.user;
+      var souseUsers = this.state.users;
+      var sousePosts = this.state.posts;
+      var souseComments = this.state.comments;
+      console.log(souseComments);
       return _react["default"].createElement(_reactRouterDom.BrowserRouter, null, _react["default"].createElement("div", null, _react["default"].createElement(_navbar["default"], null), _react["default"].createElement("div", {
         "class": "container"
       }, _react["default"].createElement(_reactRouterDom.Switch, null, _react["default"].createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/",
-        component: _LandingPage["default"]
+        render: function render(props) {
+          return _react["default"].createElement(_LandingPage["default"], _extends({}, props, {
+            souseUserData: souseUsers,
+            sousePostData: sousePosts,
+            souseCommentData: souseComments
+          }));
+        }
       }), _react["default"].createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/signup",
@@ -87,15 +165,30 @@ function (_Component) {
       }), _react["default"].createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/:username",
-        component: _userProfile["default"]
+        render: function render(props) {
+          return _react["default"].createElement(_userProfile["default"], _extends({}, props, {
+            souseUserData: souseUsers,
+            sousePostData: sousePosts
+          }));
+        }
       }), _react["default"].createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/p/:id",
-        component: _postsPage["default"]
+        render: function render(props) {
+          return _react["default"].createElement(_postsPage["default"], _extends({}, props, {
+            souseUserData: souseUsers,
+            sousePostData: sousePosts,
+            souseCommentData: souseComments
+          }));
+        }
       }), _react["default"].createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/p/edit/:id",
         component: _postEditForm["default"]
+      }), _react["default"].createElement(_reactRouterDom.Route, {
+        exact: true,
+        path: "/c/delete/:id",
+        component: _commentDeleteSection["default"]
       }), _react["default"].createElement(_reactRouterDom.Route, {
         component: _Page["default"]
       })), _react["default"].createElement("div", {

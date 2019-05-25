@@ -17,6 +17,12 @@ var _reactRedux = require("react-redux");
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
+var _Delete = require("styled-icons/typicons/Delete");
+
+var _reactTimestamp = _interopRequireDefault(require("react-timestamp"));
+
+var _commentDeleteSection = _interopRequireDefault(require("./commentDeleteSection"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
@@ -61,6 +67,7 @@ function (_Component) {
       e.preventDefault();
       var postData = {
         commentCreatorId: _this.state.commentCreatorId,
+        commentCreatorUsername: _this.state.commentCreatorUsername,
         souseComment: _this.state.postComment,
         originalPostId: _this.state.originalPostId
       };
@@ -73,6 +80,7 @@ function (_Component) {
 
       _this.setState({
         commentCreatorId: '',
+        commentCreatorUsername: '',
         souseComment: '',
         originalPostId: ''
       });
@@ -85,49 +93,112 @@ function (_Component) {
         user = _this$props$auth.user;
     var loggedinUser = user.id;
     var loggedinUsername = user.username;
-    var originalPostId = _this.props.originalPostId;
+    var originalPostData = _this.props.originalPostData;
+    var originalPostId = _this.props.originalPostData._id;
     _this.state = {
-      users: [],
       commentCreatorId: loggedinUser,
       commentCreatorUsername: loggedinUsername,
       originalPostId: originalPostId,
+      commentId: '',
       postComment: ''
     };
     _this.onChangePostComment = _this.onChangePostComment.bind(_assertThisInitialized(_this));
     _this.onSubmitComment = _this.onSubmitComment.bind(_assertThisInitialized(_this));
+    _this["delete"] = _this["delete"].bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(CommentsSection, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
+    key: "delete",
+    value: function _delete() {
+      var _this$props$auth2 = this.props.auth,
+          isAuthenticated = _this$props$auth2.isAuthenticated,
+          user = _this$props$auth2.user;
+      var userName = user.username;
+      var postId = this.state.originalPostId;
+      var commentId = this.state.commentId;
       var apiRoute = "/souseAPI";
-      var findUserRoute = "/u";
+      var deleteRoute = "/c/delete";
 
-      _axios["default"].get(apiRoute + findUserRoute).then(function (res) {
-        var users = res.data;
-        console.log(users);
-
-        _this2.setState({
-          users: users
-        });
-      })["catch"](function (error) {
-        console.log(error);
+      _axios["default"].get(apiRoute + deleteRoute + "/" + postId).then(console.log('Deleted'))["catch"](function (err) {
+        return console.log(err);
       });
+
+      this.props.history.push("/p/" + postId);
+    }
+  }, {
+    key: "commentsFinder",
+    value: function commentsFinder() {
+      var souseCommentData = this.props.souseCommentData;
+      var souseCommentList = ["" + this.state.originalPostId + ""],
+          souseCommentsList = new Set(souseCommentList),
+          souseFilterData = souseCommentData.filter(function (souseCommentsData) {
+        return souseCommentsList.has(souseCommentsData.originalPostId);
+      });
+      console.log(souseFilterData);
+      return souseFilterData;
     }
   }, {
     key: "render",
     value: function render() {
-      var _this$props$auth2 = this.props.auth,
-          isAuthenticated = _this$props$auth2.isAuthenticated,
-          user = _this$props$auth2.user;
+      var _this2 = this;
+
+      var _this$props$auth3 = this.props.auth,
+          isAuthenticated = _this$props$auth3.isAuthenticated,
+          user = _this$props$auth3.user;
       var loggedinUser = user.username;
+      var originalPostId = this.props.originalPostData._id;
+      var DeleteIcon = (0, _styledComponents["default"])(_Delete.Delete).withConfig({
+        displayName: "commentsSection__DeleteIcon",
+        componentId: "wmizgj-0"
+      })(["color:#C45758;height:1.1em;width:1.5em;"]);
       return _react["default"].createElement("div", null, _react["default"].createElement("div", {
         "class": "souseCommentInput"
       }, " ", _react["default"].createElement("div", {
-        "class": "row"
+        "class": "commentsPostsSection"
+      }, _react["default"].createElement("div", {
+        "class": "pre-scrollable"
+      }, Object.keys(this.commentsFinder()).map(function (object, i) {
+        return _react["default"].createElement("div", {
+          "class": "row no-gutters commentsSectionBody"
+        }, _react["default"].createElement("div", {
+          "class": "col-2"
+        }, _react["default"].createElement("img", {
+          "class": "souseUserIconComments",
+          src: "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg",
+          alt: "souseUserIconComments",
+          width: "25px",
+          height: "25px"
+        })), _react["default"].createElement("div", {
+          "class": "col-10"
+        }, _react["default"].createElement("h6", {
+          "class": "souseCommentsCaption"
+        }, _react["default"].createElement("span", {
+          "class": "pr-1"
+        }, _react["default"].createElement(_reactRouterDom.Link, {
+          to: "/".concat(_this2.commentsFinder()[i].commentCreatorUsername)
+        }, _this2.commentsFinder()[i].commentCreatorUsername), " "), _this2.commentsFinder()[i].souseComment), _react["default"].createElement("div", {
+          "class": "row souseCommentsDataReply"
+        }, _react["default"].createElement("h6", {
+          "class": "col-4 pl-4 commentTime"
+        }, _react["default"].createElement(_reactTimestamp["default"], {
+          relative: true,
+          time: Date,
+          relativeTo: _this2.commentsFinder()[i].commentCreatedDate
+        })), _react["default"].createElement("h6", {
+          "class": "col-8 pl-2"
+        }, _this2.commentsFinder()[i].commentCreatorUsername == loggedinUser ? _react["default"].createElement("h6", null, _react["default"].createElement(_reactRouterDom.Link, {
+          to: {
+            pathname: "/c/delete/".concat(_this2.commentsFinder()[i]._id),
+            state: {
+              originalPostId: {
+                originalPostId: originalPostId
+              }
+            }
+          }
+        }, _react["default"].createElement(DeleteIcon, null))) : _react["default"].createElement("div", null)), " ")));
+      }))), isAuthenticated ? _react["default"].createElement("div", {
+        "class": "row commentsFormSection"
       }, _react["default"].createElement("form", {
         "class": "col s12",
         onSubmit: this.onSubmitComment
@@ -138,12 +209,13 @@ function (_Component) {
       }, _react["default"].createElement("input", {
         id: "souse_comment",
         type: "text",
+        maxLength: 1000,
         "class": "validate",
         value: this.state.postComment,
         onChange: this.onChangePostComment
       }), _react["default"].createElement("label", {
         "for": "souse_comment"
-      }, "Add a Comment")))))));
+      }, "Add a Comment (", this.state.postComment.length, "/1000)"))))) : _react["default"].createElement("div", null)));
     }
   }]);
 

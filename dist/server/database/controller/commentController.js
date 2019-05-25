@@ -13,6 +13,7 @@ exports.create_comment = function (req, res, next) {
   var originalPostId = req.body.originalPostId; // This is needed to fing the postId
 
   var commentCreatorId = req.body.commentCreatorId;
+  var commentCreatorUsername = req.body.commentCreatorUsername;
   Post.findById(originalPostId, function (err, post) {
     // Post Caption Upload
     if (err) throw new Error(err);
@@ -21,6 +22,7 @@ exports.create_comment = function (req, res, next) {
       if (err) throw new Error(err);
       var newComment = new Comment({
         commentCreatorId: commentCreatorId,
+        commentCreatorUsername: commentCreatorUsername,
         souseComment: req.body.souseComment,
         originalPostId: originalPostId
       });

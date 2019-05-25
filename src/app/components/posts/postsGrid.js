@@ -31,7 +31,10 @@ class PostsGrid extends Component {
     render() {
         const {isAuthenticated, user} = this.props.auth;
         const loggedinUser = user.id;
+        const postData = this.props.obj;
         const postId = this.props.obj._id;
+        const souseUserData = this.props.souseUserData;
+        const souseCommentData = this.props.souseCommentData;
         const postCreatorId = this.props.obj.postCreator;
         const postCaption = this.props.obj.sousePosts.postCaption;
         const sousePostImage = this.props.obj.sousePosts.postImageURL;
@@ -98,11 +101,12 @@ class PostsGrid extends Component {
                         </div>
                         <div class="col-4">
                             <div class="container">
-                                <h6 class="sousePostCreatorName pl-2">{postCreatorName}</h6>
-                                <div class="pre-scrollable">
-                                    <h6 class="sousePostCaption pl-2">{postCaption}</h6>
-                                </div>
-                                <CommentsSection originalPostId={postId}/> {/* Comments */}
+                                <h6 class="sousePostCreatorName">{postCreatorName}</h6>
+                                <h6 class="sousePostCaption">{postCaption}</h6>
+                                <CommentsSection 
+                                    originalPostData={postData}
+                                    souseUserData={souseUserData} 
+                                    souseCommentData={souseCommentData}/> {/* Comments */}
                             </div>
                         </div>
                     </div>

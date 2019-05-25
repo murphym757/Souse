@@ -131,7 +131,6 @@ function (_Component) {
     var loggedinUsername = user.username;
     var postsTotal = _this.props.postsTotal;
     _this.state = {
-      posts: [],
       postCreatorId: loggedinUser,
       postCaption: '',
       postUnixTimestamp: new Date().valueOf(),

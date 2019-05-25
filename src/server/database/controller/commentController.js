@@ -10,6 +10,7 @@ const mongoose = require('mongoose'),
     exports.create_comment = (req, res, next) => {
         const originalPostId = req.body.originalPostId; // This is needed to fing the postId
         const commentCreatorId = req.body.commentCreatorId;
+        const commentCreatorUsername = req.body.commentCreatorUsername;
         Post.findById(originalPostId, (err, post) => { // Post Caption Upload
             if (err) throw new Error(err);
 
@@ -18,8 +19,9 @@ const mongoose = require('mongoose'),
 
                 const newComment = new Comment({
                     commentCreatorId: commentCreatorId,
+                    commentCreatorUsername: commentCreatorUsername,
                     souseComment: req.body.souseComment,
-                    originalPostId: originalPostId
+                    originalPostId: originalPostId,
                 });
 
                 Comment.create(newComment, (err, comment) => {

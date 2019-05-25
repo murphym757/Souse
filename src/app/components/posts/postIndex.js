@@ -10,11 +10,9 @@ class PostIndex extends Component {
         this.state = {
         };
     }
-
     componentDidMount(){
         M.AutoInit();
     }
-
     render() {
         return (
             <div>

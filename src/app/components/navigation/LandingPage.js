@@ -1,37 +1,13 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect, withRouter } from 'react-router-dom';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class LandingPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            users: []
-        };
-    }
-
-    componentDidMount() {
-        const apiRoute = "/souseAPI";
-        const findUserRoute = "/u";
-        axios.get(apiRoute + findUserRoute)
-            .then(res => {
-                const users = res.data;
-                console.log(users);
-                this.setState({
-                    users: users
-                });
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-        }
-
     render() {
         const {isAuthenticated, user} = this.props.auth;
+        const souseUserData = this.props.souseUserData;
         const loggedinUser = user.username;
-
         return (
             <div class="container">
                 <h2>LandingPage</h2>
@@ -44,10 +20,10 @@ class LandingPage extends Component {
                         </div> 
                 }
                 <div class="usersPosts">
-                        {Object.keys(this.state.users)
+                        {Object.keys(souseUserData)
                             .map((object, i) => (
                                 <div>
-                                    <Link to={`/${this.state.users[i].username}`}>{this.state.users[i].username}</Link>
+                                    <Link to={`/${souseUserData[i].username}`}>{souseUserData[i].username}</Link>
                                 </div>
                         ))}
                 </div>

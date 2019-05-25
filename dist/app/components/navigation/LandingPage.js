@@ -9,8 +9,6 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _reactRouterDom = require("react-router-dom");
 
-var _axios = _interopRequireDefault(require("axios"));
-
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _reactRedux = require("react-redux");
@@ -42,54 +40,28 @@ var LandingPage =
 function (_Component) {
   _inherits(LandingPage, _Component);
 
-  function LandingPage(props) {
-    var _this;
-
+  function LandingPage() {
     _classCallCheck(this, LandingPage);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(LandingPage).call(this, props));
-    _this.state = {
-      users: []
-    };
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(LandingPage).apply(this, arguments));
   }
 
   _createClass(LandingPage, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      var apiRoute = "/souseAPI";
-      var findUserRoute = "/u";
-
-      _axios["default"].get(apiRoute + findUserRoute).then(function (res) {
-        var users = res.data;
-        console.log(users);
-
-        _this2.setState({
-          users: users
-        });
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    }
-  }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
-
       var _this$props$auth = this.props.auth,
           isAuthenticated = _this$props$auth.isAuthenticated,
           user = _this$props$auth.user;
+      var souseUserData = this.props.souseUserData;
       var loggedinUser = user.username;
       return _react["default"].createElement("div", {
         "class": "container"
       }, _react["default"].createElement("h2", null, "LandingPage"), isAuthenticated ? _react["default"].createElement("div", null, _react["default"].createElement("h4", null, "Logged In")) : _react["default"].createElement("div", null, _react["default"].createElement("h4", null, "Not Logged In")), _react["default"].createElement("div", {
         "class": "usersPosts"
-      }, Object.keys(this.state.users).map(function (object, i) {
+      }, Object.keys(souseUserData).map(function (object, i) {
         return _react["default"].createElement("div", null, _react["default"].createElement(_reactRouterDom.Link, {
-          to: "/".concat(_this3.state.users[i].username)
-        }, _this3.state.users[i].username));
+          to: "/".concat(souseUserData[i].username)
+        }, souseUserData[i].username));
       })));
     }
   }]);

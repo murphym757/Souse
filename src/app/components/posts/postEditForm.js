@@ -53,6 +53,7 @@ class PostEdit extends Component {
             .then(console.log('Deleted'))
             .catch(err => console.log(err));
         this.props.history.push("/" + userName);
+        window.location.reload();
     }
 
     onChangepostCaption = (e) => {

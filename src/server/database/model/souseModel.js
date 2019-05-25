@@ -89,7 +89,7 @@ const PostSchema = new mongoose.Schema({
         }
     },
     comments: [{
-        type: mongoose.Schema.Types.Mixed,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Comments'
     }]
 });
@@ -112,6 +112,11 @@ const CommentSchema = new mongoose.Schema({
          type: String,
          trim: true,
          default: ''
+     },
+     commentCreatorUsername: {
+         type: String,
+            trim: true,
+            default: ''
      }
 });
 

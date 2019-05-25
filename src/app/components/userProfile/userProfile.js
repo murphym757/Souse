@@ -25,8 +25,6 @@ class UserProfile extends Component {
         const instagramUsernameURL = "https://www.instagram.com/" + instagramUsername + "/";
         
         this.state = {
-            posts: [],
-            users: [],
             postCreatorUsername: usernameFound,
             postCreatorId: '',
             postTotalDisplay: '1',
@@ -39,55 +37,21 @@ class UserProfile extends Component {
             postCreatorInstagramURL: instagramUsernameURL
         };
     }
-
-
-
-
-    componentDidMount() {
-        { /* Posts Collection */ }
-        const apiRoute = "/souseAPI";
-        const findPostRoute = "/p";
-        axios.get(apiRoute + findPostRoute)
-            .then(res => {
-                const posts = res.data;
-                console.log(posts);
-                this.setState({
-                    posts: posts
-                });
-            })
-            .catch(function (error) {
-                console.log(error);
-            }) 
-        { /* Users Collection */ }
-        const findUserRoute = "/u";
-        axios.get(apiRoute + findUserRoute)
-            .then(res => {
-                const users = res.data;
-                console.log(users);
-                this.setState({
-                    users: users
-                });
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-    }
-
     postFinder() {
-        const souseUsers = this.state.users;
-        const filteredUsernameData = Object.keys(souseUsers).filter((i) => {
-                return souseUsers[i].username === "" + this.state.postCreatorUsername + ""
+        const souseUserData = this.props.souseUserData;
+        const filteredUsernameData = Object.keys(souseUserData).filter((i) => {
+                return souseUserData[i].username === "" + this.state.postCreatorUsername + ""
             }),
-            userIdFinder = Object.keys(souseUsers).map((object, i) => {
-                return souseUsers[filteredUsernameData]._id
+            userIdFinder = Object.keys(souseUserData).map((object, i) => {
+                return souseUserData[filteredUsernameData]._id
             }),
             userId = userIdFinder.find((i) => {
                 return "" + userIdFinder[0] + ""
             });
-        const sousePosts = this.state.posts;
+        const sousePostData = this.props.sousePostData;
         const souseUserList = ["" + userId + ""],
             sousePostsList = new Set(souseUserList),
-            souseFilterData = sousePosts.filter(sousePost => sousePostsList.has(sousePost.postCreator));
+            souseFilterData = sousePostData.filter(sousePostData => sousePostsList.has(sousePostData.postCreator));
         return souseFilterData;
     }
 
