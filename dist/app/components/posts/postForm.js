@@ -121,7 +121,7 @@ function (_Component) {
         postImageURL: ''
       });
 
-      window.location.reload();
+      window.location.reload(false);
     };
 
     var _this$props$auth = _this.props.auth,

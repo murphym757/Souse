@@ -130,7 +130,7 @@ function (_Component) {
       });
 
       this.props.history.push("/" + userName);
-      window.location.reload();
+      window.location.reload(false);
     }
   }, {
     key: "render",

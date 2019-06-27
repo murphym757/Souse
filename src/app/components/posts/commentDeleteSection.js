@@ -36,7 +36,7 @@ class CommentDelete extends Component {
             .then(console.log('Deleted'))
             .catch(err => console.log(err));
         this.props.history.push("/p/" + postId);
-        window.location.reload();
+        window.location.reload(false);
     }
 
     render() {

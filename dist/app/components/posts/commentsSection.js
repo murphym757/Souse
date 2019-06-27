@@ -17,7 +17,15 @@ var _reactRedux = require("react-redux");
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
+var _materializeCss = _interopRequireDefault(require("materialize-css"));
+
 var _Delete = require("styled-icons/typicons/Delete");
+
+var _ThumbsOk = require("styled-icons/typicons/ThumbsOk");
+
+var _ThumbsDown = require("styled-icons/typicons/ThumbsDown");
+
+var _DotsHorizontalRounded = require("styled-icons/boxicons-regular/DotsHorizontalRounded");
 
 var _reactTimestamp = _interopRequireDefault(require("react-timestamp"));
 
@@ -85,7 +93,7 @@ function (_Component) {
         originalPostId: ''
       });
 
-      window.location.reload();
+      window.location.reload(false);
     };
 
     var _this$props$auth = _this.props.auth,
@@ -100,7 +108,8 @@ function (_Component) {
       commentCreatorUsername: loggedinUsername,
       originalPostId: originalPostId,
       commentId: '',
-      postComment: ''
+      postComment: '',
+      deleteCommentSelected: false
     };
     _this.onChangePostComment = _this.onChangePostComment.bind(_assertThisInitialized(_this));
     _this.onSubmitComment = _this.onSubmitComment.bind(_assertThisInitialized(_this));
@@ -120,11 +129,12 @@ function (_Component) {
       var apiRoute = "/souseAPI";
       var deleteRoute = "/c/delete";
 
-      _axios["default"].get(apiRoute + deleteRoute + "/" + postId).then(console.log('Deleted'))["catch"](function (err) {
+      _axios["default"].get(apiRoute + deleteRoute + "/" + commentId).then(console.log('Deleted'))["catch"](function (err) {
         return console.log(err);
       });
 
       this.props.history.push("/p/" + postId);
+      window.location.reload(false);
     }
   }, {
     key: "commentsFinder",
@@ -139,6 +149,11 @@ function (_Component) {
       return souseFilterData;
     }
   }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      _materializeCss["default"].AutoInit();
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
@@ -151,6 +166,18 @@ function (_Component) {
       var DeleteIcon = (0, _styledComponents["default"])(_Delete.Delete).withConfig({
         displayName: "commentsSection__DeleteIcon",
         componentId: "wmizgj-0"
+      })(["color:#C45758;height:1.1em;width:1.5em;"]);
+      var DotsHorizontalRoundedIcon = (0, _styledComponents["default"])(_DotsHorizontalRounded.DotsHorizontalRounded).withConfig({
+        displayName: "commentsSection__DotsHorizontalRoundedIcon",
+        componentId: "wmizgj-1"
+      })(["color:#C45758;height:1.1em;width:1.5em;"]);
+      var ThumbsOkIcon = (0, _styledComponents["default"])(_ThumbsOk.ThumbsOk).withConfig({
+        displayName: "commentsSection__ThumbsOkIcon",
+        componentId: "wmizgj-2"
+      })(["color:#C45758;height:1.1em;width:1.5em;"]);
+      var ThumbsDownIcon = (0, _styledComponents["default"])(_ThumbsDown.ThumbsDown).withConfig({
+        displayName: "commentsSection__ThumbsDownIcon",
+        componentId: "wmizgj-3"
       })(["color:#C45758;height:1.1em;width:1.5em;"]);
       return _react["default"].createElement("div", null, _react["default"].createElement("div", {
         "class": "souseCommentInput"
@@ -187,16 +214,35 @@ function (_Component) {
           relativeTo: _this2.commentsFinder()[i].commentCreatedDate
         })), _react["default"].createElement("h6", {
           "class": "col-8 pl-2"
-        }, _this2.commentsFinder()[i].commentCreatorUsername == loggedinUser ? _react["default"].createElement("h6", null, _react["default"].createElement(_reactRouterDom.Link, {
-          to: {
-            pathname: "/c/delete/".concat(_this2.commentsFinder()[i]._id),
-            state: {
-              originalPostId: {
-                originalPostId: originalPostId
-              }
-            }
+        }, _this2.commentsFinder()[i].commentCreatorUsername == loggedinUser ? _react["default"].createElement("div", null, _react["default"].createElement("h6", null, _react["default"].createElement("div", {
+          "class": "modal-trigger",
+          href: "#modal1",
+          onClick: _this2.deleteClicked = function (e) {
+            _this2.setState({
+              deleteCommentSelected: true,
+              commentId: _this2.commentsFinder()[i]._id
+            });
           }
-        }, _react["default"].createElement(DeleteIcon, null))) : _react["default"].createElement("div", null)), " ")));
+        }, _react["default"].createElement(DotsHorizontalRoundedIcon, null))), _react["default"].createElement("div", {
+          id: "modal1",
+          "class": "modal"
+        }, _react["default"].createElement("div", {
+          "class": "container-fluid"
+        }, _react["default"].createElement("div", {
+          "class": "modal-content"
+        }, _react["default"].createElement("div", {
+          "class": "row d-flex justify-content-center"
+        }, _react["default"].createElement("div", {
+          "class": "container"
+        }, _react["default"].createElement("button", {
+          type: "button",
+          "class": "btn btn-modalButton btn-lg btn-block",
+          onClick: _this2["delete"]
+        }, "Delete"), _react["default"].createElement("button", {
+          type: "button",
+          "class": "btn btn-modalButton btn-lg btn-block modal-close",
+          onClick: _this2.deleteClickedAlt
+        }, "Cancel"))))))) : _react["default"].createElement("div", null)), " ")));
       }))), isAuthenticated ? _react["default"].createElement("div", {
         "class": "row commentsFormSection"
       }, _react["default"].createElement("form", {

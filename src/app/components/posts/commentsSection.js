@@ -4,7 +4,11 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import M from 'materialize-css';
 import { Delete } from 'styled-icons/typicons/Delete';
+import { ThumbsOk } from 'styled-icons/typicons/ThumbsOk';
+import { ThumbsDown } from 'styled-icons/typicons/ThumbsDown';
+import { DotsHorizontalRounded } from 'styled-icons/boxicons-regular/DotsHorizontalRounded';
 import Timestamp from 'react-timestamp';
 import CommentDelete from './commentDeleteSection';
 
@@ -21,7 +25,8 @@ class CommentsSection extends Component {
             commentCreatorUsername: loggedinUsername,
             originalPostId: originalPostId,
             commentId: '',
-            postComment: ''
+            postComment: '',
+            deleteCommentSelected: false
         };
         this.onChangePostComment = this.onChangePostComment.bind(this);
         this.onSubmitComment = this.onSubmitComment.bind(this);
@@ -41,10 +46,11 @@ class CommentsSection extends Component {
         const commentId = this.state.commentId;
         const apiRoute = "/souseAPI";
         const deleteRoute = "/c/delete";
-        axios.get(apiRoute + deleteRoute + "/" + postId)
+        axios.get(apiRoute + deleteRoute + "/" + commentId)
             .then(console.log('Deleted'))
             .catch(err => console.log(err));
         this.props.history.push("/p/" + postId);
+        window.location.reload(false);
     }
    
     commentsFinder() {
@@ -76,7 +82,10 @@ class CommentsSection extends Component {
             souseComment: '',
             originalPostId: ''
         });
-        window.location.reload();
+        window.location.reload(false);
+    }
+    componentDidMount() {
+        M.AutoInit();
     }
 
     render() {
@@ -88,7 +97,25 @@ class CommentsSection extends Component {
             color: #C45758;
             height: 1.1em;
             width: 1.5em;
-            `;
+        `;
+        const DotsHorizontalRoundedIcon = styled(DotsHorizontalRounded)
+        `
+            color: #C45758;
+            height: 1.1em;
+            width: 1.5em;
+        `;
+        const ThumbsOkIcon = styled(ThumbsOk)
+        `
+            color: #C45758;
+            height: 1.1em;
+            width: 1.5em;
+        `;
+        const ThumbsDownIcon = styled(ThumbsDown)
+        `
+            color: #C45758;
+            height: 1.1em;
+            width: 1.5em;
+        `;
         return (
             <div>
                 <div class="souseCommentInput"> {/* Should go on seperate comments page */}
@@ -98,12 +125,12 @@ class CommentsSection extends Component {
                                 .map((object, i) => (
                                     <div class="row no-gutters commentsSectionBody">
                                         <div class="col-2">
-                                    <img class="souseUserIconComments" 
-                                        src = "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg"
-                                        alt="souseUserIconComments"
-                                        width="25px" 
-                                        height="25px"/>
-                                </div>
+                                            <img class="souseUserIconComments" 
+                                                src = "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg"
+                                                alt="souseUserIconComments"
+                                                width="25px" 
+                                                height="25px"/>
+                                        </div>
                                         <div class="col-10">
                                             <h6 class="souseCommentsCaption">
                                                 <span class="pr-1"><Link to={`/${this.commentsFinder()[i].commentCreatorUsername}`}>{this.commentsFinder()[i].commentCreatorUsername}</Link> </span>{this.commentsFinder()[i].souseComment}
@@ -112,14 +139,25 @@ class CommentsSection extends Component {
                                                 <h6 class="col-4 pl-4 commentTime"><Timestamp relative time={Date} relativeTo={this.commentsFinder()[i].commentCreatedDate} /></h6>
                                                 <h6 class="col-8 pl-2">
                                                 {this.commentsFinder()[i].commentCreatorUsername == loggedinUser
-                                                    ? <h6>
-                                                        <Link to={{
-                                                            pathname:`/c/delete/${this.commentsFinder()[i]._id}`,
-                                                            state: {
-                                                                originalPostId: {originalPostId}
-                                                            }
-                                                    }}><DeleteIcon /></Link>
-                                                    </h6>
+                                                    ? <div>
+                                                        <h6>
+                                                            <div class="modal-trigger" href="#modal1" onClick={this.deleteClicked = (e) => {this.setState({deleteCommentSelected: true, commentId: this.commentsFinder()[i]._id})}}>
+                                                                <DotsHorizontalRoundedIcon />
+                                                            </div>
+                                                        </h6>
+                                                            <div id="modal1" class="modal">
+                                                                <div class="container-fluid">
+                                                                    <div class="modal-content">
+                                                                        <div class="row d-flex justify-content-center">
+                                                                            <div class="container">
+                                                                                <button type="button" class="btn btn-modalButton btn-lg btn-block" onClick={this.delete}>Delete</button>
+                                                                                <button type="button" class="btn btn-modalButton btn-lg btn-block modal-close" onClick={this.deleteClickedAlt}>Cancel</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    </div>
                                                     : <div></div>
                                                 }
                                                 </h6> {/* Should first disply the user who creator post */}

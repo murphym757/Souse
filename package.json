@@ -6,8 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/server/server.js",
-    "transpile": "babel src -d dist --copy-files",
     "build": "webpack --mode production",
+    "transpile": "concurrently \"rimraf -r dist\" \"babel src -d dist --copy-files\" \"npm run start\"",
+    "deldist": "rimraf -r dist",
     "heroku-postbuild": "echo Skip build on Heroku"
   },
   "author": "Maurice Murphy",
@@ -29,6 +30,7 @@
     "popper.js": "^1.15.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "rimraf": "^2.6.3",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2"
@@ -42,6 +44,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "classnames": "^2.2.6",
+    "concurrently": "^4.1.0",
     "connect-mongo": "^2.0.3",
     "cors": "^2.8.5",
     "dotenv": "^7.0.0",
@@ -55,6 +58,7 @@
     "materialize-css": "^1.0.0",
     "method-override": "^3.0.0",
     "mongoose": "^5.5.4",
+    "npm": "^6.9.0",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "react-redux": "^6.0.1",

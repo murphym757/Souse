@@ -92,7 +92,7 @@ class PostCreate extends Component {
             postImageFileType: '',
             postImageURL: ''
         });
-        window.location.reload();
+        window.location.reload(false);
     }
 
     render() {

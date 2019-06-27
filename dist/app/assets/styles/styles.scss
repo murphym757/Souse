@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,900&display=swap');
 // Souse Color Palette
 $primaryColorAlt: #DDAEAA;
 $secondaryColor: #C45758;
@@ -16,7 +17,8 @@ body {
     background-attachment: fixed;
     background-size: cover;
     color: $softBlack;
-    font-family: 'Roboto-Regular';
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 400;
 }
 
 img {
@@ -29,7 +31,8 @@ h1 {
 }
 
 span {
-    font-family: 'Futura-Bold';
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 900;
 }
 
 nav {
@@ -105,6 +108,31 @@ nav ul a {
     font-size: 0.7em;
 }
 
+#modal1 {
+    height: 15%;
+    width: 25%;
+    top: 50% !important;
+}
+
+.modal .modal-footer {
+    background-color: $white;
+}
+.modal-footer> :not(:last-child) {
+    margin-right: 0rem;
+}
+.modal-content {
+    border: 0px;
+}
+
+.z-depth-1, nav, .card-panel, .card, .toast, .btn, .btn-large, .btn-small, .btn-floating, .dropdown-content, .collapsible, .sidenav {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.z-depth-1:hover, nav:hover, .card-panel:hover, .card:hover, .toast:hover, .btn:hover, .btn-large:hover, .btn-small:hover, .btn-floating:hover, .dropdown-content:hover, .collapsible:hover, .sidenav:hover {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
 /* ---------------------------------------------------- */
 
 // Image Format
@@ -293,7 +321,54 @@ select:-internal-autofill-selected {
 }
 
 /* ---------------------------------------------------- */
+// Bootstrap Button (Modal)
+/* ---------------------------------------------------- */
+.btn-modalButton {
+    color: $secondaryColor;
+    background-color: $white;
+    border-color: $white;
+}
 
+.btn-modalButton:hover,
+.btn-modalButton:focus,
+.btn-modalButton:active,
+.btn-modalButton.active,
+.open .dropdown-toggle.btn-modalButton {
+    color: $secondaryColor;
+    background-color: $white;
+    border-color: $white;
+}
+
+.btn-modalButton:active,
+.btn-modalButton.active,
+.open .dropdown-toggle.btn-modalButton {
+    background-image: none;
+}
+
+.btn-modalButton.disabled,
+.btn-modalButton[disabled],
+fieldset[disabled] .btn-modalButton,
+.btn-modalButton.disabled:hover,
+.btn-modalButton[disabled]:hover,
+fieldset[disabled] .btn-modalButton:hover,
+.btn-modalButton.disabled:focus,
+.btn-modalButton[disabled]:focus,
+fieldset[disabled] .btn-modalButton:focus,
+.btn-modalButton.disabled:active,
+.btn-modalButton[disabled]:active,
+fieldset[disabled] .btn-modalButton:active,
+.btn-modalButton.disabled.active,
+.btn-modalButton[disabled].active,
+fieldset[disabled] .btn-modalButton.active {
+    background-color: $white;
+    border-color: $white;
+}
+
+.btn-modalButton .badge {
+    color: $white;
+    background-color: $secondaryColor;
+}
+/* ---------------------------------------------------- */
 .souseFooter,
 .addPostButton {
     text-align: center;
