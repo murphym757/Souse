@@ -37,7 +37,6 @@ span {
 
 nav {
     background-color: $primaryColor;
-    border: 1px solid $secondaryColor;
     box-shadow: none;
 }
 
@@ -90,6 +89,13 @@ nav ul a {
     margin-bottom:0px !important;
 }
 
+.souseCommentsCaption {
+    font-size: 0.7em;
+}
+.commentTime {
+    font-size: 0.6em;
+}
+
 // Comments Section
 /* ---------------------------------------------------- */
 .souseCommentRow {
@@ -139,8 +145,8 @@ nav ul a {
 /* ---------------------------------------------------- */
 .sousePostImage { //Img Tag
     object-fit: cover;
-    width: 75vw;
-    height: 50vw;
+    width: 49vw;
+    height: 43vw;
 }
 
 .img-wrapper {
@@ -196,7 +202,8 @@ nav ul a {
 .souseUserPostsUserHomePage:hover {
     border: 1px solid $secondaryColor;
 }
-.souseUserIconComments {
+.souseUserIconComments,
+.souseUserIconPost {
     border-radius: 50%;
     width: 3vw;
     height: 3vw;
@@ -205,29 +212,31 @@ nav ul a {
     justify-content: center;
     align-items: center;
 }
+.sousePostImageThumbnail {
+    //Img Tag
+    object-fit: cover;
+    width: 15vw;
+    height: 15vw;
+}
+
 /* ---------------------------------------------------- */
 
 // Buttons
 /* ---------------------------------------------------- */
 
-.btn-large {
-    background-color: $secondaryColor;
-}
-
-.btn-large:visited {
+.btn-large,
+.btn-small,
+.btn-large:visited,
+.btn-large:active,
+.btn-large:focus,
+.btn-small:visited,
+.btn-small:active,
+.btn-small:focus {
     background-color: $secondaryColor;
 }
 
 .btn-large:hover {
     background-color: $primaryColorAlt;
-}
-
-.btn-large:active {
-    background-color: $secondaryColor;
-}
-
-.btn-large:focus {
-    background-color: $secondaryColor;
 }
 .buttonFont {
     text-transform: uppercase;
@@ -385,19 +394,67 @@ fieldset[disabled] .btn-modalButton.active {
 
 /* Small devices (Phones, 768px) */
 
-@media (max-width: 767px) and (orientation: portrait) {}
+@media (max-width: 767px) and (orientation: portrait) {
+    .sousePostImage {
+        object-fit: cover;
+        width: 100vw;
+        height: 100vw;
+    }
+    .souseUserIconComments {
+        width: 10vw;
+        height: 10vw;
+    }
+    .souseUserIconPost {
+        width: 15vw;
+        height: 15vw;
+    }
+    .pre-scrollable {
+        max-height: 200px;
+    }
+    .postSection,
+    .sousePostImageColumn,
+    .sousePostUserDataColumn,
+    .souseCommentsColumn {
+        padding: 0;
+    }
+    .sousePostImage {
+        padding-bottom: 0.5rem;
+    }
+    .souseUserImageColumn {
+        padding-right: 0;
+        padding-left: 1.5rem;
+    }
+    .souseUserNameColumn {
+        padding-left: 0;
+    }
+    .souseEditPostButton {
+        padding-left: 1rem;
+        padding-top: 1.5rem;
+    }
+}
 
 @media (max-width: 767px) and (orientation: landscape) {}
 
-@media (max-width: 766px) and (orientation: landscape) {}
 
 /* ---------------------------------------------------- */
 
 /* IPhone X and Pixel XL 2 */
 
-@media (min-width: 812px) and (max-width: 823px) and (orientation: portrait) {}
+@media (min-width: 812px) and (max-width: 823px) and (orientation: portrait) {
+    .sousePostImage {
+        object-fit: cover;
+        width: 20vw;
+        height: 20vw;
+    }
+}
 
-@media (min-width: 812px) and (max-width: 823px) and (orientation: landscape) {}
+@media (min-width: 812px) and (max-width: 823px) and (orientation: landscape) {
+    .sousePostImage {
+        object-fit: cover;
+        width: 25vw;
+        height: 25vw;
+    }
+}
 
 /* ---------------------------------------------------- */
 

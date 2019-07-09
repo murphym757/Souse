@@ -93,7 +93,7 @@ function (_Component) {
         originalPostId: ''
       });
 
-      window.location.reload(false);
+      window.location.reload();
     };
 
     var _this$props$auth = _this.props.auth,
@@ -109,7 +109,8 @@ function (_Component) {
       originalPostId: originalPostId,
       commentId: '',
       postComment: '',
-      deleteCommentSelected: false
+      deleteCommentSelected: false,
+      userIcon: 'http://www.venmond.com/demo/vendroid/img/avatar/big.jpg'
     };
     _this.onChangePostComment = _this.onChangePostComment.bind(_assertThisInitialized(_this));
     _this.onSubmitComment = _this.onSubmitComment.bind(_assertThisInitialized(_this));
@@ -134,7 +135,7 @@ function (_Component) {
       });
 
       this.props.history.push("/p/" + postId);
-      window.location.reload(false);
+      window.location.reload();
     }
   }, {
     key: "commentsFinder",
@@ -187,12 +188,12 @@ function (_Component) {
         "class": "pre-scrollable"
       }, Object.keys(this.commentsFinder()).map(function (object, i) {
         return _react["default"].createElement("div", {
-          "class": "row no-gutters commentsSectionBody"
+          "class": "row no-gutters commentsSectionBody mt-0 mb-0"
         }, _react["default"].createElement("div", {
-          "class": "col-2"
+          "class": "col-2 pl-3"
         }, _react["default"].createElement("img", {
           "class": "souseUserIconComments",
-          src: "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg",
+          src: _this2.state.userIcon,
           alt: "souseUserIconComments",
           width: "25px",
           height: "25px"
@@ -244,12 +245,12 @@ function (_Component) {
           onClick: _this2.deleteClickedAlt
         }, "Cancel"))))))) : _react["default"].createElement("div", null)), " ")));
       }))), isAuthenticated ? _react["default"].createElement("div", {
-        "class": "row commentsFormSection"
+        "class": "row commentsFormSection container-fluid"
       }, _react["default"].createElement("form", {
         "class": "col s12",
         onSubmit: this.onSubmitComment
       }, _react["default"].createElement("div", {
-        "class": "row"
+        "class": "row pl-4"
       }, _react["default"].createElement("div", {
         "class": "input-field col s6"
       }, _react["default"].createElement("input", {

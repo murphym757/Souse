@@ -85,6 +85,7 @@ function (_Component) {
 
       _this.setState({
         postImageFileType: e.target.files[0].type.slice(6),
+        postImageFileName: _this.state.postUnixTimestamp + "." + e.target.files[0].type.slice(6),
         fullPostUploadLoader: false
       });
     };
@@ -104,6 +105,7 @@ function (_Component) {
         postCaption: _this.state.postCaption,
         postUnixTimestamp: _this.state.postUnixTimestamp,
         postImageFileType: _this.state.postImageFileType,
+        postImageFileName: _this.state.postImageFileName,
         postImageURL: _this.state.postImageURL
       };
       var apiRoute = "/souseAPI";
@@ -121,7 +123,7 @@ function (_Component) {
         postImageURL: ''
       });
 
-      window.location.reload(false);
+      window.location.reload();
     };
 
     var _this$props$auth = _this.props.auth,
@@ -135,6 +137,7 @@ function (_Component) {
       postCaption: '',
       postUnixTimestamp: new Date().valueOf(),
       postImageFileType: '',
+      postImageFileName: '',
       postImageURL: '',
       username: loggedinUsername,
       imageUploadOption: true,

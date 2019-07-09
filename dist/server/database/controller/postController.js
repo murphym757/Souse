@@ -21,6 +21,7 @@ exports.create_post = function (req, res, next) {
         postCaption: req.body.postCaption,
         postUnixTimestamp: req.body.postUnixTimestamp,
         postImageFileType: req.body.postImageFileType,
+        postImageFileName: req.body.postImageFileName,
         postImageURL: req.body.postImageURL
       }
     });
@@ -69,7 +70,11 @@ exports.update_post = function (req, res, next) {
   var newerPost = {
     postCreator: req.body.postCreatorId,
     sousePosts: {
-      postCaption: req.body.postCaption
+      postCaption: req.body.postCaption,
+      postUnixTimestamp: req.body.postUnixTimestamp,
+      postImageFileType: req.body.postImageFileType,
+      postImageFileName: req.body.postImageFileName,
+      postImageURL: req.body.postImageURL
     }
   };
   var updatepost = {

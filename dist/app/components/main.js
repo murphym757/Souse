@@ -15,8 +15,6 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _reactRedux = require("react-redux");
 
-var _footer = _interopRequireDefault(require("./navigation/footer"));
-
 var _loginForm = _interopRequireDefault(require("./registration/loginForm"));
 
 var _signUpForm = _interopRequireDefault(require("./registration/signUpForm"));
@@ -142,9 +140,7 @@ function (_Component) {
       var sousePosts = this.state.posts;
       var souseComments = this.state.comments;
       console.log(souseComments);
-      return _react["default"].createElement(_reactRouterDom.BrowserRouter, null, _react["default"].createElement("div", null, _react["default"].createElement(_navbar["default"], null), _react["default"].createElement("div", {
-        "class": "container"
-      }, _react["default"].createElement(_reactRouterDom.Switch, null, _react["default"].createElement(_reactRouterDom.Route, {
+      return _react["default"].createElement(_reactRouterDom.BrowserRouter, null, _react["default"].createElement("div", null, _react["default"].createElement(_navbar["default"], null), _react["default"].createElement("div", null, _react["default"].createElement(_reactRouterDom.Switch, null, _react["default"].createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/",
         render: function render(props) {
@@ -191,9 +187,7 @@ function (_Component) {
         component: _commentDeleteSection["default"]
       }), _react["default"].createElement(_reactRouterDom.Route, {
         component: _Page["default"]
-      })), _react["default"].createElement("div", {
-        "class": "fixed-bottom"
-      }, _react["default"].createElement(_footer["default"], null)))));
+      })))));
     }
   }]);
 

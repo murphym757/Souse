@@ -17,11 +17,12 @@ class PostCreate extends Component {
             postCaption: '',
             postUnixTimestamp: new Date().valueOf(),
             postImageFileType: '',
+            postImageFileName: '',
             postImageURL: '',
             username: loggedinUsername,
             imageUploadOption: true,
             isLoading: true,
-            fullPostUploadLoader: true,
+            fullPostUploadLoader: true
         };
         this.onChangepostCaption = this.onChangepostCaption.bind(this);
         this.onImageUpload = this.onImageUpload.bind(this);
@@ -58,6 +59,7 @@ class PostCreate extends Component {
         })
         this.setState({
             postImageFileType: e.target.files[0].type.slice(6),
+            postImageFileName: this.state.postUnixTimestamp + "." + e.target.files[0].type.slice(6),
             fullPostUploadLoader: false
         });
     }
@@ -76,6 +78,7 @@ class PostCreate extends Component {
             postCaption: this.state.postCaption,
             postUnixTimestamp: this.state.postUnixTimestamp,
             postImageFileType: this.state.postImageFileType,
+            postImageFileName: this.state.postImageFileName,
             postImageURL: this.state.postImageURL
 
         };
@@ -92,7 +95,7 @@ class PostCreate extends Component {
             postImageFileType: '',
             postImageURL: ''
         });
-        window.location.reload(false);
+        window.location.reload();
     }
 
     render() {

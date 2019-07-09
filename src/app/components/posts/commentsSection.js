@@ -26,7 +26,8 @@ class CommentsSection extends Component {
             originalPostId: originalPostId,
             commentId: '',
             postComment: '',
-            deleteCommentSelected: false
+            deleteCommentSelected: false,
+            userIcon: 'http://www.venmond.com/demo/vendroid/img/avatar/big.jpg'
         };
         this.onChangePostComment = this.onChangePostComment.bind(this);
         this.onSubmitComment = this.onSubmitComment.bind(this);
@@ -50,7 +51,7 @@ class CommentsSection extends Component {
             .then(console.log('Deleted'))
             .catch(err => console.log(err));
         this.props.history.push("/p/" + postId);
-        window.location.reload(false);
+        window.location.reload();
     }
    
     commentsFinder() {
@@ -82,7 +83,7 @@ class CommentsSection extends Component {
             souseComment: '',
             originalPostId: ''
         });
-        window.location.reload(false);
+        window.location.reload();
     }
     componentDidMount() {
         M.AutoInit();
@@ -123,10 +124,10 @@ class CommentsSection extends Component {
                         <div class="pre-scrollable">
                             {Object.keys(this.commentsFinder())
                                 .map((object, i) => (
-                                    <div class="row no-gutters commentsSectionBody">
-                                        <div class="col-2">
+                                    <div class="row no-gutters commentsSectionBody mt-0 mb-0">
+                                        <div class="col-2 pl-3">
                                             <img class="souseUserIconComments" 
-                                                src = "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg"
+                                                src= {this.state.userIcon}
                                                 alt="souseUserIconComments"
                                                 width="25px" 
                                                 height="25px"/>
@@ -168,9 +169,9 @@ class CommentsSection extends Component {
                         </div>
                     </div>
                         {isAuthenticated 
-                            ? <div class="row commentsFormSection">
+                            ? <div class="row commentsFormSection container-fluid">
                             <form class="col s12" onSubmit={this.onSubmitComment}>
-                                <div class="row">
+                                <div class="row pl-4">
                                     <div class="input-field col s6">
                                         <input 
                                             id="souse_comment" 

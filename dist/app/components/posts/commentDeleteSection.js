@@ -89,7 +89,7 @@ function (_Component) {
       });
 
       this.props.history.push("/p/" + postId);
-      window.location.reload(false);
+      window.location.reload();
     }
   }, {
     key: "render",

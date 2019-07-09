@@ -4,7 +4,6 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Footer from './navigation/footer';
 import LoginForm from './registration/loginForm';
 import SignUpForm from './registration/signUpForm';
 import LandingPage from './navigation/LandingPage';
@@ -74,36 +73,33 @@ class MainSource extends Component {
       console.log(souseComments);
         return (
             <Router>
-              <div>
-                <Navbar />
-                  <div class="container">
-                    <Switch>
-                        <Route exact path="/" 
-                          render={
-                            (props) => <LandingPage {...props} 
-                            souseUserData={souseUsers} sousePostData={sousePosts} souseCommentData={souseComments} />
-                          }/>
-                        <Route exact path="/signup" component={SignUpForm}/>
-                        <Route exact path="/login" component={LoginForm}/>
-                        <Route exact path="/:username" 
-                          render={
-                              (props) => <UserProfile {...props} 
-                              souseUserData={souseUsers} sousePostData={sousePosts} />
+                <div>
+                    <Navbar />
+                    <div>
+                        <Switch>
+                            <Route exact path="/" 
+                            render={
+                                (props) => <LandingPage {...props} 
+                                souseUserData={souseUsers} sousePostData={sousePosts} souseCommentData={souseComments} />
                             }/>
-                        <Route exact path="/p/:id" 
-                          render={
-                            (props) => <PostPage {...props} 
-                            souseUserData={souseUsers} sousePostData={sousePosts} souseCommentData={souseComments} />
-                          }/>
-                        <Route exact path="/p/edit/:id" component={PostEdit}/>
-                        <Route exact path="/c/delete/:id" component={CommentDelete}/>
-                        <Route component={RouteNotFound} />
-                    </Switch>
-                    <div class="fixed-bottom">
-                      <Footer />
-                  </div>
-                  </div>
-              </div>
+                            <Route exact path="/signup" component={SignUpForm}/>
+                            <Route exact path="/login" component={LoginForm}/>
+                            <Route exact path="/:username" 
+                            render={
+                                (props) => <UserProfile {...props} 
+                                souseUserData={souseUsers} sousePostData={sousePosts} />
+                                }/>
+                            <Route exact path="/p/:id" 
+                            render={
+                                (props) => <PostPage {...props} 
+                                souseUserData={souseUsers} sousePostData={sousePosts} souseCommentData={souseComments} />
+                            }/>
+                            <Route exact path="/p/edit/:id" component={PostEdit}/>
+                            <Route exact path="/c/delete/:id" component={CommentDelete}/>
+                            <Route component={RouteNotFound} />
+                        </Switch>
+                    </div>
+                </div>
             </Router>
         );
     }

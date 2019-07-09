@@ -15,11 +15,17 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _reactRedux = require("react-redux");
 
+var _awsS = _interopRequireDefault(require("aws-s3"));
+
+var _config = _interopRequireDefault(require("../../../server/config"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -43,6 +49,8 @@ function (_Component) {
   _inherits(PostEdit, _Component);
 
   function PostEdit(props) {
+    var _this$state;
+
     var _this;
 
     _classCallCheck(this, PostEdit);
@@ -55,11 +63,72 @@ function (_Component) {
       });
     };
 
+    _this.onUpdateImage = function (e) {
+      _this.setState({
+        updateImage: true
+      });
+    };
+
+    _this.onImageUpload = function (e) {
+      var config = {
+        bucketName: _config["default"].AWS_BUCKET_NAME,
+        dirName: "posts/" + "" + _this.state.postCreatorId + "",
+        region: _config["default"].AWS_REGION,
+        accessKeyId: _config["default"].AWS_ACCESS_KEY_ID,
+        secretAccessKey: _config["default"].AWS_SECRET_ACCESS_KEY,
+        s3Url: _config["default"].AWS_Uploaded_File_URL_LINK
+        /* Required */
+
+      };
+      var S3Client = new _awsS["default"](config);
+      var newFileName = "" + _this.state.postUnixTimestamp + "";
+      S3Client.uploadFile(e.target.files[0], newFileName).then(function (data) {
+        console.log(data.location);
+
+        _this.setState({
+          postImageURL: data.location,
+          isLoading: true
+        });
+      })["catch"](function (err) {
+        alert(err);
+      });
+
+      _this.setState({
+        postImageFileType: e.target.files[0].type.slice(6),
+        newPostImageFileName: _this.state.postUnixTimestamp + "." + e.target.files[0].type.slice(6),
+        fullPostUploadLoader: true
+      });
+    };
+
+    _this.onUpdateImageDelete = function (e) {
+      var config = {
+        bucketName: _config["default"].AWS_BUCKET_NAME,
+        dirName: "posts/" + "" + _this.state.postCreatorId + "",
+        region: _config["default"].AWS_REGION,
+        accessKeyId: _config["default"].AWS_ACCESS_KEY_ID,
+        secretAccessKey: _config["default"].AWS_SECRET_ACCESS_KEY,
+        s3Url: _config["default"].AWS_Uploaded_File_URL_LINK
+        /* Required */
+
+      };
+      var S3Client = new _awsS["default"](config);
+      var filename = "1561781587964.jpeg";
+      S3Client.deleteFile(filename).then(function (res) {
+        return console.log(res);
+      })["catch"](function (err) {
+        return console.error(err);
+      });
+    };
+
     _this.onSubmit = function (e) {
       e.preventDefault();
       var postData = {
         postCreatorId: _this.state.postCreatorId,
-        postCaption: _this.state.postCaption
+        postCaption: _this.state.postCaption,
+        postUnixTimestamp: _this.state.postUnixTimestamp,
+        postImageFileType: _this.state.postImageFileType,
+        postImageFileName: _this.state.newPostImageFileName,
+        postImageURL: _this.state.postImageURL
       };
       var apiRoute = "/souseAPI";
       var updateRoute = "/p/update";
@@ -75,19 +144,27 @@ function (_Component) {
     var _this$props$auth = _this.props.auth,
         isAuthenticated = _this$props$auth.isAuthenticated,
         user = _this$props$auth.user;
+    var postTimestamp = _this.props.location.state.postTimestamp;
     var loggedInUsername = user.username;
     var loggedInUserId = user.id;
     var postIdPathname = window.location.pathname;
     var postIdFound = postIdPathname.slice(8);
-    _this.state = {
+    _this.state = (_this$state = {
       posts: [],
       users: [],
       originalPostId: postIdFound,
       postCreatorId: '',
-      postCaption: ''
-    };
+      postCaption: '',
+      postImageURL: '',
+      updateImage: false,
+      updatedImage: false,
+      isLoading: false
+    }, _defineProperty(_this$state, "postCreatorId", loggedInUserId), _defineProperty(_this$state, "postUnixTimestamp", postTimestamp), _defineProperty(_this$state, "postImageFileType", ''), _defineProperty(_this$state, "postImageFileName", ''), _defineProperty(_this$state, "newPostImageFileName", ''), _defineProperty(_this$state, "username", loggedInUsername), _defineProperty(_this$state, "fullPostUploadLoader", false), _this$state);
     _this.onChangepostCaption = _this.onChangepostCaption.bind(_assertThisInitialized(_this));
+    _this.onUpdateImage = _this.onUpdateImage.bind(_assertThisInitialized(_this));
+    _this.onImageUpload = _this.onImageUpload.bind(_assertThisInitialized(_this));
     _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
+    _this.onUpdateImageDelete = _this.onUpdateImageDelete.bind(_assertThisInitialized(_this));
     _this["delete"] = _this["delete"].bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -108,7 +185,8 @@ function (_Component) {
       _axios["default"].get(apiRoute + editRoute + "/" + postId).then(function (res) {
         _this2.setState({
           postCaption: res.data.sousePosts.postCaption,
-          postCreatorId: res.data.postCreator
+          postCreatorId: res.data.postCreator,
+          postImageURL: res.data.sousePosts.postImageURL
         });
       })["catch"](function (error) {
         console.log(error);
@@ -130,7 +208,7 @@ function (_Component) {
       });
 
       this.props.history.push("/" + userName);
-      window.location.reload(false);
+      window.location.reload();
     }
   }, {
     key: "render",
@@ -140,10 +218,15 @@ function (_Component) {
           user = _this$props$auth3.user;
       var loggedInUser = "" + user.id + "";
       var postCreatorId = this.state.postCreatorId;
+      var updateImage = this.state.updateImage;
+      var updatedImage = this.state.updatedImage;
       return _react["default"].createElement("div", null, isAuthenticated && postCreatorId == loggedInUser ? _react["default"].createElement("div", {
         "class": "container"
+      }, _react["default"].createElement("div", {
+        "class": "row pt-5"
       }, _react["default"].createElement("form", {
-        onSubmit: this.onSubmit
+        onSubmit: this.onSubmit,
+        "class": "col-6"
       }, _react["default"].createElement("div", {
         "class": "input-field"
       }, _react["default"].createElement("textarea", {
@@ -156,13 +239,58 @@ function (_Component) {
       }), _react["default"].createElement("label", {
         "class": "active",
         "for": "souseCaptionPost"
-      }, "Caption")), _react["default"].createElement("div", {
+      }, "Caption")), updateImage ? _react["default"].createElement("div", null, this.state.fullPostUploadLoader ? _react["default"].createElement("div", null, this.state.isLoading ? _react["default"].createElement("div", {
+        "class": "img-wrapper col-6"
+      }, _react["default"].createElement("label", null, "Image updated"), _react["default"].createElement("div", {
+        "class": "img-responsive"
+      }, _react["default"].createElement("div", {
+        "class": "souseImageFormat"
+      }, _react["default"].createElement("img", {
+        "class": "d-flex justify-content-left sousePostImageThumbnail pb-2",
+        src: this.state.postImageURL,
+        alt: "sousePostImage",
+        width: "1080px",
+        height: "1080px"
+      })))) : _react["default"].createElement("div", {
+        "class": "progress"
+      }, _react["default"].createElement("div", {
+        "class": "indeterminate"
+      }))) : _react["default"].createElement("div", {
+        "class": "file-field input-field"
+      }, _react["default"].createElement("div", {
+        "class": "btn-large"
+      }, _react["default"].createElement("span", null, "Upload"), _react["default"].createElement("input", {
+        type: "file",
+        name: "souseImage",
+        id: "souseImagePost",
+        onChange: this.onImageUpload
+      })), _react["default"].createElement("div", {
+        "class": "file-path-wrapper"
+      }, _react["default"].createElement("input", {
+        "class": "file-path validate",
+        type: "text"
+      })))) : _react["default"].createElement("div", {
+        "class": "img-wrapper col-6"
+      }, _react["default"].createElement("label", null, "Click image to update"), _react["default"].createElement("div", {
+        "class": "img-responsive"
+      }, _react["default"].createElement("div", {
+        "class": "souseImageFormat"
+      }, _react["default"].createElement("img", {
+        "class": "d-flex justify-content-left sousePostImageThumbnail pb-2",
+        onClick: this.onUpdateImage,
+        onChange: this.onChangeImageFileType,
+        src: this.state.postImageURL,
+        alt: "sousePostImage",
+        width: "1080px",
+        height: "1080px"
+      })))), _react["default"].createElement("div", {
         "class": "form-group"
       }, _react["default"].createElement("button", {
+        onClick: this.onUpdateImageDelete,
         type: "submit",
         "class": "waves-effect waves-light btn-large"
-      }, "Update"))), _react["default"].createElement("div", {
-        "class": "form-group col d-flex justify-content-center"
+      }, "Update")))), _react["default"].createElement("div", {
+        "class": "form-group col d-flex justify-content-center pt-3"
       }, _react["default"].createElement("button", {
         onClick: this["delete"],
         "class": "waves-effect waves-light btn-large"

@@ -15,9 +15,13 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _reactRedux = require("react-redux");
 
+var _reactTimestamp = _interopRequireDefault(require("react-timestamp"));
+
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
-var _commentsSection = _interopRequireDefault(require("../posts/commentsSection"));
+var _commentDeleteSection = _interopRequireDefault(require("./commentDeleteSection"));
+
+var _commentsSection = _interopRequireDefault(require("./commentsSection"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -58,7 +62,8 @@ function (_Component) {
     var loggedinUser = user.username;
     _this.state = {
       postCreatorId: loggedinUser,
-      userIcon: "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg"
+      postCreatorImage: "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg",
+      currentYear: new Date().getFullYear()
     };
     _this["delete"] = _this["delete"].bind(_assertThisInitialized(_this));
     return _this;
@@ -94,12 +99,13 @@ function (_Component) {
       var postCreatorId = this.props.obj.postCreator;
       var postCaption = this.props.obj.sousePosts.postCaption;
       var sousePostImage = this.props.obj.sousePosts.postImageURL;
+      var postUnixTimestamp = this.props.obj.sousePosts.postUnixTimestamp;
       var postCreatorName = this.props.postCreatorName;
       var postCreatorImage = this.props.postCreatorImage;
       return _react["default"].createElement("div", {
         "class": "mx-auto d-block pt-1"
       }, _react["default"].createElement("div", {
-        "class": "container-fluid d-none d-xl-block"
+        "class": "d-none d-xl-block container"
       }, " ", _react["default"].createElement("div", {
         "class": "row pt-5"
       }, _react["default"].createElement("div", {
@@ -116,7 +122,31 @@ function (_Component) {
         alt: "sousePostImage",
         width: "1080px",
         height: "1080px"
-      }))), isAuthenticated && postCreatorId === loggedinUser ? _react["default"].createElement("div", {
+      }))))), _react["default"].createElement("div", {
+        "class": "col-4"
+      }, _react["default"].createElement("div", {
+        "class": "container"
+      }, _react["default"].createElement("div", {
+        "class": "row"
+      }, _react["default"].createElement("div", {
+        "class": "col-2"
+      }, _react["default"].createElement("img", {
+        "class": "souseUserIconComments",
+        src: this.state.postUserImage,
+        alt: "souseUserIconComments",
+        width: "25px",
+        height: "25px"
+      })), _react["default"].createElement("div", {
+        "class": "col-8"
+      }, _react["default"].createElement("h6", {
+        "class": "sousePostCreatorName"
+      }, postCreatorName))), _react["default"].createElement("div", {
+        "class": "row"
+      }, _react["default"].createElement("div", {
+        "class": "col-12"
+      }, _react["default"].createElement("h6", {
+        "class": "sousePostCaption"
+      }, postCaption))), isAuthenticated && postCreatorId === loggedinUser ? _react["default"].createElement("div", {
         "class": "container-fluid img-overlay col justify-content-left"
       }, _react["default"].createElement("div", {
         "class": "row profileImageRow"
@@ -137,7 +167,12 @@ function (_Component) {
       }, _react["default"].createElement("div", {
         "class": "form-group pt-4"
       }, _react["default"].createElement(_reactRouterDom.Link, {
-        to: "/p/edit/" + this.props.obj._id
+        to: {
+          pathname: "/p/edit/" + this.props.obj._id,
+          state: {
+            postTimestamp: postUnixTimestamp
+          }
+        }
       }, _react["default"].createElement("button", {
         type: "submit",
         "class": "waves-effect waves-light btn-large"
@@ -155,7 +190,7 @@ function (_Component) {
         "class": "col-3 d-flex flex-row-reverse"
       }, _react["default"].createElement("p", {
         "class": "followData"
-      }, "22.2k Followers"))), _react["default"].createElement("div", {
+      }))), _react["default"].createElement("div", {
         "class": "row profileImageRow"
       }, " ", _react["default"].createElement("div", {
         "class": "col-6"
@@ -163,23 +198,83 @@ function (_Component) {
         "class": "col-3 d-flex flex-row"
       }, _react["default"].createElement("p", {
         "class": "locationData"
-      }, "Miami, Florida")), _react["default"].createElement("div", {
+      })), _react["default"].createElement("div", {
         "class": "col-3 d-flex flex-row-reverse"
       }, _react["default"].createElement("p", {
         "class": "followData"
-      }, "1.2k Following")))) : _react["default"].createElement("div", null))), _react["default"].createElement("div", {
-        "class": "col-4"
-      }, _react["default"].createElement("div", {
-        "class": "container"
-      }, _react["default"].createElement("h6", {
-        "class": "sousePostCreatorName"
-      }, postCreatorName), _react["default"].createElement("h6", {
-        "class": "sousePostCaption"
-      }, postCaption), _react["default"].createElement(_commentsSection["default"], {
+      })))) : _react["default"].createElement("div", null), _react["default"].createElement(_commentsSection["default"], {
         originalPostData: postData,
         souseUserData: souseUserData,
         souseCommentData: souseCommentData
-      }), " ")))));
+      }), " "), _react["default"].createElement("div", {
+        "class": "souseFooter"
+      }, _react["default"].createElement("h6", null, _react["default"].createElement("i", {
+        "class": "far fa-copyright"
+      }), this.state.currentYear, " Souse"))))), _react["default"].createElement("div", {
+        "class": "d-xl-none container-fluid"
+      }, " ", _react["default"].createElement("div", {
+        "class": "row"
+      }, _react["default"].createElement("div", {
+        "class": "col-sm-6 no-gutters postSection"
+      }, " ", _react["default"].createElement("div", {
+        "class": "col-12 no-gutters sousePostImageColumn"
+      }, _react["default"].createElement("div", {
+        "class": "img-responsive"
+      }, _react["default"].createElement("div", {
+        "class": "souseImageFormat"
+      }, _react["default"].createElement("img", {
+        "class": "mx-auto d-block sousePostImage",
+        src: sousePostImage,
+        alt: "sousePostImage",
+        width: "1080px",
+        height: "1080px"
+      })))), _react["default"].createElement("div", {
+        "class": "col-12 no-gutters sousePostUserDataColumn"
+      }, _react["default"].createElement("div", {
+        "class": "row"
+      }, _react["default"].createElement("div", {
+        "class": "col-3 no-gutters souseUserImageColumn"
+      }, _react["default"].createElement("img", {
+        "class": "souseUserIconPost",
+        src: this.state.postCreatorImage,
+        alt: "souseUserIconPost",
+        width: "25px",
+        height: "25px"
+      })), _react["default"].createElement("div", {
+        "class": "col-9 souseUserNameColumn"
+      }, _react["default"].createElement("h6", {
+        "class": "souseUsername"
+      }, _react["default"].createElement("span", null, _react["default"].createElement(_reactRouterDom.Link, {
+        to: "/".concat(postCreatorName)
+      }, postCreatorName))), _react["default"].createElement("h6", {
+        "class": "sousePostCaption"
+      }, postCaption), _react["default"].createElement("div", {
+        "class": "row souseEditPostButton"
+      }, _react["default"].createElement("div", {
+        "class": "form-group"
+      }, _react["default"].createElement(_reactRouterDom.Link, {
+        to: {
+          pathname: "/p/edit/" + this.props.obj._id,
+          state: {
+            postTimestamp: postUnixTimestamp
+          }
+        }
+      }, _react["default"].createElement("button", {
+        type: "submit",
+        "class": "waves-effect waves-light btn-small"
+      }, _react["default"].createElement("p", {
+        "class": "lead buttonFont"
+      }, "Edit Post"))))))))), _react["default"].createElement("div", {
+        "class": "col-sm-6 no-gutters souseCommentsColumn"
+      }, " ", _react["default"].createElement(_commentsSection["default"], {
+        originalPostData: postData,
+        souseUserData: souseUserData,
+        souseCommentData: souseCommentData
+      }), " ", _react["default"].createElement("div", {
+        "class": "souseFooter"
+      }, _react["default"].createElement("h6", null, _react["default"].createElement("i", {
+        "class": "far fa-copyright"
+      }), this.state.currentYear, " Souse"))))));
     }
   }]);
 
