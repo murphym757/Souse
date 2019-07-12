@@ -105,7 +105,7 @@ nav ul a {
 }
 
 .pre-scrollable {
-    max-height: 340px;
+    max-height: 500px;
     overflow-y: scroll;
     overflow-x: hidden !important;
 }
@@ -430,6 +430,11 @@ fieldset[disabled] .btn-modalButton.active {
     .souseEditPostButton {
         padding-left: 1rem;
         padding-top: 1.5rem;
+    }
+    .pre-scrollable {
+        max-height: 500px;
+        overflow-y: scroll;
+        overflow-x: hidden !important;
     }
 }
 

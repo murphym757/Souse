@@ -16,10 +16,27 @@ class PostsGrid extends Component {
         this.state = {
             postCreatorId: loggedinUser,
             postCreatorImage: "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg",
+            commentSectionSelected: false,
             currentYear: new Date().getFullYear()
         };
+        this.displayComments = this.displayComments.bind(this);
         this.delete = this.delete.bind(this);
     }
+    commentsFinder() {
+        const souseCommentData = this.props.souseCommentData;
+        const souseCommentList = ["" + this.props.obj._id + ""],
+            souseCommentsList = new Set(souseCommentList),
+            souseFilterData = souseCommentData.filter(souseCommentsData => souseCommentsList.has(souseCommentsData.originalPostId));
+        console.log(souseFilterData);
+        return souseFilterData;
+    }
+
+    displayComments = (e) => {
+        this.setState({
+            commentSectionSelected: true
+        });
+    }
+
     delete() {
         const {isAuthenticated, user} = this.props.auth;
         const userName = user.username;
@@ -44,6 +61,8 @@ class PostsGrid extends Component {
         const postUnixTimestamp = this.props.obj.sousePosts.postUnixTimestamp;
         const postCreatorName = this.props.postCreatorName;
         const postCreatorImage = this.props.postCreatorImage;
+        const commentSectionSelected = this.state.commentSectionSelected;
+        const commentsTotal = "" + this.commentsFinder().length + "";
         return (
             <div class="mx-auto d-block pt-1">
                 <div class="d-none d-xl-block container"> {/* For larger Sceens */}
@@ -142,55 +161,67 @@ class PostsGrid extends Component {
                 </div>
                 <div class="d-xl-none container-fluid"> {/* For smaller Sceens */}
                     <div class="row">
-                        <div class="col-sm-6 no-gutters postSection"> {/* Post Section */}
-                            <div class="col-12 no-gutters sousePostImageColumn">
-                                <div class="img-responsive">
-                                    <div class="souseImageFormat">
-                                        <img class="mx-auto d-block sousePostImage" 
-                                            src={sousePostImage}
-                                            alt="sousePostImage"
-                                            width="1080px" 
-                                            height="1080px"/>
-                                    </div>
-                                </div>
+                    {commentSectionSelected 
+                        ?   <div class="souseCommentsColumn no-gutters col-12"> {/* Comments Section */}
+                                <CommentsSection 
+                                    originalPostData={postData}
+                                    souseUserData={souseUserData} 
+                                    souseCommentData={souseCommentData}/> {/* Comments */}
                             </div>
-                            <div class="col-12 no-gutters sousePostUserDataColumn">
+                        :   <div class="postSection no-gutters"> {/* Post Section */}
                                 <div class="row">
-                                    <div class="col-3 no-gutters souseUserImageColumn">
-                                        <img class="souseUserIconPost" 
-                                            src={this.state.postCreatorImage}
-                                            alt="souseUserIconPost"
-                                            width="25px" 
-                                            height="25px"/>
-                                    </div>
-                                    <div class="col-9 souseUserNameColumn">
-                                        <h6 class="souseUsername">
-                                            <span><Link to={`/${postCreatorName}`}>{postCreatorName}</Link></span>
-                                        </h6>
-                                        <h6 class="sousePostCaption">{postCaption}</h6>
-                                        <div class="row souseEditPostButton">
-                                            <div class="form-group">
-                                                <Link to={
-                                                    {
-                                                        pathname: "/p/edit/" + this.props.obj._id,
-                                                        state: {
-                                                            postTimestamp: postUnixTimestamp
-                                                        }
-                                                    }
-                                                }>
-                                                    <button type="submit" class="waves-effect waves-light btn-small"><p class="lead buttonFont">Edit Post</p></button>
-                                                </Link>
+                                    <div class="col-12 no-gutters sousePostImageColumn">
+                                        <div class="img-responsive">
+                                            <div class="souseImageFormat">
+                                                <img class="mx-auto d-block sousePostImage" 
+                                                    src={sousePostImage}
+                                                    alt="sousePostImage"
+                                                    width="1080px" 
+                                                    height="1080px"/>
                                             </div>
                                         </div>
                                     </div>
-                                </div>  
+                                    <div class="col-12 no-gutters sousePostUserDataColumn">
+                                        <div class="row">
+                                            <div class="col-3 no-gutters souseUserImageColumn">
+                                                <img class="souseUserIconPost" 
+                                                    src={this.state.postCreatorImage}
+                                                    alt="souseUserIconPost"
+                                                    width="25px" 
+                                                    height="25px"/>
+                                            </div>
+                                            <div class="col-9 souseUserNameColumn">
+                                                <h6 class="souseUsername">
+                                                    <span><Link to={`/${postCreatorName}`}>{postCreatorName}</Link></span>
+                                                </h6>
+                                                <h6 class="sousePostCaption">{postCaption}</h6>
+                                                {isAuthenticated && postCreatorId === loggedinUser
+                                                    ?   <div class="row souseEditPostButton">
+                                                            <div class="form-group">
+                                                                <Link to={
+                                                                    {
+                                                                        pathname: "/p/edit/" + this.props.obj._id,
+                                                                        state: {
+                                                                            postTimestamp: postUnixTimestamp
+                                                                        }
+                                                                    }
+                                                                }>
+                                                                    <button type="submit" class="waves-effect waves-light btn-small"><p class="lead buttonFont">Edit Post</p></button>
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+                                                    :   <div></div>
+                                                }
+                                            </div>
+                                        </div>  
+                                    </div>
+                                    <div class="col-12 no-gutters sousePostUserCommentsLink">
+                                        <h6 onClick={this.displayComments}>View all {commentsTotal} comments</h6>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-sm-6 no-gutters souseCommentsColumn"> {/* Comments Section */}
-                            <CommentsSection 
-                                originalPostData={postData}
-                                souseUserData={souseUserData} 
-                                souseCommentData={souseCommentData}/> {/* Comments */}
+                    }
+                        <div class="col-sm-6 no-gutters footerSection">
                             <div class="souseFooter">
                                 <h6><i class="far fa-copyright"></i>{this.state.currentYear} Souse</h6>
                             </div>

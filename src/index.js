@@ -27,7 +27,7 @@ if (localStorage.jwtToken) {
 }
 
 render(
-    <Provider store = { store }>
+    <Provider store = {store}>
         <MainSource />
     </Provider>, 
     document.getElementById("app")

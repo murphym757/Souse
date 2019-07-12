@@ -200,21 +200,21 @@ function (_Component) {
         })), _react["default"].createElement("div", {
           "class": "col-10"
         }, _react["default"].createElement("h6", {
-          "class": "souseCommentsCaption"
+          "class": "souseCommentsCaption pr-3"
         }, _react["default"].createElement("span", {
           "class": "pr-1"
         }, _react["default"].createElement(_reactRouterDom.Link, {
           to: "/".concat(_this2.commentsFinder()[i].commentCreatorUsername)
         }, _this2.commentsFinder()[i].commentCreatorUsername), " "), _this2.commentsFinder()[i].souseComment), _react["default"].createElement("div", {
-          "class": "row souseCommentsDataReply"
+          "class": "row souseCommentsDataReply no-gutters"
         }, _react["default"].createElement("h6", {
-          "class": "col-4 pl-4 commentTime"
+          "class": "col-3 pl-4 commentTime"
         }, _react["default"].createElement(_reactTimestamp["default"], {
           relative: true,
           time: Date,
           relativeTo: _this2.commentsFinder()[i].commentCreatedDate
         })), _react["default"].createElement("h6", {
-          "class": "col-8 pl-2"
+          "class": "col-9 pl-2"
         }, _this2.commentsFinder()[i].commentCreatorUsername == loggedinUser ? _react["default"].createElement("div", null, _react["default"].createElement("h6", null, _react["default"].createElement("div", {
           "class": "modal-trigger",
           href: "#modal1",

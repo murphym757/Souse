@@ -133,12 +133,12 @@ class CommentsSection extends Component {
                                                 height="25px"/>
                                         </div>
                                         <div class="col-10">
-                                            <h6 class="souseCommentsCaption">
+                                            <h6 class="souseCommentsCaption pr-3">
                                                 <span class="pr-1"><Link to={`/${this.commentsFinder()[i].commentCreatorUsername}`}>{this.commentsFinder()[i].commentCreatorUsername}</Link> </span>{this.commentsFinder()[i].souseComment}
                                             </h6>
-                                            <div class="row souseCommentsDataReply">
-                                                <h6 class="col-4 pl-4 commentTime"><Timestamp relative time={Date} relativeTo={this.commentsFinder()[i].commentCreatedDate} /></h6>
-                                                <h6 class="col-8 pl-2">
+                                            <div class="row souseCommentsDataReply no-gutters">
+                                                <h6 class="col-3 pl-4 commentTime"><Timestamp relative time={Date} relativeTo={this.commentsFinder()[i].commentCreatedDate} /></h6>
+                                                <h6 class="col-9 pl-2">
                                                 {this.commentsFinder()[i].commentCreatorUsername == loggedinUser
                                                     ? <div>
                                                         <h6>

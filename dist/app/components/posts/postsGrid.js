@@ -56,6 +56,13 @@ function (_Component) {
     _classCallCheck(this, PostsGrid);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(PostsGrid).call(this, props));
+
+    _this.displayComments = function (e) {
+      _this.setState({
+        commentSectionSelected: true
+      });
+    };
+
     var _this$props$auth = _this.props.auth,
         isAuthenticated = _this$props$auth.isAuthenticated,
         user = _this$props$auth.user;
@@ -63,13 +70,27 @@ function (_Component) {
     _this.state = {
       postCreatorId: loggedinUser,
       postCreatorImage: "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg",
+      commentSectionSelected: false,
       currentYear: new Date().getFullYear()
     };
+    _this.displayComments = _this.displayComments.bind(_assertThisInitialized(_this));
     _this["delete"] = _this["delete"].bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(PostsGrid, [{
+    key: "commentsFinder",
+    value: function commentsFinder() {
+      var souseCommentData = this.props.souseCommentData;
+      var souseCommentList = ["" + this.props.obj._id + ""],
+          souseCommentsList = new Set(souseCommentList),
+          souseFilterData = souseCommentData.filter(function (souseCommentsData) {
+        return souseCommentsList.has(souseCommentsData.originalPostId);
+      });
+      console.log(souseFilterData);
+      return souseFilterData;
+    }
+  }, {
     key: "delete",
     value: function _delete() {
       var _this$props$auth2 = this.props.auth,
@@ -102,6 +123,8 @@ function (_Component) {
       var postUnixTimestamp = this.props.obj.sousePosts.postUnixTimestamp;
       var postCreatorName = this.props.postCreatorName;
       var postCreatorImage = this.props.postCreatorImage;
+      var commentSectionSelected = this.state.commentSectionSelected;
+      var commentsTotal = "" + this.commentsFinder().length + "";
       return _react["default"].createElement("div", {
         "class": "mx-auto d-block pt-1"
       }, _react["default"].createElement("div", {
@@ -214,9 +237,17 @@ function (_Component) {
         "class": "d-xl-none container-fluid"
       }, " ", _react["default"].createElement("div", {
         "class": "row"
-      }, _react["default"].createElement("div", {
-        "class": "col-sm-6 no-gutters postSection"
+      }, commentSectionSelected ? _react["default"].createElement("div", {
+        "class": "souseCommentsColumn no-gutters col-12"
+      }, " ", _react["default"].createElement(_commentsSection["default"], {
+        originalPostData: postData,
+        souseUserData: souseUserData,
+        souseCommentData: souseCommentData
+      }), " ") : _react["default"].createElement("div", {
+        "class": "postSection no-gutters"
       }, " ", _react["default"].createElement("div", {
+        "class": "row"
+      }, _react["default"].createElement("div", {
         "class": "col-12 no-gutters sousePostImageColumn"
       }, _react["default"].createElement("div", {
         "class": "img-responsive"
@@ -248,7 +279,7 @@ function (_Component) {
         to: "/".concat(postCreatorName)
       }, postCreatorName))), _react["default"].createElement("h6", {
         "class": "sousePostCaption"
-      }, postCaption), _react["default"].createElement("div", {
+      }, postCaption), isAuthenticated && postCreatorId === loggedinUser ? _react["default"].createElement("div", {
         "class": "row souseEditPostButton"
       }, _react["default"].createElement("div", {
         "class": "form-group"
@@ -264,13 +295,13 @@ function (_Component) {
         "class": "waves-effect waves-light btn-small"
       }, _react["default"].createElement("p", {
         "class": "lead buttonFont"
-      }, "Edit Post"))))))))), _react["default"].createElement("div", {
-        "class": "col-sm-6 no-gutters souseCommentsColumn"
-      }, " ", _react["default"].createElement(_commentsSection["default"], {
-        originalPostData: postData,
-        souseUserData: souseUserData,
-        souseCommentData: souseCommentData
-      }), " ", _react["default"].createElement("div", {
+      }, "Edit Post"))))) : _react["default"].createElement("div", null)))), _react["default"].createElement("div", {
+        "class": "col-12 no-gutters sousePostUserCommentsLink"
+      }, _react["default"].createElement("h6", {
+        onClick: this.displayComments
+      }, "View all ", commentsTotal, " comments")))), _react["default"].createElement("div", {
+        "class": "col-sm-6 no-gutters footerSection"
+      }, _react["default"].createElement("div", {
         "class": "souseFooter"
       }, _react["default"].createElement("h6", null, _react["default"].createElement("i", {
         "class": "far fa-copyright"
