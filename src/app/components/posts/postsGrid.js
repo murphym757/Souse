@@ -204,13 +204,18 @@ class PostsGrid extends Component {
                                                 </div>
                                                 <div class="card bottomRowOfCardContent comboImage" width="1080px">
                                                     <div class="card-body">
-                                                        <div class="container">
+                                                        
                                                             <div class="row bottomRowOfCardContentRow my-auto">
                                                                 <div class="col-4"></div>
-                                                                <div class="col-4"><h6 class="d-flex justify-content-center my-auto">Hi There</h6></div>
+                                                                <div class="col-4">
+                                                                    <div class="container d-flex justify-content-center align-items-end">
+                                                                        <h6 class="d-flex my-auto">Hi There</h6>
+                                                                        <br />
+                                                                        <div class="customUnderline comboImage"></div>
+                                                                    </div>
+                                                                </div>
                                                                 <div class="col-4"></div>
                                                             </div>
-                                                        </div>
                                                     </div>
                                                 </div>
                                                 <img class="mx-auto d-block sousePostImage" 

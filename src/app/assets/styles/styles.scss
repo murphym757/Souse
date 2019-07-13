@@ -523,8 +523,8 @@ fieldset[disabled] .btn-modalButton.active {
         position: absolute;
         top: 25rem;
         left: 1rem;
-        background: rgb(255,255,255);
-background: linear-gradient(180deg, rgba($black,0) 41%, rgba($primaryColorAlt,1) 80%, rgba($primaryColorAlt,1) 58%);
+        background: rgb(255, 255, 255);
+        background: linear-gradient(180deg, rgba($black, 0) 41%, rgba($primaryColorAlt, 1) 80%, rgba($primaryColorAlt, 1) 58%);
         border: none;
     }
 
@@ -562,6 +562,18 @@ background: linear-gradient(180deg, rgba($black,0) 41%, rgba($primaryColorAlt,1)
 
     .bottomRowOfCardContentRow {
         padding-bottom: 0;
+    }
+
+    div.comboImage.customUnderline {
+        position: absolute;
+        top: 2.65rem;
+    }
+
+    .customUnderline {
+        width: 7rem;
+        height: 0.15rem;
+        z-index: 5;
+        background: $white;
     }
 }
 

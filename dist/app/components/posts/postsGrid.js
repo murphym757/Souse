@@ -293,18 +293,20 @@ function (_Component) {
       }, _react["default"].createElement("div", {
         "class": "card-body"
       }, _react["default"].createElement("div", {
-        "class": "container"
-      }, _react["default"].createElement("div", {
         "class": "row bottomRowOfCardContentRow my-auto"
       }, _react["default"].createElement("div", {
         "class": "col-4"
       }), _react["default"].createElement("div", {
         "class": "col-4"
+      }, _react["default"].createElement("div", {
+        "class": "container d-flex justify-content-center align-items-end"
       }, _react["default"].createElement("h6", {
-        "class": "d-flex justify-content-center my-auto"
-      }, "Hi There")), _react["default"].createElement("div", {
+        "class": "d-flex my-auto"
+      }, "Hi There"), _react["default"].createElement("br", null), _react["default"].createElement("div", {
+        "class": "customUnderline comboImage"
+      }))), _react["default"].createElement("div", {
         "class": "col-4"
-      }))))), _react["default"].createElement("img", {
+      })))), _react["default"].createElement("img", {
         "class": "mx-auto d-block sousePostImage",
         src: sousePostImage,
         alt: "sousePostImage",
