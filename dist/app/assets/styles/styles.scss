@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,900&display=swap');
 // Souse Color Palette
-$primaryColorAlt: #DDAEAA;
-$secondaryColor: #C45758;
-$primaryColor: #E4D1D1;
-$white: #FFFFFF;
-$softBlack: #272727;
+$primaryColorAlt: rgb(221, 174, 170);
+$secondaryColor: rgb(196, 87, 88);
+$primaryColor: rgb(228, 209, 209);
+$white: rgb(255, 255, 255);
+$softBlack: rgb(39, 39, 39);
+$black: rgb(0, 0, 0);
+
 body {
     display: table;
     width: 100%;
@@ -65,6 +67,7 @@ nav ul a {
     color: $white;
 
 }
+
 .locationData {
     text-transform: uppercase;
     font-weight: bold;
@@ -86,12 +89,13 @@ nav ul a {
 .userData,
 .locationData,
 .followData {
-    margin-bottom:0px !important;
+    margin-bottom: 0px !important;
 }
 
 .souseCommentsCaption {
     font-size: 0.7em;
 }
+
 .commentTime {
     font-size: 0.6em;
 }
@@ -109,6 +113,7 @@ nav ul a {
     overflow-y: scroll;
     overflow-x: hidden !important;
 }
+
 .commentTime,
 .replyLink {
     font-size: 0.7em;
@@ -123,27 +128,57 @@ nav ul a {
 .modal .modal-footer {
     background-color: $white;
 }
+
 .modal-footer> :not(:last-child) {
     margin-right: 0rem;
 }
+
 .modal-content {
     border: 0px;
 }
 
-.z-depth-1, nav, .card-panel, .card, .toast, .btn, .btn-large, .btn-small, .btn-floating, .dropdown-content, .collapsible, .sidenav {
+.z-depth-1,
+nav,
+.card-panel,
+.card,
+.toast,
+.btn,
+.btn-large,
+.btn-small,
+.btn-floating,
+.dropdown-content,
+.collapsible,
+.sidenav {
     -webkit-box-shadow: none;
     box-shadow: none;
 }
 
-.z-depth-1:hover, nav:hover, .card-panel:hover, .card:hover, .toast:hover, .btn:hover, .btn-large:hover, .btn-small:hover, .btn-floating:hover, .dropdown-content:hover, .collapsible:hover, .sidenav:hover {
+.z-depth-1:hover,
+nav:hover,
+.card-panel:hover,
+.card:hover,
+.toast:hover,
+.btn:hover,
+.btn-large:hover,
+.btn-small:hover,
+.btn-floating:hover,
+.dropdown-content:hover,
+.collapsible:hover,
+.sidenav:hover {
     -webkit-box-shadow: none;
     box-shadow: none;
 }
+
+.commentDataColumn {
+    padding-left: 0.5rem;
+}
+
 /* ---------------------------------------------------- */
 
 // Image Format
 /* ---------------------------------------------------- */
-.sousePostImage { //Img Tag
+.sousePostImage {
+    //Img Tag
     object-fit: cover;
     width: 49vw;
     height: 43vw;
@@ -202,6 +237,7 @@ nav ul a {
 .souseUserPostsUserHomePage:hover {
     border: 1px solid $secondaryColor;
 }
+
 .souseUserIconComments,
 .souseUserIconPost {
     border-radius: 50%;
@@ -212,6 +248,7 @@ nav ul a {
     justify-content: center;
     align-items: center;
 }
+
 .sousePostImageThumbnail {
     //Img Tag
     object-fit: cover;
@@ -238,6 +275,7 @@ nav ul a {
 .btn-large:hover {
     background-color: $primaryColorAlt;
 }
+
 .buttonFont {
     text-transform: uppercase;
     font-size: 0.696em; //10px
@@ -307,11 +345,14 @@ input[type=tel]:not(.browser-default),
 input[type=number]:not(.browser-default),
 input[type=search]:not(.browser-default),
 textarea.materialize-textarea {
+
     // Focused input style
     &:focus:not([readonly]) {
         border-bottom: 1px solid $secondaryColor;
         box-shadow: 0 1px 0 0 $secondaryColor;
-    } // Focused label style
+    }
+
+    // Focused label style
     &:focus:not([readonly])+label {
         color: $secondaryColor;
     }
@@ -377,6 +418,7 @@ fieldset[disabled] .btn-modalButton.active {
     color: $white;
     background-color: $secondaryColor;
 }
+
 /* ---------------------------------------------------- */
 .souseFooter,
 .addPostButton {
@@ -400,41 +442,126 @@ fieldset[disabled] .btn-modalButton.active {
         width: 100vw;
         height: 100vw;
     }
+
     .souseUserIconComments {
         width: 10vw;
         height: 10vw;
     }
+
     .souseUserIconPost {
         width: 15vw;
         height: 15vw;
     }
+
     .pre-scrollable {
         max-height: 200px;
     }
+
     .postSection,
     .sousePostImageColumn,
     .sousePostUserDataColumn,
     .souseCommentsColumn {
         padding: 0;
     }
+
     .sousePostImage {
         padding-bottom: 0.5rem;
     }
+
     .souseUserImageColumn {
         padding-right: 0;
         padding-left: 1.5rem;
     }
+
     .souseUserNameColumn {
         padding-left: 0;
     }
+
     .souseEditPostButton {
         padding-left: 1rem;
         padding-top: 1.5rem;
     }
+
+    .commentTime {
+        padding-left: 1.5rem;
+    }
+
+    .commentEdit {
+        padding-left: 0.5rem;
+    }
+
     .pre-scrollable {
         max-height: 500px;
         overflow-y: scroll;
         overflow-x: hidden !important;
+    }
+
+    div.comboImage {
+        position: absolute;
+        top: 0rem;
+        left: 1rem;
+    }
+
+    div.comboImage.bottomRowOfCardBackground {
+        position: absolute;
+        top: 26rem;
+        left: 1rem;
+        background: rgba($primaryColorAlt, 1);
+        border: none;
+    }
+
+    div.comboImage.bottomRowOfCard {
+        position: absolute;
+        top: 24rem;
+        left: 1rem;
+        background: rgb(255, 255, 255);
+        background: linear-gradient(180deg, rgba($black, 0) 0%, rgba($primaryColorAlt, 1) 92%);
+        border: none;
+    }
+
+    div.comboImage.bottomRowOfCardContent {
+        position: absolute;
+        top: 25rem;
+        left: 1rem;
+        background: rgb(255,255,255);
+background: linear-gradient(180deg, rgba($black,0) 41%, rgba($primaryColorAlt,1) 80%, rgba($primaryColorAlt,1) 58%);
+        border: none;
+    }
+
+    .bottomRowOfCardBackground {
+        width: 101vw;
+        z-index: 1;
+        border-radius: 0 !important;
+        -webkit-box-shadow: 0 6px 10px -8px $black;
+        -moz-box-shadow: 0 6px 10px -8px $black;
+        box-shadow: 0 6px 10px -8px $black;
+    }
+
+    .colorOverlay {
+        object-fit: cover;
+        width: 101vw;
+        height: 99vw;
+        border-bottom: none;
+        background: rgb(255, 255, 255);
+        background: linear-gradient(180deg, rgba($black, 0) 60%, $primaryColorAlt 100%);
+        z-index: 2;
+        border-radius: 0 !important;
+    }
+
+    .bottomRowOfCard {
+        width: 101vw;
+        z-index: 3;
+        border-radius: 0 !important;
+    }
+
+    .bottomRowOfCardContent {
+        width: 101vw;
+        z-index: 4;
+        border-radius: 0 !important;
+    }
+
+    .bottomRowOfCardContentRow {
+        padding-bottom: 0;
     }
 }
 

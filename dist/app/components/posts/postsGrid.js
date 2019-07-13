@@ -23,6 +23,8 @@ var _commentDeleteSection = _interopRequireDefault(require("./commentDeleteSecti
 
 var _commentsSection = _interopRequireDefault(require("./commentsSection"));
 
+var _Close = require("styled-icons/material/Close");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
@@ -63,6 +65,12 @@ function (_Component) {
       });
     };
 
+    _this.closeComments = function (e) {
+      _this.setState({
+        commentSectionSelected: false
+      });
+    };
+
     var _this$props$auth = _this.props.auth,
         isAuthenticated = _this$props$auth.isAuthenticated,
         user = _this$props$auth.user;
@@ -74,6 +82,7 @@ function (_Component) {
       currentYear: new Date().getFullYear()
     };
     _this.displayComments = _this.displayComments.bind(_assertThisInitialized(_this));
+    _this.closeComments = _this.closeComments.bind(_assertThisInitialized(_this));
     _this["delete"] = _this["delete"].bind(_assertThisInitialized(_this));
     return _this;
   }
@@ -125,6 +134,10 @@ function (_Component) {
       var postCreatorImage = this.props.postCreatorImage;
       var commentSectionSelected = this.state.commentSectionSelected;
       var commentsTotal = "" + this.commentsFinder().length + "";
+      var CloseIcon = (0, _styledComponents["default"])(_Close.Close).withConfig({
+        displayName: "postsGrid__CloseIcon",
+        componentId: "wnvxd8-0"
+      })(["color:#C45758;height:1.1em;width:1.5em;"]);
       return _react["default"].createElement("div", {
         "class": "mx-auto d-block pt-1"
       }, _react["default"].createElement("div", {
@@ -239,7 +252,14 @@ function (_Component) {
         "class": "row"
       }, commentSectionSelected ? _react["default"].createElement("div", {
         "class": "souseCommentsColumn no-gutters col-12"
-      }, " ", _react["default"].createElement(_commentsSection["default"], {
+      }, " ", _react["default"].createElement("div", {
+        "class": "row"
+      }, _react["default"].createElement("div", {
+        "class": "container"
+      }, _react["default"].createElement("h6", {
+        "class": "float-right",
+        onClick: this.closeComments
+      }, _react["default"].createElement(CloseIcon, null)))), _react["default"].createElement(_commentsSection["default"], {
         originalPostData: postData,
         souseUserData: souseUserData,
         souseCommentData: souseCommentData
@@ -253,7 +273,38 @@ function (_Component) {
         "class": "img-responsive"
       }, _react["default"].createElement("div", {
         "class": "souseImageFormat"
-      }, _react["default"].createElement("img", {
+      }, _react["default"].createElement("div", {
+        "class": "mx-auto d-block colorOverlay comboImage",
+        width: "1080px",
+        height: "1080px"
+      }), _react["default"].createElement("div", {
+        "class": "card bottomRowOfCardBackground comboImage",
+        width: "1080px"
+      }, _react["default"].createElement("div", {
+        "class": "card-body"
+      })), _react["default"].createElement("div", {
+        "class": "card bottomRowOfCard comboImage",
+        width: "1080px"
+      }, _react["default"].createElement("div", {
+        "class": "card-body"
+      })), _react["default"].createElement("div", {
+        "class": "card bottomRowOfCardContent comboImage",
+        width: "1080px"
+      }, _react["default"].createElement("div", {
+        "class": "card-body"
+      }, _react["default"].createElement("div", {
+        "class": "container"
+      }, _react["default"].createElement("div", {
+        "class": "row bottomRowOfCardContentRow my-auto"
+      }, _react["default"].createElement("div", {
+        "class": "col-4"
+      }), _react["default"].createElement("div", {
+        "class": "col-4"
+      }, _react["default"].createElement("h6", {
+        "class": "d-flex justify-content-center my-auto"
+      }, "Hi There")), _react["default"].createElement("div", {
+        "class": "col-4"
+      }))))), _react["default"].createElement("img", {
         "class": "mx-auto d-block sousePostImage",
         src: sousePostImage,
         alt: "sousePostImage",

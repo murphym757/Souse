@@ -199,6 +199,8 @@ function (_Component) {
           height: "25px"
         })), _react["default"].createElement("div", {
           "class": "col-10"
+        }, _react["default"].createElement("div", {
+          "class": "commentDataColumn"
         }, _react["default"].createElement("h6", {
           "class": "souseCommentsCaption pr-3"
         }, _react["default"].createElement("span", {
@@ -208,13 +210,13 @@ function (_Component) {
         }, _this2.commentsFinder()[i].commentCreatorUsername), " "), _this2.commentsFinder()[i].souseComment), _react["default"].createElement("div", {
           "class": "row souseCommentsDataReply no-gutters"
         }, _react["default"].createElement("h6", {
-          "class": "col-3 pl-4 commentTime"
+          "class": "col-3 commentTime"
         }, _react["default"].createElement(_reactTimestamp["default"], {
           relative: true,
           time: Date,
           relativeTo: _this2.commentsFinder()[i].commentCreatedDate
         })), _react["default"].createElement("h6", {
-          "class": "col-9 pl-2"
+          "class": "col-9 commentEdit"
         }, _this2.commentsFinder()[i].commentCreatorUsername == loggedinUser ? _react["default"].createElement("div", null, _react["default"].createElement("h6", null, _react["default"].createElement("div", {
           "class": "modal-trigger",
           href: "#modal1",
@@ -243,7 +245,7 @@ function (_Component) {
           type: "button",
           "class": "btn btn-modalButton btn-lg btn-block modal-close",
           onClick: _this2.deleteClickedAlt
-        }, "Cancel"))))))) : _react["default"].createElement("div", null)), " ")));
+        }, "Cancel"))))))) : _react["default"].createElement("div", null)), " "))));
       }))), isAuthenticated ? _react["default"].createElement("div", {
         "class": "row commentsFormSection container-fluid"
       }, _react["default"].createElement("form", {

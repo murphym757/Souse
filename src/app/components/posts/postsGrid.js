@@ -7,6 +7,7 @@ import Timestamp from 'react-timestamp';
 import styled from 'styled-components';
 import PostEdit from './commentDeleteSection';
 import CommentsSection from './commentsSection';
+import { Close } from 'styled-icons/material/Close';
 
 class PostsGrid extends Component {
     constructor(props) {
@@ -20,6 +21,7 @@ class PostsGrid extends Component {
             currentYear: new Date().getFullYear()
         };
         this.displayComments = this.displayComments.bind(this);
+        this.closeComments = this.closeComments.bind(this);
         this.delete = this.delete.bind(this);
     }
     commentsFinder() {
@@ -34,6 +36,12 @@ class PostsGrid extends Component {
     displayComments = (e) => {
         this.setState({
             commentSectionSelected: true
+        });
+    }
+    
+    closeComments = (e) => {
+        this.setState({
+            commentSectionSelected: false
         });
     }
 
@@ -63,6 +71,12 @@ class PostsGrid extends Component {
         const postCreatorImage = this.props.postCreatorImage;
         const commentSectionSelected = this.state.commentSectionSelected;
         const commentsTotal = "" + this.commentsFinder().length + "";
+        const CloseIcon = styled(Close)
+        `
+            color: #C45758;
+            height: 1.1em;
+            width: 1.5em;
+        `;
         return (
             <div class="mx-auto d-block pt-1">
                 <div class="d-none d-xl-block container"> {/* For larger Sceens */}
@@ -163,6 +177,11 @@ class PostsGrid extends Component {
                     <div class="row">
                     {commentSectionSelected 
                         ?   <div class="souseCommentsColumn no-gutters col-12"> {/* Comments Section */}
+                                <div class="row">
+                                    <div class="container">
+                                        <h6 class="float-right" onClick={this.closeComments}><CloseIcon /></h6>
+                                    </div>
+                                </div>
                                 <CommentsSection 
                                     originalPostData={postData}
                                     souseUserData={souseUserData} 
@@ -173,6 +192,27 @@ class PostsGrid extends Component {
                                     <div class="col-12 no-gutters sousePostImageColumn">
                                         <div class="img-responsive">
                                             <div class="souseImageFormat">
+                                                <div class="mx-auto d-block colorOverlay comboImage" 
+                                                    width="1080px" 
+                                                    height="1080px">
+                                                </div>
+                                                <div class="card bottomRowOfCardBackground comboImage" width="1080px">
+                                                    <div class="card-body"></div>
+                                                </div>
+                                                <div class="card bottomRowOfCard comboImage" width="1080px">
+                                                    <div class="card-body"></div>
+                                                </div>
+                                                <div class="card bottomRowOfCardContent comboImage" width="1080px">
+                                                    <div class="card-body">
+                                                        <div class="container">
+                                                            <div class="row bottomRowOfCardContentRow my-auto">
+                                                                <div class="col-4"></div>
+                                                                <div class="col-4"><h6 class="d-flex justify-content-center my-auto">Hi There</h6></div>
+                                                                <div class="col-4"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <img class="mx-auto d-block sousePostImage" 
                                                     src={sousePostImage}
                                                     alt="sousePostImage"

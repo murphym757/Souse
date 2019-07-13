@@ -525,15 +525,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     });
   }()));
 }, function (e, n, t) {
-  t(119).config(), e.exports = {
-    DATABASE_URL: "mongodb://localhost:27017/sousedb",
-    AWS_BUCKET_NAME: "souse",
-    AWS_ACCESS_KEY_ID: "AKIAIUPCQXGXYP3O5IXQ",
-    AWS_SECRET_ACCESS_KEY: "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",
-    AWS_REGION: "us-east-1",
-    AWS_Uploaded_File_URL_LINK: "https://s3.amazonaws.com/souse"
-  };
-}, function (e, n, t) {
   "use strict";
 
   (function (e) {
@@ -1530,6 +1521,15 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     O && (window.scCGSHMRCache = {});
     n.a = Ge;
   }).call(this, t(23));
+}, function (e, n, t) {
+  t(119).config(), e.exports = {
+    DATABASE_URL: "mongodb://localhost:27017/sousedb",
+    AWS_BUCKET_NAME: "souse",
+    AWS_ACCESS_KEY_ID: "AKIAIUPCQXGXYP3O5IXQ",
+    AWS_SECRET_ACCESS_KEY: "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",
+    AWS_REGION: "us-east-1",
+    AWS_Uploaded_File_URL_LINK: "https://s3.amazonaws.com/souse"
+  };
 }, function (e, n, t) {
   "use strict";
 
@@ -26521,7 +26521,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   t(21)(r, o);
   r.locals && (e.exports = r.locals);
 }, function (e, n, t) {
-  (n = e.exports = t(20)(!1)).push([e.i, "@import url(https://fonts.googleapis.com/css?family=Nunito+Sans:400,900&display=swap);", ""]), n.push([e.i, "body {\n  display: table;\n  width: 100%;\n  height: auto;\n  background: no-repeat bottom center scroll;\n  background-color: #E4D1D1;\n  background-blend-mode: multiply;\n  background-position: center center;\n  background-repeat: no-repeat;\n  background-attachment: fixed;\n  background-size: cover;\n  color: #272727;\n  font-family: 'Nunito Sans', sans-serif;\n  font-weight: 400; }\n\nimg {\n  max-width: 100%;\n  height: auto; }\n\nh1 {\n  color: #272727; }\n\nspan {\n  font-family: 'Nunito Sans', sans-serif;\n  font-weight: 900; }\n\nnav {\n  background-color: #E4D1D1;\n  box-shadow: none; }\n\nnav ul a {\n  color: #C45758; }\n\n.sidenav {\n  background-color: #E4D1D1;\n  color: #C45758; }\n\n.sidenav li > a {\n  color: #C45758; }\n\n.souseFooter {\n  color: #C45758; }\n\n/* ---------------------------------------------------- */\n.userData {\n  font-size: 1em;\n  font-weight: bold;\n  color: #FFFFFF; }\n\n.locationData {\n  text-transform: uppercase;\n  font-weight: bold;\n  color: #FFFFFF;\n  font-size: 0.75em; }\n\n.followData {\n  font-weight: bold;\n  color: #FFFFFF;\n  font-size: 0.75em; }\n\n.commentsHeader {\n  color: #C45758; }\n\n.profileImageRow,\n.userData,\n.locationData,\n.followData {\n  margin-bottom: 0px !important; }\n\n.souseCommentsCaption {\n  font-size: 0.7em; }\n\n.commentTime {\n  font-size: 0.6em; }\n\n/* ---------------------------------------------------- */\n.souseCommentRow {\n  position: relative;\n  top: 100%;\n  transform: translateY(-100%); }\n\n.pre-scrollable {\n  max-height: 500px;\n  overflow-y: scroll;\n  overflow-x: hidden !important; }\n\n.commentTime,\n.replyLink {\n  font-size: 0.7em; }\n\n#modal1 {\n  height: 15%;\n  width: 25%;\n  top: 50% !important; }\n\n.modal .modal-footer {\n  background-color: #FFFFFF; }\n\n.modal-footer > :not(:last-child) {\n  margin-right: 0rem; }\n\n.modal-content {\n  border: 0px; }\n\n.z-depth-1, nav, .card-panel, .card, .toast, .btn, .btn-large, .btn-small, .btn-floating, .dropdown-content, .collapsible, .sidenav {\n  -webkit-box-shadow: none;\n  box-shadow: none; }\n\n.z-depth-1:hover, nav:hover, .card-panel:hover, .card:hover, .toast:hover, .btn:hover, .btn-large:hover, .btn-small:hover, .btn-floating:hover, .dropdown-content:hover, .collapsible:hover, .sidenav:hover {\n  -webkit-box-shadow: none;\n  box-shadow: none; }\n\n/* ---------------------------------------------------- */\n/* ---------------------------------------------------- */\n.sousePostImage {\n  object-fit: cover;\n  width: 49vw;\n  height: 43vw; }\n\n.img-wrapper {\n  position: relative; }\n\n.img-responsive {\n  width: 100%;\n  height: auto; }\n\n.img-overlay {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0; }\n\n.img-overlay:before {\n  content: ' ';\n  display: block;\n  /* adjust 'height' to position overlay content vertically */\n  height: 70%; }\n\n.souseUserIcon {\n  border-radius: 50%;\n  height: 7.1vw;\n  width: 7.1vw;\n  overflow: hidden;\n  display: flex;\n  justify-content: center;\n  align-items: center; }\n\n.souseUserIconUserHomePage {\n  border-radius: 50%;\n  height: 12vw;\n  width: 12vw;\n  overflow: hidden;\n  display: flex;\n  justify-content: center;\n  align-items: center; }\n\n.souseUserPostsUserHomePage {\n  object-fit: cover;\n  width: 15vw;\n  height: 15vw; }\n\n.souseUserPostsUserHomePage:hover {\n  border: 1px solid #C45758; }\n\n.souseUserIconComments,\n.souseUserIconPost {\n  border-radius: 50%;\n  width: 3vw;\n  height: 3vw;\n  overflow: hidden;\n  display: flex;\n  justify-content: center;\n  align-items: center; }\n\n.sousePostImageThumbnail {\n  object-fit: cover;\n  width: 15vw;\n  height: 15vw; }\n\n/* ---------------------------------------------------- */\n/* ---------------------------------------------------- */\n.btn-large,\n.btn-small,\n.btn-large:visited,\n.btn-large:active,\n.btn-large:focus,\n.btn-small:visited,\n.btn-small:active,\n.btn-small:focus {\n  background-color: #C45758; }\n\n.btn-large:hover {\n  background-color: #DDAEAA; }\n\n.buttonFont {\n  text-transform: uppercase;\n  font-size: 0.696em; }\n\n/* ---------------------------------------------------- */\n/* ---------------------------------------------------- */\n/* unvisited link */\na:link {\n  color: #C45758;\n  text-decoration: none; }\n\n/* visited link */\na:visited {\n  color: #C45758;\n  text-decoration: none; }\n\n/* mouse over link */\na:hover {\n  color: #C45758;\n  text-decoration: none; }\n\n/* selected link */\na:active {\n  color: #C45758;\n  text-decoration: none; }\n\n/* ---------------------------------------------------- */\n/* ---------------------------------------------------- */\n/* label focus color */\n.input-field input:focus + label {\n  color: #C45758 !important; }\n\n/* label underline focus color */\n.row .input-field input:focus {\n  border-bottom: 1px solid #C45758 !important;\n  box-shadow: 0 1px 0 0 #C45758 !important; }\n\ninput:not([type]):focus:not([readonly]),\ninput[type=text]:not(.browser-default):focus:not([readonly]),\ninput[type=password]:not(.browser-default):focus:not([readonly]),\ninput[type=email]:not(.browser-default):focus:not([readonly]),\ninput[type=url]:not(.browser-default):focus:not([readonly]),\ninput[type=time]:not(.browser-default):focus:not([readonly]),\ninput[type=date]:not(.browser-default):focus:not([readonly]),\ninput[type=datetime]:not(.browser-default):focus:not([readonly]),\ninput[type=datetime-local]:not(.browser-default):focus:not([readonly]),\ninput[type=tel]:not(.browser-default):focus:not([readonly]),\ninput[type=number]:not(.browser-default):focus:not([readonly]),\ninput[type=search]:not(.browser-default):focus:not([readonly]),\ntextarea.materialize-textarea:focus:not([readonly]) {\n  border-bottom: 1px solid #C45758;\n  box-shadow: 0 1px 0 0 #C45758; }\n\ninput:not([type]):focus:not([readonly]) + label,\ninput[type=text]:not(.browser-default):focus:not([readonly]) + label,\ninput[type=password]:not(.browser-default):focus:not([readonly]) + label,\ninput[type=email]:not(.browser-default):focus:not([readonly]) + label,\ninput[type=url]:not(.browser-default):focus:not([readonly]) + label,\ninput[type=time]:not(.browser-default):focus:not([readonly]) + label,\ninput[type=date]:not(.browser-default):focus:not([readonly]) + label,\ninput[type=datetime]:not(.browser-default):focus:not([readonly]) + label,\ninput[type=datetime-local]:not(.browser-default):focus:not([readonly]) + label,\ninput[type=tel]:not(.browser-default):focus:not([readonly]) + label,\ninput[type=number]:not(.browser-default):focus:not([readonly]) + label,\ninput[type=search]:not(.browser-default):focus:not([readonly]) + label,\ntextarea.materialize-textarea:focus:not([readonly]) + label {\n  color: #C45758; }\n\ninput:-internal-autofill-previewed,\ninput:-internal-autofill-selected,\ntextarea:-internal-autofill-previewed,\ntextarea:-internal-autofill-selected,\nselect:-internal-autofill-previewed,\nselect:-internal-autofill-selected {\n  background-color: #E4D1D1 !important;\n  background-image: none !important;\n  color: black !important; }\n\n/* ---------------------------------------------------- */\n/* ---------------------------------------------------- */\n.btn-modalButton {\n  color: #C45758;\n  background-color: #FFFFFF;\n  border-color: #FFFFFF; }\n\n.btn-modalButton:hover,\n.btn-modalButton:focus,\n.btn-modalButton:active,\n.btn-modalButton.active,\n.open .dropdown-toggle.btn-modalButton {\n  color: #C45758;\n  background-color: #FFFFFF;\n  border-color: #FFFFFF; }\n\n.btn-modalButton:active,\n.btn-modalButton.active,\n.open .dropdown-toggle.btn-modalButton {\n  background-image: none; }\n\n.btn-modalButton.disabled,\n.btn-modalButton[disabled],\nfieldset[disabled] .btn-modalButton,\n.btn-modalButton.disabled:hover,\n.btn-modalButton[disabled]:hover,\nfieldset[disabled] .btn-modalButton:hover,\n.btn-modalButton.disabled:focus,\n.btn-modalButton[disabled]:focus,\nfieldset[disabled] .btn-modalButton:focus,\n.btn-modalButton.disabled:active,\n.btn-modalButton[disabled]:active,\nfieldset[disabled] .btn-modalButton:active,\n.btn-modalButton.disabled.active,\n.btn-modalButton[disabled].active,\nfieldset[disabled] .btn-modalButton.active {\n  background-color: #FFFFFF;\n  border-color: #FFFFFF; }\n\n.btn-modalButton .badge {\n  color: #FFFFFF;\n  background-color: #C45758; }\n\n/* ---------------------------------------------------- */\n.souseFooter,\n.addPostButton {\n  text-align: center; }\n\n.form-control-plaintext {\n  outline: none; }\n\n/* ---------------------------------------------------- */\n/* ---------------------------------------------------- */\n/* Small devices (Phones, 768px) */\n@media (max-width: 767px) and (orientation: portrait) {\n  .sousePostImage {\n    object-fit: cover;\n    width: 100vw;\n    height: 100vw; }\n  .souseUserIconComments {\n    width: 10vw;\n    height: 10vw; }\n  .souseUserIconPost {\n    width: 15vw;\n    height: 15vw; }\n  .pre-scrollable {\n    max-height: 200px; }\n  .postSection,\n  .sousePostImageColumn,\n  .sousePostUserDataColumn,\n  .souseCommentsColumn {\n    padding: 0; }\n  .sousePostImage {\n    padding-bottom: 0.5rem; }\n  .souseUserImageColumn {\n    padding-right: 0;\n    padding-left: 1.5rem; }\n  .souseUserNameColumn {\n    padding-left: 0; }\n  .souseEditPostButton {\n    padding-left: 1rem;\n    padding-top: 1.5rem; }\n  .pre-scrollable {\n    max-height: 500px;\n    overflow-y: scroll;\n    overflow-x: hidden !important; } }\n\n/* ---------------------------------------------------- */\n/* IPhone X and Pixel XL 2 */\n@media (min-width: 812px) and (max-width: 823px) and (orientation: portrait) {\n  .sousePostImage {\n    object-fit: cover;\n    width: 20vw;\n    height: 20vw; } }\n\n@media (min-width: 812px) and (max-width: 823px) and (orientation: landscape) {\n  .sousePostImage {\n    object-fit: cover;\n    width: 25vw;\n    height: 25vw; } }\n\n/* ---------------------------------------------------- */\n/* Ipad */\n/* Ipad Pro */\n/* ---------------------------------------------------- */\n/* MDPI Screens (Computers, 1440px and up) */\n/* ---------------------------------------------------- */\n/* Large devices (Computers, 1440px and up) */\n/* ---------------------------------------------------- */\n", ""]);
+  (n = e.exports = t(20)(!1)).push([e.i, "@import url(https://fonts.googleapis.com/css?family=Nunito+Sans:400,900&display=swap);", ""]), n.push([e.i, "body {\n  display: table;\n  width: 100%;\n  height: auto;\n  background: no-repeat bottom center scroll;\n  background-color: #e4d1d1;\n  background-blend-mode: multiply;\n  background-position: center center;\n  background-repeat: no-repeat;\n  background-attachment: fixed;\n  background-size: cover;\n  color: #272727;\n  font-family: 'Nunito Sans', sans-serif;\n  font-weight: 400; }\n\nimg {\n  max-width: 100%;\n  height: auto; }\n\nh1 {\n  color: #272727; }\n\nspan {\n  font-family: 'Nunito Sans', sans-serif;\n  font-weight: 900; }\n\nnav {\n  background-color: #e4d1d1;\n  box-shadow: none; }\n\nnav ul a {\n  color: #c45758; }\n\n.sidenav {\n  background-color: #e4d1d1;\n  color: #c45758; }\n\n.sidenav li > a {\n  color: #c45758; }\n\n.souseFooter {\n  color: #c45758; }\n\n/* ---------------------------------------------------- */\n.userData {\n  font-size: 1em;\n  font-weight: bold;\n  color: white; }\n\n.locationData {\n  text-transform: uppercase;\n  font-weight: bold;\n  color: white;\n  font-size: 0.75em; }\n\n.followData {\n  font-weight: bold;\n  color: white;\n  font-size: 0.75em; }\n\n.commentsHeader {\n  color: #c45758; }\n\n.profileImageRow,\n.userData,\n.locationData,\n.followData {\n  margin-bottom: 0px !important; }\n\n.souseCommentsCaption {\n  font-size: 0.7em; }\n\n.commentTime {\n  font-size: 0.6em; }\n\n/* ---------------------------------------------------- */\n.souseCommentRow {\n  position: relative;\n  top: 100%;\n  transform: translateY(-100%); }\n\n.pre-scrollable {\n  max-height: 500px;\n  overflow-y: scroll;\n  overflow-x: hidden !important; }\n\n.commentTime,\n.replyLink {\n  font-size: 0.7em; }\n\n#modal1 {\n  height: 15%;\n  width: 25%;\n  top: 50% !important; }\n\n.modal .modal-footer {\n  background-color: white; }\n\n.modal-footer > :not(:last-child) {\n  margin-right: 0rem; }\n\n.modal-content {\n  border: 0px; }\n\n.z-depth-1,\nnav,\n.card-panel,\n.card,\n.toast,\n.btn,\n.btn-large,\n.btn-small,\n.btn-floating,\n.dropdown-content,\n.collapsible,\n.sidenav {\n  -webkit-box-shadow: none;\n  box-shadow: none; }\n\n.z-depth-1:hover,\nnav:hover,\n.card-panel:hover,\n.card:hover,\n.toast:hover,\n.btn:hover,\n.btn-large:hover,\n.btn-small:hover,\n.btn-floating:hover,\n.dropdown-content:hover,\n.collapsible:hover,\n.sidenav:hover {\n  -webkit-box-shadow: none;\n  box-shadow: none; }\n\n.commentDataColumn {\n  padding-left: 0.5rem; }\n\n/* ---------------------------------------------------- */\n/* ---------------------------------------------------- */\n.sousePostImage {\n  object-fit: cover;\n  width: 49vw;\n  height: 43vw; }\n\n.img-wrapper {\n  position: relative; }\n\n.img-responsive {\n  width: 100%;\n  height: auto; }\n\n.img-overlay {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0; }\n\n.img-overlay:before {\n  content: ' ';\n  display: block;\n  /* adjust 'height' to position overlay content vertically */\n  height: 70%; }\n\n.souseUserIcon {\n  border-radius: 50%;\n  height: 7.1vw;\n  width: 7.1vw;\n  overflow: hidden;\n  display: flex;\n  justify-content: center;\n  align-items: center; }\n\n.souseUserIconUserHomePage {\n  border-radius: 50%;\n  height: 12vw;\n  width: 12vw;\n  overflow: hidden;\n  display: flex;\n  justify-content: center;\n  align-items: center; }\n\n.souseUserPostsUserHomePage {\n  object-fit: cover;\n  width: 15vw;\n  height: 15vw; }\n\n.souseUserPostsUserHomePage:hover {\n  border: 1px solid #c45758; }\n\n.souseUserIconComments,\n.souseUserIconPost {\n  border-radius: 50%;\n  width: 3vw;\n  height: 3vw;\n  overflow: hidden;\n  display: flex;\n  justify-content: center;\n  align-items: center; }\n\n.sousePostImageThumbnail {\n  object-fit: cover;\n  width: 15vw;\n  height: 15vw; }\n\n/* ---------------------------------------------------- */\n/* ---------------------------------------------------- */\n.btn-large,\n.btn-small,\n.btn-large:visited,\n.btn-large:active,\n.btn-large:focus,\n.btn-small:visited,\n.btn-small:active,\n.btn-small:focus {\n  background-color: #c45758; }\n\n.btn-large:hover {\n  background-color: #ddaeaa; }\n\n.buttonFont {\n  text-transform: uppercase;\n  font-size: 0.696em; }\n\n/* ---------------------------------------------------- */\n/* ---------------------------------------------------- */\n/* unvisited link */\na:link {\n  color: #c45758;\n  text-decoration: none; }\n\n/* visited link */\na:visited {\n  color: #c45758;\n  text-decoration: none; }\n\n/* mouse over link */\na:hover {\n  color: #c45758;\n  text-decoration: none; }\n\n/* selected link */\na:active {\n  color: #c45758;\n  text-decoration: none; }\n\n/* ---------------------------------------------------- */\n/* ---------------------------------------------------- */\n/* label focus color */\n.input-field input:focus + label {\n  color: #c45758 !important; }\n\n/* label underline focus color */\n.row .input-field input:focus {\n  border-bottom: 1px solid #c45758 !important;\n  box-shadow: 0 1px 0 0 #c45758 !important; }\n\ninput:not([type]):focus:not([readonly]),\ninput[type=text]:not(.browser-default):focus:not([readonly]),\ninput[type=password]:not(.browser-default):focus:not([readonly]),\ninput[type=email]:not(.browser-default):focus:not([readonly]),\ninput[type=url]:not(.browser-default):focus:not([readonly]),\ninput[type=time]:not(.browser-default):focus:not([readonly]),\ninput[type=date]:not(.browser-default):focus:not([readonly]),\ninput[type=datetime]:not(.browser-default):focus:not([readonly]),\ninput[type=datetime-local]:not(.browser-default):focus:not([readonly]),\ninput[type=tel]:not(.browser-default):focus:not([readonly]),\ninput[type=number]:not(.browser-default):focus:not([readonly]),\ninput[type=search]:not(.browser-default):focus:not([readonly]),\ntextarea.materialize-textarea:focus:not([readonly]) {\n  border-bottom: 1px solid #c45758;\n  box-shadow: 0 1px 0 0 #c45758; }\n\ninput:not([type]):focus:not([readonly]) + label,\ninput[type=text]:not(.browser-default):focus:not([readonly]) + label,\ninput[type=password]:not(.browser-default):focus:not([readonly]) + label,\ninput[type=email]:not(.browser-default):focus:not([readonly]) + label,\ninput[type=url]:not(.browser-default):focus:not([readonly]) + label,\ninput[type=time]:not(.browser-default):focus:not([readonly]) + label,\ninput[type=date]:not(.browser-default):focus:not([readonly]) + label,\ninput[type=datetime]:not(.browser-default):focus:not([readonly]) + label,\ninput[type=datetime-local]:not(.browser-default):focus:not([readonly]) + label,\ninput[type=tel]:not(.browser-default):focus:not([readonly]) + label,\ninput[type=number]:not(.browser-default):focus:not([readonly]) + label,\ninput[type=search]:not(.browser-default):focus:not([readonly]) + label,\ntextarea.materialize-textarea:focus:not([readonly]) + label {\n  color: #c45758; }\n\ninput:-internal-autofill-previewed,\ninput:-internal-autofill-selected,\ntextarea:-internal-autofill-previewed,\ntextarea:-internal-autofill-selected,\nselect:-internal-autofill-previewed,\nselect:-internal-autofill-selected {\n  background-color: #e4d1d1 !important;\n  background-image: none !important;\n  color: black !important; }\n\n/* ---------------------------------------------------- */\n/* ---------------------------------------------------- */\n.btn-modalButton {\n  color: #c45758;\n  background-color: white;\n  border-color: white; }\n\n.btn-modalButton:hover,\n.btn-modalButton:focus,\n.btn-modalButton:active,\n.btn-modalButton.active,\n.open .dropdown-toggle.btn-modalButton {\n  color: #c45758;\n  background-color: white;\n  border-color: white; }\n\n.btn-modalButton:active,\n.btn-modalButton.active,\n.open .dropdown-toggle.btn-modalButton {\n  background-image: none; }\n\n.btn-modalButton.disabled,\n.btn-modalButton[disabled],\nfieldset[disabled] .btn-modalButton,\n.btn-modalButton.disabled:hover,\n.btn-modalButton[disabled]:hover,\nfieldset[disabled] .btn-modalButton:hover,\n.btn-modalButton.disabled:focus,\n.btn-modalButton[disabled]:focus,\nfieldset[disabled] .btn-modalButton:focus,\n.btn-modalButton.disabled:active,\n.btn-modalButton[disabled]:active,\nfieldset[disabled] .btn-modalButton:active,\n.btn-modalButton.disabled.active,\n.btn-modalButton[disabled].active,\nfieldset[disabled] .btn-modalButton.active {\n  background-color: white;\n  border-color: white; }\n\n.btn-modalButton .badge {\n  color: white;\n  background-color: #c45758; }\n\n/* ---------------------------------------------------- */\n.souseFooter,\n.addPostButton {\n  text-align: center; }\n\n.form-control-plaintext {\n  outline: none; }\n\n/* ---------------------------------------------------- */\n/* ---------------------------------------------------- */\n/* Small devices (Phones, 768px) */\n@media (max-width: 767px) and (orientation: portrait) {\n  .sousePostImage {\n    object-fit: cover;\n    width: 100vw;\n    height: 100vw; }\n  .souseUserIconComments {\n    width: 10vw;\n    height: 10vw; }\n  .souseUserIconPost {\n    width: 15vw;\n    height: 15vw; }\n  .pre-scrollable {\n    max-height: 200px; }\n  .postSection,\n  .sousePostImageColumn,\n  .sousePostUserDataColumn,\n  .souseCommentsColumn {\n    padding: 0; }\n  .sousePostImage {\n    padding-bottom: 0.5rem; }\n  .souseUserImageColumn {\n    padding-right: 0;\n    padding-left: 1.5rem; }\n  .souseUserNameColumn {\n    padding-left: 0; }\n  .souseEditPostButton {\n    padding-left: 1rem;\n    padding-top: 1.5rem; }\n  .commentTime {\n    padding-left: 1.5rem; }\n  .commentEdit {\n    padding-left: 0.5rem; }\n  .pre-scrollable {\n    max-height: 500px;\n    overflow-y: scroll;\n    overflow-x: hidden !important; }\n  div.comboImage {\n    position: absolute;\n    top: 0rem;\n    left: 1rem; }\n  div.comboImage.bottomRowOfCardBackground {\n    position: absolute;\n    top: 26rem;\n    left: 1rem;\n    background: #ddaeaa;\n    border: none; }\n  div.comboImage.bottomRowOfCard {\n    position: absolute;\n    top: 24rem;\n    left: 1rem;\n    background: white;\n    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #ddaeaa 92%);\n    border: none; }\n  div.comboImage.bottomRowOfCardContent {\n    position: absolute;\n    top: 25rem;\n    left: 1rem;\n    background: white;\n    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 41%, #ddaeaa 80%, #ddaeaa 58%);\n    border: none; }\n  .bottomRowOfCardBackground {\n    width: 101vw;\n    z-index: 1;\n    border-radius: 0 !important;\n    -webkit-box-shadow: 0 6px 10px -8px black;\n    -moz-box-shadow: 0 6px 10px -8px black;\n    box-shadow: 0 6px 10px -8px black; }\n  .colorOverlay {\n    object-fit: cover;\n    width: 101vw;\n    height: 99vw;\n    border-bottom: none;\n    background: white;\n    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 60%, #ddaeaa 100%);\n    z-index: 2;\n    border-radius: 0 !important; }\n  .bottomRowOfCard {\n    width: 101vw;\n    z-index: 3;\n    border-radius: 0 !important; }\n  .bottomRowOfCardContent {\n    width: 101vw;\n    z-index: 4;\n    border-radius: 0 !important; }\n  .bottomRowOfCardContentRow {\n    padding-bottom: 0; } }\n\n/* ---------------------------------------------------- */\n/* IPhone X and Pixel XL 2 */\n@media (min-width: 812px) and (max-width: 823px) and (orientation: portrait) {\n  .sousePostImage {\n    object-fit: cover;\n    width: 20vw;\n    height: 20vw; } }\n\n@media (min-width: 812px) and (max-width: 823px) and (orientation: landscape) {\n  .sousePostImage {\n    object-fit: cover;\n    width: 25vw;\n    height: 25vw; } }\n\n/* ---------------------------------------------------- */\n/* Ipad */\n/* Ipad Pro */\n/* ---------------------------------------------------- */\n/* MDPI Screens (Computers, 1440px and up) */\n/* ---------------------------------------------------- */\n/* Large devices (Computers, 1440px and up) */\n/* ---------------------------------------------------- */\n", ""]);
 }, function (e, n, t) {
   var r = t(135);
   "string" == typeof r && (r = [[e.i, r, ""]]);
@@ -28566,7 +28566,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
   })(Fn),
       Un = t(22),
       $n = t.n(Un),
-      Wn = t(7),
+      Wn = t(8),
       qn = t.n(Wn);
 
   function Vn(e) {
@@ -28875,7 +28875,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
       auth: e.auth
     };
   })(lt),
-      ct = t(8);
+      ct = t(7);
 
   var _dt = function dt() {
     return (_dt = Object.assign || function (e) {
@@ -29749,6 +29749,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             height: "25px"
           })), o.a.createElement("div", {
             "class": "col-10"
+          }, o.a.createElement("div", {
+            "class": "commentDataColumn"
           }, o.a.createElement("h6", {
             "class": "souseCommentsCaption pr-3"
           }, o.a.createElement("span", {
@@ -29758,13 +29760,13 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           }, e.commentsFinder()[t].commentCreatorUsername), " "), e.commentsFinder()[t].souseComment), o.a.createElement("div", {
             "class": "row souseCommentsDataReply no-gutters"
           }, o.a.createElement("h6", {
-            "class": "col-3 pl-4 commentTime"
+            "class": "col-3 commentTime"
           }, o.a.createElement(Ut.a, {
             relative: !0,
             time: Date,
             relativeTo: e.commentsFinder()[t].commentCreatedDate
           })), o.a.createElement("h6", {
-            "class": "col-9 pl-2"
+            "class": "col-9 commentEdit"
           }, e.commentsFinder()[t].commentCreatorUsername == r ? o.a.createElement("div", null, o.a.createElement("h6", null, o.a.createElement("div", {
             "class": "modal-trigger",
             href: "#modal1",
@@ -29793,7 +29795,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             type: "button",
             "class": "btn btn-modalButton btn-lg btn-block modal-close",
             onClick: e.deleteClickedAlt
-          }, "Cancel"))))))) : o.a.createElement("div", null)), " ")));
+          }, "Cancel"))))))) : o.a.createElement("div", null)), " "))));
         }))), t ? o.a.createElement("div", {
           "class": "row commentsFormSection container-fluid"
         }, o.a.createElement("form", {
@@ -29824,48 +29826,67 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     return {
       auth: e.auth
     };
-  })(kn(ir));
+  })(kn(ir)),
+      lr = r.forwardRef(function (e, n) {
+    return r.createElement(bt, _dt({
+      iconAttrs: {
+        fill: "currentColor"
+      },
+      iconVerticalAlign: "middle",
+      iconViewBox: "0 0 24 24"
+    }, e, {
+      ref: n
+    }), r.createElement("path", {
+      d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z",
+      key: "k0"
+    }));
+  });
+  lr.displayName = "Close";
 
-  function lr(e) {
-    return (lr = "function" == typeof Symbol && "symbol" == _typeof(Symbol.iterator) ? function (e) {
+  function sr(e) {
+    return (sr = "function" == typeof Symbol && "symbol" == _typeof(Symbol.iterator) ? function (e) {
       return _typeof(e);
     } : function (e) {
       return e && "function" == typeof Symbol && e.constructor === Symbol && e !== Symbol.prototype ? "symbol" : _typeof(e);
     })(e);
   }
 
-  function sr(e, n) {
+  function cr(e, n) {
     for (var t = 0; t < n.length; t++) {
       var r = n[t];
       r.enumerable = r.enumerable || !1, r.configurable = !0, "value" in r && (r.writable = !0), Object.defineProperty(e, r.key, r);
     }
   }
 
-  function cr(e) {
-    return (cr = Object.setPrototypeOf ? Object.getPrototypeOf : function (e) {
+  function dr(e) {
+    return (dr = Object.setPrototypeOf ? Object.getPrototypeOf : function (e) {
       return e.__proto__ || Object.getPrototypeOf(e);
     })(e);
   }
 
-  function dr(e) {
+  function ur(e) {
     if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
     return e;
   }
 
-  function ur(e, n) {
-    return (ur = Object.setPrototypeOf || function (e, n) {
+  function pr(e, n) {
+    return (pr = Object.setPrototypeOf || function (e, n) {
       return e.__proto__ = n, e;
     })(e, n);
   }
 
-  var pr = function (e) {
+  var mr = function (e) {
     function n(e) {
       var t, r, o;
       !function (e, n) {
         if (!(e instanceof n)) throw new TypeError("Cannot call a class as a function");
-      }(this, n), r = this, o = cr(n).call(this, e), (t = !o || "object" !== lr(o) && "function" != typeof o ? dr(r) : o).displayComments = function (e) {
+      }(this, n), r = this, o = dr(n).call(this, e), (t = !o || "object" !== sr(o) && "function" != typeof o ? ur(r) : o).displayComments = function (e) {
         t.setState({
           commentSectionSelected: !0
+        });
+      }, t.closeComments = function (e) {
+        t.setState({
+          commentSectionSelected: !1
         });
       };
       var i = t.props.auth,
@@ -29875,7 +29896,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         postCreatorImage: "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg",
         commentSectionSelected: !1,
         currentYear: new Date().getFullYear()
-      }, t.displayComments = t.displayComments.bind(dr(t)), t["delete"] = t["delete"].bind(dr(t)), t;
+      }, t.displayComments = t.displayComments.bind(ur(t)), t.closeComments = t.closeComments.bind(ur(t)), t["delete"] = t["delete"].bind(ur(t)), t;
     }
 
     var t, i, a;
@@ -29887,7 +29908,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           writable: !0,
           configurable: !0
         }
-      }), n && ur(e, n);
+      }), n && pr(e, n);
     }(n, r["Component"]), t = n, (i = [{
       key: "commentsFinder",
       value: function value() {
@@ -29924,7 +29945,11 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             u = this.props.postCreatorName,
             p = this.props.postCreatorImage,
             m = this.state.commentSectionSelected,
-            f = "" + this.commentsFinder().length;
+            f = "" + this.commentsFinder().length,
+            h = Object(ct.a)(lr).withConfig({
+          displayName: "postsGrid__CloseIcon",
+          componentId: "wnvxd8-0"
+        })(["color:#C45758;height:1.1em;width:1.5em;"]);
         return o.a.createElement("div", {
           "class": "mx-auto d-block pt-1"
         }, o.a.createElement("div", {
@@ -30039,7 +30064,14 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           "class": "row"
         }, m ? o.a.createElement("div", {
           "class": "souseCommentsColumn no-gutters col-12"
-        }, " ", o.a.createElement(ar, {
+        }, " ", o.a.createElement("div", {
+          "class": "row"
+        }, o.a.createElement("div", {
+          "class": "container"
+        }, o.a.createElement("h6", {
+          "class": "float-right",
+          onClick: this.closeComments
+        }, o.a.createElement(h, null)))), o.a.createElement(ar, {
           originalPostData: r,
           souseUserData: i,
           souseCommentData: a
@@ -30053,7 +30085,38 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           "class": "img-responsive"
         }, o.a.createElement("div", {
           "class": "souseImageFormat"
-        }, o.a.createElement("img", {
+        }, o.a.createElement("div", {
+          "class": "mx-auto d-block colorOverlay comboImage",
+          width: "1080px",
+          height: "1080px"
+        }), o.a.createElement("div", {
+          "class": "card bottomRowOfCardBackground comboImage",
+          width: "1080px"
+        }, o.a.createElement("div", {
+          "class": "card-body"
+        })), o.a.createElement("div", {
+          "class": "card bottomRowOfCard comboImage",
+          width: "1080px"
+        }, o.a.createElement("div", {
+          "class": "card-body"
+        })), o.a.createElement("div", {
+          "class": "card bottomRowOfCardContent comboImage",
+          width: "1080px"
+        }, o.a.createElement("div", {
+          "class": "card-body"
+        }, o.a.createElement("div", {
+          "class": "container"
+        }, o.a.createElement("div", {
+          "class": "row bottomRowOfCardContentRow my-auto"
+        }, o.a.createElement("div", {
+          "class": "col-4"
+        }), o.a.createElement("div", {
+          "class": "col-4"
+        }, o.a.createElement("h6", {
+          "class": "d-flex justify-content-center my-auto"
+        }, "Hi There")), o.a.createElement("div", {
+          "class": "col-4"
+        }))))), o.a.createElement("img", {
           "class": "mx-auto d-block sousePostImage",
           src: c,
           alt: "sousePostImage",
@@ -30107,59 +30170,59 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           "class": "far fa-copyright"
         }), this.state.currentYear, " Souse"))))));
       }
-    }]) && sr(t.prototype, i), a && sr(t, a), n;
+    }]) && cr(t.prototype, i), a && cr(t, a), n;
   }();
 
-  pr.propTypes = {
+  mr.propTypes = {
     auth: we.a.object.isRequired
   };
-  var mr = ne(function (e) {
+  var fr = ne(function (e) {
     return {
       auth: e.auth
     };
-  })(kn(pr));
+  })(kn(mr));
 
-  function fr(e) {
-    return (fr = "function" == typeof Symbol && "symbol" == _typeof(Symbol.iterator) ? function (e) {
+  function hr(e) {
+    return (hr = "function" == typeof Symbol && "symbol" == _typeof(Symbol.iterator) ? function (e) {
       return _typeof(e);
     } : function (e) {
       return e && "function" == typeof Symbol && e.constructor === Symbol && e !== Symbol.prototype ? "symbol" : _typeof(e);
     })(e);
   }
 
-  function hr(e, n) {
+  function gr(e, n) {
     for (var t = 0; t < n.length; t++) {
       var r = n[t];
       r.enumerable = r.enumerable || !1, r.configurable = !0, "value" in r && (r.writable = !0), Object.defineProperty(e, r.key, r);
     }
   }
 
-  function gr(e, n) {
-    return !n || "object" !== fr(n) && "function" != typeof n ? function (e) {
+  function br(e, n) {
+    return !n || "object" !== hr(n) && "function" != typeof n ? function (e) {
       if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
       return e;
     }(e) : n;
   }
 
-  function br(e) {
-    return (br = Object.setPrototypeOf ? Object.getPrototypeOf : function (e) {
+  function vr(e) {
+    return (vr = Object.setPrototypeOf ? Object.getPrototypeOf : function (e) {
       return e.__proto__ || Object.getPrototypeOf(e);
     })(e);
   }
 
-  function vr(e, n) {
-    return (vr = Object.setPrototypeOf || function (e, n) {
+  function yr(e, n) {
+    return (yr = Object.setPrototypeOf || function (e, n) {
       return e.__proto__ = n, e;
     })(e, n);
   }
 
-  var yr = function (e) {
+  var xr = function (e) {
     function n(e) {
       var t;
       !function (e, n) {
         if (!(e instanceof n)) throw new TypeError("Cannot call a class as a function");
       }(this, n);
-      var r = (t = gr(this, br(n).call(this, e))).props.auth,
+      var r = (t = br(this, vr(n).call(this, e))).props.auth,
           o = (r.isAuthenticated, r.user),
           i = (o.username, o.id, window.location.pathname.slice(3));
       return t.state = {
@@ -30178,7 +30241,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           writable: !0,
           configurable: !0
         }
-      }), n && vr(e, n);
+      }), n && yr(e, n);
     }(n, r["Component"]), t = n, (i = [{
       key: "postFinder",
       value: function value() {
@@ -30219,7 +30282,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
             h = this.state.postCreatorImage,
             g = this.props.souseCommentData;
         return l.map(function (e, n) {
-          return o.a.createElement(mr, {
+          return o.a.createElement(fr, {
             obj: e,
             key: n,
             postCreatorName: f,
@@ -30236,27 +30299,27 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         e.isAuthenticated, e.user;
         return o.a.createElement("div", null, o.a.createElement("div", null, this.postFinder()));
       }
-    }]) && hr(t.prototype, i), a && hr(t, a), n;
+    }]) && gr(t.prototype, i), a && gr(t, a), n;
   }();
 
-  yr.propTypes = {
+  xr.propTypes = {
     auth: we.a.object.isRequired
   };
-  var xr = ne(function (e) {
+  var wr = ne(function (e) {
     return {
       auth: e.auth
     };
-  })(yr);
+  })(xr);
 
-  function wr(e) {
-    return (wr = "function" == typeof Symbol && "symbol" == _typeof(Symbol.iterator) ? function (e) {
+  function kr(e) {
+    return (kr = "function" == typeof Symbol && "symbol" == _typeof(Symbol.iterator) ? function (e) {
       return _typeof(e);
     } : function (e) {
       return e && "function" == typeof Symbol && e.constructor === Symbol && e !== Symbol.prototype ? "symbol" : _typeof(e);
     })(e);
   }
 
-  function kr(e, n, t) {
+  function _r(e, n, t) {
     return n in e ? Object.defineProperty(e, n, {
       value: t,
       enumerable: !0,
@@ -30265,36 +30328,36 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }) : e[n] = t, e;
   }
 
-  function _r(e, n) {
+  function Er(e, n) {
     for (var t = 0; t < n.length; t++) {
       var r = n[t];
       r.enumerable = r.enumerable || !1, r.configurable = !0, "value" in r && (r.writable = !0), Object.defineProperty(e, r.key, r);
     }
   }
 
-  function Er(e) {
-    return (Er = Object.setPrototypeOf ? Object.getPrototypeOf : function (e) {
+  function Cr(e) {
+    return (Cr = Object.setPrototypeOf ? Object.getPrototypeOf : function (e) {
       return e.__proto__ || Object.getPrototypeOf(e);
     })(e);
   }
 
-  function Cr(e) {
+  function Sr(e) {
     if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
     return e;
   }
 
-  function Sr(e, n) {
-    return (Sr = Object.setPrototypeOf || function (e, n) {
+  function Tr(e, n) {
+    return (Tr = Object.setPrototypeOf || function (e, n) {
       return e.__proto__ = n, e;
     })(e, n);
   }
 
-  var Tr = function (e) {
+  var Or = function (e) {
     function n(e) {
       var t, r, o, i;
       !function (e, n) {
         if (!(e instanceof n)) throw new TypeError("Cannot call a class as a function");
-      }(this, n), o = this, i = Er(n).call(this, e), (r = !i || "object" !== wr(i) && "function" != typeof i ? Cr(o) : i).onChangepostCaption = function (e) {
+      }(this, n), o = this, i = Cr(n).call(this, e), (r = !i || "object" !== kr(i) && "function" != typeof i ? Sr(o) : i).onChangepostCaption = function (e) {
         r.setState({
           postCaption: e.target.value
         });
@@ -30360,7 +30423,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           c = l.username,
           d = l.id,
           u = window.location.pathname.slice(8);
-      return r.state = (kr(t = {
+      return r.state = (_r(t = {
         posts: [],
         users: [],
         originalPostId: u,
@@ -30370,7 +30433,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         updateImage: !1,
         updatedImage: !1,
         isLoading: !1
-      }, "postCreatorId", d), kr(t, "postUnixTimestamp", s), kr(t, "postImageFileType", ""), kr(t, "postImageFileName", ""), kr(t, "newPostImageFileName", ""), kr(t, "username", c), kr(t, "fullPostUploadLoader", !1), t), r.onChangepostCaption = r.onChangepostCaption.bind(Cr(r)), r.onUpdateImage = r.onUpdateImage.bind(Cr(r)), r.onImageUpload = r.onImageUpload.bind(Cr(r)), r.onSubmit = r.onSubmit.bind(Cr(r)), r.onUpdateImageDelete = r.onUpdateImageDelete.bind(Cr(r)), r["delete"] = r["delete"].bind(Cr(r)), r;
+      }, "postCreatorId", d), _r(t, "postUnixTimestamp", s), _r(t, "postImageFileType", ""), _r(t, "postImageFileName", ""), _r(t, "newPostImageFileName", ""), _r(t, "username", c), _r(t, "fullPostUploadLoader", !1), t), r.onChangepostCaption = r.onChangepostCaption.bind(Sr(r)), r.onUpdateImage = r.onUpdateImage.bind(Sr(r)), r.onImageUpload = r.onImageUpload.bind(Sr(r)), r.onSubmit = r.onSubmit.bind(Sr(r)), r.onUpdateImageDelete = r.onUpdateImageDelete.bind(Sr(r)), r["delete"] = r["delete"].bind(Sr(r)), r;
     }
 
     var t, i, a;
@@ -30382,7 +30445,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           writable: !0,
           configurable: !0
         }
-      }), n && Sr(e, n);
+      }), n && Tr(e, n);
     }(n, r["Component"]), t = n, (i = [{
       key: "componentDidMount",
       value: function value() {
@@ -30493,28 +30556,28 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           "class": "waves-effect waves-light btn-large"
         }, "Delete"))) : o.a.createElement("div", null));
       }
-    }]) && _r(t.prototype, i), a && _r(t, a), n;
+    }]) && Er(t.prototype, i), a && Er(t, a), n;
   }();
 
-  Tr.propTypes = {
+  Or.propTypes = {
     auth: we.a.object.isRequired
   };
-  var Or = ne(function (e) {
+  var Ar = ne(function (e) {
     return {
       auth: e.auth
     };
-  })(Tr);
+  })(Or);
 
-  function Ar(e) {
-    return (Ar = "function" == typeof Symbol && "symbol" == _typeof(Symbol.iterator) ? function (e) {
+  function Ir(e) {
+    return (Ir = "function" == typeof Symbol && "symbol" == _typeof(Symbol.iterator) ? function (e) {
       return _typeof(e);
     } : function (e) {
       return e && "function" == typeof Symbol && e.constructor === Symbol && e !== Symbol.prototype ? "symbol" : _typeof(e);
     })(e);
   }
 
-  function Ir() {
-    return (Ir = Object.assign || function (e) {
+  function Dr() {
+    return (Dr = Object.assign || function (e) {
       for (var n = 1; n < arguments.length; n++) {
         var t = arguments[n];
 
@@ -30527,38 +30590,38 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
     }).apply(this, arguments);
   }
 
-  function Dr(e, n) {
+  function Pr(e, n) {
     for (var t = 0; t < n.length; t++) {
       var r = n[t];
       r.enumerable = r.enumerable || !1, r.configurable = !0, "value" in r && (r.writable = !0), Object.defineProperty(e, r.key, r);
     }
   }
 
-  function Pr(e, n) {
-    return !n || "object" !== Ar(n) && "function" != typeof n ? function (e) {
+  function Mr(e, n) {
+    return !n || "object" !== Ir(n) && "function" != typeof n ? function (e) {
       if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
       return e;
     }(e) : n;
   }
 
-  function Mr(e) {
-    return (Mr = Object.setPrototypeOf ? Object.getPrototypeOf : function (e) {
+  function jr(e) {
+    return (jr = Object.setPrototypeOf ? Object.getPrototypeOf : function (e) {
       return e.__proto__ || Object.getPrototypeOf(e);
     })(e);
   }
 
-  function jr(e, n) {
-    return (jr = Object.setPrototypeOf || function (e, n) {
+  function Lr(e, n) {
+    return (Lr = Object.setPrototypeOf || function (e, n) {
       return e.__proto__ = n, e;
     })(e, n);
   }
 
-  var Lr = function (e) {
+  var Rr = function (e) {
     function n(e) {
       var t;
       return function (e, n) {
         if (!(e instanceof n)) throw new TypeError("Cannot call a class as a function");
-      }(this, n), (t = Pr(this, Mr(n).call(this, e))).state = {
+      }(this, n), (t = Mr(this, jr(n).call(this, e))).state = {
         posts: [],
         users: [],
         comments: []
@@ -30574,7 +30637,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           writable: !0,
           configurable: !0
         }
-      }), n && jr(e, n);
+      }), n && Lr(e, n);
     }(n, r["Component"]), t = n, (i = [{
       key: "componentDidMount",
       value: function value() {
@@ -30615,7 +30678,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           exact: !0,
           path: "/",
           render: function render(e) {
-            return o.a.createElement(Hn, Ir({}, e, {
+            return o.a.createElement(Hn, Dr({}, e, {
               souseUserData: n,
               sousePostData: t,
               souseCommentData: r
@@ -30633,7 +30696,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           exact: !0,
           path: "/:username",
           render: function render(e) {
-            return o.a.createElement(Tt, Ir({}, e, {
+            return o.a.createElement(Tt, Dr({}, e, {
               souseUserData: n,
               sousePostData: t
             }));
@@ -30642,7 +30705,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           exact: !0,
           path: "/p/:id",
           render: function render(e) {
-            return o.a.createElement(xr, Ir({}, e, {
+            return o.a.createElement(wr, Dr({}, e, {
               souseUserData: n,
               sousePostData: t,
               souseCommentData: r
@@ -30651,7 +30714,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         }), o.a.createElement(cn, {
           exact: !0,
           path: "/p/edit/:id",
-          component: Or
+          component: Ar
         }), o.a.createElement(cn, {
           exact: !0,
           path: "/c/delete/:id",
@@ -30660,28 +30723,28 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
           component: Mt
         })))));
       }
-    }]) && Dr(t.prototype, i), a && Dr(t, a), n;
+    }]) && Pr(t.prototype, i), a && Pr(t, a), n;
   }();
 
-  Lr.propTypes = {
+  Rr.propTypes = {
     auth: we.a.object.isRequired
   };
-  var Rr = ne(function (e) {
+  var Br = ne(function (e) {
     return {
       auth: e.auth
     };
-  })(Lr);
+  })(Rr);
   t(122), t(125), t(127), t(129), t(132), t(134);
 
   if (localStorage.jwtToken) {
     he(localStorage.jwtToken);
-    var Br = pe()(localStorage.jwtToken);
-    de.dispatch(ge(Br));
-    var Nr = Date.now() / 1e3;
-    Br.exp < Nr && (de.dispatch(be()), window.location.href = "/login");
+    var Nr = pe()(localStorage.jwtToken);
+    de.dispatch(ge(Nr));
+    var zr = Date.now() / 1e3;
+    Nr.exp < zr && (de.dispatch(be()), window.location.href = "/login");
   }
 
   Object(i.render)(o.a.createElement(u, {
     store: de
-  }, o.a.createElement(Rr, null)), document.getElementById("app"));
+  }, o.a.createElement(Br, null)), document.getElementById("app"));
 }]);
