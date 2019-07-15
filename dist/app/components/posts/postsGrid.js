@@ -270,8 +270,6 @@ function (_Component) {
       }, _react["default"].createElement("div", {
         "class": "col-12 no-gutters sousePostImageColumn"
       }, _react["default"].createElement("div", {
-        "class": "img-responsive"
-      }, _react["default"].createElement("div", {
         "class": "souseImageFormat"
       }, _react["default"].createElement("div", {
         "class": "mx-auto d-block colorOverlay comboImage",
@@ -279,6 +277,21 @@ function (_Component) {
         height: "1080px"
       }), _react["default"].createElement("div", {
         "class": "card bottomRowOfCardBackground comboImage",
+        width: "1080px"
+      }, _react["default"].createElement("div", {
+        "class": "card-body"
+      })), _react["default"].createElement("div", {
+        "class": "card bottomRowOfCardBackground2 comboImage",
+        width: "1080px"
+      }, _react["default"].createElement("div", {
+        "class": "card-body"
+      })), _react["default"].createElement("div", {
+        "class": "card bottomRowOfCardBackground3 comboImage",
+        width: "1080px"
+      }, _react["default"].createElement("div", {
+        "class": "card-body"
+      })), _react["default"].createElement("div", {
+        "class": "card bottomRowOfCardBackground4 comboImage",
         width: "1080px"
       }, _react["default"].createElement("div", {
         "class": "card-body"
@@ -306,18 +319,26 @@ function (_Component) {
         "class": "customUnderline comboImage"
       }))), _react["default"].createElement("div", {
         "class": "col-4"
-      })))), _react["default"].createElement("img", {
+      })))), _react["default"].createElement("div", {
+        "class": "container-fluid"
+      }, _react["default"].createElement("div", {
+        "class": "thumbnail"
+      }, _react["default"].createElement("img", {
         "class": "mx-auto d-block sousePostImage",
         src: sousePostImage,
         alt: "sousePostImage",
         width: "1080px",
         height: "1080px"
-      })))), _react["default"].createElement("div", {
-        "class": "col-12 no-gutters sousePostUserDataColumn"
+      }))))), _react["default"].createElement("div", {
+        "class": "col-12 no-gutters sousePostUserDataColumn comboImage"
       }, _react["default"].createElement("div", {
-        "class": "row"
+        "class": "container"
       }, _react["default"].createElement("div", {
-        "class": "col-3 no-gutters souseUserImageColumn"
+        "class": "userContentSection"
+      }, _react["default"].createElement("div", {
+        "class": "row topUserContentRow no-gutters"
+      }, _react["default"].createElement("div", {
+        "class": "col-6 no-gutters float-left souseUserImageColumn"
       }, _react["default"].createElement("img", {
         "class": "souseUserIconPost",
         src: this.state.postCreatorImage,
@@ -325,15 +346,9 @@ function (_Component) {
         width: "25px",
         height: "25px"
       })), _react["default"].createElement("div", {
-        "class": "col-9 souseUserNameColumn"
-      }, _react["default"].createElement("h6", {
-        "class": "souseUsername"
-      }, _react["default"].createElement("span", null, _react["default"].createElement(_reactRouterDom.Link, {
-        to: "/".concat(postCreatorName)
-      }, postCreatorName))), _react["default"].createElement("h6", {
-        "class": "sousePostCaption"
-      }, postCaption), isAuthenticated && postCreatorId === loggedinUser ? _react["default"].createElement("div", {
-        "class": "row souseEditPostButton"
+        "class": "col-6 sousePostEditButton"
+      }, isAuthenticated && postCreatorId === loggedinUser ? _react["default"].createElement("div", {
+        "class": "souseEditPostButton float-right"
       }, _react["default"].createElement("div", {
         "class": "form-group"
       }, _react["default"].createElement(_reactRouterDom.Link, {
@@ -345,15 +360,38 @@ function (_Component) {
         }
       }, _react["default"].createElement("button", {
         type: "submit",
-        "class": "waves-effect waves-light btn-small"
+        "class": "waves-effect waves-light btn-large"
       }, _react["default"].createElement("p", {
         "class": "lead buttonFont"
-      }, "Edit Post"))))) : _react["default"].createElement("div", null)))), _react["default"].createElement("div", {
+      }, "Edit Post"))))) : _react["default"].createElement("div", null)), _react["default"].createElement("div", {
+        "class": "col-6 souseUserNameColumn"
+      }, _react["default"].createElement("h5", {
+        "class": "float-left userNameData"
+      }, _react["default"].createElement("span", null, _react["default"].createElement(_reactRouterDom.Link, {
+        to: "/".concat(postCreatorName),
+        "class": "profileNameLink"
+      }, postCreatorName)))), _react["default"].createElement("div", {
+        "class": "col-6 souseUserFollowersColumn"
+      }), _react["default"].createElement("div", {
+        "class": "col-6 souseUserLocationColumn"
+      }, _react["default"].createElement("h6", {
+        "class": "float-left locationData"
+      }, "Brickell City Centre, Miami, Florida")), _react["default"].createElement("div", {
+        "class": "col-6 souseUserFollowingColumn"
+      })))))), _react["default"].createElement("div", {
+        "class": "row souseBottomHalf"
+      }, _react["default"].createElement("div", {
+        "class": "col-12"
+      }, _react["default"].createElement("h6", {
+        "class": "sousePostCaption float-right"
+      }, postCaption)), _react["default"].createElement("div", {
         "class": "col-12 no-gutters sousePostUserCommentsLink"
       }, _react["default"].createElement("h6", {
         onClick: this.displayComments
-      }, "View all ", commentsTotal, " comments")))), _react["default"].createElement("div", {
-        "class": "col-sm-6 no-gutters footerSection"
+      }, "View all ", commentsTotal, " comments"))))), _react["default"].createElement("div", {
+        "class": "row souseFooter fixed-bottom"
+      }, _react["default"].createElement("div", {
+        "class": "col-12 no-gutters footerSection"
       }, _react["default"].createElement("div", {
         "class": "souseFooter"
       }, _react["default"].createElement("h6", null, _react["default"].createElement("i", {

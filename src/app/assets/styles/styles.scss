@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,900&display=swap');
 // Souse Color Palette
 $primaryColorAlt: rgb(221, 174, 170);
 $secondaryColor: rgb(196, 87, 88);
@@ -66,6 +66,11 @@ nav ul a {
     font-weight: bold;
     color: $white;
 
+}
+
+.userNameData {
+    color: $white;
+    font-size: 1em; // 10px
 }
 
 .locationData {
@@ -313,6 +318,14 @@ a:active {
     color: $secondaryColor;
     text-decoration: none;
 }
+a.profileNameLink:link,
+a.profileNameLink:visited,
+a.profileNameLink:hover,
+a.profileNameLink:active {
+    color: $white;
+    font-weight: 300;
+    font-size: 1.4em;
+}
 
 /* ---------------------------------------------------- */
 
@@ -438,8 +451,8 @@ fieldset[disabled] .btn-modalButton.active {
 @media (max-width: 767px) and (orientation: portrait) {
     .sousePostImage {
         object-fit: cover;
-        width: 100vw;
-        height: 100vw;
+        width: 108vw;
+        height: 87vw;
     }
 
     .souseUserIconComments {
@@ -448,8 +461,8 @@ fieldset[disabled] .btn-modalButton.active {
     }
 
     .souseUserIconPost {
-        width: 15vw;
-        height: 15vw;
+        width: 21vw;
+        height: 21vw;
     }
 
     .pre-scrollable {
@@ -497,14 +510,35 @@ fieldset[disabled] .btn-modalButton.active {
 
     div.comboImage {
         position: absolute;
-        top: 0rem;
-        left: 1rem;
+        top: 0.5rem;
+        left: 0rem;
     }
 
     div.comboImage.bottomRowOfCardBackground {
         position: absolute;
+        top: 31rem;
+        left: 0rem;
+        background: rgba($primaryColorAlt, 1);
+        border: none;
+    }
+    div.comboImage.bottomRowOfCardBackground2 {
+        position: absolute;
+        top: 28rem;
+        left: 0rem;
+        background: rgba($primaryColorAlt, 1);
+        border: none;
+    }
+    div.comboImage.bottomRowOfCardBackground3 {
+        position: absolute;
         top: 26rem;
-        left: 1rem;
+        left: 0rem;
+        background: rgba($primaryColorAlt, 1);
+        border: none;
+    }
+    div.comboImage.bottomRowOfCardBackground4 {
+        position: absolute;
+        top: 30rem;
+        left: 0rem;
         background: rgba($primaryColorAlt, 1);
         border: none;
     }
@@ -512,7 +546,7 @@ fieldset[disabled] .btn-modalButton.active {
     div.comboImage.bottomRowOfCard {
         position: absolute;
         top: 24rem;
-        left: 1rem;
+        left: 0rem;
         background: rgb(255, 255, 255);
         background: linear-gradient(180deg, rgba($black, 0) 0%, rgba($primaryColorAlt, 1) 92%);
         border: none;
@@ -520,25 +554,40 @@ fieldset[disabled] .btn-modalButton.active {
 
     div.comboImage.bottomRowOfCardContent {
         position: absolute;
-        top: 25rem;
-        left: 1rem;
+        top: 29.5rem;
+        left: 0rem;
         background: rgb(255, 255, 255);
         background: linear-gradient(180deg, rgba($black, 0) 41%, rgba($primaryColorAlt, 1) 80%, rgba($primaryColorAlt, 1) 58%);
         border: none;
     }
 
     .bottomRowOfCardBackground {
-        width: 101vw;
+        width: 104vw;
         z-index: 1;
         border-radius: 0 !important;
         -webkit-box-shadow: 0 6px 10px -8px $black;
         -moz-box-shadow: 0 6px 10px -8px $black;
         box-shadow: 0 6px 10px -8px $black;
     }
+    .bottomRowOfCardBackground2 {
+        width: 104vw;
+        z-index: 1;
+        border-radius: 0 !important;
+    }
+    .bottomRowOfCardBackground3 {
+        width: 104vw;
+        z-index: 1;
+        border-radius: 0 !important;
+    }
+    .bottomRowOfCardBackground4 {
+        width: 104vw;
+        z-index: 1;
+        border-radius: 0 !important;
+    }
 
     .colorOverlay {
         object-fit: cover;
-        width: 101vw;
+        width: 104vw;
         height: 99vw;
         border-bottom: none;
         background: rgb(255, 255, 255);
@@ -548,13 +597,13 @@ fieldset[disabled] .btn-modalButton.active {
     }
 
     .bottomRowOfCard {
-        width: 101vw;
+        width: 104vw;
         z-index: 3;
         border-radius: 0 !important;
     }
 
     .bottomRowOfCardContent {
-        width: 101vw;
+        width: 104vw;
         z-index: 4;
         border-radius: 0 !important;
     }
@@ -574,6 +623,44 @@ fieldset[disabled] .btn-modalButton.active {
         z-index: 5;
         background: $white;
     }
+
+    div.comboImage.sousePostUserDataColumn {
+        position: absolute;
+        top: 22rem;
+        left: 0rem;
+    }
+
+    .sousePostUserDataColumn {
+        z-index: 6;
+    }
+
+    .thumbnail {
+        position: relative;
+        width: 100vw;
+        height: 102vw;
+        overflow: hidden;
+    }
+
+    .thumbnail img {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        height: 100%;
+        width: auto;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+
+    .thumbnail img.portrait {
+        width: 100%;
+        height: auto;
+    }
+
+    .souseBottomHalf {
+        padding-top: 6rem;
+    }
+
 }
 
 @media (max-width: 767px) and (orientation: landscape) {}
