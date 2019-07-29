@@ -27,6 +27,13 @@ class Navbar extends Component {
         <div>
           <li><Link class="sidenav-close" to="/signup">Sign Up</Link></li>
           <li><Link class="sidenav-close" to="/login">Login</Link></li>
+          <li>
+            <div class="input-field col s6">
+              <i class="material-icons prefix">search</i>
+              <input type="text" placeholder="" id="autocomplete-input" class="autocomplete" />
+              <label for="autocomplete-input">Search</label>
+            </div>
+          </li>
         </div>
       )
         return (
@@ -61,7 +68,7 @@ class Navbar extends Component {
                 </ul>
             </div>
           );
-      }
+        }
 }
 Navbar.propTypes = {
     logoutUser: PropTypes.func.isRequired,

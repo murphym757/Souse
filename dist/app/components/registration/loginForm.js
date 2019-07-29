@@ -99,7 +99,9 @@ function (_Component) {
     key: "render",
     value: function render() {
       var errors = this.state.errors;
-      return _react["default"].createElement("div", null, _react["default"].createElement("form", {
+      return _react["default"].createElement("div", {
+        "class": "container-fluid"
+      }, _react["default"].createElement("form", {
         onSubmit: this.onSubmit
       }, _react["default"].createElement("div", {
         "class": "input-field"

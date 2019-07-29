@@ -63,6 +63,13 @@ function (_Component) {
         user = _this$props$auth.user;
     var loggedInUsername = user.username;
     var loggedInUserId = user.id;
+    var _this$props$location$ = _this.props.location.state,
+        souseUserId = _this$props$location$.souseUserId,
+        souseUserUsername = _this$props$location$.souseUserUsername,
+        souseUserFirstName = _this$props$location$.souseUserFirstName,
+        souseUserLastName = _this$props$location$.souseUserLastName,
+        souseUserPassword = _this$props$location$.souseUserPassword,
+        souseUserSignUpDate = _this$props$location$.souseUserSignUpDate;
     var usernameFinder = window.location.pathname;
     var usernameFound = usernameFinder.slice(1);
     var twitterUsername = "SeaP305";
@@ -71,9 +78,15 @@ function (_Component) {
     var facebookUsernameURL = "https://www.facebook.com/" + facebookUsername + "/";
     var instagramUsername = "seapanther_305";
     var instagramUsernameURL = "https://www.instagram.com/" + instagramUsername + "/";
+    var userLocation = "Miami";
+    var userBio = "Hi my name is my name. duh! :)";
     _this.state = {
-      postCreatorUsername: usernameFound,
-      postCreatorId: '',
+      postCreatorId: souseUserId,
+      postCreatorUsername: souseUserUsername,
+      postCreatorFirstName: souseUserFirstName,
+      postCreatorLastName: souseUserLastName,
+      postCreatorPassword: souseUserPassword,
+      postCreatorSignUpDate: souseUserSignUpDate,
       postTotalDisplay: '1',
       postCreatorImage: "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg",
       postCreatorTwitter: twitterUsername,
@@ -81,7 +94,9 @@ function (_Component) {
       postCreatorFacebook: facebookUsername,
       postCreatorFacebookURL: facebookUsernameURL,
       postCreatorInstagram: instagramUsername,
-      postCreatorInstagramURL: instagramUsernameURL
+      postCreatorInstagramURL: instagramUsernameURL,
+      postCreatorLocation: userLocation,
+      postCreatorBio: userBio
     };
     return _this;
   }
@@ -118,8 +133,21 @@ function (_Component) {
           isAuthenticated = _this$props$auth2.isAuthenticated,
           user = _this$props$auth2.user;
       var loggedInUsername = user.username;
+      var loggedInUserId = user.id;
+      var loggedInUserFirstname = user.firstName;
       var usernamePage = this.props.match.params.username;
+      var postCreatorId = this.state.postCreatorId;
+      var postCreatorUsername = this.state.postCreatorUsername;
+      var postCreatorFirstName = this.state.postCreatorFirstName;
+      var postCreatorLastName = this.state.postCreatorLastName;
+      var postCreatorPassword = this.state.postCreatorPassword;
+      var postCreatorSignUpDate = this.state.postCreatorSignUpDate;
       var postCreatorImage = this.state.postCreatorImage;
+      var postCreatorTwitter = this.state.postCreatorTwitter;
+      var postCreatorFacebook = this.state.postCreatorFacebook;
+      var postCreatorInstagram = this.state.postCreatorInstagram;
+      var postCreatorLocation = this.state.postCreatorLocation;
+      var postCreatorBio = this.state.postCreatorBio;
       var postsTotal = "" + this.postFinder().length + "";
       var TwitterIcon = (0, _styledComponents["default"])(_Twitter.Twitter).withConfig({
         displayName: "userProfile__TwitterIcon",
@@ -157,7 +185,30 @@ function (_Component) {
         "class": "row col-12 userNameRow"
       }, _react["default"].createElement("h2", {
         "class": "d-flex justify-content-center"
-      }, this.state.postCreatorUsername)), _react["default"].createElement("div", {
+      }, this.state.postCreatorUsername), _react["default"].createElement(_reactRouterDom.Link, {
+        to: {
+          pathname: "/u/edit/" + loggedInUserId,
+          state: {
+            postCreatorId: postCreatorId,
+            postCreatorUsername: postCreatorUsername,
+            postCreatorFirstName: postCreatorFirstName,
+            postCreatorLastName: postCreatorLastName,
+            postCreatorPassword: postCreatorPassword,
+            postCreatorSignUpDate: postCreatorSignUpDate,
+            postCreatorImage: postCreatorImage,
+            postCreatorTwitter: postCreatorTwitter,
+            postCreatorFacebook: postCreatorFacebook,
+            postCreatorInstagram: postCreatorInstagram,
+            postCreatorLocation: postCreatorLocation,
+            postCreatorBio: postCreatorBio
+          }
+        }
+      }, _react["default"].createElement("button", {
+        type: "submit",
+        "class": "waves-effect waves-light btn-large"
+      }, _react["default"].createElement("p", {
+        "class": "lead buttonFont"
+      }, "Edit Profile")))), _react["default"].createElement("div", {
         "class": "row col-12 userNumericDataRow"
       }, this.state.postTotalDisplay === postsTotal ? _react["default"].createElement("h6", {
         "class": "col d-flex justify-content-center"

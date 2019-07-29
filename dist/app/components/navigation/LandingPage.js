@@ -13,6 +13,8 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _reactRedux = require("react-redux");
 
+var _userProfile = _interopRequireDefault(require("../userProfile/userProfile"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
@@ -60,7 +62,17 @@ function (_Component) {
         "class": "usersPosts"
       }, Object.keys(souseUserData).map(function (object, i) {
         return _react["default"].createElement("div", null, _react["default"].createElement(_reactRouterDom.Link, {
-          to: "/".concat(souseUserData[i].username)
+          to: {
+            pathname: "/".concat(souseUserData[i].username),
+            state: {
+              souseUserId: souseUserData[i]._id,
+              souseUserUsername: souseUserData[i].username,
+              souseUserFirstName: souseUserData[i].firstName,
+              souseUserLastName: souseUserData[i].lastName,
+              souseUserPassword: souseUserData[i].password,
+              souseUserSignUpDate: souseUserData[i].signUpDate
+            }
+          }
         }, souseUserData[i].username));
       })));
     }

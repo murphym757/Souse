@@ -15,6 +15,14 @@ class UserProfile extends Component {
         const {isAuthenticated, user} = this.props.auth;
         const loggedInUsername = user.username;
         const loggedInUserId = user.id;
+        const {
+            souseUserId,
+            souseUserUsername,
+            souseUserFirstName,
+            souseUserLastName,
+            souseUserPassword,
+            souseUserSignUpDate
+        } = this.props.location.state;
         const usernameFinder = window.location.pathname;
         const usernameFound = usernameFinder.slice(1);
         const twitterUsername = "SeaP305";
@@ -23,10 +31,16 @@ class UserProfile extends Component {
         const facebookUsernameURL = "https://www.facebook.com/" + facebookUsername + "/";
         const instagramUsername = "seapanther_305";
         const instagramUsernameURL = "https://www.instagram.com/" + instagramUsername + "/";
+        const userLocation = "Miami";
+        const userBio = "Hi my name is my name. duh! :)";
         
         this.state = {
-            postCreatorUsername: usernameFound,
-            postCreatorId: '',
+            postCreatorId: souseUserId,
+            postCreatorUsername: souseUserUsername,
+            postCreatorFirstName: souseUserFirstName,
+            postCreatorLastName: souseUserLastName,
+            postCreatorPassword: souseUserPassword,
+            postCreatorSignUpDate: souseUserSignUpDate,
             postTotalDisplay: '1',
             postCreatorImage: "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg",
             postCreatorTwitter: twitterUsername,
@@ -34,7 +48,9 @@ class UserProfile extends Component {
             postCreatorFacebook: facebookUsername,
             postCreatorFacebookURL: facebookUsernameURL,
             postCreatorInstagram: instagramUsername,
-            postCreatorInstagramURL: instagramUsernameURL
+            postCreatorInstagramURL: instagramUsernameURL,
+            postCreatorLocation: userLocation,
+            postCreatorBio: userBio
         };
     }
     postFinder() {
@@ -58,8 +74,21 @@ class UserProfile extends Component {
     render() {
         const {isAuthenticated, user} = this.props.auth;
         const loggedInUsername = user.username;
+        const loggedInUserId = user.id;
+        const loggedInUserFirstname = user.firstName;
         const usernamePage = this.props.match.params.username;
+        const postCreatorId = this.state.postCreatorId;
+        const postCreatorUsername = this.state.postCreatorUsername;
+        const postCreatorFirstName = this.state.postCreatorFirstName;
+        const postCreatorLastName = this.state.postCreatorLastName;
+        const postCreatorPassword = this.state.postCreatorPassword;
+        const postCreatorSignUpDate = this.state.postCreatorSignUpDate;
         const postCreatorImage = this.state.postCreatorImage;
+        const postCreatorTwitter = this.state.postCreatorTwitter;
+        const postCreatorFacebook = this.state.postCreatorFacebook;
+        const postCreatorInstagram = this.state.postCreatorInstagram;
+        const postCreatorLocation = this.state.postCreatorLocation;
+        const postCreatorBio = this.state.postCreatorBio;
         const postsTotal = "" + this.postFinder().length + "";
         const TwitterIcon = styled(Twitter)
         `
@@ -96,6 +125,27 @@ class UserProfile extends Component {
                             <div class="container-fluid">
                                 <div class="row col-12 userNameRow">
                                     <h2 class="d-flex justify-content-center">{this.state.postCreatorUsername}</h2>
+                                    <Link to={
+                                        {
+                                            pathname: "/u/edit/" + loggedInUserId,
+                                            state: {
+                                                postCreatorId: postCreatorId,
+                                                postCreatorUsername: postCreatorUsername,
+                                                postCreatorFirstName: postCreatorFirstName,
+                                                postCreatorLastName: postCreatorLastName,
+                                                postCreatorPassword: postCreatorPassword,
+                                                postCreatorSignUpDate: postCreatorSignUpDate,
+                                                postCreatorImage: postCreatorImage,
+                                                postCreatorTwitter: postCreatorTwitter,
+                                                postCreatorFacebook: postCreatorFacebook,
+                                                postCreatorInstagram: postCreatorInstagram,
+                                                postCreatorLocation: postCreatorLocation,
+                                                postCreatorBio: postCreatorBio
+                                            }
+                                        }
+                                    }>
+                                        <button type="submit" class="waves-effect waves-light btn-large"><p class="lead buttonFont">Edit Profile</p></button>
+                                    </Link>
                                 </div>
                                 <div class="row col-12 userNumericDataRow">
                                     {this.state.postTotalDisplay === postsTotal

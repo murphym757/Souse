@@ -69,29 +69,16 @@ function (_Component) {
         "class": "postCreateCollapse"
       }, _react["default"].createElement(_postForm["default"], null))), _react["default"].createElement("div", {
         "class": "fixed-action-btn"
-      }, _react["default"].createElement("a", {
-        "class": "btn-floating btn-large red"
+      }, " ", _react["default"].createElement("a", {
+        "class": "btn-floating btn-large red addPostButton"
       }, _react["default"].createElement("i", {
-        "class": "fas fa-plus"
-      })), _react["default"].createElement("ul", null, _react["default"].createElement("li", null, _react["default"].createElement("a", {
-        "class": "btn-floating red addPostButton"
-      }, _react["default"].createElement("i", {
-        "class": "fas fa-pen fa-xs",
+        "class": "fas fa-plus fa-xs",
         "data-toggle": "collapse",
         href: "#postCreateCollapse",
         role: "button",
         "aria-expanded": "false",
         "aria-controls": "postCreateCollapse"
-      }))), _react["default"].createElement("li", null, _react["default"].createElement("a", {
-        "class": "btn-floating yellow darken-1"
-      }, _react["default"].createElement("i", {
-        "class": "fas fa-search fa-xs",
-        "data-toggle": "collapse",
-        href: "#collapseExample",
-        role: "button",
-        "aria-expanded": "false",
-        "aria-controls": "collapseExample"
-      }))))));
+      }))));
     }
   }]);
 

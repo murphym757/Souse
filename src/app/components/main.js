@@ -13,6 +13,7 @@ import Navbar from './navigation/navbar';
 import PostPage from './posts/postsPage';
 import PostEdit from './posts/postEditForm';
 import CommentDelete from './posts/commentDeleteSection';
+import EditUserProfile from './userProfile/editUserProfile';
 
 class MainSource extends Component {
   constructor(props) {
@@ -89,6 +90,7 @@ class MainSource extends Component {
                                 (props) => <UserProfile {...props} 
                                 souseUserData={souseUsers} sousePostData={sousePosts} />
                                 }/>
+                            <Route exact path="/u/edit/:id" component={EditUserProfile}/>
                             <Route exact path="/p/:id" 
                             render={
                                 (props) => <PostPage {...props} 

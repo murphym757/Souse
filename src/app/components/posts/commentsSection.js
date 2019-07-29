@@ -125,7 +125,7 @@ class CommentsSection extends Component {
                             {Object.keys(this.commentsFinder())
                                 .map((object, i) => (
                                     <div class="row no-gutters commentsSectionBody mt-0 mb-0">
-                                        <div class="col-2 pl-3">
+                                        <div class="col-2">
                                             <img class="souseUserIconComments" 
                                                 src= {this.state.userIcon}
                                                 alt="souseUserIconComments"

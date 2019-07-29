@@ -21,34 +21,15 @@ class PostIndex extends Component {
                         <PostCreate/>
                     </div>
                 </div>
-                <div class="fixed-action-btn">
-                    <a class="btn-floating btn-large red">
-                        <i class="fas fa-plus"></i>
+                <div class="fixed-action-btn"> {/* Create Post Button */}
+                    <a class="btn-floating btn-large red addPostButton">
+                        <i class="fas fa-plus fa-xs"
+                            data-toggle="collapse" 
+                            href="#postCreateCollapse" 
+                            role="button" 
+                            aria-expanded="false" 
+                            aria-controls="postCreateCollapse"></i>
                     </a>
-                    <ul>
-                        <li>
-                            <a class="btn-floating red addPostButton">
-                                <i class="fas fa-pen fa-xs" 
-                                    data-toggle="collapse" 
-                                    href="#postCreateCollapse" 
-                                    role="button" 
-                                    aria-expanded="false" 
-                                    aria-controls="postCreateCollapse">
-                                </i>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="btn-floating yellow darken-1">
-                                <i class="fas fa-search fa-xs"
-                                    data-toggle="collapse" 
-                                    href="#collapseExample" 
-                                    role="button" 
-                                    aria-expanded="false" 
-                                    aria-controls="collapseExample">
-                                </i>
-                            </a>
-                        </li>
-                    </ul>
                 </div>
             </div>
           );

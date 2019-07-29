@@ -15,6 +15,10 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _reactRedux = require("react-redux");
 
+var _styledComponents = _interopRequireDefault(require("styled-components"));
+
+var _styledSpinkit = require("styled-spinkit");
+
 var _awsS = _interopRequireDefault(require("aws-s3"));
 
 var _config = _interopRequireDefault(require("../../../server/config"));
@@ -220,17 +224,29 @@ function (_Component) {
       var postCreatorId = this.state.postCreatorId;
       var updateImage = this.state.updateImage;
       var updatedImage = this.state.updatedImage;
+
+      var TestFont = _styledComponents["default"].h6.withConfig({
+        displayName: "postEditForm__TestFont",
+        componentId: "sc-20ft5w-0"
+      })(["color:", ";"], function (props) {
+        return props.theme.main;
+      });
+
+      TestFont.defaultProps = {
+        theme: {
+          main: "palevioletred"
+        }
+      };
       return _react["default"].createElement("div", null, isAuthenticated && postCreatorId == loggedInUser ? _react["default"].createElement("div", {
         "class": "container"
-      }, _react["default"].createElement("div", {
-        "class": "row pt-5"
       }, _react["default"].createElement("form", {
-        onSubmit: this.onSubmit,
-        "class": "col-6"
+        onSubmit: this.onSubmit
+      }, _react["default"].createElement(TestFont, null, "Hi There"), _react["default"].createElement("div", {
+        "class": "row pt-5"
       }, _react["default"].createElement("div", {
-        "class": "input-field"
+        "class": "input-field col-6"
       }, _react["default"].createElement("textarea", {
-        "class": "materialize-textarea",
+        "class": "materialize-textarea editText",
         name: "postCaption",
         id: "souseCaptionPost",
         rows: "1",
@@ -239,24 +255,25 @@ function (_Component) {
       }), _react["default"].createElement("label", {
         "class": "active",
         "for": "souseCaptionPost"
-      }, "Caption")), updateImage ? _react["default"].createElement("div", null, this.state.fullPostUploadLoader ? _react["default"].createElement("div", null, this.state.isLoading ? _react["default"].createElement("div", {
-        "class": "img-wrapper col-6"
-      }, _react["default"].createElement("label", null, "Image updated"), _react["default"].createElement("div", {
-        "class": "img-responsive"
+      }, "Caption")), _react["default"].createElement("div", {
+        "class": "col-6"
+      }, updateImage ? _react["default"].createElement("div", null, this.state.fullPostUploadLoader ? _react["default"].createElement("div", null, this.state.isLoading ? _react["default"].createElement("div", null, _react["default"].createElement("label", {
+        "class": "d-block justify-content-center"
+      }, "Image updated"), _react["default"].createElement("div", {
+        "class": "thumbnail"
       }, _react["default"].createElement("div", {
         "class": "souseImageFormat"
       }, _react["default"].createElement("img", {
-        "class": "d-flex justify-content-left sousePostImageThumbnail pb-2",
+        "class": "d-flex mx-auto sousePostImage editPost pb-2",
         src: this.state.postImageURL,
         alt: "sousePostImage",
         width: "1080px",
         height: "1080px"
-      })))) : _react["default"].createElement("div", {
-        "class": "progress"
-      }, _react["default"].createElement("div", {
-        "class": "indeterminate"
-      }))) : _react["default"].createElement("div", {
-        "class": "file-field input-field"
+      })))) : _react["default"].createElement(_styledSpinkit.WaveLoading, {
+        "__styled-spinkit__Wave": true,
+        color: "#c45758"
+      })) : _react["default"].createElement("div", {
+        "class": "file-field input-field d-block mx-auto"
       }, _react["default"].createElement("div", {
         "class": "btn-large"
       }, _react["default"].createElement("span", null, "Upload"), _react["default"].createElement("input", {
@@ -269,22 +286,22 @@ function (_Component) {
       }, _react["default"].createElement("input", {
         "class": "file-path validate",
         type: "text"
-      })))) : _react["default"].createElement("div", {
-        "class": "img-wrapper col-6"
-      }, _react["default"].createElement("label", null, "Click image to update"), _react["default"].createElement("div", {
-        "class": "img-responsive"
+      })))) : _react["default"].createElement("div", null, _react["default"].createElement("label", {
+        "class": "d-flex justify-content-center"
+      }, "Click image to update"), _react["default"].createElement("div", {
+        "class": "thumbnail"
       }, _react["default"].createElement("div", {
         "class": "souseImageFormat"
       }, _react["default"].createElement("img", {
-        "class": "d-flex justify-content-left sousePostImageThumbnail pb-2",
+        "class": "d-flex mx-auto sousePostImage editPost pb-2",
         onClick: this.onUpdateImage,
         onChange: this.onChangeImageFileType,
         src: this.state.postImageURL,
         alt: "sousePostImage",
         width: "1080px",
         height: "1080px"
-      })))), _react["default"].createElement("div", {
-        "class": "form-group"
+      }))))), _react["default"].createElement("div", {
+        "class": "form-group col d-flex justify-content-center"
       }, _react["default"].createElement("button", {
         onClick: this.onUpdateImageDelete,
         type: "submit",

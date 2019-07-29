@@ -190,7 +190,7 @@ function (_Component) {
         return _react["default"].createElement("div", {
           "class": "row no-gutters commentsSectionBody mt-0 mb-0"
         }, _react["default"].createElement("div", {
-          "class": "col-2 pl-3"
+          "class": "col-2"
         }, _react["default"].createElement("img", {
           "class": "souseUserIconComments",
           src: _this2.state.userIcon,

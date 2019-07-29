@@ -61,7 +61,7 @@ class SignUpForm extends Component {
     render() {
         const { errors } = this.state;
         return (
-            <div>
+            <div class="container-fluid">
                 <form onSubmit={this.onSubmit}>
                     <div class="input-field">
                         <input 
@@ -85,10 +85,11 @@ class SignUpForm extends Component {
                                 'is-invalid': errors.username
                             })} 
                             id = "souseUsername"
-                            value={this.state.usename}
+                            maxLength={30}
+                            value={this.state.username}
                             onChange={this.onChange} 
                         />
-                        <label for="souseUsername">Username</label>
+                        <label for="souseUsername">Username ({this.state.username.length}/30)</label>
                         {errors.username && (<div class="invalid-feedback">{errors.username}</div>)}
                     </div>
                     <div class="input-field">
@@ -102,7 +103,7 @@ class SignUpForm extends Component {
                             value={this.state.firstName}
                             onChange={this.onChange}
                         />
-                        <label for="souseFirstName">First Name</label>
+                        <label for="souseFirstName">First Name  ({this.state.firstName.length}/30)</label>
                         {errors.firstName && (<div class="invalid-feedback">{errors.firstName}</div>)}
                     </div>
                     <div class="input-field">
@@ -116,7 +117,7 @@ class SignUpForm extends Component {
                             value={this.state.lastName}
                             onChange={this.onChange}
                         />
-                        <label for="souseLastName">Last Name</label>
+                        <label for="souseLastName">Last Name  ({this.state.lastName.length}/30)</label>
                         {errors.lastName && (<div class="invalid-feedback">{errors.lastName}</div>)}
                     </div>
                     <div class="input-field">

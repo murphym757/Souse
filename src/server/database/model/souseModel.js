@@ -36,7 +36,22 @@ const UserSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    avatar: {
+    userImage: {
+        type: String
+    },
+    userBio: {
+        type: String
+    },
+    userLocation: {
+        type: String
+    },
+    userInstagram: {
+        type: String
+    },
+    userFacebook: {
+        type: String
+    },
+    userTwitter: {
         type: String
     },
     signUpDate: {

@@ -109,7 +109,9 @@ function (_Component) {
     key: "render",
     value: function render() {
       var errors = this.state.errors;
-      return _react["default"].createElement("div", null, _react["default"].createElement("form", {
+      return _react["default"].createElement("div", {
+        "class": "container-fluid"
+      }, _react["default"].createElement("form", {
         onSubmit: this.onSubmit
       }, _react["default"].createElement("div", {
         "class": "input-field"
@@ -135,11 +137,12 @@ function (_Component) {
           'is-invalid': errors.username
         }),
         id: "souseUsername",
-        value: this.state.usename,
+        maxLength: 30,
+        value: this.state.username,
         onChange: this.onChange
       }), _react["default"].createElement("label", {
         "for": "souseUsername"
-      }, "Username"), errors.username && _react["default"].createElement("div", {
+      }, "Username (", this.state.username.length, "/30)"), errors.username && _react["default"].createElement("div", {
         "class": "invalid-feedback"
       }, errors.username)), _react["default"].createElement("div", {
         "class": "input-field"
@@ -154,7 +157,7 @@ function (_Component) {
         onChange: this.onChange
       }), _react["default"].createElement("label", {
         "for": "souseFirstName"
-      }, "First Name"), errors.firstName && _react["default"].createElement("div", {
+      }, "First Name  (", this.state.firstName.length, "/30)"), errors.firstName && _react["default"].createElement("div", {
         "class": "invalid-feedback"
       }, errors.firstName)), _react["default"].createElement("div", {
         "class": "input-field"
@@ -169,7 +172,7 @@ function (_Component) {
         onChange: this.onChange
       }), _react["default"].createElement("label", {
         "for": "souseLastName"
-      }, "Last Name"), errors.lastName && _react["default"].createElement("div", {
+      }, "Last Name  (", this.state.lastName.length, "/30)"), errors.lastName && _react["default"].createElement("div", {
         "class": "invalid-feedback"
       }, errors.lastName)), _react["default"].createElement("div", {
         "class": "input-field"

@@ -33,6 +33,8 @@ var _postEditForm = _interopRequireDefault(require("./posts/postEditForm"));
 
 var _commentDeleteSection = _interopRequireDefault(require("./posts/commentDeleteSection"));
 
+var _editUserProfile = _interopRequireDefault(require("./userProfile/editUserProfile"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
@@ -167,6 +169,10 @@ function (_Component) {
             sousePostData: sousePosts
           }));
         }
+      }), _react["default"].createElement(_reactRouterDom.Route, {
+        exact: true,
+        path: "/u/edit/:id",
+        component: _editUserProfile["default"]
       }), _react["default"].createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/p/:id",

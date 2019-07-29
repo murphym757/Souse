@@ -20,18 +20,12 @@ const mongoose = require('mongoose'),
                     email: 'Email already exists'
                 });
             } else { // If no matching email, user is allowed to create an account
-                const avatar = gravatar.url(req.body.email, {
-                    s: '200',
-                    r: 'pg',
-                    d: 'mm'
-                });
                 const newUser = new User({
                     username: req.body.username,
                     firstName: req.body.firstName,
                     lastName: req.body.lastName,
                     email: req.body.email,
-                    password: req.body.password,
-                    avatar
+                    password: req.body.password
                 });
 
                 bcrypt.genSalt(10, (err, salt) => { // Password field
@@ -77,7 +71,7 @@ const mongoose = require('mongoose'),
                                 const payload = {
                                     id: user.id,
                                     username: user.username,
-                                    avatar: user.avatar
+                                    userImage: user.userImage
                                 }
                                 jwt.sign(payload, 'secret', {
                                     expiresIn: 3600
@@ -108,12 +102,43 @@ const mongoose = require('mongoose'),
         });
     }
 
-    //Not Working yet
+    // Update Post
+    exports.update_user = (req, res, next) => {
+        const newerUser = {
+            username: req.body.username,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            password: req.body.password,
+            userImage: req.body.userImage,
+            userInstagram: req.body.userInstagram,
+            userFacebook: req.body.userFacebook,
+            userTwitter: req.body.userTwitter,
+            userLocation: req.body.userLocation,
+            userBio: req.body.userBio
+            }
+
+        const updateuser = {new: true};
+        User.findByIdAndUpdate(req.user.id, newerUser, updateuser, (err, user) => {
+            if (!post)
+                res.status(404).send("User could not be found");
+            else {
+                post.save().then(post => {
+                        res.json('Update complete');
+                    })
+                    .catch(err => {
+                        res.status(400).send("Unable to update user");
+                    });
+            }
+        });
+    }
+
+    // Delete User
     exports.delete_user = (req, res, next) => {
-        User.findOneAndRemove({username: req.params.username}, (err, user) => {
-        if(err) res.json(err);
-        else res.json('User ', {username: req.params.username}, ' was successfully removed');
-    });
+        User.findByIdAndRemove({username: req.user.id}, (err, user) => {
+            if(err) res.json(err);
+            else res.json('User ', {username: req.user.id}, ' was successfully removed');
+        });
     }
 
     exports.user_account = passport.authenticate('jwt', { session: false }), (req, res, next) => {

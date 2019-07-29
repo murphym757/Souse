@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect, withRouter } fr
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
+import { WaveLoading } from 'styled-spinkit';
 import S3 from 'aws-s3';
 import awsConfig from '../../../server/config';
 
@@ -159,16 +161,26 @@ class PostEdit extends Component {
         const postCreatorId = this.state.postCreatorId;
         const updateImage = this.state.updateImage;
         const updatedImage = this.state.updatedImage;
+        const TestFont = styled.h6`
+            color: ${props => props.theme.main};
+        `;
+        
+        TestFont.defaultProps = {
+            theme: {
+                main: "palevioletred"
+            }
+        }
          
         return (
             <div>
                 {isAuthenticated && postCreatorId == loggedInUser
                     ? <div class="container">
-                        <div class="row pt-5">
-                            <form onSubmit={this.onSubmit} class="col-6">
-                                    <div class="input-field">
+                            <form onSubmit={this.onSubmit}>
+                            <TestFont>Hi There</TestFont>
+                                <div class="row pt-5">
+                                    <div class="input-field col-6">
                                         <textarea 
-                                            class="materialize-textarea"
+                                            class="materialize-textarea editText"
                                             name="postCaption"
                                             id="souseCaptionPost"  
                                             rows="1"
@@ -176,64 +188,64 @@ class PostEdit extends Component {
                                             onChange={this.onChangepostCaption}></textarea>
                                         <label class="active" for="souseCaptionPost">Caption</label>
                                     </div>
-                                {updateImage
-                                    ?   <div>
-                                            {this.state.fullPostUploadLoader
-                                                ?   <div>
-                                                        {this.state.isLoading
-                                                            ?   <div class="img-wrapper col-6">
-                                                                    <label>Image updated</label>
-                                                                        <div class="img-responsive">
-                                                                            <div class="souseImageFormat">
-                                                                                <img class="d-flex justify-content-left sousePostImageThumbnail pb-2"
-                                                                                    src={this.state.postImageURL}
-                                                                                    alt="sousePostImage"
-                                                                                    width="1080px" 
-                                                                                    height="1080px"/>
-                                                                            </div>
+                                    <div class="col-6">
+                                        {updateImage
+                                            ?   <div>
+                                                    {this.state.fullPostUploadLoader
+                                                        ?   <div>
+                                                                {this.state.isLoading
+                                                                    ?   <div>
+                                                                            <label class="d-block justify-content-center">Image updated</label>
+                                                                                <div class="thumbnail">
+                                                                                    <div class="souseImageFormat">
+                                                                                        <img class="d-flex mx-auto sousePostImage editPost pb-2"
+                                                                                            src={this.state.postImageURL}
+                                                                                            alt="sousePostImage"
+                                                                                            width="1080px" 
+                                                                                            height="1080px"/>
+                                                                                    </div>
+                                                                                </div>
                                                                         </div>
+                                                                    :   <WaveLoading __styled-spinkit__Wave color="#c45758" />
+                                                                }
+                                                            </div>
+                                                        :   <div class="file-field input-field d-block mx-auto">
+                                                                <div class="btn-large">
+                                                                    <span>Upload</span>
+                                                                    <input 
+                                                                        type="file" 
+                                                                        name="souseImage"
+                                                                        id="souseImagePost"
+                                                                        onChange={this.onImageUpload}
+                                                                    />
                                                                 </div>
-                                                            :   <div class="progress">
-                                                                    <div class="indeterminate"></div>
-                                                                </div> 
-                                                        }
-                                                    </div>
-                                                :   <div class="file-field input-field">
-                                                        <div class="btn-large">
-                                                            <span>Upload</span>
-                                                            <input 
-                                                                type="file" 
-                                                                name="souseImage"
-                                                                id="souseImagePost"
-                                                                onChange={this.onImageUpload}
-                                                            />
-                                                        </div>
-                                                        <div class="file-path-wrapper">
-                                                            <input class="file-path validate" type="text" />
-                                                        </div>
-                                                    </div>
-                                            }
-                                        </div>
-                                    :   <div class="img-wrapper col-6">
-                                            <label>Click image to update</label>
-                                                <div class="img-responsive">
-                                                    <div class="souseImageFormat">
-                                                        <img class="d-flex justify-content-left sousePostImageThumbnail pb-2"
-                                                            onClick={this.onUpdateImage} 
-                                                            onChange={this.onChangeImageFileType}
-                                                            src={this.state.postImageURL}
-                                                            alt="sousePostImage"
-                                                            width="1080px" 
-                                                            height="1080px"/>
-                                                    </div>
+                                                                <div class="file-path-wrapper">
+                                                                    <input class="file-path validate" type="text" />
+                                                                </div>
+                                                            </div>
+                                                    }
                                                 </div>
-                                        </div>
-                                }
-                                <div class="form-group">
-                                    <button onClick={this.onUpdateImageDelete} type="submit" class="waves-effect waves-light btn-large">Update</button>
+                                            :   <div>
+                                                    <label class="d-flex justify-content-center">Click image to update</label>
+                                                        <div class="thumbnail">
+                                                            <div class="souseImageFormat">
+                                                                <img class="d-flex mx-auto sousePostImage editPost pb-2"
+                                                                    onClick={this.onUpdateImage} 
+                                                                    onChange={this.onChangeImageFileType}
+                                                                    src={this.state.postImageURL}
+                                                                    alt="sousePostImage"
+                                                                    width="1080px" 
+                                                                    height="1080px"/>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                        }
+                                </div>
+                                    <div class="form-group col d-flex justify-content-center">
+                                        <button onClick={this.onUpdateImageDelete} type="submit" class="waves-effect waves-light btn-large">Update</button>
+                                    </div>
                                 </div>
                             </form>
-                        </div>
                         <div class="form-group col d-flex justify-content-center pt-3">
                             <button onClick={this.delete} class="waves-effect waves-light btn-large">Delete</button>
                         </div>

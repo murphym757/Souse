@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import UserProfile from '../userProfile/userProfile';
 
 class LandingPage extends Component {
     render() {
@@ -23,7 +24,21 @@ class LandingPage extends Component {
                         {Object.keys(souseUserData)
                             .map((object, i) => (
                                 <div>
-                                    <Link to={`/${souseUserData[i].username}`}>{souseUserData[i].username}</Link>
+                                    <Link to={
+                                        {
+                                            pathname: `/${souseUserData[i].username}`,
+                                            state: {
+                                                souseUserId: souseUserData[i]._id,
+                                                souseUserUsername: souseUserData[i].username,
+                                                souseUserFirstName: souseUserData[i].firstName,
+                                                souseUserLastName: souseUserData[i].lastName,
+                                                souseUserPassword: souseUserData[i].password,
+                                                souseUserSignUpDate: souseUserData[i].signUpDate,
+                                            }
+                                        }
+                                    }>
+                                        {souseUserData[i].username}
+                                    </Link>
                                 </div>
                         ))}
                 </div>

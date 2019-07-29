@@ -82,8 +82,7 @@ class PostsGrid extends Component {
                 <div class="d-none d-xl-block container"> {/* For larger Sceens */}
                     <div class="row pt-5">
                         <div class="col-8">
-                            <div class="img-wrapper">
-                                <div class="img-responsive">
+                            <div class="thumbnail">
                                     <div class="souseImageFormat">
                                         <img class="mx-auto d-block sousePostImage pb-2" 
                                             src={sousePostImage}
@@ -91,81 +90,66 @@ class PostsGrid extends Component {
                                             width="1080px" 
                                             height="1080px"/>
                                     </div>
-                                </div>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="container">
-                                <div class="row">
-                                    <div class="col-2">
-                                        <img class="souseUserIconComments" 
-                                            src = {this.state.postUserImage} 
-                                            alt="souseUserIconComments"
-                                            width="25px" 
-                                            height="25px"/>
+                            {commentSectionSelected  
+                                ?   <div>
+                                        <div class="row">
+                                            <div class="container">
+                                                <h6 class="float-right" onClick={this.closeComments}><CloseIcon /></h6>
+                                            </div>
+                                        </div>
+                                        <CommentsSection 
+                                            originalPostData={postData}
+                                            souseUserData={souseUserData} 
+                                            souseCommentData={souseCommentData}/> {/* Comments */}
                                     </div>
-                                    <div class="col-8">
-                                        <h6 class="sousePostCreatorName">{postCreatorName}</h6>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <h6 class="sousePostCaption">{postCaption}</h6>
-                                    </div>
-                                </div>
-                                {isAuthenticated && postCreatorId === loggedinUser
-                                        ?   <div class="container-fluid img-overlay col justify-content-left">
-                                                <div class="row profileImageRow"> {/*User Icon and Edit Button */}
-                                                    <div class="col-6"></div>
-                                                    <div class="col-3 d-flex flex-row">
-                                                        <div class="buttonform-group">
-                                                            <img class="souseUserIcon" 
-                                                                src = {postCreatorImage}
-                                                                alt="souseUserIcon"
-                                                                width="85px" 
-                                                                height="85px"/>
+                                :   <div>
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <img class="souseUserIconComments" 
+                                                    src = {this.state.postUserImage} 
+                                                    alt="souseUserIconComments"
+                                                    width="25px" 
+                                                    height="25px"/>
+                                            </div>
+                                            <div class="col-8">
+                                                <h5 class="sousePostCreatorName">{postCreatorName}</h5>
+                                            </div>
+                                            {isAuthenticated && postCreatorId === loggedinUser
+                                                    ?  <div class="row"> {/*User Icon and Edit Button */}                                                  
+                                                            <div class="col-12 d-flex flex-row-reverse">
+                                                                <div class="form-group pt-4">
+                                                                    <Link to={
+                                                                        {
+                                                                            pathname: "/p/edit/" + this.props.obj._id,
+                                                                            state: {
+                                                                                postTimestamp: postUnixTimestamp
+                                                                            }
+                                                                        }
+                                                                    }>
+                                                                        <button type="submit" class="waves-effect waves-light btn-large"><p class="lead buttonFont">Edit Post</p></button>
+                                                                    </Link>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-3 d-flex flex-row-reverse">
-                                                        <div class="form-group pt-4">
-                                                            <Link to={
-                                                                {
-                                                                    pathname: "/p/edit/" + this.props.obj._id,
-                                                                    state: {
-                                                                        postTimestamp: postUnixTimestamp
-                                                                    }
-                                                                }
-                                                            }>
-                                                                <button type="submit" class="waves-effect waves-light btn-large"><p class="lead buttonFont">Edit Post</p></button>
-                                                            </Link>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row profileImageRow"> {/* username and Follower Count */}
-                                                    <div class="col-6"></div>
-                                                    <div class="col-3 d-flex flex-row">
-                                                        <p class="userData">{this.props.postCreatorName}</p>
-                                                    </div>
-                                                    <div class="col-3 d-flex flex-row-reverse">
-                                                        <p class="followData"></p>
-                                                    </div>
-                                                </div>
-                                                <div class="row profileImageRow"> {/* Location and Following Count */}
-                                                    <div class="col-6"></div>
-                                                    <div class="col-3 d-flex flex-row">
-                                                        <p class="locationData"></p>
-                                                    </div>
-                                                    <div class="col-3 d-flex flex-row-reverse">
-                                                        <p class="followData"></p>
-                                                    </div>
+                                                :   <div></div>
+                                            }
+                                        </div>
+                                        <div class="row">
+                                            <div class="pre-scrollable">
+                                                <div class="col-12">
+                                                    <h6 class="sousePostCaption">{postCaption}</h6>
                                                 </div>
                                             </div>
-                                    :   <div></div>
-                                }
-                                <CommentsSection 
-                                    originalPostData={postData}
-                                    souseUserData={souseUserData} 
-                                    souseCommentData={souseCommentData}/> {/* Comments */}
+                                            <div class="col-12 no-gutters sousePostUserCommentsLink">
+                                                <h6 class="souseCommentsLinkFont" onClick={this.displayComments}>View all {commentsTotal} comments</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                        }
                             </div>
                             <div class="souseFooter">
                                 <h6><i class="far fa-copyright"></i>{this.state.currentYear} Souse</h6>
@@ -188,118 +172,124 @@ class PostsGrid extends Component {
                                     souseCommentData={souseCommentData}/> {/* Comments */}
                             </div>
                         :   <div class="postSection no-gutters"> {/* Post Section */}
-                                <div class="row">
-                                    <div class="col-12 no-gutters sousePostImageColumn">
-                                            <div class="souseImageFormat">
-                                                <div class="mx-auto d-block colorOverlay comboImage" 
-                                                    width="1080px" 
-                                                    height="1080px">
-                                                </div>
-                                                <div class="card bottomRowOfCardBackground comboImage" width="1080px"> 
-                                                    <div class="card-body"></div>
-                                                </div>
-                                                <div class="card bottomRowOfCardBackground2 comboImage" width="1080px">
-                                                    <div class="card-body"></div>
-                                                </div>
-                                                <div class="card bottomRowOfCardBackground3 comboImage" width="1080px">
-                                                    <div class="card-body"></div>
-                                                </div>
-                                                <div class="card bottomRowOfCardBackground4 comboImage" width="1080px">
-                                                    <div class="card-body"></div>
-                                                </div>
-                                                <div class="card bottomRowOfCard comboImage" width="1080px">
-                                                    <div class="card-body"></div>
-                                                </div>
-                                                <div class="card bottomRowOfCardContent comboImage" width="1080px">
-                                                    <div class="card-body">
-                                                        
-                                                            <div class="row bottomRowOfCardContentRow my-auto">
-                                                                <div class="col-4"></div>
-                                                                <div class="col-4">
-                                                                    <div class="container d-flex justify-content-center align-items-end">
-                                                                        <h6 class="d-flex my-auto">Hi There</h6>
-                                                                        <br />
-                                                                        <div class="customUnderline comboImage"></div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="row souseTopHalf">
+                                        <div class="col-12 no-gutters sousePostImageColumn">
+                                                <div class="souseImageFormat">
+                                                    <div class="mx-auto d-block colorOverlay comboImage" 
+                                                        width="1080px" 
+                                                        height="1080px">
+                                                    </div>
+                                                    <div class="card bottomRowOfCardBackground comboImage" width="1080px"> 
+                                                        <div class="card-body"></div>
+                                                    </div>
+                                                    <div class="card bottomRowOfCard comboImage" width="1080px">
+                                                        <div class="card-body"></div>
+                                                    </div>
+                                                    <div class="card bottomRowOfCardContent comboImage" width="1080px">
+                                                        <div class="card-body">
+                                                            
+                                                                <div class="row bottomRowOfCardContentRow my-auto">
+                                                                    <div class="col-4"></div>
+                                                                    <div class="col-4">
+                                                                        <div class="container d-flex justify-content-center align-items-end">
+                                                                            <h6 class="d-flex my-auto">Hi There</h6>
+                                                                            <br />
+                                                                            <div class="customUnderline comboImage"></div>
+                                                                        </div>
                                                                     </div>
+                                                                    <div class="col-4"></div>
                                                                 </div>
-                                                                <div class="col-4"></div>
-                                                            </div>
-                                                    </div>
-                                                </div>
-                                                <div class="container-fluid">
-                                                <div class="thumbnail">
-                                                <img class="mx-auto d-block sousePostImage" 
-                                                    src={sousePostImage}
-                                                    alt="sousePostImage"
-                                                    width="1080px" 
-                                                    height="1080px"/>
-                                                    </div>
-                                                    </div>
-                                            </div>
-                                    </div>
-                                    <div class="col-12 no-gutters sousePostUserDataColumn comboImage">
-                                        <div class="container">
-                                        <div class="userContentSection">
-                                            <div class="row topUserContentRow no-gutters">
-                                            <div class="col-6 no-gutters float-left souseUserImageColumn">
-                                                <img class="souseUserIconPost" 
-                                                    src={this.state.postCreatorImage}
-                                                    alt="souseUserIconPost"
-                                                    width="25px" 
-                                                    height="25px"/>
-                                            </div>
-                                            <div class="col-6 sousePostEditButton">
-                                                {isAuthenticated && postCreatorId === loggedinUser
-                                                    ? <div class="souseEditPostButton float-right">
-                                                        <div class="form-group">
-                                                            <Link to={
-                                                                {
-                                                                    pathname: "/p/edit/" + this.props.obj._id,
-                                                                    state: {
-                                                                        postTimestamp: postUnixTimestamp
-                                                                    }
-                                                                }
-                                                            }>
-                                                                <button type="submit" class="waves-effect waves-light btn-large"><p class="lead buttonFont">Edit Post</p></button>
-                                                            </Link>
                                                         </div>
                                                     </div>
-                                                    : <div></div>
-                                                }
-                                            </div>
-
-                                            <div class="col-6 souseUserNameColumn">
-                                                <h5 class="float-left userNameData">
-                                                    <span><Link to={`/${postCreatorName}`} class="profileNameLink">{postCreatorName}</Link></span>
-                                                </h5>
-                                            </div>
-                                            <div class="col-6 souseUserFollowersColumn"></div>
-                                            <div class="col-6 souseUserLocationColumn">
-                                                <h6 class="float-left locationData">Brickell City Centre, Miami, Florida</h6>
-                                            </div>
-                                            <div class="col-6 souseUserFollowingColumn"></div>
+                                                    <div class="container-fluid">
+                                                    <div class="thumbnail">
+                                                    <img class="mx-auto d-block sousePostImage" 
+                                                        src={sousePostImage}
+                                                        alt="sousePostImage"
+                                                        width="1080px" 
+                                                        height="1080px"/>
+                                                        </div>
+                                                        </div>
+                                                </div>
                                         </div>
-                                        </div>
+                                        <div class="col-12 no-gutters sousePostUserDataColumn comboImage">
+                                            <div class="userContentSection">
+                                                <div class="row topUserContentRow no-gutters">
+                                                <div class="container-fluid">
+                                                <div class="row my-0 topRowContent">
+                                                    <div class="col-6 pl-4 no-gutters float-left souseUserImageColumn">
+                                                    <img class="souseUserIconPost" 
+                                                        src={this.state.postCreatorImage}
+                                                        alt="souseUserIconPost"
+                                                        width="25px" 
+                                                        height="25px"/>
+                                                </div>
+                                                    <div class="col-6 pr-4 sousePostEditButton">
+                                                    {isAuthenticated && postCreatorId === loggedinUser
+                                                        ? <div class="souseEditPostButton float-right">
+                                                            <div class="form-group">
+                                                                <Link to={
+                                                                    {
+                                                                        pathname: "/p/edit/" + this.props.obj._id,
+                                                                        state: {
+                                                                            postTimestamp: postUnixTimestamp
+                                                                        }
+                                                                    }
+                                                                }>
+                                                                    <button type="submit" class="waves-effect waves-light btn-large"><p class="lead buttonFont">Edit Post</p></button>
+                                                                </Link>
+                                                            </div>
+                                                        </div>
+                                                        : <div></div>
+                                                    }
+                                                </div>
+                                                </div>
+                                                <div class="row my-0 middleRowContent">
+                                                    <div class="col-6 pl-4 souseUserNameColumn">
+                                                    <h5 class="float-left userNameData">
+                                                        <span><Link to={`/${postCreatorName}`} class="profileNameLink">{postCreatorName}</Link></span>
+                                                    </h5>
+                                                </div>
+                                                    <div class="col-6 pr-4 souseUserFollowersColumn"></div>
+                                                </div>
+                                                <div class="row my-0 bottomRowContent">
+                                                    <div class="col-6 pl-4 souseUserLocationColumn">
+                                                        <h6 class="float-left locationData">Brickell City Centre, Miami, Florida</h6>
+                                                    </div>
+                                                    <div class="col-6 pr-4 souseUserFollowingColumn"></div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row souseBottomHalf">
-                                    <div class="col-12">
-                                        <h6 class="sousePostCaption float-right">{postCaption}</h6>
-                                    </div>     
-                                    <div class="col-12 no-gutters sousePostUserCommentsLink">
-                                        <h6 onClick={this.displayComments}>View all {commentsTotal} comments</h6>
+                                <div class="col-sm-6">
+                                    <div class="row souseBottomHalf">
+                                        <div class="container-fluid">
+                                            <div class="col-12">
+                                                <div class="pre-scrollable postScroll">
+                                                    <h6 class="sousePostCaption">{postCaption}</h6>
+                                                </div>
+                                            </div>     
+                                            <div class="col-12 no-gutters sousePostUserCommentsLink">
+                                                <h6 class="souseCommentsLinkFont" onClick={this.displayComments}>View all {commentsTotal} comments</h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 souseFooter fixed-bottom">
+                                            <div class="no-gutters footerSection">
+                                                <div class="souseFooter">
+                                                    <h6><i class="far fa-copyright"></i>{this.state.currentYear} Souse</h6>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
+                                </div>
                                 </div>
                             </div>
                     }
-                    </div>
-                    <div class="row souseFooter fixed-bottom">
-                        <div class="col-12 no-gutters footerSection">
-                            <div class="souseFooter">
-                                <h6><i class="far fa-copyright"></i>{this.state.currentYear} Souse</h6>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

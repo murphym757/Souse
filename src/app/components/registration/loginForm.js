@@ -51,7 +51,7 @@ class LoginForm extends Component {
     render() {
         const { errors } = this.state;
         return (
-            <div>
+            <div class="container-fluid">
                 <form onSubmit={this.onSubmit}>
                     <div class="input-field">
                         <input 

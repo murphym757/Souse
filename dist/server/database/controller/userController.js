@@ -29,18 +29,12 @@ exports.register_user = function (req, res, next) {
       });
     } else {
       // If no matching email, user is allowed to create an account
-      var avatar = gravatar.url(req.body.email, {
-        s: '200',
-        r: 'pg',
-        d: 'mm'
-      });
       var newUser = new User({
         username: req.body.username,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
-        password: req.body.password,
-        avatar: avatar
+        password: req.body.password
       });
       bcrypt.genSalt(10, function (err, salt) {
         // Password field
@@ -85,7 +79,7 @@ exports.login_user = function (req, res, next) {
         var payload = {
           id: user.id,
           username: user.username,
-          avatar: user.avatar
+          userImage: user.userImage
         };
         jwt.sign(payload, 'secret', {
           expiresIn: 3600
@@ -114,15 +108,44 @@ exports.find_user = function (req, res, next) {
       res.json(users);
     }
   });
-}; //Not Working yet
+}; // Update Post
+
+
+exports.update_user = function (req, res, next) {
+  var newerUser = {
+    username: req.body.username,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    password: req.body.password,
+    userImage: req.body.userImage,
+    userInstagram: req.body.userInstagram,
+    userFacebook: req.body.userFacebook,
+    userTwitter: req.body.userTwitter,
+    userLocation: req.body.userLocation,
+    userBio: req.body.userBio
+  };
+  var updateuser = {
+    "new": true
+  };
+  User.findByIdAndUpdate(req.user.id, newerUser, updateuser, function (err, user) {
+    if (!post) res.status(404).send("User could not be found");else {
+      post.save().then(function (post) {
+        res.json('Update complete');
+      })["catch"](function (err) {
+        res.status(400).send("Unable to update user");
+      });
+    }
+  });
+}; // Delete User
 
 
 exports.delete_user = function (req, res, next) {
-  User.findOneAndRemove({
-    username: req.params.username
+  User.findByIdAndRemove({
+    username: req.user.id
   }, function (err, user) {
     if (err) res.json(err);else res.json('User ', {
-      username: req.params.username
+      username: req.user.id
     }, ' was successfully removed');
   });
 };

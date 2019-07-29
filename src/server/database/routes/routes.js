@@ -17,6 +17,12 @@ souseRouter.route('/u/account')
 souseRouter.route('/u')
     .get(userController.find_user);
 
+souseRouter.route('/u/edit/:id')
+    .get(userController.update_user);
+
+souseRouter.route('/u/delete/:id')
+    .get(userController.delete_user);
+
 // Routes for Posts
 souseRouter.route('/p/add')
     .post(postController.create_post);

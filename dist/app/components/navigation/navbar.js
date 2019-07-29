@@ -90,7 +90,18 @@ function (_Component) {
       }, "Sign Up")), _react["default"].createElement("li", null, _react["default"].createElement(_reactRouterDom.Link, {
         "class": "sidenav-close",
         to: "/login"
-      }, "Login")));
+      }, "Login")), _react["default"].createElement("li", null, _react["default"].createElement("div", {
+        "class": "input-field col s6"
+      }, _react["default"].createElement("i", {
+        "class": "material-icons prefix"
+      }, "search"), _react["default"].createElement("input", {
+        type: "text",
+        placeholder: "",
+        id: "autocomplete-input",
+        "class": "autocomplete"
+      }), _react["default"].createElement("label", {
+        "for": "autocomplete-input"
+      }, "Search"))));
 
       return _react["default"].createElement("div", null, _react["default"].createElement("nav", {
         "class": "z-depth-0"
