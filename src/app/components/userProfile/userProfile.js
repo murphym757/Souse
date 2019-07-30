@@ -20,6 +20,7 @@ class UserProfile extends Component {
             souseUserUsername,
             souseUserFirstName,
             souseUserLastName,
+            souseUserEmail,
             souseUserPassword,
             souseUserSignUpDate
         } = this.props.location.state;
@@ -31,32 +32,36 @@ class UserProfile extends Component {
         const facebookUsernameURL = "https://www.facebook.com/" + facebookUsername + "/";
         const instagramUsername = "seapanther_305";
         const instagramUsernameURL = "https://www.instagram.com/" + instagramUsername + "/";
+        const userImage = "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg";
         const userLocation = "Miami";
         const userBio = "Hi my name is my name. duh! :)";
         
+        
         this.state = {
-            postCreatorId: souseUserId,
-            postCreatorUsername: souseUserUsername,
-            postCreatorFirstName: souseUserFirstName,
-            postCreatorLastName: souseUserLastName,
-            postCreatorPassword: souseUserPassword,
-            postCreatorSignUpDate: souseUserSignUpDate,
-            postTotalDisplay: '1',
-            postCreatorImage: "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg",
-            postCreatorTwitter: twitterUsername,
-            postCreatorTwitterURL: twitterUsernameURL,
-            postCreatorFacebook: facebookUsername,
-            postCreatorFacebookURL: facebookUsernameURL,
-            postCreatorInstagram: instagramUsername,
-            postCreatorInstagramURL: instagramUsernameURL,
-            postCreatorLocation: userLocation,
-            postCreatorBio: userBio
+            creatorId: souseUserId,
+            creatorUsername: souseUserUsername,
+            creatorFirstName: souseUserFirstName,
+            creatorLastName: souseUserLastName,
+            creatorEmail: souseUserEmail,
+            creatorPassword: souseUserPassword,
+            creatorSignUpDate: souseUserSignUpDate,
+            creatorUnixTimestamp: new Date(souseUserSignUpDate).valueOf(),
+            totalDisplay: '1',
+            creatorImage: userImage,
+            creatorTwitter: twitterUsername,
+            creatorTwitterURL: twitterUsernameURL,
+            creatorFacebook: facebookUsername,
+            creatorFacebookURL: facebookUsernameURL,
+            creatorInstagram: instagramUsername,
+            creatorInstagramURL: instagramUsernameURL,
+            creatorLocation: userLocation,
+            creatorBio: userBio
         };
     }
     postFinder() {
         const souseUserData = this.props.souseUserData;
         const filteredUsernameData = Object.keys(souseUserData).filter((i) => {
-                return souseUserData[i].username === "" + this.state.postCreatorUsername + ""
+                return souseUserData[i].username === "" + this.state.creatorUsername + ""
             }),
             userIdFinder = Object.keys(souseUserData).map((object, i) => {
                 return souseUserData[filteredUsernameData]._id
@@ -77,18 +82,20 @@ class UserProfile extends Component {
         const loggedInUserId = user.id;
         const loggedInUserFirstname = user.firstName;
         const usernamePage = this.props.match.params.username;
-        const postCreatorId = this.state.postCreatorId;
-        const postCreatorUsername = this.state.postCreatorUsername;
-        const postCreatorFirstName = this.state.postCreatorFirstName;
-        const postCreatorLastName = this.state.postCreatorLastName;
-        const postCreatorPassword = this.state.postCreatorPassword;
-        const postCreatorSignUpDate = this.state.postCreatorSignUpDate;
-        const postCreatorImage = this.state.postCreatorImage;
-        const postCreatorTwitter = this.state.postCreatorTwitter;
-        const postCreatorFacebook = this.state.postCreatorFacebook;
-        const postCreatorInstagram = this.state.postCreatorInstagram;
-        const postCreatorLocation = this.state.postCreatorLocation;
-        const postCreatorBio = this.state.postCreatorBio;
+        const creatorId = this.state.creatorId;
+        const creatorUsername = this.state.creatorUsername;
+        const creatorFirstName = this.state.creatorFirstName;
+        const creatorLastName = this.state.creatorLastName;
+        const creatorEmail = this.state.creatorEmail;
+        const creatorPassword = this.state.creatorPassword;
+        const creatorSignUpDate = this.state.creatorSignUpDate;
+        const creatorUnixTimestamp = this.state.creatorUnixTimestamp;
+        const creatorImage = this.state.creatorImage;
+        const creatorTwitter = this.state.creatorTwitter;
+        const creatorFacebook = this.state.creatorFacebook;
+        const creatorInstagram = this.state.creatorInstagram;
+        const creatorLocation = this.state.creatorLocation;
+        const creatorBio = this.state.creatorBio;
         const postsTotal = "" + this.postFinder().length + "";
         const TwitterIcon = styled(Twitter)
         `
@@ -115,7 +122,7 @@ class UserProfile extends Component {
                         <div class="souseUserCreatorPage col-6 d-flex">
                             <div class="container-fluid d-flex justify-content-center">
                                 <img class="souseUserIconUserHomePage" 
-                                    src = {postCreatorImage}
+                                    src = {creatorImage}
                                     alt="souseUserIcon"
                                     width="85px" 
                                     height="85px"/>
@@ -124,31 +131,36 @@ class UserProfile extends Component {
                         <div class="profilePageUserData d-flex justify-content-center"> {/* User Data Section */}
                             <div class="container-fluid">
                                 <div class="row col-12 userNameRow">
-                                    <h2 class="d-flex justify-content-center">{this.state.postCreatorUsername}</h2>
-                                    <Link to={
-                                        {
-                                            pathname: "/u/edit/" + loggedInUserId,
-                                            state: {
-                                                postCreatorId: postCreatorId,
-                                                postCreatorUsername: postCreatorUsername,
-                                                postCreatorFirstName: postCreatorFirstName,
-                                                postCreatorLastName: postCreatorLastName,
-                                                postCreatorPassword: postCreatorPassword,
-                                                postCreatorSignUpDate: postCreatorSignUpDate,
-                                                postCreatorImage: postCreatorImage,
-                                                postCreatorTwitter: postCreatorTwitter,
-                                                postCreatorFacebook: postCreatorFacebook,
-                                                postCreatorInstagram: postCreatorInstagram,
-                                                postCreatorLocation: postCreatorLocation,
-                                                postCreatorBio: postCreatorBio
-                                            }
-                                        }
-                                    }>
-                                        <button type="submit" class="waves-effect waves-light btn-large"><p class="lead buttonFont">Edit Profile</p></button>
-                                    </Link>
+                                    <h2 class="d-flex justify-content-center">{creatorUsername}</h2>
+                                    {isAuthenticated && creatorId == loggedInUserId 
+                                        ?   <Link to={
+                                                {
+                                                    pathname: "/u/edit/" + loggedInUserId,
+                                                    state: {
+                                                        creatorId: creatorId,
+                                                        creatorUsername: creatorUsername,
+                                                        creatorFirstName: creatorFirstName,
+                                                        creatorLastName: creatorLastName,
+                                                        creatorEmail: creatorEmail,
+                                                        creatorPassword: creatorPassword,
+                                                        creatorSignUpDate: creatorSignUpDate,
+                                                        creatorUnixTimestamp: creatorUnixTimestamp,
+                                                        creatorImage: creatorImage,
+                                                        creatorTwitter: creatorTwitter,
+                                                        creatorFacebook: creatorFacebook,
+                                                        creatorInstagram: creatorInstagram,
+                                                        creatorLocation: creatorLocation,
+                                                        creatorBio: creatorBio
+                                                    }
+                                                }
+                                            }>
+                                                <button type="submit" class="waves-effect waves-light btn-large"><p class="lead buttonFont">Edit Profile</p></button>
+                                            </Link>
+                                        :   <div></div>
+                                    }
                                 </div>
                                 <div class="row col-12 userNumericDataRow">
-                                    {this.state.postTotalDisplay === postsTotal
+                                    {this.state.totalDisplay === postsTotal
                                         ?   <h6 class="col d-flex justify-content-center">{postsTotal} post</h6>
                                         :   <h6 class="col d-flex justify-content-center">{postsTotal} posts</h6>
                                     }
@@ -156,25 +168,25 @@ class UserProfile extends Component {
                                 <div class="row userAltContactRow">
                                     <div class="container-fluid">
                                         <div class="row">
-                                            {this.state.postCreatorTwitter === null
+                                            {this.state.creatorTwitter === null
                                                 ? <div></div>
                                                 : <h6 class="col-12 d-flex justify-content-center">
-                                                    <a href={this.state.postCreatorTwitterURL} target="_blank">
-                                                        <TwitterIcon /> {this.state.postCreatorTwitter}</a>
+                                                    <a href={this.state.creatorTwitterURL} target="_blank">
+                                                        <TwitterIcon /> {this.state.creatorTwitter}</a>
                                                 </h6>
                                             }
-                                            {this.state.postCreatorFacebook === null
+                                            {this.state.creatorFacebook === null
                                                 ? <div></div>
                                                 : <h6 class="col-12 d-flex justify-content-center">
-                                                    <a href={this.state.postCreatorFacebookURL} target="_blank">
-                                                        <FacebookIcon /> {this.state.postCreatorFacebook}</a>
+                                                    <a href={this.state.creatorFacebookURL} target="_blank">
+                                                        <FacebookIcon /> {this.state.creatorFacebook}</a>
                                                 </h6>
                                             }
-                                            {this.state.postCreatorInstagram === null
+                                            {this.state.creatorInstagram === null
                                                 ? <div></div>
                                                 : <h6 class="col-12 d-flex justify-content-center">
-                                                    <a href={this.state.postCreatorInstagramURL} target="_blank">
-                                                        <InstagramIcon /> {this.state.postCreatorInstagram}</a>
+                                                    <a href={this.state.creatorInstagramURL} target="_blank">
+                                                        <InstagramIcon /> {this.state.creatorInstagram}</a>
                                                 </h6>
                                             }  
                                         </div>

@@ -12,7 +12,7 @@ class Navbar extends Component {
   }
 
   componentDidMount() {
-    M.AutoInit();
+    M.Autocomplete.init(this.autocomplete);
   }
   
     render() {
@@ -30,7 +30,11 @@ class Navbar extends Component {
           <li>
             <div class="input-field col s6">
               <i class="material-icons prefix">search</i>
-              <input type="text" placeholder="" id="autocomplete-input" class="autocomplete" />
+              <input type="text" 
+                placeholder="" 
+                id="autocomplete-input" 
+                class="autocomplete" 
+                ref={ (autocomplete) => {this.autocomplete = autocomplete} } />
               <label for="autocomplete-input">Search</label>
             </div>
           </li>

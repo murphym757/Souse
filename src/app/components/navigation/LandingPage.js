@@ -32,6 +32,7 @@ class LandingPage extends Component {
                                                 souseUserUsername: souseUserData[i].username,
                                                 souseUserFirstName: souseUserData[i].firstName,
                                                 souseUserLastName: souseUserData[i].lastName,
+                                                souseUserEmail: souseUserData[i].email,
                                                 souseUserPassword: souseUserData[i].password,
                                                 souseUserSignUpDate: souseUserData[i].signUpDate,
                                             }

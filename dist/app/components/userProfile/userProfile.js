@@ -68,6 +68,7 @@ function (_Component) {
         souseUserUsername = _this$props$location$.souseUserUsername,
         souseUserFirstName = _this$props$location$.souseUserFirstName,
         souseUserLastName = _this$props$location$.souseUserLastName,
+        souseUserEmail = _this$props$location$.souseUserEmail,
         souseUserPassword = _this$props$location$.souseUserPassword,
         souseUserSignUpDate = _this$props$location$.souseUserSignUpDate;
     var usernameFinder = window.location.pathname;
@@ -78,25 +79,28 @@ function (_Component) {
     var facebookUsernameURL = "https://www.facebook.com/" + facebookUsername + "/";
     var instagramUsername = "seapanther_305";
     var instagramUsernameURL = "https://www.instagram.com/" + instagramUsername + "/";
+    var userImage = "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg";
     var userLocation = "Miami";
     var userBio = "Hi my name is my name. duh! :)";
     _this.state = {
-      postCreatorId: souseUserId,
-      postCreatorUsername: souseUserUsername,
-      postCreatorFirstName: souseUserFirstName,
-      postCreatorLastName: souseUserLastName,
-      postCreatorPassword: souseUserPassword,
-      postCreatorSignUpDate: souseUserSignUpDate,
-      postTotalDisplay: '1',
-      postCreatorImage: "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg",
-      postCreatorTwitter: twitterUsername,
-      postCreatorTwitterURL: twitterUsernameURL,
-      postCreatorFacebook: facebookUsername,
-      postCreatorFacebookURL: facebookUsernameURL,
-      postCreatorInstagram: instagramUsername,
-      postCreatorInstagramURL: instagramUsernameURL,
-      postCreatorLocation: userLocation,
-      postCreatorBio: userBio
+      creatorId: souseUserId,
+      creatorUsername: souseUserUsername,
+      creatorFirstName: souseUserFirstName,
+      creatorLastName: souseUserLastName,
+      creatorEmail: souseUserEmail,
+      creatorPassword: souseUserPassword,
+      creatorSignUpDate: souseUserSignUpDate,
+      creatorUnixTimestamp: new Date(souseUserSignUpDate).valueOf(),
+      totalDisplay: '1',
+      creatorImage: userImage,
+      creatorTwitter: twitterUsername,
+      creatorTwitterURL: twitterUsernameURL,
+      creatorFacebook: facebookUsername,
+      creatorFacebookURL: facebookUsernameURL,
+      creatorInstagram: instagramUsername,
+      creatorInstagramURL: instagramUsernameURL,
+      creatorLocation: userLocation,
+      creatorBio: userBio
     };
     return _this;
   }
@@ -108,7 +112,7 @@ function (_Component) {
 
       var souseUserData = this.props.souseUserData;
       var filteredUsernameData = Object.keys(souseUserData).filter(function (i) {
-        return souseUserData[i].username === "" + _this2.state.postCreatorUsername + "";
+        return souseUserData[i].username === "" + _this2.state.creatorUsername + "";
       }),
           userIdFinder = Object.keys(souseUserData).map(function (object, i) {
         return souseUserData[filteredUsernameData]._id;
@@ -136,18 +140,20 @@ function (_Component) {
       var loggedInUserId = user.id;
       var loggedInUserFirstname = user.firstName;
       var usernamePage = this.props.match.params.username;
-      var postCreatorId = this.state.postCreatorId;
-      var postCreatorUsername = this.state.postCreatorUsername;
-      var postCreatorFirstName = this.state.postCreatorFirstName;
-      var postCreatorLastName = this.state.postCreatorLastName;
-      var postCreatorPassword = this.state.postCreatorPassword;
-      var postCreatorSignUpDate = this.state.postCreatorSignUpDate;
-      var postCreatorImage = this.state.postCreatorImage;
-      var postCreatorTwitter = this.state.postCreatorTwitter;
-      var postCreatorFacebook = this.state.postCreatorFacebook;
-      var postCreatorInstagram = this.state.postCreatorInstagram;
-      var postCreatorLocation = this.state.postCreatorLocation;
-      var postCreatorBio = this.state.postCreatorBio;
+      var creatorId = this.state.creatorId;
+      var creatorUsername = this.state.creatorUsername;
+      var creatorFirstName = this.state.creatorFirstName;
+      var creatorLastName = this.state.creatorLastName;
+      var creatorEmail = this.state.creatorEmail;
+      var creatorPassword = this.state.creatorPassword;
+      var creatorSignUpDate = this.state.creatorSignUpDate;
+      var creatorUnixTimestamp = this.state.creatorUnixTimestamp;
+      var creatorImage = this.state.creatorImage;
+      var creatorTwitter = this.state.creatorTwitter;
+      var creatorFacebook = this.state.creatorFacebook;
+      var creatorInstagram = this.state.creatorInstagram;
+      var creatorLocation = this.state.creatorLocation;
+      var creatorBio = this.state.creatorBio;
       var postsTotal = "" + this.postFinder().length + "";
       var TwitterIcon = (0, _styledComponents["default"])(_Twitter.Twitter).withConfig({
         displayName: "userProfile__TwitterIcon",
@@ -173,7 +179,7 @@ function (_Component) {
         "class": "container-fluid d-flex justify-content-center"
       }, _react["default"].createElement("img", {
         "class": "souseUserIconUserHomePage",
-        src: postCreatorImage,
+        src: creatorImage,
         alt: "souseUserIcon",
         width: "85px",
         height: "85px"
@@ -185,22 +191,24 @@ function (_Component) {
         "class": "row col-12 userNameRow"
       }, _react["default"].createElement("h2", {
         "class": "d-flex justify-content-center"
-      }, this.state.postCreatorUsername), _react["default"].createElement(_reactRouterDom.Link, {
+      }, creatorUsername), isAuthenticated && creatorId == loggedInUserId ? _react["default"].createElement(_reactRouterDom.Link, {
         to: {
           pathname: "/u/edit/" + loggedInUserId,
           state: {
-            postCreatorId: postCreatorId,
-            postCreatorUsername: postCreatorUsername,
-            postCreatorFirstName: postCreatorFirstName,
-            postCreatorLastName: postCreatorLastName,
-            postCreatorPassword: postCreatorPassword,
-            postCreatorSignUpDate: postCreatorSignUpDate,
-            postCreatorImage: postCreatorImage,
-            postCreatorTwitter: postCreatorTwitter,
-            postCreatorFacebook: postCreatorFacebook,
-            postCreatorInstagram: postCreatorInstagram,
-            postCreatorLocation: postCreatorLocation,
-            postCreatorBio: postCreatorBio
+            creatorId: creatorId,
+            creatorUsername: creatorUsername,
+            creatorFirstName: creatorFirstName,
+            creatorLastName: creatorLastName,
+            creatorEmail: creatorEmail,
+            creatorPassword: creatorPassword,
+            creatorSignUpDate: creatorSignUpDate,
+            creatorUnixTimestamp: creatorUnixTimestamp,
+            creatorImage: creatorImage,
+            creatorTwitter: creatorTwitter,
+            creatorFacebook: creatorFacebook,
+            creatorInstagram: creatorInstagram,
+            creatorLocation: creatorLocation,
+            creatorBio: creatorBio
           }
         }
       }, _react["default"].createElement("button", {
@@ -208,9 +216,9 @@ function (_Component) {
         "class": "waves-effect waves-light btn-large"
       }, _react["default"].createElement("p", {
         "class": "lead buttonFont"
-      }, "Edit Profile")))), _react["default"].createElement("div", {
+      }, "Edit Profile"))) : _react["default"].createElement("div", null)), _react["default"].createElement("div", {
         "class": "row col-12 userNumericDataRow"
-      }, this.state.postTotalDisplay === postsTotal ? _react["default"].createElement("h6", {
+      }, this.state.totalDisplay === postsTotal ? _react["default"].createElement("h6", {
         "class": "col d-flex justify-content-center"
       }, postsTotal, " post") : _react["default"].createElement("h6", {
         "class": "col d-flex justify-content-center"
@@ -220,22 +228,22 @@ function (_Component) {
         "class": "container-fluid"
       }, _react["default"].createElement("div", {
         "class": "row"
-      }, this.state.postCreatorTwitter === null ? _react["default"].createElement("div", null) : _react["default"].createElement("h6", {
+      }, this.state.creatorTwitter === null ? _react["default"].createElement("div", null) : _react["default"].createElement("h6", {
         "class": "col-12 d-flex justify-content-center"
       }, _react["default"].createElement("a", {
-        href: this.state.postCreatorTwitterURL,
+        href: this.state.creatorTwitterURL,
         target: "_blank"
-      }, _react["default"].createElement(TwitterIcon, null), " ", this.state.postCreatorTwitter)), this.state.postCreatorFacebook === null ? _react["default"].createElement("div", null) : _react["default"].createElement("h6", {
+      }, _react["default"].createElement(TwitterIcon, null), " ", this.state.creatorTwitter)), this.state.creatorFacebook === null ? _react["default"].createElement("div", null) : _react["default"].createElement("h6", {
         "class": "col-12 d-flex justify-content-center"
       }, _react["default"].createElement("a", {
-        href: this.state.postCreatorFacebookURL,
+        href: this.state.creatorFacebookURL,
         target: "_blank"
-      }, _react["default"].createElement(FacebookIcon, null), " ", this.state.postCreatorFacebook)), this.state.postCreatorInstagram === null ? _react["default"].createElement("div", null) : _react["default"].createElement("h6", {
+      }, _react["default"].createElement(FacebookIcon, null), " ", this.state.creatorFacebook)), this.state.creatorInstagram === null ? _react["default"].createElement("div", null) : _react["default"].createElement("h6", {
         "class": "col-12 d-flex justify-content-center"
       }, _react["default"].createElement("a", {
-        href: this.state.postCreatorInstagramURL,
+        href: this.state.creatorInstagramURL,
         target: "_blank"
-      }, _react["default"].createElement(InstagramIcon, null), " ", this.state.postCreatorInstagram)))))))), _react["default"].createElement("div", {
+      }, _react["default"].createElement(InstagramIcon, null), " ", this.state.creatorInstagram)))))))), _react["default"].createElement("div", {
         "class": "col-12"
       }, isAuthenticated ? _react["default"].createElement("div", null, _react["default"].createElement(_postIndex["default"], null)) : _react["default"].createElement("div", null))), _react["default"].createElement("div", {
         "class": "d-flex justify-content-center"

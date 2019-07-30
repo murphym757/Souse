@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import classnames from 'classnames';
 import S3 from 'aws-s3';
 import awsConfig from '../../../server/config';
+import M from 'materialize-css';
 import styled from 'styled-components';
 import { Twitter } from 'styled-icons/feather/Twitter';
 import { Facebook } from 'styled-icons/feather/Facebook';
@@ -18,27 +19,37 @@ class editUserProfile extends Component {
         const loggedinUser = user.id;
         const loggedinUsername = user.username;
         const {
-            postCreatorImage,
-            postCreatorTwitter,
-            postCreatorFacebook,
-            postCreatorInstagram,
-            postCreatorLocation,
-            postCreatorBio
+            creatorId,
+            creatorUsername,
+            creatorFirstName,
+            creatorLastName,
+            creatorEmail,
+            creatorPassword,
+            creatorSignUpDate,
+            creatorUnixTimestamp,
+            creatorImage,
+            creatorTwitter,
+            creatorFacebook,
+            creatorInstagram,
+            creatorLocation,
+            creatorBio
         } = this.props.location.state;
 
         this.state = {
-            username: loggedinUsername,
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            password_confirm: '',
-            userImage: postCreatorImage,
-            userInstagram: postCreatorInstagram,
-            userFacebook: postCreatorFacebook,
-            userTwitter: postCreatorTwitter,
-            userLocation: postCreatorLocation,
-            userBio: postCreatorBio,
+            userId: creatorId,
+            username: creatorUsername,
+            firstName: creatorFirstName,
+            lastName: creatorLastName,
+            email: creatorEmail,
+            password: creatorPassword,
+            signUpDate: creatorSignUpDate,
+            unixTimestamp: creatorUnixTimestamp,
+            userImage: creatorImage,
+            userInstagram: creatorInstagram,
+            userFacebook: creatorFacebook,
+            userTwitter: creatorTwitter,
+            userLocation: creatorLocation,
+            userBio: creatorBio,
             errors: {}
         };
         this.onUpdateUsername = this.onUpdateUsername.bind(this);
@@ -56,23 +67,83 @@ class editUserProfile extends Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    onChange = (e) => {
+   onUpdateUsername = (e) => {
         this.setState({
-            [e.target.name]: e.target.value
-        })
+            username: e.target.value
+        });
+    }
+
+    onUpdateFirstName = (e) => {
+        this.setState({
+            firstName: e.target.value
+        });
+    }
+
+    onUpdateLastName = (e) => {
+        this.setState({
+            lastName: e.target.value
+        });
+    }
+
+    onUpdateEmail = (e) => {
+        this.setState({
+            email: e.target.value
+        });
+    }
+
+    onUpdatePassword = (e) => {
+        this.setState({
+            password: e.target.value
+        });
+    }
+
+    onUpdateUserInstagram = (e) => {
+        this.setState({
+            userInstagram: e.target.value
+        });
+    }
+
+    onUpdateUserFacebook = (e) => {
+        this.setState({
+            userFacebook: e.target.value
+        });
+    }
+
+    onUpdateUserTwitter = (e) => {
+        this.setState({
+            userTwitter: e.target.value
+        });
+    }
+
+    onUpdateUserLocation = (e) => {
+        this.setState({
+            userLocation: e.target.value
+        });
+    }
+
+    onUpdateUserBio = (e) => {
+        this.setState({
+            userBio: e.target.value
+        });
+    }
+
+    onUpdateUserImage = (e) => {
+        this.setState({
+            userImage: e.target.value
+        });
     }
     
     onImageUpload = (e) => {
         const config = {
             bucketName: awsConfig.AWS_BUCKET_NAME,
-            dirName: "users/" + "" + this.state.postCreatorId + "",
+            dirName: "users/" + "" + this.state.userId + "",
             region: awsConfig.AWS_REGION,
             accessKeyId: awsConfig.AWS_ACCESS_KEY_ID,
             secretAccessKey: awsConfig.AWS_SECRET_ACCESS_KEY,
             s3Url: awsConfig.AWS_Uploaded_File_URL_LINK /* Required */
         }
         const S3Client = new S3(config);
-        const newFileName = "" + this.state.postUnixTimestamp + "";
+        const newFileName = "" + this.state.unixTimestamp + "" + ".jpg";
         S3Client.uploadFile(e.target.files[0], newFileName)
             .then((data) => {
                 console.log(data.location);
@@ -91,6 +162,10 @@ class editUserProfile extends Component {
         });
     }
 
+    componentDidMount() {
+        M.AutoInit();
+    }
+
     onSubmit = (e) => {
         e.preventDefault();
         const user = {
@@ -98,10 +173,13 @@ class editUserProfile extends Component {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             email: this.state.email,
-            password: this.state.password,
-            password_confirm: this.state.password_confirm
+            userImage: this.state.userImage,
+            userInstagram: this.state.userInstagram,
+            userFacebook: this.state.userFacebook,
+            userTwitter: this.state.userTwitter,
+            userLocation: this.state.userLocation,
+            userBio: this.state.userBio
         }
-        this.props.registerUser(user, this.props.history);
     }
 
     render() {
@@ -109,7 +187,7 @@ class editUserProfile extends Component {
         return (
             <div class="container-fluid">
                 <form onSubmit={this.onSubmit}>
-                    <div class="input-field">
+                    <div class="input-field"> {/* Email Field */}
                         <input 
                             type="email"
                             name="email" 
@@ -118,12 +196,12 @@ class editUserProfile extends Component {
                             })}
                             id="souseEmail"
                             value={this.state.email}
-                            onChange={this.onChange} 
+                            onChange={this.onUpdateEmail} 
                         />
-                        <label for="souseEmail">Email</label>
+                        <label class="active" for="souseEmail">Email</label>
                         {errors.email && (<div class="invalid-feedback">{errors.email}</div>)}
                     </div>
-                    <div class="input-field">
+                    <div class="input-field"> {/* Username Field */}
                         <input 
                             type="text"
                             name="username" 
@@ -133,12 +211,12 @@ class editUserProfile extends Component {
                             id = "souseUsername"
                             maxLength={30}
                             value={this.state.username}
-                            onChange={this.onChange} 
+                            onChange={this.onUpdateUsername} 
                         />
-                        <label for="souseUsername">Username ({this.state.username.length}/30)</label>
+                        <label class="active" for="souseUsername">Username ({this.state.username.length}/30)</label>
                         {errors.username && (<div class="invalid-feedback">{errors.username}</div>)}
                     </div>
-                    <div class="input-field">
+                    <div class="input-field"> {/* First Name Field */}
                         <input 
                             type="text"
                             name="firstName" 
@@ -147,12 +225,12 @@ class editUserProfile extends Component {
                             })} 
                             id = "souseFirstName"
                             value={this.state.firstName}
-                            onChange={this.onChange}
+                            onChange={this.onUpdateFirstName}
                         />
-                        <label for="souseFirstName">First Name  ({this.state.firstName.length}/30)</label>
+                        <label class="active" for="souseFirstName">First Name  ({this.state.firstName.length}/30)</label>
                         {errors.firstName && (<div class="invalid-feedback">{errors.firstName}</div>)}
                     </div>
-                    <div class="input-field">
+                    <div class="input-field"> {/* Last Name Field */}
                         <input 
                             type="text"
                             name="lastName" 
@@ -161,41 +239,83 @@ class editUserProfile extends Component {
                             })} 
                             id="souseLastName"
                             value={this.state.lastName}
-                            onChange={this.onChange}
+                            onChange={this.onUpdateLastName}
                         />
-                        <label for="souseLastName">Last Name  ({this.state.lastName.length}/30)</label>
+                        <label class="active" for="souseLastName">Last Name  ({this.state.lastName.length}/30)</label>
                         {errors.lastName && (<div class="invalid-feedback">{errors.lastName}</div>)}
                     </div>
-                    <div class="input-field">
+                    <div class="input-field"> {/* Twitter Field */}
                         <input 
-                            type="password"
-                            name="password"
-                            class={classnames('form-control', {
-                                'is-invalid': errors.password
-                            })} 
-                            id="sousePassword"
-                            value={this.state.password}
-                            onChange={this.onChange}
+                            type="text"
+                            name="userTwitter" 
+                            class="validate"
+                            id="souseUserTwitter"
+                            value={this.state.userTwitter}
+                            onChange={this.onUpdateUserTwitter} 
                         />
-                        <label for="sousePassword">Password</label>
-                        {errors.password && (<div class="invalid-feedback">{errors.password}</div>)}
+                        <label class="active" for="souseUserTwitter">Twitter Username</label>
                     </div>
-                    <div class="input-field">
+                    <div class="input-field"> {/* Facebook Field */}
                         <input 
-                            type="password"
-                            name="password_confirm"
-                            class={classnames('form-control', {
-                                'is-invalid': errors.password_confirm
-                            })} 
-                            id="sousePasswordConfirm"
-                            value={this.state.password_confirm}
-                            onChange={this.onChange}
+                            type="text"
+                            name="userFacebook" 
+                            class="validate"
+                            id="souseUserFacebook"
+                            value={this.state.userFacebook}
+                            onChange={this.onUpdateUserFacebook} 
                         />
-                        <label for="sousePasswordConfirm">Password Confirm</label>
-                        {errors.password_confirm && (<div class="invalid-feedback">{errors.password_confirm}</div>)}
+                        <label for="souseUserFacebook">Facebook Username</label>
+                    </div>
+                    <div class="input-field"> {/* Instagram Field */}
+                        <input 
+                            type="text"
+                            name="userInstagram" 
+                            class="validate"
+                            id="souseUserInstagram"
+                            value={this.state.userInstagram}
+                            onChange={this.onUpdateUserInstagram} 
+                        />
+                        <label class="active" for="souseUserInstagram">Instagram Username</label>
+                    </div>
+                    <div class="input-field"> {/* Location Field */}
+                        <input 
+                            type="text"
+                            name="userLocation" 
+                            class="validate"
+                            id="souseUserLocation"
+                            value={this.state.userLocation}
+                            onChange={this.onUpdateUserLocation} 
+                        />
+                        <label class="active" for="souseUserLocation">Location</label>
+                    </div>
+                    <div class="input-field"> {/* Location Field */}
+                        <textarea 
+                            id = "souseUserBio"
+                            class="materialize-textarea"
+                            name = "userBio"
+                            maxLength={150}
+                            rows="2"
+                            value={this.state.userBio}
+                            onChange={this.onUpdateUserBio}>
+                        </textarea>
+                        <label class="active" for="souseUserBio">Bio ({this.state.userBio.length}/150)</label>
+                    </div>
+                    <div class="file-field input-field">
+                        <div class="btn-large">
+                            <span>Upload</span>
+                            <input 
+                                type="file" 
+                                name="userImage"
+                                id="souseUserImage"
+                                onChange={this.onImageUpload}
+                            />
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" />
+                        </div>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="waves-effect waves-light btn-large">Sign Up</button>
+                        <button type="submit" class="waves-effect waves-light btn-large d-block mx-auto">Update User</button>
                     </div>
                 </form>
             </div>

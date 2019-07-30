@@ -6,57 +6,63 @@ const UserSchema = new mongoose.Schema({
         unique: true,
         required: true,
         trim: true,
-        default: ''
+        default: null
     },
     username: {
         type: String,
         unique: true,
         required: true,
         trim: true,
-        default: ''
+        default: null
     },
     firstName: {
         type: String,
         required: true,
         trim: true,
-        default: ''
+        default: null
     },
     lastName: {
         type: String,
         required: true,
         trim: true,
-        default: ''
+        default: null
     },
     password: {
         type: String,
         required: true,
-        default: ''
+        default: null
     },
     isDeleted: {
         type: Boolean,
         default: false
     },
     userImage: {
-        type: String
+        type: String,
+        default: null
     },
     userBio: {
-        type: String
+        type: String,
+        default: null
     },
     userLocation: {
-        type: String
+        type: String,
+        default: null
     },
     userInstagram: {
-        type: String
+        type: String,
+        default: null
     },
     userFacebook: {
-        type: String
+        type: String,
+        default: null
     },
     userTwitter: {
-        type: String
+        type: String,
+        default: null
     },
     signUpDate: {
         type: Date,
-        default: Date.now()
+        default: Date.now
     },
     posts: [{
         type: mongoose.Schema.Types.ObjectId, //Returns the entire post

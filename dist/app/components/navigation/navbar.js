@@ -69,11 +69,13 @@ function (_Component) {
   _createClass(Navbar, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      _materializeCss["default"].AutoInit();
+      _materializeCss["default"].Autocomplete.init(this.autocomplete);
     }
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var _this$props$auth = this.props.auth,
           isAuthenticated = _this$props$auth.isAuthenticated,
           user = _this$props$auth.user;
@@ -98,7 +100,10 @@ function (_Component) {
         type: "text",
         placeholder: "",
         id: "autocomplete-input",
-        "class": "autocomplete"
+        "class": "autocomplete",
+        ref: function ref(autocomplete) {
+          _this2.autocomplete = autocomplete;
+        }
       }), _react["default"].createElement("label", {
         "for": "autocomplete-input"
       }, "Search"))));
