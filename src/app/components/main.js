@@ -22,6 +22,8 @@ class MainSource extends Component {
             posts: [],
             users: [],
             comments: [],
+            followers: [],
+            follows: []
         };
     }
     componentDidMount() {
@@ -65,12 +67,41 @@ class MainSource extends Component {
             .catch(function (error) {
                 console.log(error);
             })
+        { /* Followers Collection */ }
+        const findFollowerRoute = "/followers";
+        axios.get(apiRoute + findFollowerRoute)
+            .then(res => {
+                const followers = res.data;
+                console.log(followers);
+                this.setState({
+                    followers: followers
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+        { /* Follow Collection */ }
+        const findFollowRoute = "/follows";
+        axios.get(apiRoute + findFollowRoute)
+            .then(res => {
+                const follows = res.data;
+                console.log(follows);
+                this.setState({
+                    follows: follows
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
     }
     render() {
       const {isAuthenticated, user} = this.props.auth;
       const souseUsers = this.state.users;
       const sousePosts = this.state.posts;
       const souseComments = this.state.comments;
+      const souseFollowers = this.state.followers;
+      const souseFollows = this.state.follows;
+
       console.log(souseComments);
         return (
             <Router>
@@ -81,20 +112,29 @@ class MainSource extends Component {
                             <Route exact path="/" 
                             render={
                                 (props) => <LandingPage {...props} 
-                                souseUserData={souseUsers} sousePostData={sousePosts} souseCommentData={souseComments} />
+                                souseUserData={souseUsers} 
+                                sousePostData={sousePosts} 
+                                souseCommentData={souseComments}
+                                souseFollowerData={souseFollowers}
+                                souseFollowData={souseFollows} />
                             }/>
                             <Route exact path="/signup" component={SignUpForm}/>
                             <Route exact path="/login" component={LoginForm}/>
                             <Route exact path="/:username" 
                             render={
                                 (props) => <UserProfile {...props} 
-                                souseUserData={souseUsers} sousePostData={sousePosts} />
+                                souseUserData={souseUsers} 
+                                sousePostData={sousePosts} 
+                                souseFollowerData={souseFollowers} 
+                                souseFollowData={souseFollows}/>
                                 }/>
                             <Route exact path="/u/edit/:id" component={EditUserProfile}/>
                             <Route exact path="/p/:id" 
                             render={
                                 (props) => <PostPage {...props} 
-                                souseUserData={souseUsers} sousePostData={sousePosts} souseCommentData={souseComments} />
+                                souseUserData={souseUsers} 
+                                sousePostData={sousePosts} 
+                                souseCommentData={souseComments} />
                             }/>
                             <Route exact path="/p/edit/:id" component={PostEdit}/>
                             <Route exact path="/c/delete/:id" component={CommentDelete}/>

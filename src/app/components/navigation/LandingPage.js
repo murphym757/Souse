@@ -5,16 +5,45 @@ import { connect } from 'react-redux';
 import UserProfile from '../userProfile/userProfile';
 
 class LandingPage extends Component {
+    followFinder() {
+        const souseFollowData = this.props.souseFollowData;
+        const filteredFollowData = Object.keys(souseFollowData).filter((i) => { // Finds Specific Post
+                return souseFollowData[i].initiatedFollowuserId === "" + loggedinUserId + ""
+            }),
+            followIdFinder = Object.keys(souseFollowData).map((object, i) => {
+                return souseFollowData[filteredFollowData]._id
+            }),
+            followId = followIdFinder.find((i) => {
+                return "" + followIdFinder[0] + ""
+            });
+    }
+
+    followerFinder() {
+        const {isAuthenticated, user} = this.props.auth;
+        const loggedinUserId = user.id;
+        const souseFollowerData = this.props.souseFollowerData;
+        const filteredFollowerData = Object.keys(souseFollowerData).filter((i) => { // Finds Specific Post
+                return souseFollowerData[i].receivedFollowUserId === "" + loggedinUserId + ""
+            }),
+            followerIdFinder = Object.keys(souseFollowerData).map((object, i) => {
+                return souseFollowerData[filteredFollowerData]._id
+            }),
+            followerId = followerIdFinder.find((i) => {
+                return "" + followerIdFinder[0] + ""
+            });
+    }
+
     render() {
         const {isAuthenticated, user} = this.props.auth;
         const souseUserData = this.props.souseUserData;
         const loggedinUser = user.username;
+        const loggedinUserId = user.id;
         return (
-            <div class="container">
+            <div class="container-fluid">
                 <h2>LandingPage</h2>
                 {isAuthenticated 
                     ?   <div>
-                            <h4>Logged In</h4>
+                            <h4>{loggedinUser}</h4>
                         </div> 
                     :   <div>
                             <h4>Not Logged In</h4>
@@ -35,6 +64,12 @@ class LandingPage extends Component {
                                                 souseUserEmail: souseUserData[i].email,
                                                 souseUserPassword: souseUserData[i].password,
                                                 souseUserSignUpDate: souseUserData[i].signUpDate,
+                                                souseUserImage: souseUserData[i].userImage,
+                                                souseUserTwitter: souseUserData[i].userTwitter,
+                                                souseUserFacebook: souseUserData[i].userFacebook,
+                                                souseUserInstagram: souseUserData[i].userInstagram,
+                                                souseUserLocation: souseUserData[i].userLocation,
+                                                souseUserBio: souseUserData[i].userBio
                                             }
                                         }
                                     }>

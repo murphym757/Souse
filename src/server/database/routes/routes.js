@@ -2,6 +2,7 @@ const souseRouter = require('express').Router(),
     userController = require('../controller/userController'),
     postController = require('../controller/postController'),
     commentController = require('../controller/commentController'),
+    userConnectionController = require('../controller/userConnectionController'),
     souseModel = require('../model/souseModel');
 
 // Routes for Users
@@ -18,7 +19,10 @@ souseRouter.route('/u')
     .get(userController.find_user);
 
 souseRouter.route('/u/edit/:id')
-    .get(userController.update_user);
+    .get(userController.edit_user);
+
+souseRouter.route('/u/update/:id')
+    .post(userController.update_user);
 
 souseRouter.route('/u/delete/:id')
     .get(userController.delete_user);
@@ -48,5 +52,25 @@ souseRouter.route('/c')
 
 souseRouter.route('/c/delete/:id')
     .get(commentController.delete_comment);
+
+// Routes for Follows
+souseRouter.route('/follows/add') // Follow
+    .post(userConnectionController.follows);
+
+souseRouter.route('/follows')
+    .get(userConnectionController.find_follows);
+
+/*souseRouter.route('/following/delete/:id') // Unfollow
+    .get(userConnectionController.unfollow);*/
+
+// Routes for Followers
+souseRouter.route('/followers/add')
+    .post(userConnectionController.add_follower);
+
+souseRouter.route('/followers')
+    .get(userConnectionController.find_follower);
+
+/* souseRouter.route('/followers/delete/:id') // Being Unfollowed
+    .get(userConnectionController.delete_follower);*/
 
 module.exports = souseRouter;

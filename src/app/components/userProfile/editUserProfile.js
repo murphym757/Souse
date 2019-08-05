@@ -57,7 +57,6 @@ class editUserProfile extends Component {
         this.onUpdateLastName = this.onUpdateLastName.bind(this);
         this.onUpdateEmail = this.onUpdateEmail.bind(this);
         this.onUpdatePassword = this.onUpdatePassword.bind(this);
-        this.onUpdateUserImage = this.onUpdateUserImage.bind(this);
         this.onUpdateUserInstagram = this.onUpdateUserInstagram.bind(this);
         this.onUpdateUserFacebook = this.onUpdateUserFacebook.bind(this);
         this.onUpdateUserTwitter = this.onUpdateUserTwitter.bind(this);
@@ -126,12 +125,6 @@ class editUserProfile extends Component {
             userBio: e.target.value
         });
     }
-
-    onUpdateUserImage = (e) => {
-        this.setState({
-            userImage: e.target.value
-        });
-    }
     
     onImageUpload = (e) => {
         const config = {
@@ -143,12 +136,12 @@ class editUserProfile extends Component {
             s3Url: awsConfig.AWS_Uploaded_File_URL_LINK /* Required */
         }
         const S3Client = new S3(config);
-        const newFileName = "" + this.state.unixTimestamp + "" + ".jpg";
+        const newFileName = "" + this.state.unixTimestamp + "";
         S3Client.uploadFile(e.target.files[0], newFileName)
             .then((data) => {
                 console.log(data.location);
                 this.setState({
-                    postImageURL: data.location,
+                    userImage: data.location,
                     isLoading: true
                 });
             })
@@ -156,19 +149,36 @@ class editUserProfile extends Component {
                 alert(err);
             })
         this.setState({
-            postImageFileType: e.target.files[0].type.slice(6),
-            newPostImageFileName: this.state.postUnixTimestamp + "." + e.target.files[0].type.slice(6),
             fullPostUploadLoader: true
         });
     }
 
     componentDidMount() {
         M.AutoInit();
+        { /* Edit Post Command */ }
+        const apiRoute = "/souseAPI";
+        const editRoute = "/u/edit";
+        const userId = this.state.userId;
+        console.log(userId);
+        axios.get(apiRoute + editRoute + "/" + userId)
+          .then(res => {
+              this.setState({ 
+                userTwitter: res.data.userTwitter,
+                userFacebook: res.data.userFacebook,
+                userInstagram: res.data.userInstagram,
+                userLocation: res.data.userLocation,
+                userBio: res.data.userBio,
+                userImage: res.data.userImage
+                });
+          })
+          .catch(function (error) {
+              console.log(error);
+          })
     }
-
+    
     onSubmit = (e) => {
         e.preventDefault();
-        const user = {
+        const userData = {
             username: this.state.username,
             firstName: this.state.firstName,
             lastName: this.state.lastName,
@@ -179,7 +189,16 @@ class editUserProfile extends Component {
             userTwitter: this.state.userTwitter,
             userLocation: this.state.userLocation,
             userBio: this.state.userBio
-        }
+        };
+        const apiRoute = "/souseAPI";
+        const updateRoute = "/u/update";
+        const userId = this.state.userId;
+        const username = this.state.username;
+
+        axios.post(apiRoute + updateRoute + "/" + userId, userData)
+            .then(res => console.log(res.data));
+
+        this.props.history.push("/");
     }
 
     render() {
@@ -264,7 +283,7 @@ class editUserProfile extends Component {
                             value={this.state.userFacebook}
                             onChange={this.onUpdateUserFacebook} 
                         />
-                        <label for="souseUserFacebook">Facebook Username</label>
+                        <label class="active" for="souseUserFacebook">Facebook Username</label>
                     </div>
                     <div class="input-field"> {/* Instagram Field */}
                         <input 

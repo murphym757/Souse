@@ -49,16 +49,51 @@ function (_Component) {
   }
 
   _createClass(LandingPage, [{
-    key: "render",
-    value: function render() {
+    key: "followFinder",
+    value: function followFinder() {
+      var souseFollowData = this.props.souseFollowData;
+      var filteredFollowData = Object.keys(souseFollowData).filter(function (i) {
+        // Finds Specific Post
+        return souseFollowData[i].initiatedFollowuserId === "" + loggedinUserId + "";
+      }),
+          followIdFinder = Object.keys(souseFollowData).map(function (object, i) {
+        return souseFollowData[filteredFollowData]._id;
+      }),
+          followId = followIdFinder.find(function (i) {
+        return "" + followIdFinder[0] + "";
+      });
+    }
+  }, {
+    key: "followerFinder",
+    value: function followerFinder() {
       var _this$props$auth = this.props.auth,
           isAuthenticated = _this$props$auth.isAuthenticated,
           user = _this$props$auth.user;
+      var loggedinUserId = user.id;
+      var souseFollowerData = this.props.souseFollowerData;
+      var filteredFollowerData = Object.keys(souseFollowerData).filter(function (i) {
+        // Finds Specific Post
+        return souseFollowerData[i].receivedFollowUserId === "" + loggedinUserId + "";
+      }),
+          followerIdFinder = Object.keys(souseFollowerData).map(function (object, i) {
+        return souseFollowerData[filteredFollowerData]._id;
+      }),
+          followerId = followerIdFinder.find(function (i) {
+        return "" + followerIdFinder[0] + "";
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this$props$auth2 = this.props.auth,
+          isAuthenticated = _this$props$auth2.isAuthenticated,
+          user = _this$props$auth2.user;
       var souseUserData = this.props.souseUserData;
       var loggedinUser = user.username;
+      var loggedinUserId = user.id;
       return _react["default"].createElement("div", {
-        "class": "container"
-      }, _react["default"].createElement("h2", null, "LandingPage"), isAuthenticated ? _react["default"].createElement("div", null, _react["default"].createElement("h4", null, "Logged In")) : _react["default"].createElement("div", null, _react["default"].createElement("h4", null, "Not Logged In")), _react["default"].createElement("div", {
+        "class": "container-fluid"
+      }, _react["default"].createElement("h2", null, "LandingPage"), isAuthenticated ? _react["default"].createElement("div", null, _react["default"].createElement("h4", null, loggedinUser)) : _react["default"].createElement("div", null, _react["default"].createElement("h4", null, "Not Logged In")), _react["default"].createElement("div", {
         "class": "usersPosts"
       }, Object.keys(souseUserData).map(function (object, i) {
         return _react["default"].createElement("div", null, _react["default"].createElement(_reactRouterDom.Link, {
@@ -71,7 +106,13 @@ function (_Component) {
               souseUserLastName: souseUserData[i].lastName,
               souseUserEmail: souseUserData[i].email,
               souseUserPassword: souseUserData[i].password,
-              souseUserSignUpDate: souseUserData[i].signUpDate
+              souseUserSignUpDate: souseUserData[i].signUpDate,
+              souseUserImage: souseUserData[i].userImage,
+              souseUserTwitter: souseUserData[i].userTwitter,
+              souseUserFacebook: souseUserData[i].userFacebook,
+              souseUserInstagram: souseUserData[i].userInstagram,
+              souseUserLocation: souseUserData[i].userLocation,
+              souseUserBio: souseUserData[i].userBio
             }
           }
         }, souseUserData[i].username));

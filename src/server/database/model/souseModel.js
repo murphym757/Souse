@@ -71,6 +71,14 @@ const UserSchema = new mongoose.Schema({
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Comments'
+    }],
+    followers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Followers'
+    }],
+    follows: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Follows'
     }]
 });
 
@@ -91,27 +99,27 @@ const PostSchema = new mongoose.Schema({
         postCaption: {
             type: String,
             trim: true,
-            default: ''
+            default: null
         },
         postUnixTimestamp: {
             type: String,
             trim: true,
-            default: ''
+            default: null
         },
         postImageFileType: {
             type: String,
             trim: true,
-            default: ''
+            default: null
         },
         postImageFileName: {
             type: String,
             trim: true,
-            default: ''
+            default: null
         },
         postImageURL: {
             type: String,
             trim: true,
-            default: ''
+            default: null
         }
     },
     comments: [{
@@ -132,22 +140,66 @@ const CommentSchema = new mongoose.Schema({
      souseComment: {
          type: String,
          trim: true,
-         default: ''
+         default: null
      },
      originalPostId: {
          type: String,
          trim: true,
-         default: ''
+         default: null
      },
      commentCreatorUsername: {
          type: String,
             trim: true,
-            default: ''
+            default: null
      }
+});
+
+const FollowerSchema = new mongoose.Schema({
+    followerUserId: {
+        type: String,
+        trim: true,
+        default: null
+    },
+    receivedFollowUserId: {
+        type: String,
+        trim: true,
+        default: null
+    },
+    followedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Users'
+    },
+    followedDate: {
+        type: Date,
+        default: Date.now
+    }
+});
+
+const FollowSchema = new mongoose.Schema({
+    followUserId: {
+        type: String,
+        trim: true,
+        default: null
+    },
+    initiatedFollowuserId: {
+        type: String,
+        trim: true,
+        default: null
+    },
+    follows: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Users'
+    },
+    followedDate: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 const User = mongoose.model('Users', UserSchema);
 const Post = mongoose.model('Posts', PostSchema);
 const Comment = mongoose.model('Comments', CommentSchema);
+const Follower = mongoose.model('Followers', FollowerSchema);
+const Follow = mongoose.model('Follows', FollowSchema);
 
-module.exports = { User, Post, Comment }
+module.exports = { User, Post, Comment, Follower, Follow }

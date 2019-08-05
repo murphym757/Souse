@@ -102,14 +102,21 @@ const mongoose = require('mongoose'),
         });
     }
 
-    // Update Post
+    // Edit User
+    exports.edit_user = (req, res, next) => {
+        const userId = req.params.id;
+        User.findById(userId, (err, user) => {
+            res.json(user);
+        });
+    }
+
+    // Update User
     exports.update_user = (req, res, next) => {
         const newerUser = {
             username: req.body.username,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
-            password: req.body.password,
             userImage: req.body.userImage,
             userInstagram: req.body.userInstagram,
             userFacebook: req.body.userFacebook,
@@ -119,11 +126,11 @@ const mongoose = require('mongoose'),
             }
 
         const updateuser = {new: true};
-        User.findByIdAndUpdate(req.user.id, newerUser, updateuser, (err, user) => {
-            if (!post)
+        User.findByIdAndUpdate(req.params.id, newerUser, updateuser, (err, user) => {
+            if (!user)
                 res.status(404).send("User could not be found");
             else {
-                post.save().then(post => {
+                user.save().then(user => {
                         res.json('Update complete');
                     })
                     .catch(err => {

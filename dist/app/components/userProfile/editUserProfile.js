@@ -125,12 +125,6 @@ function (_Component) {
       });
     };
 
-    _this.onUpdateUserImage = function (e) {
-      _this.setState({
-        userImage: e.target.value
-      });
-    };
-
     _this.onImageUpload = function (e) {
       var config = {
         bucketName: _config["default"].AWS_BUCKET_NAME,
@@ -143,12 +137,12 @@ function (_Component) {
 
       };
       var S3Client = new _awsS["default"](config);
-      var newFileName = "" + _this.state.unixTimestamp + "" + ".jpg";
+      var newFileName = "" + _this.state.unixTimestamp + "";
       S3Client.uploadFile(e.target.files[0], newFileName).then(function (data) {
         console.log(data.location);
 
         _this.setState({
-          postImageURL: data.location,
+          userImage: data.location,
           isLoading: true
         });
       })["catch"](function (err) {
@@ -156,15 +150,13 @@ function (_Component) {
       });
 
       _this.setState({
-        postImageFileType: e.target.files[0].type.slice(6),
-        newPostImageFileName: _this.state.postUnixTimestamp + "." + e.target.files[0].type.slice(6),
         fullPostUploadLoader: true
       });
     };
 
     _this.onSubmit = function (e) {
       e.preventDefault();
-      var user = {
+      var userData = {
         username: _this.state.username,
         firstName: _this.state.firstName,
         lastName: _this.state.lastName,
@@ -176,6 +168,16 @@ function (_Component) {
         userLocation: _this.state.userLocation,
         userBio: _this.state.userBio
       };
+      var apiRoute = "/souseAPI";
+      var updateRoute = "/u/update";
+      var userId = _this.state.userId;
+      var username = _this.state.username;
+
+      _axios["default"].post(apiRoute + updateRoute + "/" + userId, userData).then(function (res) {
+        return console.log(res.data);
+      });
+
+      _this.props.history.push("/");
     };
 
     var _this$props$auth = _this.props.auth,
@@ -220,7 +222,6 @@ function (_Component) {
     _this.onUpdateLastName = _this.onUpdateLastName.bind(_assertThisInitialized(_this));
     _this.onUpdateEmail = _this.onUpdateEmail.bind(_assertThisInitialized(_this));
     _this.onUpdatePassword = _this.onUpdatePassword.bind(_assertThisInitialized(_this));
-    _this.onUpdateUserImage = _this.onUpdateUserImage.bind(_assertThisInitialized(_this));
     _this.onUpdateUserInstagram = _this.onUpdateUserInstagram.bind(_assertThisInitialized(_this));
     _this.onUpdateUserFacebook = _this.onUpdateUserFacebook.bind(_assertThisInitialized(_this));
     _this.onUpdateUserTwitter = _this.onUpdateUserTwitter.bind(_assertThisInitialized(_this));
@@ -234,7 +235,30 @@ function (_Component) {
   _createClass(editUserProfile, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this2 = this;
+
       _materializeCss["default"].AutoInit();
+
+      {
+        /* Edit Post Command */
+      }
+      var apiRoute = "/souseAPI";
+      var editRoute = "/u/edit";
+      var userId = this.state.userId;
+      console.log(userId);
+
+      _axios["default"].get(apiRoute + editRoute + "/" + userId).then(function (res) {
+        _this2.setState({
+          userTwitter: res.data.userTwitter,
+          userFacebook: res.data.userFacebook,
+          userInstagram: res.data.userInstagram,
+          userLocation: res.data.userLocation,
+          userBio: res.data.userBio,
+          userImage: res.data.userImage
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   }, {
     key: "render",
@@ -331,6 +355,7 @@ function (_Component) {
         value: this.state.userFacebook,
         onChange: this.onUpdateUserFacebook
       }), _react["default"].createElement("label", {
+        "class": "active",
         "for": "souseUserFacebook"
       }, "Facebook Username")), _react["default"].createElement("div", {
         "class": "input-field"

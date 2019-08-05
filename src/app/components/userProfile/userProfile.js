@@ -22,22 +22,29 @@ class UserProfile extends Component {
             souseUserLastName,
             souseUserEmail,
             souseUserPassword,
-            souseUserSignUpDate
+            souseUserSignUpDate,
+            souseUserImage,
+            souseUserTwitter,
+            souseUserFacebook,
+            souseUserInstagram,
+            souseUserLocation,
+            souseUserBio
         } = this.props.location.state;
         const usernameFinder = window.location.pathname;
         const usernameFound = usernameFinder.slice(1);
-        const twitterUsername = "SeaP305";
+        const twitterUsername = souseUserTwitter;
         const twitterUsernameURL = "https://mobile.twitter.com/" + twitterUsername + "";
-        const facebookUsername = null;
+        const facebookUsername = souseUserFacebook;
         const facebookUsernameURL = "https://www.facebook.com/" + facebookUsername + "/";
-        const instagramUsername = "seapanther_305";
+        const instagramUsername = souseUserInstagram;
         const instagramUsernameURL = "https://www.instagram.com/" + instagramUsername + "/";
-        const userImage = "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg";
-        const userLocation = "Miami";
-        const userBio = "Hi my name is my name. duh! :)";
+        const userImage = souseUserImage;
+        const userLocation = souseUserLocation;
+        const userBio = souseUserBio;
         
         
         this.state = {
+            loggedInUserId: loggedInUserId,
             creatorId: souseUserId,
             creatorUsername: souseUserUsername,
             creatorFirstName: souseUserFirstName,
@@ -55,8 +62,14 @@ class UserProfile extends Component {
             creatorInstagram: instagramUsername,
             creatorInstagramURL: instagramUsernameURL,
             creatorLocation: userLocation,
-            creatorBio: userBio
+            creatorBio: userBio,
+            followerUserId: "", // This is the user who received the follow
+            initiatedFollowinguserId: "", // This is the user who pressed "Follow"
+            followingUserId: "", // This is the user who pressed "Follow"
+            receivedFollowUserId: "" // This is the user who received the follow
         };
+        this.onSetFollow = this.onSetFollow.bind(this);
+        this.onSetFollower = this.onSetFollower.bind(this);
     }
     postFinder() {
         const souseUserData = this.props.souseUserData;
@@ -74,6 +87,48 @@ class UserProfile extends Component {
             sousePostsList = new Set(souseUserList),
             souseFilterData = sousePostData.filter(sousePostData => sousePostsList.has(sousePostData.postCreator));
         return souseFilterData;
+    }
+
+    onSetFollow = (e) => {
+        e.preventDefault();
+        const loggedInUserId = this.state.loggedInUserId;
+        const creatorId = this.state.creatorId;
+        const followData = {
+            followUserId: creatorId, // This is the user who received the follow
+            initiatedFollowuserId: loggedInUserId, // This is the user who pressed "Follow"
+        };
+        const apiRoute = "/souseAPI";
+        const createRoute = "/follows/add";
+
+        axios.post(apiRoute + createRoute, followData)
+            .then(res => console.log(res.data));
+
+        this.setState({
+            followUserId: '',
+            receivedFollowUserId: ''
+        });
+    }
+    onSetFollower = (e) => {    
+        e.preventDefault();
+        const loggedInUserId = this.state.loggedInUserId;
+        const creatorId = this.state.creatorId;
+        const followerData = {
+            followerUserId: loggedInUserId, // This is the user who pressed "Follow"
+            receivedFollowUserId: creatorId // This is the user who received the follow
+
+
+        };
+        const apiRoute = "/souseAPI";
+        const createRoute = "/followers/add";
+
+        axios.post(apiRoute + createRoute, followerData)
+            .then(res => console.log(res.data));
+
+        this.setState({
+            followerUserId: '',
+            initiatedFollowinguserId: ''
+        });
+        window.location.reload();
     }
 
     render() {
@@ -97,21 +152,22 @@ class UserProfile extends Component {
         const creatorLocation = this.state.creatorLocation;
         const creatorBio = this.state.creatorBio;
         const postsTotal = "" + this.postFinder().length + "";
+        const followingUserId = "5ca398084064c80a4b0b16a6";
         const TwitterIcon = styled(Twitter)
         `
-            color: blue;
+            color: #c45758;
             height: 1.1em;
             width: 1.5em;
             `;
         const FacebookIcon = styled(Facebook)
         `
-            color: blue;
+            color: #c45758;
             height: 1.1em;
             width: 1.5em;
         `;
         const InstagramIcon = styled(Instagram)
         `
-            color: blue;
+            color: #c45758;
             height: 1.1em;
             width: 1.5em;
         `;
@@ -128,12 +184,24 @@ class UserProfile extends Component {
                                     height="85px"/>
                             </div>
                         </div>
-                        <div class="profilePageUserData d-flex justify-content-center"> {/* User Data Section */}
+                        <div class="profilePageUserData col-6 d-flex justify-content-center"> {/* User Data Section */}
                             <div class="container-fluid">
-                                <div class="row col-12 userNameRow">
-                                    <h2 class="d-flex justify-content-center">{creatorUsername}</h2>
-                                    {isAuthenticated && creatorId == loggedInUserId 
-                                        ?   <Link to={
+                                <div class="row userNameRow">
+                                    <h2 class="d-flex justify-content-center mx-auto">{creatorUsername}</h2>
+                                </div>
+                                <div class="row userButtonsRow">
+                                    {isAuthenticated && creatorId !== loggedInUserId
+                                        ?   <div>
+                                                {followingUserId == creatorId
+                                                    ?   <div>
+                                                            <button type="submit" class="waves-effect waves-light btn-large"><p class="lead buttonFont">Unfollow</p></button>
+                                                        </div>
+                                                    :   <div>
+                                                            <button type="submit" class="waves-effect waves-light btn-large" onClick={(e) => {this.onSetFollow(e); this.onSetFollower(e)}}><p class="lead buttonFont">Follow</p></button>
+                                                        </div>
+                                                }
+                                            </div>
+                                        :   <Link class="d-block mx-auto" to={
                                                 {
                                                     pathname: "/u/edit/" + loggedInUserId,
                                                     state: {
@@ -156,10 +224,9 @@ class UserProfile extends Component {
                                             }>
                                                 <button type="submit" class="waves-effect waves-light btn-large"><p class="lead buttonFont">Edit Profile</p></button>
                                             </Link>
-                                        :   <div></div>
                                     }
                                 </div>
-                                <div class="row col-12 userNumericDataRow">
+                                <div class="row userNumericDataRow">
                                     {this.state.totalDisplay === postsTotal
                                         ?   <h6 class="col d-flex justify-content-center">{postsTotal} post</h6>
                                         :   <h6 class="col d-flex justify-content-center">{postsTotal} posts</h6>
@@ -169,25 +236,37 @@ class UserProfile extends Component {
                                     <div class="container-fluid">
                                         <div class="row">
                                             {this.state.creatorTwitter === null
-                                                ? <div></div>
-                                                : <h6 class="col-12 d-flex justify-content-center">
-                                                    <a href={this.state.creatorTwitterURL} target="_blank">
-                                                        <TwitterIcon /> {this.state.creatorTwitter}</a>
-                                                </h6>
+                                                ?   <div></div>
+                                                :   <div class="col-12">
+                                                        <div class="row d-block mx-auto">
+                                                            <h5 class="d-flex justify-content-center m-0">
+                                                            <a href={this.state.creatorTwitterURL} target="_blank">
+                                                                <TwitterIcon /> {this.state.creatorTwitter}</a>
+                                                            </h5>
+                                                        </div>
+                                                    </div>
                                             }
                                             {this.state.creatorFacebook === null
-                                                ? <div></div>
-                                                : <h6 class="col-12 d-flex justify-content-center">
-                                                    <a href={this.state.creatorFacebookURL} target="_blank">
-                                                        <FacebookIcon /> {this.state.creatorFacebook}</a>
-                                                </h6>
+                                                ?   <div></div>
+                                                :   <div class="col-12">
+                                                        <div class="row d-block mx-auto">
+                                                            <h5 class="d-flex justify-content-center m-0">
+                                                            <a href={this.state.creatorFacebookURL} target="_blank">
+                                                                <FacebookIcon /> {this.state.creatorFacebook}</a>
+                                                            </h5>
+                                                        </div>
+                                                    </div>
                                             }
                                             {this.state.creatorInstagram === null
-                                                ? <div></div>
-                                                : <h6 class="col-12 d-flex justify-content-center">
-                                                    <a href={this.state.creatorInstagramURL} target="_blank">
-                                                        <InstagramIcon /> {this.state.creatorInstagram}</a>
-                                                </h6>
+                                                ?   <div></div>
+                                                :   <div class="col-12">
+                                                        <div class="row d-block mx-auto">
+                                                            <h5 class="d-flex justify-content-center m-0">
+                                                            <a href={this.state.creatorInstagramURL} target="_blank">
+                                                                <InstagramIcon /> {this.state.creatorInstagram}</a>
+                                                            </h5>
+                                                        </div>
+                                                    </div>
                                             }  
                                         </div>
                                     </div>

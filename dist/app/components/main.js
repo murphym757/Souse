@@ -73,7 +73,9 @@ function (_Component) {
     _this.state = {
       posts: [],
       users: [],
-      comments: []
+      comments: [],
+      followers: [],
+      follows: []
     };
     return _this;
   }
@@ -131,6 +133,38 @@ function (_Component) {
       })["catch"](function (error) {
         console.log(error);
       });
+
+      {
+        /* Followers Collection */
+      }
+      var findFollowerRoute = "/followers";
+
+      _axios["default"].get(apiRoute + findFollowerRoute).then(function (res) {
+        var followers = res.data;
+        console.log(followers);
+
+        _this2.setState({
+          followers: followers
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
+
+      {
+        /* Follow Collection */
+      }
+      var findFollowRoute = "/follows";
+
+      _axios["default"].get(apiRoute + findFollowRoute).then(function (res) {
+        var follows = res.data;
+        console.log(follows);
+
+        _this2.setState({
+          follows: follows
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   }, {
     key: "render",
@@ -141,6 +175,8 @@ function (_Component) {
       var souseUsers = this.state.users;
       var sousePosts = this.state.posts;
       var souseComments = this.state.comments;
+      var souseFollowers = this.state.followers;
+      var souseFollows = this.state.follows;
       console.log(souseComments);
       return _react["default"].createElement(_reactRouterDom.BrowserRouter, null, _react["default"].createElement("div", null, _react["default"].createElement(_navbar["default"], null), _react["default"].createElement("div", null, _react["default"].createElement(_reactRouterDom.Switch, null, _react["default"].createElement(_reactRouterDom.Route, {
         exact: true,
@@ -149,7 +185,9 @@ function (_Component) {
           return _react["default"].createElement(_LandingPage["default"], _extends({}, props, {
             souseUserData: souseUsers,
             sousePostData: sousePosts,
-            souseCommentData: souseComments
+            souseCommentData: souseComments,
+            souseFollowerData: souseFollowers,
+            souseFollowData: souseFollows
           }));
         }
       }), _react["default"].createElement(_reactRouterDom.Route, {
@@ -166,7 +204,9 @@ function (_Component) {
         render: function render(props) {
           return _react["default"].createElement(_userProfile["default"], _extends({}, props, {
             souseUserData: souseUsers,
-            sousePostData: sousePosts
+            sousePostData: sousePosts,
+            souseFollowerData: souseFollowers,
+            souseFollowData: souseFollows
           }));
         }
       }), _react["default"].createElement(_reactRouterDom.Route, {

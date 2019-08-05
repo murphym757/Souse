@@ -39,9 +39,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -58,11 +58,60 @@ function (_Component) {
     _classCallCheck(this, UserProfile);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(UserProfile).call(this, props));
+
+    _this.onSetFollow = function (e) {
+      e.preventDefault();
+      var loggedInUserId = _this.state.loggedInUserId;
+      var creatorId = _this.state.creatorId;
+      var followData = {
+        followUserId: creatorId,
+        // This is the user who received the follow
+        initiatedFollowuserId: loggedInUserId // This is the user who pressed "Follow"
+
+      };
+      var apiRoute = "/souseAPI";
+      var createRoute = "/follows/add";
+
+      _axios["default"].post(apiRoute + createRoute, followData).then(function (res) {
+        return console.log(res.data);
+      });
+
+      _this.setState({
+        followUserId: '',
+        receivedFollowUserId: ''
+      });
+    };
+
+    _this.onSetFollower = function (e) {
+      e.preventDefault();
+      var loggedInUserId = _this.state.loggedInUserId;
+      var creatorId = _this.state.creatorId;
+      var followerData = {
+        followerUserId: loggedInUserId,
+        // This is the user who pressed "Follow"
+        receivedFollowUserId: creatorId // This is the user who received the follow
+
+      };
+      var apiRoute = "/souseAPI";
+      var createRoute = "/followers/add";
+
+      _axios["default"].post(apiRoute + createRoute, followerData).then(function (res) {
+        return console.log(res.data);
+      });
+
+      _this.setState({
+        followerUserId: '',
+        initiatedFollowinguserId: ''
+      });
+
+      window.location.reload();
+    };
+
     var _this$props$auth = _this.props.auth,
         isAuthenticated = _this$props$auth.isAuthenticated,
         user = _this$props$auth.user;
     var loggedInUsername = user.username;
-    var loggedInUserId = user.id;
+    var _loggedInUserId = user.id;
     var _this$props$location$ = _this.props.location.state,
         souseUserId = _this$props$location$.souseUserId,
         souseUserUsername = _this$props$location$.souseUserUsername,
@@ -70,19 +119,26 @@ function (_Component) {
         souseUserLastName = _this$props$location$.souseUserLastName,
         souseUserEmail = _this$props$location$.souseUserEmail,
         souseUserPassword = _this$props$location$.souseUserPassword,
-        souseUserSignUpDate = _this$props$location$.souseUserSignUpDate;
+        souseUserSignUpDate = _this$props$location$.souseUserSignUpDate,
+        souseUserImage = _this$props$location$.souseUserImage,
+        souseUserTwitter = _this$props$location$.souseUserTwitter,
+        souseUserFacebook = _this$props$location$.souseUserFacebook,
+        souseUserInstagram = _this$props$location$.souseUserInstagram,
+        souseUserLocation = _this$props$location$.souseUserLocation,
+        souseUserBio = _this$props$location$.souseUserBio;
     var usernameFinder = window.location.pathname;
     var usernameFound = usernameFinder.slice(1);
-    var twitterUsername = "SeaP305";
+    var twitterUsername = souseUserTwitter;
     var twitterUsernameURL = "https://mobile.twitter.com/" + twitterUsername + "";
-    var facebookUsername = null;
+    var facebookUsername = souseUserFacebook;
     var facebookUsernameURL = "https://www.facebook.com/" + facebookUsername + "/";
-    var instagramUsername = "seapanther_305";
+    var instagramUsername = souseUserInstagram;
     var instagramUsernameURL = "https://www.instagram.com/" + instagramUsername + "/";
-    var userImage = "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg";
-    var userLocation = "Miami";
-    var userBio = "Hi my name is my name. duh! :)";
+    var userImage = souseUserImage;
+    var userLocation = souseUserLocation;
+    var userBio = souseUserBio;
     _this.state = {
+      loggedInUserId: _loggedInUserId,
       creatorId: souseUserId,
       creatorUsername: souseUserUsername,
       creatorFirstName: souseUserFirstName,
@@ -100,8 +156,18 @@ function (_Component) {
       creatorInstagram: instagramUsername,
       creatorInstagramURL: instagramUsernameURL,
       creatorLocation: userLocation,
-      creatorBio: userBio
+      creatorBio: userBio,
+      followerUserId: "",
+      // This is the user who received the follow
+      initiatedFollowinguserId: "",
+      // This is the user who pressed "Follow"
+      followingUserId: "",
+      // This is the user who pressed "Follow"
+      receivedFollowUserId: "" // This is the user who received the follow
+
     };
+    _this.onSetFollow = _this.onSetFollow.bind(_assertThisInitialized(_this));
+    _this.onSetFollower = _this.onSetFollower.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -155,18 +221,19 @@ function (_Component) {
       var creatorLocation = this.state.creatorLocation;
       var creatorBio = this.state.creatorBio;
       var postsTotal = "" + this.postFinder().length + "";
+      var followingUserId = "5ca398084064c80a4b0b16a6";
       var TwitterIcon = (0, _styledComponents["default"])(_Twitter.Twitter).withConfig({
         displayName: "userProfile__TwitterIcon",
         componentId: "sc-16lkwtc-0"
-      })(["color:blue;height:1.1em;width:1.5em;"]);
+      })(["color:#c45758;height:1.1em;width:1.5em;"]);
       var FacebookIcon = (0, _styledComponents["default"])(_Facebook.Facebook).withConfig({
         displayName: "userProfile__FacebookIcon",
         componentId: "sc-16lkwtc-1"
-      })(["color:blue;height:1.1em;width:1.5em;"]);
+      })(["color:#c45758;height:1.1em;width:1.5em;"]);
       var InstagramIcon = (0, _styledComponents["default"])(_Instagram.Instagram).withConfig({
         displayName: "userProfile__InstagramIcon",
         componentId: "sc-16lkwtc-2"
-      })(["color:blue;height:1.1em;width:1.5em;"]);
+      })(["color:#c45758;height:1.1em;width:1.5em;"]);
       return _react["default"].createElement("div", {
         "class": "container pt-5"
       }, _react["default"].createElement("div", {
@@ -184,14 +251,32 @@ function (_Component) {
         width: "85px",
         height: "85px"
       }))), _react["default"].createElement("div", {
-        "class": "profilePageUserData d-flex justify-content-center"
+        "class": "profilePageUserData col-6 d-flex justify-content-center"
       }, " ", _react["default"].createElement("div", {
         "class": "container-fluid"
       }, _react["default"].createElement("div", {
-        "class": "row col-12 userNameRow"
+        "class": "row userNameRow"
       }, _react["default"].createElement("h2", {
-        "class": "d-flex justify-content-center"
-      }, creatorUsername), isAuthenticated && creatorId == loggedInUserId ? _react["default"].createElement(_reactRouterDom.Link, {
+        "class": "d-flex justify-content-center mx-auto"
+      }, creatorUsername)), _react["default"].createElement("div", {
+        "class": "row userButtonsRow"
+      }, isAuthenticated && creatorId !== loggedInUserId ? _react["default"].createElement("div", null, followingUserId == creatorId ? _react["default"].createElement("div", null, _react["default"].createElement("button", {
+        type: "submit",
+        "class": "waves-effect waves-light btn-large"
+      }, _react["default"].createElement("p", {
+        "class": "lead buttonFont"
+      }, "Unfollow"))) : _react["default"].createElement("div", null, _react["default"].createElement("button", {
+        type: "submit",
+        "class": "waves-effect waves-light btn-large",
+        onClick: function onClick(e) {
+          _this3.onSetFollow(e);
+
+          _this3.onSetFollower(e);
+        }
+      }, _react["default"].createElement("p", {
+        "class": "lead buttonFont"
+      }, "Follow")))) : _react["default"].createElement(_reactRouterDom.Link, {
+        "class": "d-block mx-auto",
         to: {
           pathname: "/u/edit/" + loggedInUserId,
           state: {
@@ -216,8 +301,8 @@ function (_Component) {
         "class": "waves-effect waves-light btn-large"
       }, _react["default"].createElement("p", {
         "class": "lead buttonFont"
-      }, "Edit Profile"))) : _react["default"].createElement("div", null)), _react["default"].createElement("div", {
-        "class": "row col-12 userNumericDataRow"
+      }, "Edit Profile")))), _react["default"].createElement("div", {
+        "class": "row userNumericDataRow"
       }, this.state.totalDisplay === postsTotal ? _react["default"].createElement("h6", {
         "class": "col d-flex justify-content-center"
       }, postsTotal, " post") : _react["default"].createElement("h6", {
@@ -228,22 +313,34 @@ function (_Component) {
         "class": "container-fluid"
       }, _react["default"].createElement("div", {
         "class": "row"
-      }, this.state.creatorTwitter === null ? _react["default"].createElement("div", null) : _react["default"].createElement("h6", {
-        "class": "col-12 d-flex justify-content-center"
+      }, this.state.creatorTwitter === null ? _react["default"].createElement("div", null) : _react["default"].createElement("div", {
+        "class": "col-12"
+      }, _react["default"].createElement("div", {
+        "class": "row d-block mx-auto"
+      }, _react["default"].createElement("h5", {
+        "class": "d-flex justify-content-center m-0"
       }, _react["default"].createElement("a", {
         href: this.state.creatorTwitterURL,
         target: "_blank"
-      }, _react["default"].createElement(TwitterIcon, null), " ", this.state.creatorTwitter)), this.state.creatorFacebook === null ? _react["default"].createElement("div", null) : _react["default"].createElement("h6", {
-        "class": "col-12 d-flex justify-content-center"
+      }, _react["default"].createElement(TwitterIcon, null), " ", this.state.creatorTwitter)))), this.state.creatorFacebook === null ? _react["default"].createElement("div", null) : _react["default"].createElement("div", {
+        "class": "col-12"
+      }, _react["default"].createElement("div", {
+        "class": "row d-block mx-auto"
+      }, _react["default"].createElement("h5", {
+        "class": "d-flex justify-content-center m-0"
       }, _react["default"].createElement("a", {
         href: this.state.creatorFacebookURL,
         target: "_blank"
-      }, _react["default"].createElement(FacebookIcon, null), " ", this.state.creatorFacebook)), this.state.creatorInstagram === null ? _react["default"].createElement("div", null) : _react["default"].createElement("h6", {
-        "class": "col-12 d-flex justify-content-center"
+      }, _react["default"].createElement(FacebookIcon, null), " ", this.state.creatorFacebook)))), this.state.creatorInstagram === null ? _react["default"].createElement("div", null) : _react["default"].createElement("div", {
+        "class": "col-12"
+      }, _react["default"].createElement("div", {
+        "class": "row d-block mx-auto"
+      }, _react["default"].createElement("h5", {
+        "class": "d-flex justify-content-center m-0"
       }, _react["default"].createElement("a", {
         href: this.state.creatorInstagramURL,
         target: "_blank"
-      }, _react["default"].createElement(InstagramIcon, null), " ", this.state.creatorInstagram)))))))), _react["default"].createElement("div", {
+      }, _react["default"].createElement(InstagramIcon, null), " ", this.state.creatorInstagram)))))))))), _react["default"].createElement("div", {
         "class": "col-12"
       }, isAuthenticated ? _react["default"].createElement("div", null, _react["default"].createElement(_postIndex["default"], null)) : _react["default"].createElement("div", null))), _react["default"].createElement("div", {
         "class": "d-flex justify-content-center"
