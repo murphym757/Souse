@@ -2,7 +2,6 @@
 
 var mongoose = require('mongoose'),
     User = mongoose.model('Users'),
-    gravatar = require('gravatar'),
     bcrypt = require('bcryptjs'),
     jwt = require('jsonwebtoken'),
     passport = require('passport'),
