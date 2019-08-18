@@ -285,12 +285,12 @@ function (_Component) {
         "class": "d-flex justify-content-center mx-auto"
       }, creatorUsername)), _react["default"].createElement("div", {
         "class": "row userButtonsRow"
-      }, isAuthenticated && creatorId !== loggedInUserId ? _react["default"].createElement("div", null, Array.isArray(this.followFinder()) && this.followFinder()[0] ? _react["default"].createElement("div", null, this.followFinder()[0].followUserId == loggedInUserId ? _react["default"].createElement("div", null, _react["default"].createElement("button", {
+      }, isAuthenticated ? _react["default"].createElement("div", null, creatorId !== loggedInUserId ? _react["default"].createElement("div", null, Array.isArray(this.followFinder()) ? _react["default"].createElement("div", null, this.followFinder().followUserId == loggedInUserId ? _react["default"].createElement("div", null) : _react["default"].createElement("div", null, _react["default"].createElement("button", {
         type: "submit",
         "class": "waves-effect waves-light btn-large"
       }, _react["default"].createElement("p", {
         "class": "lead buttonFont"
-      }, "Unfollow"))) : _react["default"].createElement("h6", null, "Hi there")) : _react["default"].createElement("div", null, _react["default"].createElement("button", {
+      }, "Unfollow")))) : _react["default"].createElement("div", null, _react["default"].createElement("button", {
         type: "submit",
         "class": "waves-effect waves-light btn-large",
         onClick: function onClick(e) {
@@ -326,7 +326,7 @@ function (_Component) {
         "class": "waves-effect waves-light btn-large"
       }, _react["default"].createElement("p", {
         "class": "lead buttonFont"
-      }, "Edit Profile")))), _react["default"].createElement("div", {
+      }, "Edit Profile")))) : _react["default"].createElement("div", null)), _react["default"].createElement("div", {
         "class": "row userNumericDataRow"
       }, this.state.totalDisplay === postsTotal ? _react["default"].createElement("h6", {
         "class": "col d-flex justify-content-center"

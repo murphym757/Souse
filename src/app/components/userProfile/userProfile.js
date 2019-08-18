@@ -207,45 +207,51 @@ class UserProfile extends Component {
                                     <h2 class="d-flex justify-content-center mx-auto">{creatorUsername}</h2>
                                 </div>
                                 <div class="row userButtonsRow">
-                                    {isAuthenticated && creatorId !== loggedInUserId
+                                    {isAuthenticated 
                                         ?   <div>
-                                            {Array.isArray(this.followFinder()) && this.followFinder()[0]
+                                                {creatorId !== loggedInUserId
                                                     ?   <div>
-                                                            {this.followFinder()[0].followUserId == loggedInUserId
-                                                                ? <div>
-                                                                        <button type="submit" class="waves-effect waves-light btn-large"><p class="lead buttonFont">Unfollow</p></button>
+                                                            {Array.isArray(this.followFinder())
+                                                                ?   <div>
+                                                                        {this.followFinder().followUserId == loggedInUserId
+                                                                            ?   <div></div>
+                                                                            :   <div>
+                                                                                    <button type="submit" class="waves-effect waves-light btn-large"><p class="lead buttonFont">Unfollow</p></button>
+                                                                                </div>
+                                                                        } 
                                                                     </div>
-                                                                : <h6>Hi there</h6>
-                                                            } 
+                                                                :   <div>
+                                                                        <button type="submit" class="waves-effect waves-light btn-large" onClick={(e) => {this.onSetFollow(e); this.onSetFollower(e)}}><p class="lead buttonFont">Follow</p></button>
+                                                                    </div>
+                                                            }
                                                         </div>
-                                                    :   <div>
-                                                            <button type="submit" class="waves-effect waves-light btn-large" onClick={(e) => {this.onSetFollow(e); this.onSetFollower(e)}}><p class="lead buttonFont">Follow</p></button>
-                                                        </div>
+                                                    :   <Link class="d-block mx-auto" to={
+                                                            {
+                                                                pathname: "/u/edit/" + loggedInUserId,
+                                                                state: {
+                                                                    creatorId: creatorId,
+                                                                    creatorUsername: creatorUsername,
+                                                                    creatorFirstName: creatorFirstName,
+                                                                    creatorLastName: creatorLastName,
+                                                                    creatorEmail: creatorEmail,
+                                                                    creatorPassword: creatorPassword,
+                                                                    creatorSignUpDate: creatorSignUpDate,
+                                                                    creatorUnixTimestamp: creatorUnixTimestamp,
+                                                                    creatorImage: creatorImage,
+                                                                    creatorTwitter: creatorTwitter,
+                                                                    creatorFacebook: creatorFacebook,
+                                                                    creatorInstagram: creatorInstagram,
+                                                                    creatorLocation: creatorLocation,
+                                                                    creatorBio: creatorBio
+                                                                }
+                                                            }
+                                                        }>
+                                                            <button type="submit" class="waves-effect waves-light btn-large"><p class="lead buttonFont">Edit Profile</p></button>
+                                                        </Link>
                                                 }
                                             </div>
-                                        :   <Link class="d-block mx-auto" to={
-                                                {
-                                                    pathname: "/u/edit/" + loggedInUserId,
-                                                    state: {
-                                                        creatorId: creatorId,
-                                                        creatorUsername: creatorUsername,
-                                                        creatorFirstName: creatorFirstName,
-                                                        creatorLastName: creatorLastName,
-                                                        creatorEmail: creatorEmail,
-                                                        creatorPassword: creatorPassword,
-                                                        creatorSignUpDate: creatorSignUpDate,
-                                                        creatorUnixTimestamp: creatorUnixTimestamp,
-                                                        creatorImage: creatorImage,
-                                                        creatorTwitter: creatorTwitter,
-                                                        creatorFacebook: creatorFacebook,
-                                                        creatorInstagram: creatorInstagram,
-                                                        creatorLocation: creatorLocation,
-                                                        creatorBio: creatorBio
-                                                    }
-                                                }
-                                            }>
-                                                <button type="submit" class="waves-effect waves-light btn-large"><p class="lead buttonFont">Edit Profile</p></button>
-                                            </Link>
+                                        :   <div>
+                                            </div>
                                     }
                                 </div>
                                 <div class="row userNumericDataRow">
