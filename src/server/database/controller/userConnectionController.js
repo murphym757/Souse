@@ -36,7 +36,7 @@ exports.find_follows = (req, res, next) => {
 exports.follows = (req, res, next) => {
     const followUserId = req.body.followUserId; // This is the user who pressed "Follow"
     const initiatedFollowuserId = req.body.initiatedFollowuserId; // This is the user who received the follow
-    User.findById(followUserId, (err, user) => { // Post Caption Upload
+    User.findById(initiatedFollowuserId, (err, user) => { // Post Caption Upload
         if (err) throw new Error(err);
 
         const newFollow = new Follow({
@@ -65,7 +65,7 @@ exports.follows = (req, res, next) => {
 exports.add_follower = (req, res, next) => {
     const followerUserId = req.body.followerUserId; // The user who pressed "follow"
     const receivedFollowUserId = req.body.receivedFollowUserId; // This is the user who received the follow
-    User.findById(followerUserId, (err, user) => { // Post Caption Upload
+    User.findById(receivedFollowUserId, (err, user) => { // Post Caption Upload
         if (err) throw new Error(err);
 
         const newFollower = new Follower({

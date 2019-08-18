@@ -71,8 +71,8 @@ function (_Component) {
       var _this2 = this;
 
       var sousePostData = this.props.sousePostData;
-      var filteredPostData = Object.keys(sousePostData).filter(function (i) {
-        // Finds Specific Post
+      var filteredPostData = Object.keys(sousePostData).filter( // Finds Specific Post
+      function (i) {
         return sousePostData[i]._id === "" + _this2.state.originalPostId + "";
       }),
           postIdFinder = Object.keys(sousePostData).map(function (object, i) {
@@ -87,7 +87,6 @@ function (_Component) {
         return sousePostsList.has(sousePostData._id);
       });
       var filteredPostCreator = Object.keys(sousePostData).filter(function (i) {
-        // Finds Username of Specific Post
         return sousePostData[i]._id === "" + _this2.state.originalPostId + "";
       }),
           postCreatorIdFinder = Object.keys(sousePostData).map(function (object, i) {
@@ -97,8 +96,8 @@ function (_Component) {
         return "" + postCreatorIdFinder[0] + "";
       });
       var souseUserData = this.props.souseUserData;
-      var filteredUsernameData = Object.keys(souseUserData).filter(function (i) {
-        // Finds Username in souseUsersDB and display data from it (Username)
+      var filteredUsernameData = Object.keys(souseUserData).filter( // Finds Username in souseUsersDB and display data from it (Username)
+      function (i) {
         return souseUserData[i]._id === "" + postCreatorId + "";
       }),
           postUserNameFinder = Object.keys(souseUserData).map(function (object, i) {

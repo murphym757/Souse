@@ -6,44 +6,78 @@ import UserProfile from '../userProfile/userProfile';
 
 class LandingPage extends Component {
     followFinder() {
+        const {isAuthenticated, user} = this.props.auth;
+        const loggedinUserId = user.id;
         const souseFollowData = this.props.souseFollowData;
-        const filteredFollowData = Object.keys(souseFollowData).filter((i) => { // Finds Specific Post
-                return souseFollowData[i].initiatedFollowuserId === "" + loggedinUserId + ""
-            }),
-            followIdFinder = Object.keys(souseFollowData).map((object, i) => {
-                return souseFollowData[filteredFollowData]._id
-            }),
-            followId = followIdFinder.find((i) => {
-                return "" + followIdFinder[0] + ""
-            });
-    }
+        const souseFollowList = ["" + loggedinUserId + ""],
+            souseFollowsList = new Set(souseFollowList),
+            souseFilterFollowData = souseFollowData.filter(souseFollowsData => souseFollowsList.has(souseFollowsData.initiatedFollowuserId));
+        console.log(souseFilterFollowData);
+        return souseFilterFollowData;
+}
 
     followerFinder() {
         const {isAuthenticated, user} = this.props.auth;
         const loggedinUserId = user.id;
         const souseFollowerData = this.props.souseFollowerData;
-        const filteredFollowerData = Object.keys(souseFollowerData).filter((i) => { // Finds Specific Post
-                return souseFollowerData[i].receivedFollowUserId === "" + loggedinUserId + ""
-            }),
-            followerIdFinder = Object.keys(souseFollowerData).map((object, i) => {
-                return souseFollowerData[filteredFollowerData]._id
-            }),
-            followerId = followerIdFinder.find((i) => {
-                return "" + followerIdFinder[0] + ""
-            });
+        const souseFollowerList = ["" + loggedinUserId + ""],
+            souseFollowersList = new Set(souseFollowerList),
+            souseFilterFollowerData = souseFollowerData.filter(souseFollowersData => souseFollowersList.has(souseFollowersData.receivedFollowUserId));
+        console.log(souseFilterFollowerData);
+        return souseFilterFollowerData;
     }
+
+    followFinderUsersId() {
+        const {isAuthenticated, user} = this.props.auth;
+        const loggedinUserId = user.id;
+        const souseUserData = this.props.souseUserData;
+        const filteredUsernameData = Object.keys(souseUserData).filter( // Finds Username in souseUsersDB and display data from it (Username)
+                i => souseUserData[i]._id === "" + postCreatorId + ""
+            ),
+            postUserNameFinder = Object.keys(souseUserData).map(
+                (object, i) => souseUserData[filteredUsernameData].username
+            ),
+            postUserName = postUserNameFinder.find(
+                i => "" + postUserNameFinder[0] + ""
+            );
+        const followUserId = souseFilterPosts.map(
+            
+        );
+        {Object.keys(this.followerFinder())
+            .map((object, i) => (
+                <div>
+                    <h6>Followers</h6>
+                    <h6>{this.followerFinder()[i].followerUserId}</h6>
+                </div>
+            ))}
+    }
+
+    
 
     render() {
         const {isAuthenticated, user} = this.props.auth;
         const souseUserData = this.props.souseUserData;
-        const loggedinUser = user.username;
+        const loggedinUser = user.user;
         const loggedinUserId = user.id;
         return (
             <div class="container-fluid">
                 <h2>LandingPage</h2>
+                {Object.keys(this.followerFinder())
+                    .map((object, i) => (
+                        <div>
+                            <h6>Followers</h6>
+                            <h6>{this.followerFinder()[i].followerUserId}</h6>
+                        </div>
+                    ))}
+                {Object.keys(this.followerFinder())
+                    .map((object, i) => (
+                        <div>
+                            <h6>{this.followerFinder()[i].followerUserId}</h6>
+                        </div>
+                    ))}
                 {isAuthenticated 
                     ?   <div>
-                            <h4>{loggedinUser}</h4>
+                            <h4>{loggedinUserId}</h4>
                         </div> 
                     :   <div>
                             <h4>Not Logged In</h4>

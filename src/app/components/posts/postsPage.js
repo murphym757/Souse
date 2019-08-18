@@ -22,49 +22,49 @@ class PostPage extends Component {
     }
     postFinder() {
         const sousePostData = this.props.sousePostData;
-        const filteredPostData = Object.keys(sousePostData).filter((i) => { // Finds Specific Post
-            return sousePostData[i]._id === "" + this.state.originalPostId + ""
-        }),
-        postIdFinder = Object.keys(sousePostData).map((object, i) => {
-            return sousePostData[filteredPostData]._id
-        }),
-        postId = postIdFinder.find((i) => {
-            return "" + postIdFinder[0] + ""
-        });
+        const filteredPostData = Object.keys(sousePostData).filter( // Finds Specific Post
+            i => sousePostData[i]._id === "" + this.state.originalPostId + ""
+        ),
+        postIdFinder = Object.keys(sousePostData).map(
+            (object, i) => sousePostData[filteredPostData]._id
+        ),
+        postId = postIdFinder.find(
+            i => "" + postIdFinder[0] + ""
+        );
         const sousePostList = ["" + postId + ""],
             sousePostsList = new Set(sousePostList),
             souseFilterPosts = sousePostData.filter(sousePostData => sousePostsList.has(sousePostData._id));
-        const filteredPostCreator = Object.keys(sousePostData).filter((i) => { // Finds Username of Specific Post
-                return sousePostData[i]._id === "" + this.state.originalPostId + ""
-            }),
-            postCreatorIdFinder = Object.keys(sousePostData).map((object, i) => {
-                return sousePostData[filteredPostCreator].postCreator
-            }),
-            postCreatorId = postCreatorIdFinder.find((i) => {
-                return "" + postCreatorIdFinder[0] + ""
-            });
+        const filteredPostCreator = Object.keys(sousePostData).filter(
+            i => sousePostData[i]._id === "" + this.state.originalPostId + ""
+        ),
+            postCreatorIdFinder = Object.keys(sousePostData).map(
+                (object, i) => sousePostData[filteredPostCreator].postCreator
+            ),
+            postCreatorId = postCreatorIdFinder.find(
+                i => "" + postCreatorIdFinder[0] + ""
+            );
         const souseUserData = this.props.souseUserData;
-        const filteredUsernameData = Object.keys(souseUserData).filter((i) => { // Finds Username in souseUsersDB and display data from it (Username)
-                return souseUserData[i]._id === "" + postCreatorId + ""
-            }),
-            postUserNameFinder = Object.keys(souseUserData).map((object, i) => {
-                return souseUserData[filteredUsernameData].username
-            }),
-            postUserName = postUserNameFinder.find((i) => {
-                return "" + postUserNameFinder[0] + ""
-            });         
+        const filteredUsernameData = Object.keys(souseUserData).filter( // Finds Username in souseUsersDB and display data from it (Username)
+                i => souseUserData[i]._id === "" + postCreatorId + ""
+            ),
+            postUserNameFinder = Object.keys(souseUserData).map(
+                (object, i) => souseUserData[filteredUsernameData].username
+            ),
+            postUserName = postUserNameFinder.find(
+                i => "" + postUserNameFinder[0] + ""
+            );         
         const sousePostCreatorName = postUserName; 
         const sousePostCreatorImage = this.state.postCreatorImage;
         const souseCommentData = this.props.souseCommentData;
-        const userData = souseFilterPosts.map((object, i) => {
-          return <PostsGrid 
+        const userData = souseFilterPosts.map(
+          (object, i) => <PostsGrid 
             obj={object} 
             key={i} 
             postCreatorName={sousePostCreatorName}
             postCreatorImage={sousePostCreatorImage}
             souseUserData={souseUserData}
-            souseCommentData={souseCommentData}/>;
-      });
+            souseCommentData={souseCommentData}/>
+      );
       return userData;
     }
 

@@ -8,6 +8,7 @@ import LoginForm from './registration/loginForm';
 import SignUpForm from './registration/signUpForm';
 import LandingPage from './navigation/LandingPage';
 import UserProfile from './userProfile/userProfile';
+import UserPage from './userProfile/usersPage';
 import RouteNotFound from './navigation/404Page';
 import Navbar from './navigation/navbar';
 import PostPage from './posts/postsPage';
@@ -122,7 +123,7 @@ class MainSource extends Component {
                             <Route exact path="/login" component={LoginForm}/>
                             <Route exact path="/:username" 
                             render={
-                                (props) => <UserProfile {...props} 
+                                (props) => <UserPage {...props} 
                                 souseUserData={souseUsers} 
                                 sousePostData={sousePosts} 
                                 souseFollowerData={souseFollowers} 

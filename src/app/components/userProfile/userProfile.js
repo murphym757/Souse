@@ -15,21 +15,18 @@ class UserProfile extends Component {
         const {isAuthenticated, user} = this.props.auth;
         const loggedInUsername = user.username;
         const loggedInUserId = user.id;
-        const {
-            souseUserId,
-            souseUserUsername,
-            souseUserFirstName,
-            souseUserLastName,
-            souseUserEmail,
-            souseUserPassword,
-            souseUserSignUpDate,
-            souseUserImage,
-            souseUserTwitter,
-            souseUserFacebook,
-            souseUserInstagram,
-            souseUserLocation,
-            souseUserBio
-        } = this.props.location.state;
+        const souseUserId = this.props.obj._id;
+        const souseUserFirstName = this.props.obj.firstName; 
+        const souseUserLastName = this.props.obj.lastName;
+        const souseUserEmail = this.props.obj.email;
+        const souseUserPassword = this.props.obj.password;
+        const souseUserSignUpDate = this.props.obj.signUpDate;
+        const souseUserImage = this.props.obj.userImage;
+        const souseUserTwitter = this.props.obj.userTwitter;
+        const souseUserFacebook = this.props.obj.userFacebook;
+        const souseUserInstagram = this.props.obj.userInstagram;
+        const souseUserLocation = this.props.obj.userLocation;
+        const souseUserBio = this.props.obj.userBio;
         const usernameFinder = window.location.pathname;
         const usernameFound = usernameFinder.slice(1);
         const twitterUsername = souseUserTwitter;
@@ -37,16 +34,12 @@ class UserProfile extends Component {
         const facebookUsername = souseUserFacebook;
         const facebookUsernameURL = "https://www.facebook.com/" + facebookUsername + "/";
         const instagramUsername = souseUserInstagram;
-        const instagramUsernameURL = "https://www.instagram.com/" + instagramUsername + "/";
-        const userImage = souseUserImage;
-        const userLocation = souseUserLocation;
-        const userBio = souseUserBio;
-        
+        const instagramUsernameURL = "https://www.instagram.com/" + instagramUsername + "/";        
         
         this.state = {
             loggedInUserId: loggedInUserId,
             creatorId: souseUserId,
-            creatorUsername: souseUserUsername,
+            creatorUsername: usernameFound,
             creatorFirstName: souseUserFirstName,
             creatorLastName: souseUserLastName,
             creatorEmail: souseUserEmail,
@@ -54,15 +47,15 @@ class UserProfile extends Component {
             creatorSignUpDate: souseUserSignUpDate,
             creatorUnixTimestamp: new Date(souseUserSignUpDate).valueOf(),
             totalDisplay: '1',
-            creatorImage: userImage,
+            creatorImage: souseUserImage,
             creatorTwitter: twitterUsername,
             creatorTwitterURL: twitterUsernameURL,
             creatorFacebook: facebookUsername,
             creatorFacebookURL: facebookUsernameURL,
             creatorInstagram: instagramUsername,
             creatorInstagramURL: instagramUsernameURL,
-            creatorLocation: userLocation,
-            creatorBio: userBio,
+            creatorLocation: souseUserLocation,
+            creatorBio: souseUserBio,
             followerUserId: "", // This is the user who received the follow
             initiatedFollowinguserId: "", // This is the user who pressed "Follow"
             followingUserId: "", // This is the user who pressed "Follow"
@@ -73,20 +66,41 @@ class UserProfile extends Component {
     }
     postFinder() {
         const souseUserData = this.props.souseUserData;
-        const filteredUsernameData = Object.keys(souseUserData).filter((i) => {
-                return souseUserData[i].username === "" + this.state.creatorUsername + ""
-            }),
-            userIdFinder = Object.keys(souseUserData).map((object, i) => {
-                return souseUserData[filteredUsernameData]._id
-            }),
-            userId = userIdFinder.find((i) => {
-                return "" + userIdFinder[0] + ""
-            });
+        const filteredUsernameData = Object.keys(souseUserData).filter(
+                i => souseUserData[i].username === "" + this.state.creatorUsername + ""
+            ),
+            userIdFinder = Object.keys(souseUserData).map(
+                (object, i) => souseUserData[filteredUsernameData]._id
+            ),
+            userId = userIdFinder.find(
+                i => "" + userIdFinder[0] + ""
+            );
         const sousePostData = this.props.sousePostData;
         const souseUserList = ["" + userId + ""],
             sousePostsList = new Set(souseUserList),
             souseFilterData = sousePostData.filter(sousePostData => sousePostsList.has(sousePostData.postCreator));
         return souseFilterData;
+    }
+
+    followFinder() {
+        const {isAuthenticated, user} = this.props.auth;
+        const followUserId = user.id;
+        const souseFollowData = this.props.obj.follows;
+        const souseUserList = ["" + followUserId + ""],
+            souseFollowsList = new Set(souseUserList),
+            souseFilterFollowData = souseFollowData.filter(souseFollowData => souseFollowsList.has(souseFollowData.followUserId));
+            console.log(souseFilterFollowData);
+        return souseFilterFollowData;
+    }
+
+    followerFinder() {
+        const followerUserId = this.state.creatorId;
+        const souseFollowerData = this.props.obj.followers;
+        const souseUserList = ["" + followerUserId + ""],
+            souseFollowersList = new Set(souseUserList),
+            souseFilterFollowerData = souseFollowerData.filter(souseFollowerData => souseFollowersList.has(souseFollowerData.receivedFollowUserId));
+            console.log(souseFollowerData);
+        return souseFilterFollowerData;
     }
 
     onSetFollow = (e) => {
@@ -152,7 +166,8 @@ class UserProfile extends Component {
         const creatorLocation = this.state.creatorLocation;
         const creatorBio = this.state.creatorBio;
         const postsTotal = "" + this.postFinder().length + "";
-        const followingUserId = "5ca398084064c80a4b0b16a6";
+        const followersTotal = "" + this.followerFinder().length + "";
+        const followsTotal = "" + this.followFinder().length + "";
         const TwitterIcon = styled(Twitter)
         `
             color: #c45758;
@@ -184,6 +199,8 @@ class UserProfile extends Component {
                                     height="85px"/>
                             </div>
                         </div>
+                            <h6>{followersTotal}</h6>
+                            <h6>{followsTotal}</h6>
                         <div class="profilePageUserData col-6 d-flex justify-content-center"> {/* User Data Section */}
                             <div class="container-fluid">
                                 <div class="row userNameRow">
@@ -192,9 +209,14 @@ class UserProfile extends Component {
                                 <div class="row userButtonsRow">
                                     {isAuthenticated && creatorId !== loggedInUserId
                                         ?   <div>
-                                                {followingUserId == creatorId
+                                            {Array.isArray(this.followFinder()) && this.followFinder()[0]
                                                     ?   <div>
-                                                            <button type="submit" class="waves-effect waves-light btn-large"><p class="lead buttonFont">Unfollow</p></button>
+                                                            {this.followFinder()[0].followUserId == loggedInUserId
+                                                                ? <div>
+                                                                        <button type="submit" class="waves-effect waves-light btn-large"><p class="lead buttonFont">Unfollow</p></button>
+                                                                    </div>
+                                                                : <h6>Hi there</h6>
+                                                            } 
                                                         </div>
                                                     :   <div>
                                                             <button type="submit" class="waves-effect waves-light btn-large" onClick={(e) => {this.onSetFollow(e); this.onSetFollower(e)}}><p class="lead buttonFont">Follow</p></button>
@@ -235,7 +257,7 @@ class UserProfile extends Component {
                                 <div class="row userAltContactRow">
                                     <div class="container-fluid">
                                         <div class="row">
-                                            {this.state.creatorTwitter === null
+                                            {this.state.creatorTwitter === ""
                                                 ?   <div></div>
                                                 :   <div class="col-12">
                                                         <div class="row d-block mx-auto">
@@ -246,7 +268,7 @@ class UserProfile extends Component {
                                                         </div>
                                                     </div>
                                             }
-                                            {this.state.creatorFacebook === null
+                                            {this.state.creatorFacebook === ""
                                                 ?   <div></div>
                                                 :   <div class="col-12">
                                                         <div class="row d-block mx-auto">
@@ -257,7 +279,7 @@ class UserProfile extends Component {
                                                         </div>
                                                     </div>
                                             }
-                                            {this.state.creatorInstagram === null
+                                            {this.state.creatorInstagram === ""
                                                 ?   <div></div>
                                                 :   <div class="col-12">
                                                         <div class="row d-block mx-auto">
@@ -321,4 +343,4 @@ const mapStateToProps = (state) => ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps)(UserProfile)
+export default connect(mapStateToProps)(withRouter (UserProfile))

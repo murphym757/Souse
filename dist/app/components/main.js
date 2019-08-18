@@ -23,6 +23,8 @@ var _LandingPage = _interopRequireDefault(require("./navigation/LandingPage"));
 
 var _userProfile = _interopRequireDefault(require("./userProfile/userProfile"));
 
+var _usersPage = _interopRequireDefault(require("./userProfile/usersPage"));
+
 var _Page = _interopRequireDefault(require("./navigation/404Page"));
 
 var _navbar = _interopRequireDefault(require("./navigation/navbar"));
@@ -202,7 +204,7 @@ function (_Component) {
         exact: true,
         path: "/:username",
         render: function render(props) {
-          return _react["default"].createElement(_userProfile["default"], _extends({}, props, {
+          return _react["default"].createElement(_usersPage["default"], _extends({}, props, {
             souseUserData: souseUsers,
             sousePostData: sousePosts,
             souseFollowerData: souseFollowers,

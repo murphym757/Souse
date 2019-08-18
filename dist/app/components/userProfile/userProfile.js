@@ -112,20 +112,18 @@ function (_Component) {
         user = _this$props$auth.user;
     var loggedInUsername = user.username;
     var _loggedInUserId = user.id;
-    var _this$props$location$ = _this.props.location.state,
-        souseUserId = _this$props$location$.souseUserId,
-        souseUserUsername = _this$props$location$.souseUserUsername,
-        souseUserFirstName = _this$props$location$.souseUserFirstName,
-        souseUserLastName = _this$props$location$.souseUserLastName,
-        souseUserEmail = _this$props$location$.souseUserEmail,
-        souseUserPassword = _this$props$location$.souseUserPassword,
-        souseUserSignUpDate = _this$props$location$.souseUserSignUpDate,
-        souseUserImage = _this$props$location$.souseUserImage,
-        souseUserTwitter = _this$props$location$.souseUserTwitter,
-        souseUserFacebook = _this$props$location$.souseUserFacebook,
-        souseUserInstagram = _this$props$location$.souseUserInstagram,
-        souseUserLocation = _this$props$location$.souseUserLocation,
-        souseUserBio = _this$props$location$.souseUserBio;
+    var souseUserId = _this.props.obj._id;
+    var souseUserFirstName = _this.props.obj.firstName;
+    var souseUserLastName = _this.props.obj.lastName;
+    var souseUserEmail = _this.props.obj.email;
+    var souseUserPassword = _this.props.obj.password;
+    var souseUserSignUpDate = _this.props.obj.signUpDate;
+    var souseUserImage = _this.props.obj.userImage;
+    var souseUserTwitter = _this.props.obj.userTwitter;
+    var souseUserFacebook = _this.props.obj.userFacebook;
+    var souseUserInstagram = _this.props.obj.userInstagram;
+    var souseUserLocation = _this.props.obj.userLocation;
+    var souseUserBio = _this.props.obj.userBio;
     var usernameFinder = window.location.pathname;
     var usernameFound = usernameFinder.slice(1);
     var twitterUsername = souseUserTwitter;
@@ -134,13 +132,10 @@ function (_Component) {
     var facebookUsernameURL = "https://www.facebook.com/" + facebookUsername + "/";
     var instagramUsername = souseUserInstagram;
     var instagramUsernameURL = "https://www.instagram.com/" + instagramUsername + "/";
-    var userImage = souseUserImage;
-    var userLocation = souseUserLocation;
-    var userBio = souseUserBio;
     _this.state = {
       loggedInUserId: _loggedInUserId,
       creatorId: souseUserId,
-      creatorUsername: souseUserUsername,
+      creatorUsername: usernameFound,
       creatorFirstName: souseUserFirstName,
       creatorLastName: souseUserLastName,
       creatorEmail: souseUserEmail,
@@ -148,15 +143,15 @@ function (_Component) {
       creatorSignUpDate: souseUserSignUpDate,
       creatorUnixTimestamp: new Date(souseUserSignUpDate).valueOf(),
       totalDisplay: '1',
-      creatorImage: userImage,
+      creatorImage: souseUserImage,
       creatorTwitter: twitterUsername,
       creatorTwitterURL: twitterUsernameURL,
       creatorFacebook: facebookUsername,
       creatorFacebookURL: facebookUsernameURL,
       creatorInstagram: instagramUsername,
       creatorInstagramURL: instagramUsernameURL,
-      creatorLocation: userLocation,
-      creatorBio: userBio,
+      creatorLocation: souseUserLocation,
+      creatorBio: souseUserBio,
       followerUserId: "",
       // This is the user who received the follow
       initiatedFollowinguserId: "",
@@ -195,13 +190,42 @@ function (_Component) {
       return souseFilterData;
     }
   }, {
+    key: "followFinder",
+    value: function followFinder() {
+      var _this$props$auth2 = this.props.auth,
+          isAuthenticated = _this$props$auth2.isAuthenticated,
+          user = _this$props$auth2.user;
+      var followUserId = user.id;
+      var souseFollowData = this.props.obj.follows;
+      var souseUserList = ["" + followUserId + ""],
+          souseFollowsList = new Set(souseUserList),
+          souseFilterFollowData = souseFollowData.filter(function (souseFollowData) {
+        return souseFollowsList.has(souseFollowData.followUserId);
+      });
+      console.log(souseFilterFollowData);
+      return souseFilterFollowData;
+    }
+  }, {
+    key: "followerFinder",
+    value: function followerFinder() {
+      var followerUserId = this.state.creatorId;
+      var souseFollowerData = this.props.obj.followers;
+      var souseUserList = ["" + followerUserId + ""],
+          souseFollowersList = new Set(souseUserList),
+          souseFilterFollowerData = souseFollowerData.filter(function (souseFollowerData) {
+        return souseFollowersList.has(souseFollowerData.receivedFollowUserId);
+      });
+      console.log(souseFollowerData);
+      return souseFilterFollowerData;
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
 
-      var _this$props$auth2 = this.props.auth,
-          isAuthenticated = _this$props$auth2.isAuthenticated,
-          user = _this$props$auth2.user;
+      var _this$props$auth3 = this.props.auth,
+          isAuthenticated = _this$props$auth3.isAuthenticated,
+          user = _this$props$auth3.user;
       var loggedInUsername = user.username;
       var loggedInUserId = user.id;
       var loggedInUserFirstname = user.firstName;
@@ -221,7 +245,8 @@ function (_Component) {
       var creatorLocation = this.state.creatorLocation;
       var creatorBio = this.state.creatorBio;
       var postsTotal = "" + this.postFinder().length + "";
-      var followingUserId = "5ca398084064c80a4b0b16a6";
+      var followersTotal = "" + this.followerFinder().length + "";
+      var followsTotal = "" + this.followFinder().length + "";
       var TwitterIcon = (0, _styledComponents["default"])(_Twitter.Twitter).withConfig({
         displayName: "userProfile__TwitterIcon",
         componentId: "sc-16lkwtc-0"
@@ -250,7 +275,7 @@ function (_Component) {
         alt: "souseUserIcon",
         width: "85px",
         height: "85px"
-      }))), _react["default"].createElement("div", {
+      }))), _react["default"].createElement("h6", null, followersTotal), _react["default"].createElement("h6", null, followsTotal), _react["default"].createElement("div", {
         "class": "profilePageUserData col-6 d-flex justify-content-center"
       }, " ", _react["default"].createElement("div", {
         "class": "container-fluid"
@@ -260,12 +285,12 @@ function (_Component) {
         "class": "d-flex justify-content-center mx-auto"
       }, creatorUsername)), _react["default"].createElement("div", {
         "class": "row userButtonsRow"
-      }, isAuthenticated && creatorId !== loggedInUserId ? _react["default"].createElement("div", null, followingUserId == creatorId ? _react["default"].createElement("div", null, _react["default"].createElement("button", {
+      }, isAuthenticated && creatorId !== loggedInUserId ? _react["default"].createElement("div", null, Array.isArray(this.followFinder()) && this.followFinder()[0] ? _react["default"].createElement("div", null, this.followFinder()[0].followUserId == loggedInUserId ? _react["default"].createElement("div", null, _react["default"].createElement("button", {
         type: "submit",
         "class": "waves-effect waves-light btn-large"
       }, _react["default"].createElement("p", {
         "class": "lead buttonFont"
-      }, "Unfollow"))) : _react["default"].createElement("div", null, _react["default"].createElement("button", {
+      }, "Unfollow"))) : _react["default"].createElement("h6", null, "Hi there")) : _react["default"].createElement("div", null, _react["default"].createElement("button", {
         type: "submit",
         "class": "waves-effect waves-light btn-large",
         onClick: function onClick(e) {
@@ -313,7 +338,7 @@ function (_Component) {
         "class": "container-fluid"
       }, _react["default"].createElement("div", {
         "class": "row"
-      }, this.state.creatorTwitter === null ? _react["default"].createElement("div", null) : _react["default"].createElement("div", {
+      }, this.state.creatorTwitter === "" ? _react["default"].createElement("div", null) : _react["default"].createElement("div", {
         "class": "col-12"
       }, _react["default"].createElement("div", {
         "class": "row d-block mx-auto"
@@ -322,7 +347,7 @@ function (_Component) {
       }, _react["default"].createElement("a", {
         href: this.state.creatorTwitterURL,
         target: "_blank"
-      }, _react["default"].createElement(TwitterIcon, null), " ", this.state.creatorTwitter)))), this.state.creatorFacebook === null ? _react["default"].createElement("div", null) : _react["default"].createElement("div", {
+      }, _react["default"].createElement(TwitterIcon, null), " ", this.state.creatorTwitter)))), this.state.creatorFacebook === "" ? _react["default"].createElement("div", null) : _react["default"].createElement("div", {
         "class": "col-12"
       }, _react["default"].createElement("div", {
         "class": "row d-block mx-auto"
@@ -331,7 +356,7 @@ function (_Component) {
       }, _react["default"].createElement("a", {
         href: this.state.creatorFacebookURL,
         target: "_blank"
-      }, _react["default"].createElement(FacebookIcon, null), " ", this.state.creatorFacebook)))), this.state.creatorInstagram === null ? _react["default"].createElement("div", null) : _react["default"].createElement("div", {
+      }, _react["default"].createElement(FacebookIcon, null), " ", this.state.creatorFacebook)))), this.state.creatorInstagram === "" ? _react["default"].createElement("div", null) : _react["default"].createElement("div", {
         "class": "col-12"
       }, _react["default"].createElement("div", {
         "class": "row d-block mx-auto"
@@ -386,6 +411,6 @@ var mapStateToProps = function mapStateToProps(state) {
   };
 };
 
-var _default = (0, _reactRedux.connect)(mapStateToProps)(UserProfile);
+var _default = (0, _reactRedux.connect)(mapStateToProps)((0, _reactRouterDom.withRouter)(UserProfile));
 
 exports["default"] = _default;

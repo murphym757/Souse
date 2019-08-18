@@ -73,11 +73,11 @@ const UserSchema = new mongoose.Schema({
         ref: 'Comments'
     }],
     followers: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.Mixed,
         ref: 'Followers'
     }],
     follows: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.Mixed,
         ref: 'Follows'
     }]
 });
@@ -123,7 +123,7 @@ const PostSchema = new mongoose.Schema({
         }
     },
     comments: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.Mixed,
         ref: 'Comments'
     }]
 });
@@ -148,9 +148,9 @@ const CommentSchema = new mongoose.Schema({
          default: null
      },
      commentCreatorUsername: {
-         type: String,
-            trim: true,
-            default: null
+        type: String,
+        trim: true,
+        default: null
      }
 });
 
