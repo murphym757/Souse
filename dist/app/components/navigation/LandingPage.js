@@ -13,7 +13,7 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _reactRedux = require("react-redux");
 
-var _userProfile = _interopRequireDefault(require("../userProfile/userProfile"));
+var _usersPage = _interopRequireDefault(require("../userProfile/usersPage"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -49,11 +49,43 @@ function (_Component) {
   }
 
   _createClass(LandingPage, [{
-    key: "followFinder",
-    value: function followFinder() {
+    key: "userFinder",
+    value: function userFinder() {
       var _this$props$auth = this.props.auth,
           isAuthenticated = _this$props$auth.isAuthenticated,
           user = _this$props$auth.user;
+      var loggedinUserId = user.id;
+      var souseUserData = this.props.souseUserData;
+      var souseUserList = ["" + loggedinUserId + ""],
+          souseUsersList = new Set(souseUserList),
+          souseFilterUserData = souseUserData.filter(function (souseUsersData) {
+        return souseUsersList.has(souseUsersData._id);
+      });
+      console.log(souseFilterUserData);
+      return souseFilterUserData;
+    }
+  }, {
+    key: "postFinder",
+    value: function postFinder() {
+      var _this$props$auth2 = this.props.auth,
+          isAuthenticated = _this$props$auth2.isAuthenticated,
+          user = _this$props$auth2.user;
+      var loggedinUserId = user.id;
+      var sousePostData = this.props.sousePostData;
+      var sousePostList = ["" + loggedinUserId + ""],
+          sousePostsList = new Set(sousePostList),
+          souseFilterPostData = sousePostData.filter(function (sousePostsData) {
+        return sousePostsList.has(sousePostsData.postCreator);
+      });
+      console.log(souseFilterPostData);
+      return souseFilterPostData;
+    }
+  }, {
+    key: "followFinder",
+    value: function followFinder() {
+      var _this$props$auth3 = this.props.auth,
+          isAuthenticated = _this$props$auth3.isAuthenticated,
+          user = _this$props$auth3.user;
       var loggedinUserId = user.id;
       var souseFollowData = this.props.souseFollowData;
       var souseFollowList = ["" + loggedinUserId + ""],
@@ -67,9 +99,9 @@ function (_Component) {
   }, {
     key: "followerFinder",
     value: function followerFinder() {
-      var _this$props$auth2 = this.props.auth,
-          isAuthenticated = _this$props$auth2.isAuthenticated,
-          user = _this$props$auth2.user;
+      var _this$props$auth4 = this.props.auth,
+          isAuthenticated = _this$props$auth4.isAuthenticated,
+          user = _this$props$auth4.user;
       var loggedinUserId = user.id;
       var souseFollowerData = this.props.souseFollowerData;
       var souseFollowerList = ["" + loggedinUserId + ""],
@@ -81,50 +113,78 @@ function (_Component) {
       return souseFilterFollowerData;
     }
   }, {
-    key: "followFinderUsersId",
-    value: function followFinderUsersId() {
-      var _this = this;
-
-      var _this$props$auth3 = this.props.auth,
-          isAuthenticated = _this$props$auth3.isAuthenticated,
-          user = _this$props$auth3.user;
-      var loggedinUserId = user.id;
-      var souseUserData = this.props.souseUserData;
-      var filteredUsernameData = Object.keys(souseUserData).filter( // Finds Username in souseUsersDB and display data from it (Username)
-      function (i) {
-        return souseUserData[i]._id === "" + postCreatorId + "";
-      }),
-          postUserNameFinder = Object.keys(souseUserData).map(function (object, i) {
-        return souseUserData[filteredUsernameData].username;
-      }),
-          postUserName = postUserNameFinder.find(function (i) {
-        return "" + postUserNameFinder[0] + "";
-      });
-      var followUserId = souseFilterPosts.map();
-      {
-        Object.keys(this.followerFinder()).map(function (object, i) {
-          return _react["default"].createElement("div", null, _react["default"].createElement("h6", null, "Followers"), _react["default"].createElement("h6", null, _this.followerFinder()[i].followerUserId));
-        });
-      }
-    }
-  }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this = this;
 
-      var _this$props$auth4 = this.props.auth,
-          isAuthenticated = _this$props$auth4.isAuthenticated,
-          user = _this$props$auth4.user;
+      var _this$props$auth5 = this.props.auth,
+          isAuthenticated = _this$props$auth5.isAuthenticated,
+          user = _this$props$auth5.user;
       var souseUserData = this.props.souseUserData;
-      var loggedinUser = user.user;
+      var loggedinUser = user.username;
       var loggedinUserId = user.id;
+      var postsTotal = "" + this.postFinder().length + "";
+      var followersTotal = "" + this.followerFinder().length + "";
+      var followsTotal = "" + this.followFinder().length + "";
       return _react["default"].createElement("div", {
         "class": "container-fluid"
-      }, _react["default"].createElement("h2", null, "LandingPage"), Object.keys(this.followerFinder()).map(function (object, i) {
-        return _react["default"].createElement("div", null, _react["default"].createElement("h6", null, "Followers"), _react["default"].createElement("h6", null, _this2.followerFinder()[i].followerUserId));
-      }), Object.keys(this.followerFinder()).map(function (object, i) {
-        return _react["default"].createElement("div", null, _react["default"].createElement("h6", null, _this2.followerFinder()[i].followerUserId));
-      }), isAuthenticated ? _react["default"].createElement("div", null, _react["default"].createElement("h4", null, loggedinUserId)) : _react["default"].createElement("div", null, _react["default"].createElement("h4", null, "Not Logged In")), _react["default"].createElement("div", {
+      }, Object.keys(this.userFinder()).map(function (object, i) {
+        return _react["default"].createElement("div", {
+          "class": "container"
+        }, _react["default"].createElement("div", {
+          "class": "row d-flex justify-content-center"
+        }, "   ", _react["default"].createElement("img", {
+          "class": "souseUserIconUserHomePage",
+          src: _this.userFinder()[i].userImage,
+          alt: "souseUserIcon",
+          width: "85px",
+          height: "85px"
+        })), _react["default"].createElement("div", {
+          "class": "row d-flex justify-content-center"
+        }, "   ", _react["default"].createElement("h2", null, _this.userFinder()[i].username)), _react["default"].createElement("div", {
+          "class": "row d-flex justify-content-center"
+        }, "   ", _react["default"].createElement("div", {
+          "class": "col-4"
+        }, _react["default"].createElement("h4", {
+          "class": "float-right"
+        }, postsTotal, " Posts")), _react["default"].createElement("div", {
+          "class": "col-4"
+        }, _react["default"].createElement("h4", {
+          "class": "d-flex justify-content-center"
+        }, followersTotal, " Followers")), _react["default"].createElement("div", {
+          "class": "col-4"
+        }, _react["default"].createElement("h4", {
+          "class": "float-left"
+        }, followsTotal, " Follows"))), Object.keys(_this.userFinder()).map(function (object, i) {
+          return _react["default"].createElement("div", null, _react["default"].createElement(_reactRouterDom.Link, {
+            to: {
+              pathname: "/".concat(_this.userFinder()[i].username),
+              state: {
+                souseUserId: _this.userFinder()[i]._id,
+                souseUserUsername: _this.userFinder()[i].username,
+                souseUserFirstName: _this.userFinder()[i].firstName,
+                souseUserLastName: souseUserData[i].lastName,
+                souseUserEmail: _this.userFinder()[i].email,
+                souseUserPassword: _this.userFinder()[i].password,
+                souseUserSignUpDate: _this.userFinder()[i].signUpDate,
+                souseUserImage: _this.userFinder()[i].userImage,
+                souseUserTwitter: _this.userFinder()[i].userTwitter,
+                souseUserFacebook: _this.userFinder()[i].userFacebook,
+                souseUserInstagram: _this.userFinder()[i].userInstagram,
+                souseUserLocation: _this.userFinder()[i].userLocation,
+                souseUserBio: _this.userFinder()[i].userBio
+              }
+            }
+          }, _react["default"].createElement("div", {
+            "class": "row d-flex justify-content-center"
+          }, "   ", _react["default"].createElement("button", {
+            type: "submit",
+            "class": "waves-effect waves-light btn-large"
+          }, _react["default"].createElement("p", {
+            "class": "lead buttonFont"
+          }, "Confirm")))));
+        }));
+      }), _react["default"].createElement("h2", null, "LandingPage"), isAuthenticated ? _react["default"].createElement("div", {
         "class": "usersPosts"
       }, Object.keys(souseUserData).map(function (object, i) {
         return _react["default"].createElement("div", null, _react["default"].createElement(_reactRouterDom.Link, {
@@ -147,7 +207,7 @@ function (_Component) {
             }
           }
         }, souseUserData[i].username));
-      })));
+      })) : _react["default"].createElement("div", null, _react["default"].createElement("h4", null, "Not Logged In")));
     }
   }]);
 

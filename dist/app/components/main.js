@@ -180,7 +180,9 @@ function (_Component) {
       var souseFollowers = this.state.followers;
       var souseFollows = this.state.follows;
       console.log(souseComments);
-      return _react["default"].createElement(_reactRouterDom.BrowserRouter, null, _react["default"].createElement("div", null, _react["default"].createElement(_navbar["default"], null), _react["default"].createElement("div", null, _react["default"].createElement(_reactRouterDom.Switch, null, _react["default"].createElement(_reactRouterDom.Route, {
+      return _react["default"].createElement(_reactRouterDom.BrowserRouter, null, _react["default"].createElement("div", {
+        "class": "entireProject"
+      }, _react["default"].createElement(_navbar["default"], null), _react["default"].createElement("div", null, _react["default"].createElement(_reactRouterDom.Switch, null, _react["default"].createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/",
         render: function render(props) {

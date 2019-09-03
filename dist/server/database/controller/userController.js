@@ -162,6 +162,7 @@ exports.user_account = passport.authenticate('jwt', {
   return res.json({
     id: req.user.id,
     username: req.user.username,
+    userImage: req.user.userImage,
     email: req.user.email
   });
 };

@@ -4,6 +4,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
+import { WaveLoading } from 'styled-spinkit';
 import S3 from 'aws-s3';
 import awsConfig from '../../../server/config';
 import M from 'materialize-css';
@@ -50,6 +51,8 @@ class editUserProfile extends Component {
             userTwitter: creatorTwitter,
             userLocation: creatorLocation,
             userBio: creatorBio,
+            isLoading: false,
+            fullPostUploadLoader: false,
             errors: {}
         };
         this.onUpdateUsername = this.onUpdateUsername.bind(this);
@@ -178,6 +181,8 @@ class editUserProfile extends Component {
     
     onSubmit = (e) => {
         e.preventDefault();
+        const {isAuthenticated, user} = this.props.auth;
+        const loggedinUsername = user.username;
         const userData = {
             username: this.state.username,
             firstName: this.state.firstName,
@@ -197,8 +202,8 @@ class editUserProfile extends Component {
 
         axios.post(apiRoute + updateRoute + "/" + userId, userData)
             .then(res => console.log(res.data));
-
-        this.props.history.push("/");
+        this.props.history.push("/" + "" + loggedinUsername + "");
+        window.location.reload();
     }
 
     render() {
@@ -319,23 +324,38 @@ class editUserProfile extends Component {
                         </textarea>
                         <label class="active" for="souseUserBio">Bio ({this.state.userBio.length}/150)</label>
                     </div>
-                    <div class="file-field input-field">
-                        <div class="btn-large">
-                            <span>Upload</span>
-                            <input 
-                                type="file" 
-                                name="userImage"
-                                id="souseUserImage"
-                                onChange={this.onImageUpload}
-                            />
-                        </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="waves-effect waves-light btn-large d-block mx-auto">Update User</button>
-                    </div>
+                    {this.state.fullPostUploadLoader
+                        ?   <div>
+                                {this.state.isLoading
+                                    ?   <div>
+                                            <h6>User Image Updated</h6>
+                                            <div class="form-group">
+                                                <button type="submit" class="waves-effect waves-light btn-large d-block mx-auto">Update User</button>
+                                            </div>
+                                        </div>
+                                    :   <WaveLoading __styled-spinkit__Wave color="#c45758" />
+                                }
+                            </div>
+                        :   <div>
+                                <div class="file-field input-field">
+                                    <div class="btn-large">
+                                        <span>Upload</span>
+                                        <input 
+                                            type="file" 
+                                            name="userImage"
+                                            id="souseUserImage"
+                                            onChange={this.onImageUpload}
+                                        />
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path validate" type="text" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="waves-effect waves-light btn-large d-block mx-auto">Update User</button>
+                                </div>
+                            </div>
+                    }
                 </form>
             </div>
           );

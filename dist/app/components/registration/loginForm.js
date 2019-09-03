@@ -63,6 +63,8 @@ function (_Component) {
       };
 
       _this.props.loginUser(user);
+
+      window.location.reload();
     };
 
     _this.state = {

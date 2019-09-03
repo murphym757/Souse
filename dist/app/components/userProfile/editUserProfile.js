@@ -17,6 +17,8 @@ var _reactRedux = require("react-redux");
 
 var _classnames = _interopRequireDefault(require("classnames"));
 
+var _styledSpinkit = require("styled-spinkit");
+
 var _awsS = _interopRequireDefault(require("aws-s3"));
 
 var _config = _interopRequireDefault(require("../../../server/config"));
@@ -156,6 +158,10 @@ function (_Component) {
 
     _this.onSubmit = function (e) {
       e.preventDefault();
+      var _this$props$auth = _this.props.auth,
+          isAuthenticated = _this$props$auth.isAuthenticated,
+          user = _this$props$auth.user;
+      var loggedinUsername = user.username;
       var userData = {
         username: _this.state.username,
         firstName: _this.state.firstName,
@@ -177,14 +183,16 @@ function (_Component) {
         return console.log(res.data);
       });
 
-      _this.props.history.push("/");
+      _this.props.history.push("/" + "" + loggedinUsername + "");
+
+      window.location.reload();
     };
 
-    var _this$props$auth = _this.props.auth,
-        isAuthenticated = _this$props$auth.isAuthenticated,
-        user = _this$props$auth.user;
-    var loggedinUser = user.id;
-    var loggedinUsername = user.username;
+    var _this$props$auth2 = _this.props.auth,
+        isAuthenticated = _this$props$auth2.isAuthenticated,
+        _user = _this$props$auth2.user;
+    var loggedinUser = _user.id;
+    var _loggedinUsername = _user.username;
     var _this$props$location$ = _this.props.location.state,
         creatorId = _this$props$location$.creatorId,
         creatorUsername = _this$props$location$.creatorUsername,
@@ -215,6 +223,8 @@ function (_Component) {
       userTwitter: creatorTwitter,
       userLocation: creatorLocation,
       userBio: creatorBio,
+      isLoading: false,
+      fullPostUploadLoader: false,
       errors: {}
     };
     _this.onUpdateUsername = _this.onUpdateUsername.bind(_assertThisInitialized(_this));
@@ -394,7 +404,15 @@ function (_Component) {
       }), _react["default"].createElement("label", {
         "class": "active",
         "for": "souseUserBio"
-      }, "Bio (", this.state.userBio.length, "/150)")), _react["default"].createElement("div", {
+      }, "Bio (", this.state.userBio.length, "/150)")), this.state.fullPostUploadLoader ? _react["default"].createElement("div", null, this.state.isLoading ? _react["default"].createElement("div", null, _react["default"].createElement("h6", null, "User Image Updated"), _react["default"].createElement("div", {
+        "class": "form-group"
+      }, _react["default"].createElement("button", {
+        type: "submit",
+        "class": "waves-effect waves-light btn-large d-block mx-auto"
+      }, "Update User"))) : _react["default"].createElement(_styledSpinkit.WaveLoading, {
+        "__styled-spinkit__Wave": true,
+        color: "#c45758"
+      })) : _react["default"].createElement("div", null, _react["default"].createElement("div", {
         "class": "file-field input-field"
       }, _react["default"].createElement("div", {
         "class": "btn-large"
@@ -413,7 +431,7 @@ function (_Component) {
       }, _react["default"].createElement("button", {
         type: "submit",
         "class": "waves-effect waves-light btn-large d-block mx-auto"
-      }, "Update User"))));
+      }, "Update User")))));
     }
   }]);
 

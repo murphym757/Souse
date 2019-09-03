@@ -29,6 +29,7 @@ class LoginForm extends Component {
             password: this.state.password
         }
         this.props.loginUser(user);
+        window.location.reload();
     }
 
     componentDidMount() {
@@ -39,7 +40,7 @@ class LoginForm extends Component {
     
     componentWillReceiveProps(nextProps) {
         if (nextProps.auth.isAuthenticated) {
-            this.props.history.push('/')
+            this.props.history.push('/');
         }
         if (nextProps.errors) {
             this.setState({

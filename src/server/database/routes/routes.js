@@ -60,8 +60,8 @@ souseRouter.route('/follows/add') // Follow
 souseRouter.route('/follows')
     .get(userConnectionController.find_follows);
 
-/*souseRouter.route('/following/delete/:id') // Unfollow
-    .get(userConnectionController.unfollow);*/
+souseRouter.route('/follows/delete/:id') // Unfollow
+    .get(userConnectionController.delete_follow);
 
 // Routes for Followers
 souseRouter.route('/followers/add')
@@ -70,7 +70,7 @@ souseRouter.route('/followers/add')
 souseRouter.route('/followers')
     .get(userConnectionController.find_follower);
 
-/* souseRouter.route('/followers/delete/:id') // Being Unfollowed
-    .get(userConnectionController.delete_follower);*/
+souseRouter.route('/followers/delete/:id') // Being Unfollowed
+    .get(userConnectionController.delete_follower);
 
 module.exports = souseRouter;

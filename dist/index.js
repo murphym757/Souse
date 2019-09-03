@@ -41,6 +41,7 @@ if (localStorage.jwtToken) {
   if (decoded.exp < currentTime) {
     _store["default"].dispatch((0, _authentication.logoutUser)());
 
+    window.location.reload();
     window.location.href = '/login';
   }
 }

@@ -151,6 +151,7 @@ const mongoose = require('mongoose'),
         return res.json({
             id: req.user.id,
             username: req.user.username,
+            userImage: req.user.userImage,
             email: req.user.email
         });
     }

@@ -106,7 +106,7 @@ class MainSource extends Component {
       console.log(souseComments);
         return (
             <Router>
-                <div>
+                <div class="entireProject">
                     <Navbar />
                     <div>
                         <Switch>

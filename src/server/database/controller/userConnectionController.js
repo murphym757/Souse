@@ -35,12 +35,16 @@ exports.find_follows = (req, res, next) => {
 // Create Follow (Pressed "Follow" Button)
 exports.follows = (req, res, next) => {
     const followUserId = req.body.followUserId; // This is the user who pressed "Follow"
+    const followUserImage = req.body.followUserImage; // This is the user who pressed "Follow" image
+    const followUsername = req.body.followUsername; // This is the user who pressed "Follow" username
     const initiatedFollowuserId = req.body.initiatedFollowuserId; // This is the user who received the follow
     User.findById(initiatedFollowuserId, (err, user) => { // Post Caption Upload
         if (err) throw new Error(err);
 
         const newFollow = new Follow({
             followUserId: followUserId,
+            followUserImage: followUserImage,
+            followUsername: followUsername,
             initiatedFollowuserId: initiatedFollowuserId
         });
 
@@ -64,12 +68,16 @@ exports.follows = (req, res, next) => {
 // Create Follower
 exports.add_follower = (req, res, next) => {
     const followerUserId = req.body.followerUserId; // The user who pressed "follow"
+    const followerUserImage = req.body.followerUserImage; // This is the user who received the follow image
+    const followerUsername = req.body.followerUsername; // This is the user who received the follow username
     const receivedFollowUserId = req.body.receivedFollowUserId; // This is the user who received the follow
     User.findById(receivedFollowUserId, (err, user) => { // Post Caption Upload
         if (err) throw new Error(err);
 
         const newFollower = new Follower({
             followerUserId: followerUserId,
+            followerUserImage: followerUserImage,
+            followerUsername: followerUsername,
             receivedFollowUserId: receivedFollowUserId
         });
 
@@ -89,4 +97,26 @@ exports.add_follower = (req, res, next) => {
     }).exec((err, user) => {
         console.log(user.followers);
     })
+}
+
+// Delete Follow   "Unfollow"
+exports.delete_follow = (req, res, next) => {
+    Follow.findByIdAndRemove({_id: req.params.id}, (err, follow) => {
+        if(err) {
+            res.json(err);
+        } else {
+            res.json('Follow ', {_id: req.params.id}, ' was successfully removed');
+        }
+    });
+}
+
+// Delete Follower  "Being Unfollowed"
+exports.delete_follower = (req, res, next) => {
+    Follower.findByIdAndRemove({_id: req.params.id}, (err, follower) => {
+        if(err) {
+            res.json(err);
+        } else {
+            res.json('Follower ', {_id: req.params.id}, ' was successfully removed');
+        }
+    });
 }

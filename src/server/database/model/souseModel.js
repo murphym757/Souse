@@ -6,31 +6,31 @@ const UserSchema = new mongoose.Schema({
         unique: true,
         required: true,
         trim: true,
-        default: null
+        default: ""
     },
     username: {
         type: String,
         unique: true,
         required: true,
         trim: true,
-        default: null
+        default: ""
     },
     firstName: {
         type: String,
         required: true,
         trim: true,
-        default: null
+        default: ""
     },
     lastName: {
         type: String,
         required: true,
         trim: true,
-        default: null
+        default: ""
     },
     password: {
         type: String,
         required: true,
-        default: null
+        default: ""
     },
     isDeleted: {
         type: Boolean,
@@ -38,27 +38,27 @@ const UserSchema = new mongoose.Schema({
     },
     userImage: {
         type: String,
-        default: null
+        default: ""
     },
     userBio: {
         type: String,
-        default: null
+        default: ""
     },
     userLocation: {
         type: String,
-        default: null
+        default: ""
     },
     userInstagram: {
         type: String,
-        default: null
+        default: ""
     },
     userFacebook: {
         type: String,
-        default: null
+        default: ""
     },
     userTwitter: {
         type: String,
-        default: null
+        default: ""
     },
     signUpDate: {
         type: Date,
@@ -99,27 +99,27 @@ const PostSchema = new mongoose.Schema({
         postCaption: {
             type: String,
             trim: true,
-            default: null
+            default: ""
         },
         postUnixTimestamp: {
             type: String,
             trim: true,
-            default: null
+            default: ""
         },
         postImageFileType: {
             type: String,
             trim: true,
-            default: null
+            default: ""
         },
         postImageFileName: {
             type: String,
             trim: true,
-            default: null
+            default: ""
         },
         postImageURL: {
             type: String,
             trim: true,
-            default: null
+            default: ""
         }
     },
     comments: [{
@@ -140,17 +140,17 @@ const CommentSchema = new mongoose.Schema({
      souseComment: {
          type: String,
          trim: true,
-         default: null
+         default: ""
      },
      originalPostId: {
          type: String,
          trim: true,
-         default: null
+         default: ""
      },
      commentCreatorUsername: {
         type: String,
         trim: true,
-        default: null
+        default: ""
      }
 });
 
@@ -158,12 +158,20 @@ const FollowerSchema = new mongoose.Schema({
     followerUserId: {
         type: String,
         trim: true,
-        default: null
+        default: ""
+    },
+    followerUserImage: {
+        type: String,
+        default: ""
+    },
+    followerUsername: {
+        type: String,
+        default: ""
     },
     receivedFollowUserId: {
         type: String,
         trim: true,
-        default: null
+        default: ""
     },
     followedBy: {
         type: mongoose.Schema.Types.ObjectId,
@@ -179,12 +187,20 @@ const FollowSchema = new mongoose.Schema({
     followUserId: {
         type: String,
         trim: true,
-        default: null
+        default: ""
+    },
+    followUserImage: {
+        type: String,
+        default: ""
+    },
+    followUsername: {
+        type: String,
+        default: ""
     },
     initiatedFollowuserId: {
         type: String,
         trim: true,
-        default: null
+        default: ""
     },
     follows: {
         type: mongoose.Schema.Types.ObjectId,

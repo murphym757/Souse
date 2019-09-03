@@ -29,13 +29,11 @@ souseRouter.route('/c/delete/:id').get(commentController.delete_comment); // Rou
 souseRouter.route('/follows/add') // Follow
 .post(userConnectionController.follows);
 souseRouter.route('/follows').get(userConnectionController.find_follows);
-/*souseRouter.route('/following/delete/:id') // Unfollow
-    .get(userConnectionController.unfollow);*/
-// Routes for Followers
+souseRouter.route('/follows/delete/:id') // Unfollow
+.get(userConnectionController.delete_follow); // Routes for Followers
 
 souseRouter.route('/followers/add').post(userConnectionController.add_follower);
 souseRouter.route('/followers').get(userConnectionController.find_follower);
-/* souseRouter.route('/followers/delete/:id') // Being Unfollowed
-    .get(userConnectionController.delete_follower);*/
-
+souseRouter.route('/followers/delete/:id') // Being Unfollowed
+.get(userConnectionController.delete_follower);
 module.exports = souseRouter;
