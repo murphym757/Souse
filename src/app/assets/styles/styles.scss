@@ -12,15 +12,11 @@ body {
     width: 100%;
     height: auto;
     background: no-repeat bottom center scroll;
-    background-color: $primaryColor;
     background-blend-mode: multiply;
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
-    color: $softBlack;
-    font-family: 'Nunito Sans', sans-serif;
-    font-weight: 400;
 }
 
 img {
@@ -35,6 +31,39 @@ h1 {
 span {
     font-family: 'Nunito Sans', sans-serif;
     font-weight: 900;
+}
+
+.container-fluid.entireProjectContainer {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.card.entireProjectCard {
+    height: 62.5vw;
+    color: $softBlack;
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 400;
+}
+
+.fixed-action-btn { 
+    position: initial;
+}
+
+.postsArea {
+    max-width: auto;
+    max-height: 30%;
+    border: 1px solid gray;
+
+    overflow-y: scroll;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE 10+ */
+}
+
+.postsArea::-webkit-scrollbar {
+    /* WebKit */
+    width: 0px;
 }
 
 // Navbar
@@ -64,6 +93,11 @@ nav ul a {
 .input-field .prefix.active {
     color: $primaryColorAlt;
 }
+
+a:not([href]):not([tabindex]) {
+    color: $secondaryColor;
+    text-decoration: none;
+}
 /* ---------------------------------------------------- */
 
 .souseFooter {
@@ -71,7 +105,57 @@ nav ul a {
 }
 // User Profile Page
 /* ---------------------------------------------------- */
+.userProfileUserInfoUL {
+    padding: 0;
+    list-style: none;
+    display: inline-flex;
+    text-align: center;
+}
 
+.userProfileUserInfoLI {
+    display: table-cell;
+    position: relative;
+    padding: 15px 0;
+}
+
+.bioOption.selected,
+.postsOption.selected {
+    color: $white;
+}
+
+.bioOption,
+.postsOption {
+    color: $secondaryColor;
+    font-weight: 600;
+}
+
+.userProfileUserInfoLink {
+    color: $white;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    position: relative;
+}
+
+.userProfileUserInfoLink:after {
+    background: none repeat scroll 0 0 transparent;
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 2px;
+    left: 50%;
+    position: absolute;
+    background: $white;
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+}
+
+.userProfileUserInfoLink:hover:after {
+    width: 100%;
+    left: 0;
+}
 /* ---------------------------------------------------- */
 
 // Post Page (postGrid)
@@ -154,7 +238,7 @@ nav ul a {
 
 .pre-scrollable {
     max-height: 500px;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden !important;
 }
 
@@ -224,7 +308,7 @@ nav:hover,
 .sousePostImage {
     //Img Tag
     object-fit: cover;
-    width: 49vw;
+    width: 43vw;
     height: 43vw;
 }
 
@@ -256,16 +340,6 @@ nav:hover,
     border-radius: 50%;
     height: 7.1vw;
     width: 7.1vw;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.souseUserIconUserHomePage {
-    border-radius: 50%;
-    height: 12vw;
-    width: 12vw;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -523,7 +597,7 @@ fieldset[disabled] .btn-modalButton.active {
 
     .pre-scrollable {
         max-height: 500px;
-        overflow-y: scroll;
+        overflow-y: auto;
         overflow-x: hidden !important;
     }
 
@@ -705,7 +779,7 @@ fieldset[disabled] .btn-modalButton.active {
 
     .pre-scrollable {
         max-height: 500px;
-        overflow-y: scroll;
+        overflow-y: auto;
         overflow-x: hidden !important;
     }
 

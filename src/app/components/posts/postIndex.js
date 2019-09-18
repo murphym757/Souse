@@ -21,7 +21,7 @@ class PostIndex extends Component {
                         <PostCreate/>
                     </div>
                 </div>
-                <div class="fixed-action-btn"> {/* Create Post Button */}
+                <div class="fixed-action-btn d-flex justify-content-center pb-2"> {/* Create Post Button */}
                     <a class="btn-floating btn-large red addPostButton">
                         <i class="fas fa-plus fa-xs"
                             data-toggle="collapse" 

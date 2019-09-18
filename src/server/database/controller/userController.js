@@ -1,5 +1,9 @@
 const mongoose = require('mongoose'),
     User = mongoose.model('Users'),
+    Post = mongoose.model('Posts'),
+    Comment = mongoose.model('Comments'),
+    Follow = mongoose.model('Follows'),
+    Follower = mongoose.model('Followers'),
     bcrypt = require('bcryptjs'),
     jwt = require('jsonwebtoken'),
     passport = require('passport'),
@@ -70,7 +74,8 @@ const mongoose = require('mongoose'),
                                 const payload = {
                                     id: user.id,
                                     username: user.username,
-                                    userImage: user.userImage
+                                    userImage: user.userImage,
+                                    userTheme: user.userTheme
                                 }
                                 jwt.sign(payload, 'secret', {
                                     expiresIn: 3600
@@ -117,6 +122,7 @@ const mongoose = require('mongoose'),
             lastName: req.body.lastName,
             email: req.body.email,
             userImage: req.body.userImage,
+            userTheme: req.body.userTheme,
             userInstagram: req.body.userInstagram,
             userFacebook: req.body.userFacebook,
             userTwitter: req.body.userTwitter,
@@ -141,17 +147,79 @@ const mongoose = require('mongoose'),
 
     // Delete User
     exports.delete_user = (req, res, next) => {
-        User.findByIdAndRemove({username: req.user.id}, (err, user) => {
+        User.findByIdAndRemove({_id: req.params.id}, (err, user) => {
             if(err) res.json(err);
-            else res.json('User ', {username: req.user.id}, ' was successfully removed');
+            else res.json('User ', {_id: req.params.id}, ' was successfully removed');
         });
     }
+
+    // Delete All User's Posts
+    exports.delete_posts = (req, res, next) => {
+        const postCreatorId = req.params.id;
+        User.findById(postCreatorId, (err, user) => { 
+            if (err) throw new Error(err);
+            
+            Post.deleteMany({postCreator: [postCreatorId]}, (err, post) => {
+                if(err) {
+                    res.json(err);
+                } else {
+                    res.json('Posts were successfully removed');
+                }
+            });
+        })
+    };
+    // Delete All User's Comments
+    exports.delete_comments = (req, res, next) => {
+        const postCreatorId = req.params.id;
+        User.findById(postCreatorId, (err, user) => { 
+            if (err) throw new Error(err);
+            
+            Comment.deleteMany({commentCreatorId: [postCreatorId]}, (err, comment) => {
+                if(err) {
+                    res.json(err);
+                } else {
+                    res.json('Comments were successfully removed');
+                }
+            });
+        })
+    };
+    // Delete All User's Follows
+    exports.delete_follows = (req, res, next) => {
+        const postCreatorId = req.params.id;
+        User.findById(postCreatorId, (err, user) => { 
+            if (err) throw new Error(err);
+            
+            Follow.deleteMany({initiatedFollowuserId: [postCreatorId]}, (err, follow) => {
+                if(err) {
+                    res.json(err);
+                } else {
+                    res.json('Follows were successfully removed');
+                }
+            });
+        })
+    };
+    // Delete All User's Followers
+    exports.delete_followers = (req, res, next) => {
+        const postCreatorId = req.params.id;
+        User.findById(postCreatorId, (err, user) => { 
+            if (err) throw new Error(err);
+            
+            Follower.deleteMany({receivedFollowUserId: [postCreatorId]}, (err, follower) => {
+                if(err) {
+                    res.json(err);
+                } else {
+                    res.json('Followers were successfully removed');
+                }
+            });
+        })
+    };
 
     exports.user_account = passport.authenticate('jwt', { session: false }), (req, res, next) => {
         return res.json({
             id: req.user.id,
             username: req.user.username,
             userImage: req.user.userImage,
+            userTheme: req.user.userTheme,
             email: req.user.email
         });
     }

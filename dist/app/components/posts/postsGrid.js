@@ -139,7 +139,7 @@ function (_Component) {
         componentId: "wnvxd8-0"
       })(["color:#C45758;height:1.1em;width:1.5em;"]);
       return _react["default"].createElement("div", {
-        "class": "mx-auto d-block pt-1"
+        "class": "mx-auto d-block pt-5"
       }, _react["default"].createElement("div", {
         "class": "d-none d-xl-block container"
       }, " ", _react["default"].createElement("div", {

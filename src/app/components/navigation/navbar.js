@@ -43,7 +43,7 @@ class Navbar extends Component {
         return (
             <div>
                 <nav class="z-depth-0">
-                  <div class="nav-wrapper container-fluid">
+                  <div class="nav-wrapper">
                     <Link class="brand-logo d-md-none py-3" to="/">
                       <img 
                           class="souseHomeLogo-navbar" 

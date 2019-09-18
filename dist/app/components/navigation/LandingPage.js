@@ -15,6 +15,8 @@ var _reactRedux = require("react-redux");
 
 var _usersPage = _interopRequireDefault(require("../userProfile/usersPage"));
 
+var _userProfileStyling = require("../../assets/styles/userProfileStyling");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
@@ -133,13 +135,13 @@ function (_Component) {
           "class": "container"
         }, _react["default"].createElement("div", {
           "class": "row d-flex justify-content-center"
-        }, "   ", _react["default"].createElement("img", {
-          "class": "souseUserIconUserHomePage",
+        }, "   ", _react["default"].createElement(_userProfileStyling.SouseUserPageIcon, null, _react["default"].createElement("img", {
+          className: "souseUserPageImage userHomePageImageBorder",
           src: _this.userFinder()[i].userImage,
           alt: "souseUserIcon",
           width: "85px",
           height: "85px"
-        })), _react["default"].createElement("div", {
+        }))), _react["default"].createElement("div", {
           "class": "row d-flex justify-content-center"
         }, "   ", _react["default"].createElement("h2", null, _this.userFinder()[i].username)), _react["default"].createElement("div", {
           "class": "row d-flex justify-content-center"
@@ -184,30 +186,22 @@ function (_Component) {
             "class": "lead buttonFont"
           }, "Confirm")))));
         }));
-      }), _react["default"].createElement("h2", null, "LandingPage"), isAuthenticated ? _react["default"].createElement("div", {
-        "class": "usersPosts"
-      }, Object.keys(souseUserData).map(function (object, i) {
-        return _react["default"].createElement("div", null, _react["default"].createElement(_reactRouterDom.Link, {
-          to: {
-            pathname: "/".concat(souseUserData[i].username),
-            state: {
-              souseUserId: souseUserData[i]._id,
-              souseUserUsername: souseUserData[i].username,
-              souseUserFirstName: souseUserData[i].firstName,
-              souseUserLastName: souseUserData[i].lastName,
-              souseUserEmail: souseUserData[i].email,
-              souseUserPassword: souseUserData[i].password,
-              souseUserSignUpDate: souseUserData[i].signUpDate,
-              souseUserImage: souseUserData[i].userImage,
-              souseUserTwitter: souseUserData[i].userTwitter,
-              souseUserFacebook: souseUserData[i].userFacebook,
-              souseUserInstagram: souseUserData[i].userInstagram,
-              souseUserLocation: souseUserData[i].userLocation,
-              souseUserBio: souseUserData[i].userBio
-            }
-          }
-        }, souseUserData[i].username));
-      })) : _react["default"].createElement("div", null, _react["default"].createElement("h4", null, "Not Logged In")));
+      }), isAuthenticated ? _react["default"].createElement("div", null) : _react["default"].createElement("div", {
+        "class": "container"
+      }, _react["default"].createElement("div", {
+        "class": "row"
+      }, _react["default"].createElement("div", {
+        "class": "col-6"
+      }, _react["default"].createElement("img", {
+        "class": "souseHomeLogo-navbar d-block justify-content-center",
+        src: "../../src/app/assets/images/iPhoneXSMaxSouse.svg",
+        width: "450",
+        alt: "logo"
+      })), _react["default"].createElement("div", {
+        "class": "col-6"
+      }, _react["default"].createElement("h1", {
+        "class": "d-block justify-content-center"
+      }, "Forms")))));
     }
   }]);
 

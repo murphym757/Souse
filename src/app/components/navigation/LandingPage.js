@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect, withRouter } fr
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import UserPage from '../userProfile/usersPage';
+import { SouseUserPageIcon } from '../../assets/styles/userProfileStyling';
 
 class LandingPage extends Component {
     userFinder() {
@@ -63,11 +64,13 @@ class LandingPage extends Component {
                     .map((object, i) => (
                         <div class="container">
                             <div class="row d-flex justify-content-center">   {/* Image Row */}
-                                <img class="souseUserIconUserHomePage" 
-                                    src = {this.userFinder()[i].userImage}
-                                    alt="souseUserIcon"
-                                    width="85px" 
-                                    height="85px"/>
+                                <SouseUserPageIcon>
+                                    <img className="souseUserPageImage userHomePageImageBorder"
+                                        src={this.userFinder()[i].userImage}
+                                        alt="souseUserIcon"
+                                        width="85px" 
+                                        height="85px"/>
+                                </SouseUserPageIcon>
                             </div>
                                 <div class="row d-flex justify-content-center">   {/* Username Row */}
                                 <h2>{this.userFinder()[i].username}</h2>
@@ -115,39 +118,22 @@ class LandingPage extends Component {
                             }
                         </div>
                     ))}
-                <h2>LandingPage</h2>
                 {isAuthenticated 
-                    ?   <div class="usersPosts">
-                        {Object.keys(souseUserData)
-                            .map((object, i) => (
-                                <div>
-                                    <Link to={
-                                        {
-                                            pathname: `/${souseUserData[i].username}`,
-                                            state: {
-                                                souseUserId: souseUserData[i]._id,
-                                                souseUserUsername: souseUserData[i].username,
-                                                souseUserFirstName: souseUserData[i].firstName,
-                                                souseUserLastName: souseUserData[i].lastName,
-                                                souseUserEmail: souseUserData[i].email,
-                                                souseUserPassword: souseUserData[i].password,
-                                                souseUserSignUpDate: souseUserData[i].signUpDate,
-                                                souseUserImage: souseUserData[i].userImage,
-                                                souseUserTwitter: souseUserData[i].userTwitter,
-                                                souseUserFacebook: souseUserData[i].userFacebook,
-                                                souseUserInstagram: souseUserData[i].userInstagram,
-                                                souseUserLocation: souseUserData[i].userLocation,
-                                                souseUserBio: souseUserData[i].userBio
-                                            }
-                                        }
-                                    }>
-                                        {souseUserData[i].username}
-                                    </Link>
+                    ?   <div></div>
+                    :   <div class="container">
+                            <div class="row">
+                                <div class="col-6">
+                                    <img 
+                                        class="souseHomeLogo-navbar d-block justify-content-center" 
+                                        src = "../../src/app/assets/images/iPhoneXSMaxSouse.svg"
+                                        width="450" 
+                                        alt="logo" 
+                                    />
                                 </div>
-                            ))}
-                        </div>
-                    :   <div>
-                            <h4>Not Logged In</h4>
+                                <div class="col-6">
+                                    <h1 class="d-block justify-content-center">Forms</h1>
+                                </div>
+                            </div>
                         </div> 
                 }
             </div>

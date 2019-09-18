@@ -3,12 +3,14 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect, withRouter } fr
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { logoutUser } from '../../../server/actions/authentication';
 import classnames from 'classnames';
 import { WaveLoading } from 'styled-spinkit';
 import S3 from 'aws-s3';
 import awsConfig from '../../../server/config';
 import M from 'materialize-css';
 import styled from 'styled-components';
+import { softBlack } from '../../assets/styles/globalTheme';
 import { Twitter } from 'styled-icons/feather/Twitter';
 import { Facebook } from 'styled-icons/feather/Facebook';
 import { Instagram } from 'styled-icons/feather/Instagram';
@@ -67,6 +69,11 @@ class editUserProfile extends Component {
         this.onUpdateUserBio = this.onUpdateUserBio.bind(this);
         this.onImageUpload = this.onImageUpload.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.deleteUser = this.deleteUser.bind(this);
+        this.deleteUserPosts = this.deleteUserPosts.bind(this);
+        this.deleteUserComments = this.deleteUserComments.bind(this);
+        this.deleteUserFollowers = this.deleteUserFollowers.bind(this);
+        this.deleteUserFollows = this.deleteUserFollows.bind(this);
     }
 
    onUpdateUsername = (e) => {
@@ -156,6 +163,64 @@ class editUserProfile extends Component {
         });
     }
 
+    deleteProfileModal(){}
+
+    deleteProfile() {
+        this.deleteUserPosts();
+        this.deleteUserFollowers();
+        this.deleteUserFollows();
+        this.deleteUserComments();
+        this.deleteUser();
+        this.props.history.push("/");
+        this.props.logoutUser(this.props.history);
+        window.location.reload();
+    }
+
+    deleteUserPosts(){
+        const userId = this.state.userId;
+        const apiRoute = "/souseAPI";
+        const deleteRoute = "/u/p/delete";
+        axios.get(apiRoute + deleteRoute + "/" + userId)
+            .then(console.log('Posts Deleted'))
+            .catch(err => console.log(err));
+    }
+
+    deleteUserComments() {
+        const userId = this.state.userId;
+        const apiRoute = "/souseAPI";
+        const deleteRoute = "/u/c/delete";
+        axios.get(apiRoute + deleteRoute + "/" + userId)
+            .then(console.log('Comments Deleted'))
+            .catch(err => console.log(err));
+    }
+
+    deleteUserFollowers() {
+        const userId = this.state.userId;
+        const apiRoute = "/souseAPI";
+        const deleteRoute = "/u/followers/delete";
+        axios.get(apiRoute + deleteRoute + "/" + userId)
+            .then(console.log('Followers Deleted'))
+            .catch(err => console.log(err));
+    }
+
+    deleteUserFollows() {
+        const userId = this.state.userId;
+        const apiRoute = "/souseAPI";
+        const deleteRoute = "/u/follows/delete";
+        axios.get(apiRoute + deleteRoute + "/" + userId)
+            .then(console.log('Follows Deleted'))
+            .catch(err => console.log(err));
+    }
+
+    deleteUser() {
+        const userId = this.state.userId;
+        const apiRoute = "/souseAPI";
+        const deleteRoute = "/u/delete";
+        axios.get(apiRoute + deleteRoute + "/" + userId)
+            .then(console.log('Deleted'))
+            .catch(err => console.log(err));
+    }
+
     componentDidMount() {
         M.AutoInit();
         { /* Edit Post Command */ }
@@ -208,6 +273,10 @@ class editUserProfile extends Component {
 
     render() {
         const { errors } = this.state;
+        const deleteAccountFont = styled.h6 `
+            color: ${softBlack};
+            font-weight: 900;
+        `;
         return (
             <div class="container-fluid">
                 <form onSubmit={this.onSubmit}>
@@ -354,6 +423,11 @@ class editUserProfile extends Component {
                                 <div class="form-group">
                                     <button type="submit" class="waves-effect waves-light btn-large d-block mx-auto">Update User</button>
                                 </div>
+                                <div onClick={(e) => {this.deleteProfile(e)}} class="pt-2">
+                                    <deleteAccountFont>
+                                        Delete Account
+                                    </deleteAccountFont>
+                                </div>
                             </div>
                     }
                 </form>
@@ -370,4 +444,4 @@ const mapStateToProps = (state) => ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps)(editUserProfile)
+export default connect(mapStateToProps, { logoutUser })(editUserProfile)

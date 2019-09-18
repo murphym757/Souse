@@ -5,9 +5,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import PostIndex from '../posts/postIndex';
 import styled from 'styled-components';
-import { Twitter } from 'styled-icons/feather/Twitter';
-import { Facebook } from 'styled-icons/feather/Facebook';
-import { Instagram } from 'styled-icons/feather/Instagram';
+import {
+    TwitterIcon,
+    FacebookIcon,
+    InstagramIcon,
+    SouseUserPageIcon
+} from '../../assets/styles/userProfileStyling';
 
 class UserProfile extends Component {
     constructor(props) {
@@ -214,264 +217,383 @@ class UserProfile extends Component {
         const postsTotal = "" + this.postFinder().length + "";
         const followersTotal = "" + this.followerFinder().length + "";
         const followsTotal = "" + this.followFinder().length + "";
-        const TwitterIcon = styled(Twitter)
-        `
-            color: #c45758;
-            height: 1.1em;
-            width: 1.5em;
-            `;
-        const FacebookIcon = styled(Facebook)
-        `
-            color: #c45758;
-            height: 1.1em;
-            width: 1.5em;
+        const UsernameUserPage = styled.h2`
+            color: ${props => props.theme.secondaryColor};
         `;
-        const InstagramIcon = styled(Instagram)
-        `
-            color: #c45758;
-            height: 1.1em;
-            width: 1.5em;
+        const UserDataUserPage = styled.h5`
+            color: ${props => props.theme.secondaryColor};
         `;
+    
         return (
-            <div class="container pt-5"> 
-                <div class="row userHeaderSection d-flex justify-content-center">
-                    <div class="profilePageUserImage d-flex justify-content-center"> {/* User Image Section */}
-                        <div class="souseUserCreatorPage col-8 d-flex">
-                            <div class="container-fluid d-flex justify-content-center">
-                                <img class="souseUserIconUserHomePage" 
-                                    src = {creatorImage}
-                                    alt="souseUserIcon"
-                                    width="85px" 
-                                    height="85px"/>
-                            </div>
-                        </div>
-                        <div class="profilePageUserData col-12"> {/* User Data Section */}
-                            <div>
-                                <div class="row userNameRow">
-                                    <h2>{creatorUsername}</h2>
+            <div class="mx-auto d-block pt-1">
+                <div class="d-none d-xl-block container-fluid pt-5"> {/* For larger Sceens */}
+                    <div class="row userHeaderSection d-flex justify-content-center">
+                        <div class="profilePageUserImage d-flex justify-content-center"> {/* User Image Section */}
+                            <div class="souseUserCreatorPage col-8 d-flex">
+                                <div class="container-fluid d-flex justify-content-center">
+                                    <SouseUserPageIcon>
+                                        <img className="souseUserPageImage userHomePageImageBorder"
+                                            src={creatorImage}
+                                            alt="souseUserIcon"
+                                            width="85px" 
+                                            height="85px"/>
+                                    </SouseUserPageIcon>   
                                 </div>
-                                <div class="row userButtonsRow">
-                                    <div>
-                                        <div class="col-12">
-                                            {this.state.totalDisplayPosts === postsTotal
-                                                ?   <h5 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Post</h5>
-                                                :   <h5 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Posts</h5>
-                                            }
-                                        </div>
-                                        <div class="col-12">
-                                            {this.state.totalDisplayFollowers === followersTotal
-                                                ?   <h5 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Follower</h5>
-                                                :   <h5 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Followers</h5>
-
-                                            }
-                                        </div>
-                                        <div class="col-12">
-                                            {this.state.totalDisplayFollows === followsTotal
-                                                ?   <h5 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follow</h5>
-                                                :   <h5 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follows</h5>  
-                                            }
-                                        </div>
+                            </div>
+                            <div class="profilePageUserData col-12"> {/* User Data Section */}
+                                <div>
+                                    <div class="row userNameRow">
+                                        <UsernameUserPage>
+                                            {creatorUsername}
+                                        </UsernameUserPage>
                                     </div>
-                                    {isAuthenticated 
-                                        ?   <div>
-                                                {creatorId !== loggedInUserId
-                                                    ?   <div>
-                                                            {Array.isArray(this.followerFinder()) && this.followerFinder()[0]
-                                                                ?   <div>
-                                                                            {this.followerFinder()[0].followerUserId == loggedInUserId
-                                                                                ?   <div>
-                                                                                        <button type="submit" class="waves-effect waves-light btn-large" onClick={(e) => {this.onSetDeleteFollow(e); this.onSetDeleteFollower(e)}}><p class="lead buttonFont">Unfollow</p></button>
-                                                                                    </div>
-                                                                                :   <div></div>
-                                                                            } 
-                                                                    </div>
-                                                                :   <div>
-                                                                        <button type="submit" class="waves-effect waves-light btn-large" onClick={(e) => {this.onSetFollow(e); this.onSetFollower(e)}}><p class="lead buttonFont">Follow</p></button>
-                                                                    </div>
-                                                            }
-                                                        </div>
-                                                    :   <Link class="d-block mx-auto" to={
-                                                            {
-                                                                pathname: "/u/edit/" + loggedInUserId,
-                                                                state: {
-                                                                    creatorId: creatorId,
-                                                                    creatorUsername: creatorUsername,
-                                                                    creatorFirstName: creatorFirstName,
-                                                                    creatorLastName: creatorLastName,
-                                                                    creatorEmail: creatorEmail,
-                                                                    creatorPassword: creatorPassword,
-                                                                    creatorSignUpDate: creatorSignUpDate,
-                                                                    creatorUnixTimestamp: creatorUnixTimestamp,
-                                                                    creatorImage: creatorImage,
-                                                                    creatorTwitter: creatorTwitter,
-                                                                    creatorFacebook: creatorFacebook,
-                                                                    creatorInstagram: creatorInstagram,
-                                                                    creatorLocation: creatorLocation,
-                                                                    creatorBio: creatorBio
-                                                                }
-                                                            }
-                                                        }>
-                                                            <button type="submit" class="waves-effect waves-light btn-large"><p class="lead buttonFont">Edit Profile</p></button>
-                                                        </Link>
+                                    <div class="row userButtonsRow">
+                                        <div>
+                                            <div class="col-12">
+                                            <UserDataUserPage></UserDataUserPage>
+                                                {this.state.totalDisplayPosts === postsTotal
+                                                    ?   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Post</UserDataUserPage>
+                                                    :   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Posts</UserDataUserPage>
                                                 }
                                             </div>
-                                        :   <div>
+                                            <div class="col-12">
+                                                {this.state.totalDisplayFollowers === followersTotal
+                                                    ?   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Follower</UserDataUserPage>
+                                                    :   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Followers</UserDataUserPage>
+                                                }
                                             </div>
-                                    }
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="row d-flex justify-content-center m-0">
-                                            <ul>
-                                                <li>
-                                                    <a>
-                                                        <div class="col-4"> {/* Bio Link */}
-                                                            <h5 class="d-flex justify-content-center" onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '2'})}}>Bio</h5>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                                <div class="col-4"> {/* Likes/Favorites Link */}
-                                                    <h5 class="d-flex justify-content-center"></h5>
-                                                </div>
-                                                <li>
-                                                    <a>
-                                                        <div class="col-4"> {/* Posts Link */}
-                                                            <h5 class="d-flex justify-content-center" onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}>Posts</h5>
-                                                        </div>
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                            <div class="col-12">
+                                                {this.state.totalDisplayFollows === followsTotal
+                                                    ?   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follow</UserDataUserPage>
+                                                    :   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follows</UserDataUserPage> 
+                                                }
+                                            </div>
                                         </div>
+                                        {isAuthenticated 
+                                            ?   <div>
+                                                    {creatorId !== loggedInUserId
+                                                        ?   <div>
+                                                                {Array.isArray(this.followerFinder()) && this.followerFinder()[0]
+                                                                    ?   <div>
+                                                                                {this.followerFinder()[0].followerUserId == loggedInUserId
+                                                                                    ?   <div>
+                                                                                            <button type="submit" class="waves-effect waves-light btn-large" onClick={(e) => {this.onSetDeleteFollow(e); this.onSetDeleteFollower(e)}}><p class="lead buttonFont">Unfollow</p></button>
+                                                                                        </div>
+                                                                                    :   <div></div>
+                                                                                } 
+                                                                        </div>
+                                                                    :   <div>
+                                                                            <button type="submit" class="waves-effect waves-light btn-large" onClick={(e) => {this.onSetFollow(e); this.onSetFollower(e)}}><p class="lead buttonFont">Follow</p></button>
+                                                                        </div>
+                                                                }
+                                                            </div>
+                                                        :   <Link class="d-block mx-auto" to={
+                                                                {
+                                                                    pathname: "/u/edit/" + loggedInUserId,
+                                                                    state: {
+                                                                        creatorId: creatorId,
+                                                                        creatorUsername: creatorUsername,
+                                                                        creatorFirstName: creatorFirstName,
+                                                                        creatorLastName: creatorLastName,
+                                                                        creatorEmail: creatorEmail,
+                                                                        creatorPassword: creatorPassword,
+                                                                        creatorSignUpDate: creatorSignUpDate,
+                                                                        creatorUnixTimestamp: creatorUnixTimestamp,
+                                                                        creatorImage: creatorImage,
+                                                                        creatorTwitter: creatorTwitter,
+                                                                        creatorFacebook: creatorFacebook,
+                                                                        creatorInstagram: creatorInstagram,
+                                                                        creatorLocation: creatorLocation,
+                                                                        creatorBio: creatorBio
+                                                                    }
+                                                                }
+                                                            }>
+                                                                <button type="submit" class="waves-effect waves-light btn-large"><p class="lead buttonFont">Edit Profile</p></button>
+                                                            </Link>
+                                                    }
+                                                </div>
+                                            :   <div>
+                                                </div>
+                                        }
                                     </div>
-                                </div> 
-                            </div>
-                        </div>      
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="row m-0">
+                                                <ul class="userProfileUserInfoUL">
+                                                {userPageDisplay == '2'
+                                                    ?   <div>
+                                                            <li class="userProfileUserInfoLI">
+                                                                <a class="userProfileUserInfoLink">
+                                                                    <div class="col-12"> {/* Bio Link */}
+                                                                        <h5 class="d-block justify-content-center bioOption selected" onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '2'})}}>Bio</h5>
+                                                                    </div>
+                                                                </a>
+                                                            </li>
+                                                        </div>
+                                                    :   <div>
+                                                            <li class="userProfileUserInfoLI">
+                                                                <a class="userProfileUserInfoLink">
+                                                                    <div class="col-12"> {/* Bio Link */}
+                                                                        <h5 class="d-block justify-content-center bioOption" onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '2'})}}>Bio</h5>
+                                                                    </div>
+                                                                </a>
+                                                            </li>
+                                                        </div>
+                                                }
+                                                    {/* 
+                                                    {userPageDisplay == '5'}
+                                                    <li class="userProfileUserInfoLI likesOption">
+                                                        <a class="userProfileUserInfoLink">
+                                                            <div class="col-12"> // Likes/Favorites Link
+                                                                <h5 class="d-block justify-content-center"></h5>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    */}
+                                                {userPageDisplay == '1'
+                                                    ?   <div>
+                                                            <li class="userProfileUserInfoLI">
+                                                                <a class="userProfileUserInfoLink">
+                                                                    <div class="col-12"> {/* Posts Link */}
+                                                                        <h5 class="d-block justify-content-center postsOption selected" onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}>Posts</h5>
+                                                                    </div>
+                                                                </a>
+                                                            </li>
+                                                        </div>
+                                                    :   <div>
+                                                            <li class="userProfileUserInfoLI">
+                                                                <a class="userProfileUserInfoLink">
+                                                                    <div class="col-12"> {/* Posts Link */}
+                                                                        <h5 class="d-block justify-content-center postsOption" onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}>Posts</h5>
+                                                                    </div>
+                                                                </a>
+                                                            </li>
+                                                        </div>
+                                                }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>      
+                        </div>
+                        <div class="col-12">
+                            {isAuthenticated 
+                                ? <div>
+                                    <PostIndex />
+                                </div>
+                                : <div>
+                                </div>
+                            }
+                        </div>
                     </div>
-                    <div class="col-12">
-                        {isAuthenticated 
-                            ? <div>
-                                <PostIndex />
-                            </div>
-                            : <div>
-                            </div>
-                        }
-                    </div>
-                </div>
-                <div class="d-flex justify-content-center">
-                    <div class="container-fluid">
-                        <div class="row pb-2 col d-flex justify-content-center">
-                            {userPageDisplay == '1'
-                                ?   <div> {/* Loads Posts by default */}
-                                        {Object.keys(this.postFinder()).map((object, i) => {
-                                            return <div obj={object} key={i}>
-                                                <div class="col-12 pb-4">
-                                                    <Link to={`/p/${this.postFinder()[i]._id}`}>
-                                                        <div class="img-wrapper">
-                                                            <div class="img-responsive">
-                                                                <div class="souseImageFormat">
-                                                                    <img class="souseUserPostsUserHomePage" 
-                                                                    src = {this.postFinder()[i].sousePosts.postImageURL}
-                                                                    alt="souseUserPosts"
-                                                                        width="200px" 
-                                                                        height="200px"/>
+                    <div class="d-flex justify-content-center">
+                        <div class="container-fluid">
+                            <div class="row">
+                                {userPageDisplay == '1'
+                                    ?   <div class="row d-flex justify-content-center postsArea"> {/* Loads Posts by default */}
+                                            {Object.keys(this.postFinder()).map((object, i) => {
+                                                return <div obj={object} key={i}>
+                                                    <div class="col-12 pb-4">
+                                                        <Link to={`/p/${this.postFinder()[i]._id}`}>
+                                                            <div class="img-wrapper">
+                                                                <div class="img-responsive">
+                                                                    <div class="souseImageFormat">
+                                                                        <img class="souseUserPostsUserHomePage" 
+                                                                        src = {this.postFinder()[i].sousePosts.postImageURL}
+                                                                        alt="souseUserPosts"
+                                                                            width="200px" 
+                                                                            height="200px"/>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </Link>
-                                                </div>
-                                            </div>
-                                        })}
-                                    </div>
-                                :   <div> 
-                                        {userPageDisplay == '2'
-                                            ?   <div class="container-fluid">   {/* Loads Bio*/}
-                                                    <div class="row">
-                                                        {this.state.creatorTwitter === ""
-                                                            ?   <div></div>
-                                                            :   <div class="col-12">
-                                                                    <div class="row d-block mx-auto">
-                                                                        <h5 class="d-flex justify-content-center m-0">
-                                                                        <a href={this.state.creatorTwitterURL} target="_blank">
-                                                                            <TwitterIcon /> {this.state.creatorTwitter}</a>
-                                                                        </h5>
-                                                                    </div>
-                                                                </div>
-                                                        }
-                                                        {this.state.creatorFacebook === ""
-                                                            ?   <div></div>
-                                                            :   <div class="col-12">
-                                                                    <div class="row d-block mx-auto">
-                                                                        <h5 class="d-flex justify-content-center m-0">
-                                                                        <a href={this.state.creatorFacebookURL} target="_blank">
-                                                                            <FacebookIcon /> {this.state.creatorFacebook}</a>
-                                                                        </h5>
-                                                                    </div>
-                                                                </div>
-                                                        }
-                                                        {this.state.creatorInstagram === ""
-                                                            ?   <div></div>
-                                                            :   <div class="col-12">
-                                                                    <div class="row d-block mx-auto">
-                                                                        <h5 class="d-flex justify-content-center m-0">
-                                                                        <a href={this.state.creatorInstagramURL} target="_blank">
-                                                                            <InstagramIcon /> {this.state.creatorInstagram}</a>
-                                                                        </h5>
-                                                                    </div>
-                                                                </div>
-                                                        }  
+                                                        </Link>
                                                     </div>
                                                 </div>
-                                            :   <div></div>
+                                            })}
+                                        </div>
+                                    :   <div> 
+                                            {userPageDisplay == '2'
+                                                ?   <div class="container-fluid">   {/* Loads Bio*/}
+                                                        <div class="row">
+                                                            {this.state.creatorTwitter === ""
+                                                                ?   <div></div>
+                                                                :   <div class="col-12">
+                                                                        <div class="row d-block mx-auto">
+                                                                            <h5 class="d-flex justify-content-center m-0">
+                                                                            <a href={this.state.creatorTwitterURL} target="_blank">
+                                                                                <TwitterIcon /> {this.state.creatorTwitter}</a>
+                                                                            </h5>
+                                                                        </div>
+                                                                    </div>
+                                                            }
+                                                            {this.state.creatorFacebook === ""
+                                                                ?   <div></div>
+                                                                :   <div class="col-12">
+                                                                        <div class="row d-block mx-auto">
+                                                                            <h5 class="d-flex justify-content-center m-0">
+                                                                            <a href={this.state.creatorFacebookURL} target="_blank">
+                                                                                <FacebookIcon /> {this.state.creatorFacebook}</a>
+                                                                            </h5>
+                                                                        </div>
+                                                                    </div>
+                                                            }
+                                                            {this.state.creatorInstagram === ""
+                                                                ?   <div></div>
+                                                                :   <div class="col-12">
+                                                                        <div class="row d-block mx-auto">
+                                                                            <h5 class="d-flex justify-content-center m-0">
+                                                                            <a href={this.state.creatorInstagramURL} target="_blank">
+                                                                                <InstagramIcon /> {this.state.creatorInstagram}</a>
+                                                                            </h5>
+                                                                        </div>
+                                                                    </div>
+                                                            }  
+                                                        </div>
+                                                    </div>
+                                                :   <div></div>
 
-                                        }
-                                        {userPageDisplay == '3'
-                                            ?   <div>   {/* Load Followers */}
-                                                    {Object.keys(this.followerFinder())
-                                                        .map((object, i) => (
-                                                            <div class="col-3">
-                                                                <Link to={`/${this.followerFinder()[i].followerUsername}`} onClick={() => window.location.refresh()}>
-                                                                    <div class="container-fluid d-flex justify-content-center">
-                                                                        <img class="souseUserIconUserHomePage followIcons"
-                                                                            src={this.followerFinder()[i].followerUserImage}
-                                                                            alt="souseUserIcon"
-                                                                            width="85px"
-                                                                            height="85px" />
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <h6 class="col-12">{this.followerFinder()[i].followerUsername}</h6>
-                                                                    </div>
-                                                                </Link>
+                                            }
+                                            {userPageDisplay == '3'
+                                                ?   <div>   {/* Load Followers */}
+                                                        {Object.keys(this.followerFinder())
+                                                            .map((object, i) => (
+                                                                <div class="col-3">
+                                                                    <Link to={`/${this.followerFinder()[i].followerUsername}`} onClick={() => window.location.refresh()}>
+                                                                        <div class="container-fluid d-flex justify-content-center">
+                                                                            <img class="souseUserIconUserHomePage followIcons"
+                                                                                src={this.followerFinder()[i].followerUserImage}
+                                                                                alt="souseUserIcon"
+                                                                                width="85px"
+                                                                                height="85px" />
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <h6 class="col-12">{this.followerFinder()[i].followerUsername}</h6>
+                                                                        </div>
+                                                                    </Link>
+                                                                </div>
+                                                            ))}
+                                                    </div>
+                                                :   <div></div>
+
+                                            }
+                                            {userPageDisplay == '4'
+                                                ?   <div class="row">   {/* loads Follows */}
+                                                        {Object.keys(this.followFinder())
+                                                            .map((object, i) => (
+                                                                <div class="col-3">
+                                                                    <Link to={`/${this.followFinder()[i].followUsername}`} onClick={() => window.location.refresh()}>
+                                                                        <div class="container-fluid d-flex justify-content-center">
+                                                                            <img class="souseUserIconUserHomePage followIcons"
+                                                                                src={this.followFinder()[i].followUserImage}
+                                                                                alt="souseUserIcon"
+                                                                                width="85px"
+                                                                                height="85px" />
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <h6 class="col-12">{this.followFinder()[i].followUsername}</h6>
+                                                                        </div>
+                                                                    </Link>
+                                                                </div>
+                                                            ))}
+                                                    </div>
+                                                :   <div></div>
+
+                                            }
+                                            { /* 
+                                            {userPageDisplay == '5'
+                                                ?   <div class="row"> // loads Likes/Favorites
+                                                    </div>
+                                                :   <div></div>
+                                            }
+                                        */}
+                                        </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-xl-none container-fluid"> {/* For smaller Sceens */}
+                        <img class="mx-auto d-block sousePostImage" 
+                            src={creatorImage}
+                            alt="sousePostImage"
+                            width="1080px" 
+                            height="1080px"/>
+                    <div class="row">
+                        <h5 class="col-12">{creatorUsername}</h5>
+                        <h6 class="col-12">{creatorLocation}</h6>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            {isAuthenticated 
+                                ?   <div>
+                                        {creatorId !== loggedInUserId
+                                            ?   <div>
+                                                    {Array.isArray(this.followerFinder()) && this.followerFinder()[0]
+                                                        ?   <div>
+                                                                    {this.followerFinder()[0].followerUserId == loggedInUserId
+                                                                        ?   <div>
+                                                                                <button type="submit" class="waves-effect waves-light btn-large" onClick={(e) => {this.onSetDeleteFollow(e); this.onSetDeleteFollower(e)}}><p class="lead buttonFont">Unfollow</p></button>
+                                                                            </div>
+                                                                        :   <div></div>
+                                                                    } 
                                                             </div>
-                                                        ))}
-                                                </div>
-                                            :   <div></div>
-
-                                        }
-                                        {userPageDisplay == '4'
-                                            ?   <div class="row">   {/* loads Follows */}
-                                                    {Object.keys(this.followFinder())
-                                                        .map((object, i) => (
-                                                            <div class="col-3">
-                                                                <Link to={`/${this.followFinder()[i].followUsername}`} onClick={() => window.location.refresh()}>
-                                                                    <div class="container-fluid d-flex justify-content-center">
-                                                                        <img class="souseUserIconUserHomePage followIcons"
-                                                                            src={this.followFinder()[i].followUserImage}
-                                                                            alt="souseUserIcon"
-                                                                            width="85px"
-                                                                            height="85px" />
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <h6 class="col-12">{this.followFinder()[i].followUsername}</h6>
-                                                                    </div>
-                                                                </Link>
+                                                        :   <div>
+                                                                <button type="submit" class="waves-effect waves-light btn-large" onClick={(e) => {this.onSetFollow(e); this.onSetFollower(e)}}><p class="lead buttonFont">Follow</p></button>
                                                             </div>
-                                                        ))}
+                                                    }
                                                 </div>
-                                            :   <div></div>
-
+                                            :   <Link class="d-block mx-auto" to={
+                                                    {
+                                                        pathname: "/u/edit/" + loggedInUserId,
+                                                        state: {
+                                                            creatorId: creatorId,
+                                                            creatorUsername: creatorUsername,
+                                                            creatorFirstName: creatorFirstName,
+                                                            creatorLastName: creatorLastName,
+                                                            creatorEmail: creatorEmail,
+                                                            creatorPassword: creatorPassword,
+                                                            creatorSignUpDate: creatorSignUpDate,
+                                                            creatorUnixTimestamp: creatorUnixTimestamp,
+                                                            creatorImage: creatorImage,
+                                                            creatorTwitter: creatorTwitter,
+                                                            creatorFacebook: creatorFacebook,
+                                                            creatorInstagram: creatorInstagram,
+                                                            creatorLocation: creatorLocation,
+                                                            creatorBio: creatorBio
+                                                        }
+                                                    }
+                                                }>
+                                                    <button type="submit" class="waves-effect waves-light btn-large"><p class="lead buttonFont">Edit Profile</p></button>
+                                                </Link>
                                         }
                                     </div>
+                                :   <div>
+                                    </div>
                             }
+                        </div>
+                        <div class="userButtonsRow col-6">
+                            <div class="float-right">
+                                <div class="col-12">
+                                    {this.state.totalDisplayPosts === postsTotal
+                                        ?   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Post</h6>
+                                        :   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Posts</h6>
+                                    }
+                                </div>
+                                <div class="col-12">
+                                    {this.state.totalDisplayFollowers === followersTotal
+                                        ?   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Follower</h6>
+                                        :   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Followers</h6>
+
+                                    }
+                                </div>
+                                <div class="col-12">
+                                    {this.state.totalDisplayFollows === followsTotal
+                                        ?   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follow</h6>
+                                        :   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follows</h6>  
+                                    }
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

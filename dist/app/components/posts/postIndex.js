@@ -68,7 +68,7 @@ function (_Component) {
       }, _react["default"].createElement("div", {
         "class": "postCreateCollapse"
       }, _react["default"].createElement(_postForm["default"], null))), _react["default"].createElement("div", {
-        "class": "fixed-action-btn"
+        "class": "fixed-action-btn d-flex justify-content-center pb-2"
       }, " ", _react["default"].createElement("a", {
         "class": "btn-floating btn-large red addPostButton"
       }, _react["default"].createElement("i", {

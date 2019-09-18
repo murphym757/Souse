@@ -2,6 +2,10 @@
 
 var mongoose = require('mongoose'),
     User = mongoose.model('Users'),
+    Post = mongoose.model('Posts'),
+    Comment = mongoose.model('Comments'),
+    Follow = mongoose.model('Follows'),
+    Follower = mongoose.model('Followers'),
     bcrypt = require('bcryptjs'),
     jwt = require('jsonwebtoken'),
     passport = require('passport'),
@@ -78,7 +82,8 @@ exports.login_user = function (req, res, next) {
         var payload = {
           id: user.id,
           username: user.username,
-          userImage: user.userImage
+          userImage: user.userImage,
+          userTheme: user.userTheme
         };
         jwt.sign(payload, 'secret', {
           expiresIn: 3600
@@ -125,6 +130,7 @@ exports.update_user = function (req, res, next) {
     lastName: req.body.lastName,
     email: req.body.email,
     userImage: req.body.userImage,
+    userTheme: req.body.userTheme,
     userInstagram: req.body.userInstagram,
     userFacebook: req.body.userFacebook,
     userTwitter: req.body.userTwitter,
@@ -148,11 +154,79 @@ exports.update_user = function (req, res, next) {
 
 exports.delete_user = function (req, res, next) {
   User.findByIdAndRemove({
-    username: req.user.id
+    _id: req.params.id
   }, function (err, user) {
     if (err) res.json(err);else res.json('User ', {
-      username: req.user.id
+      _id: req.params.id
     }, ' was successfully removed');
+  });
+}; // Delete All User's Posts
+
+
+exports.delete_posts = function (req, res, next) {
+  var postCreatorId = req.params.id;
+  User.findById(postCreatorId, function (err, user) {
+    if (err) throw new Error(err);
+    Post.deleteMany({
+      postCreator: [postCreatorId]
+    }, function (err, post) {
+      if (err) {
+        res.json(err);
+      } else {
+        res.json('Posts were successfully removed');
+      }
+    });
+  });
+}; // Delete All User's Comments
+
+
+exports.delete_comments = function (req, res, next) {
+  var postCreatorId = req.params.id;
+  User.findById(postCreatorId, function (err, user) {
+    if (err) throw new Error(err);
+    Comment.deleteMany({
+      commentCreatorId: [postCreatorId]
+    }, function (err, comment) {
+      if (err) {
+        res.json(err);
+      } else {
+        res.json('Comments were successfully removed');
+      }
+    });
+  });
+}; // Delete All User's Follows
+
+
+exports.delete_follows = function (req, res, next) {
+  var postCreatorId = req.params.id;
+  User.findById(postCreatorId, function (err, user) {
+    if (err) throw new Error(err);
+    Follow.deleteMany({
+      initiatedFollowuserId: [postCreatorId]
+    }, function (err, follow) {
+      if (err) {
+        res.json(err);
+      } else {
+        res.json('Follows were successfully removed');
+      }
+    });
+  });
+}; // Delete All User's Followers
+
+
+exports.delete_followers = function (req, res, next) {
+  var postCreatorId = req.params.id;
+  User.findById(postCreatorId, function (err, user) {
+    if (err) throw new Error(err);
+    Follower.deleteMany({
+      receivedFollowUserId: [postCreatorId]
+    }, function (err, follower) {
+      if (err) {
+        res.json(err);
+      } else {
+        res.json('Followers were successfully removed');
+      }
+    });
   });
 };
 
@@ -163,6 +237,7 @@ exports.user_account = passport.authenticate('jwt', {
     id: req.user.id,
     username: req.user.username,
     userImage: req.user.userImage,
+    userTheme: req.user.userTheme,
     email: req.user.email
   });
 };

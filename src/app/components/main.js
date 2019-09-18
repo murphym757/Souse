@@ -3,6 +3,11 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect, withRouter } fr
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
+import { Card, CardBlock } from '@bootstrap-styled/v4';
+import BootstrapProvider from '@bootstrap-styled/provider';
+import { makeTheme } from 'bootstrap-styled/lib/theme';
+import { souseDefaultTheme } from '../assets/styles/globalTheme';
 
 import LoginForm from './registration/loginForm';
 import SignUpForm from './registration/signUpForm';
@@ -102,13 +107,19 @@ class MainSource extends Component {
       const souseComments = this.state.comments;
       const souseFollowers = this.state.followers;
       const souseFollows = this.state.follows;
-
-      console.log(souseComments);
+      const gucci = 'green';
+      const darkTheme = makeTheme({
+          '$body-color': gucci,
+          '$card-bg': 'rgb(228, 209, 209)',
+          '$font-family-base': 'Helvetica'
+      });
         return (
             <Router>
-                <div class="entireProject">
-                    <Navbar />
-                    <div>
+                <div class="container-fluid entireProjectContainer">
+                <BootstrapProvider theme={souseDefaultTheme}>
+                    <Card className="d-flex align-content-stretch flex-wrap entireProjectCard m-0">
+                        <CardBlock>
+                        <Navbar />
                         <Switch>
                             <Route exact path="/" 
                             render={
@@ -129,7 +140,14 @@ class MainSource extends Component {
                                 souseFollowerData={souseFollowers} 
                                 souseFollowData={souseFollows}/>
                                 }/>
-                            <Route exact path="/u/edit/:id" component={EditUserProfile}/>
+                            <Route exact path="/u/edit/:id" 
+                            render={
+                                (props) => <EditUserProfile {...props} 
+                                sousePostData={sousePosts} 
+                                souseCommentData={souseComments}
+                                souseFollowerData={souseFollowers} 
+                                souseFollowData={souseFollows}/>
+                                }/>
                             <Route exact path="/p/:id" 
                             render={
                                 (props) => <PostPage {...props} 
@@ -141,7 +159,9 @@ class MainSource extends Component {
                             <Route exact path="/c/delete/:id" component={CommentDelete}/>
                             <Route component={RouteNotFound} />
                         </Switch>
-                    </div>
+                        </CardBlock>
+                    </Card>
+                </BootstrapProvider>
                 </div>
             </Router>
         );

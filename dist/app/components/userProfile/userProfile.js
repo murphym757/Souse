@@ -19,11 +19,7 @@ var _postIndex = _interopRequireDefault(require("../posts/postIndex"));
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
-var _Twitter = require("styled-icons/feather/Twitter");
-
-var _Facebook = require("styled-icons/feather/Facebook");
-
-var _Instagram = require("styled-icons/feather/Instagram");
+var _userProfileStyling = require("../../assets/styles/userProfileStyling");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -302,21 +298,26 @@ function (_Component) {
       var postsTotal = "" + this.postFinder().length + "";
       var followersTotal = "" + this.followerFinder().length + "";
       var followsTotal = "" + this.followFinder().length + "";
-      var TwitterIcon = (0, _styledComponents["default"])(_Twitter.Twitter).withConfig({
-        displayName: "userProfile__TwitterIcon",
+
+      var UsernameUserPage = _styledComponents["default"].h2.withConfig({
+        displayName: "userProfile__UsernameUserPage",
         componentId: "sc-16lkwtc-0"
-      })(["color:#c45758;height:1.1em;width:1.5em;"]);
-      var FacebookIcon = (0, _styledComponents["default"])(_Facebook.Facebook).withConfig({
-        displayName: "userProfile__FacebookIcon",
+      })(["color:", ";"], function (props) {
+        return props.theme.secondaryColor;
+      });
+
+      var UserDataUserPage = _styledComponents["default"].h5.withConfig({
+        displayName: "userProfile__UserDataUserPage",
         componentId: "sc-16lkwtc-1"
-      })(["color:#c45758;height:1.1em;width:1.5em;"]);
-      var InstagramIcon = (0, _styledComponents["default"])(_Instagram.Instagram).withConfig({
-        displayName: "userProfile__InstagramIcon",
-        componentId: "sc-16lkwtc-2"
-      })(["color:#c45758;height:1.1em;width:1.5em;"]);
+      })(["color:", ";"], function (props) {
+        return props.theme.secondaryColor;
+      });
+
       return _react["default"].createElement("div", {
-        "class": "container pt-5"
+        "class": "mx-auto d-block pt-1"
       }, _react["default"].createElement("div", {
+        "class": "d-none d-xl-block container-fluid pt-5"
+      }, " ", _react["default"].createElement("div", {
         "class": "row userHeaderSection d-flex justify-content-center"
       }, _react["default"].createElement("div", {
         "class": "profilePageUserImage d-flex justify-content-center"
@@ -324,27 +325,27 @@ function (_Component) {
         "class": "souseUserCreatorPage col-8 d-flex"
       }, _react["default"].createElement("div", {
         "class": "container-fluid d-flex justify-content-center"
-      }, _react["default"].createElement("img", {
-        "class": "souseUserIconUserHomePage",
+      }, _react["default"].createElement(_userProfileStyling.SouseUserPageIcon, null, _react["default"].createElement("img", {
+        className: "souseUserPageImage userHomePageImageBorder",
         src: creatorImage,
         alt: "souseUserIcon",
         width: "85px",
         height: "85px"
-      }))), _react["default"].createElement("div", {
+      })))), _react["default"].createElement("div", {
         "class": "profilePageUserData col-12"
       }, " ", _react["default"].createElement("div", null, _react["default"].createElement("div", {
         "class": "row userNameRow"
-      }, _react["default"].createElement("h2", null, creatorUsername)), _react["default"].createElement("div", {
+      }, _react["default"].createElement(UsernameUserPage, null, creatorUsername)), _react["default"].createElement("div", {
         "class": "row userButtonsRow"
       }, _react["default"].createElement("div", null, _react["default"].createElement("div", {
         "class": "col-12"
-      }, this.state.totalDisplayPosts === postsTotal ? _react["default"].createElement("h5", {
+      }, _react["default"].createElement(UserDataUserPage, null), this.state.totalDisplayPosts === postsTotal ? _react["default"].createElement(UserDataUserPage, {
         onClick: this.listClicked = function (e) {
           _this3.setState({
             userPageDisplay: '1'
           });
         }
-      }, _react["default"].createElement("b", null, postsTotal), " Post") : _react["default"].createElement("h5", {
+      }, _react["default"].createElement("b", null, postsTotal), " Post") : _react["default"].createElement(UserDataUserPage, {
         onClick: this.listClicked = function (e) {
           _this3.setState({
             userPageDisplay: '1'
@@ -352,13 +353,13 @@ function (_Component) {
         }
       }, _react["default"].createElement("b", null, postsTotal), " Posts")), _react["default"].createElement("div", {
         "class": "col-12"
-      }, this.state.totalDisplayFollowers === followersTotal ? _react["default"].createElement("h5", {
+      }, this.state.totalDisplayFollowers === followersTotal ? _react["default"].createElement(UserDataUserPage, {
         onClick: this.listClicked = function (e) {
           _this3.setState({
             userPageDisplay: '3'
           });
         }
-      }, _react["default"].createElement("b", null, followersTotal), " Follower") : _react["default"].createElement("h5", {
+      }, _react["default"].createElement("b", null, followersTotal), " Follower") : _react["default"].createElement(UserDataUserPage, {
         onClick: this.listClicked = function (e) {
           _this3.setState({
             userPageDisplay: '3'
@@ -366,13 +367,13 @@ function (_Component) {
         }
       }, _react["default"].createElement("b", null, followersTotal), " Followers")), _react["default"].createElement("div", {
         "class": "col-12"
-      }, this.state.totalDisplayFollows === followsTotal ? _react["default"].createElement("h5", {
+      }, this.state.totalDisplayFollows === followsTotal ? _react["default"].createElement(UserDataUserPage, {
         onClick: this.listClicked = function (e) {
           _this3.setState({
             userPageDisplay: '4'
           });
         }
-      }, _react["default"].createElement("b", null, followsTotal), " Follow") : _react["default"].createElement("h5", {
+      }, _react["default"].createElement("b", null, followsTotal), " Follow") : _react["default"].createElement(UserDataUserPage, {
         onClick: this.listClicked = function (e) {
           _this3.setState({
             userPageDisplay: '4'
@@ -429,38 +430,72 @@ function (_Component) {
       }, _react["default"].createElement("div", {
         "class": "col-12"
       }, _react["default"].createElement("div", {
-        "class": "row d-flex justify-content-center m-0"
-      }, _react["default"].createElement("ul", null, _react["default"].createElement("li", null, _react["default"].createElement("a", null, _react["default"].createElement("div", {
-        "class": "col-4"
+        "class": "row m-0"
+      }, _react["default"].createElement("ul", {
+        "class": "userProfileUserInfoUL"
+      }, userPageDisplay == '2' ? _react["default"].createElement("div", null, _react["default"].createElement("li", {
+        "class": "userProfileUserInfoLI"
+      }, _react["default"].createElement("a", {
+        "class": "userProfileUserInfoLink"
+      }, _react["default"].createElement("div", {
+        "class": "col-12"
       }, " ", _react["default"].createElement("h5", {
-        "class": "d-flex justify-content-center",
+        "class": "d-block justify-content-center bioOption selected",
         onClick: this.listClicked = function (e) {
           _this3.setState({
             userPageDisplay: '2'
           });
         }
-      }, "Bio")))), _react["default"].createElement("div", {
-        "class": "col-4"
+      }, "Bio"))))) : _react["default"].createElement("div", null, _react["default"].createElement("li", {
+        "class": "userProfileUserInfoLI"
+      }, _react["default"].createElement("a", {
+        "class": "userProfileUserInfoLink"
+      }, _react["default"].createElement("div", {
+        "class": "col-12"
       }, " ", _react["default"].createElement("h5", {
-        "class": "d-flex justify-content-center"
-      })), _react["default"].createElement("li", null, _react["default"].createElement("a", null, _react["default"].createElement("div", {
-        "class": "col-4"
+        "class": "d-block justify-content-center bioOption",
+        onClick: this.listClicked = function (e) {
+          _this3.setState({
+            userPageDisplay: '2'
+          });
+        }
+      }, "Bio"))))), userPageDisplay == '1' ? _react["default"].createElement("div", null, _react["default"].createElement("li", {
+        "class": "userProfileUserInfoLI"
+      }, _react["default"].createElement("a", {
+        "class": "userProfileUserInfoLink"
+      }, _react["default"].createElement("div", {
+        "class": "col-12"
       }, " ", _react["default"].createElement("h5", {
-        "class": "d-flex justify-content-center",
+        "class": "d-block justify-content-center postsOption selected",
         onClick: this.listClicked = function (e) {
           _this3.setState({
             userPageDisplay: '1'
           });
         }
-      }, "Posts"))))))))))), _react["default"].createElement("div", {
+      }, "Posts"))))) : _react["default"].createElement("div", null, _react["default"].createElement("li", {
+        "class": "userProfileUserInfoLI"
+      }, _react["default"].createElement("a", {
+        "class": "userProfileUserInfoLink"
+      }, _react["default"].createElement("div", {
+        "class": "col-12"
+      }, " ", _react["default"].createElement("h5", {
+        "class": "d-block justify-content-center postsOption",
+        onClick: this.listClicked = function (e) {
+          _this3.setState({
+            userPageDisplay: '1'
+          });
+        }
+      }, "Posts")))))))))))), _react["default"].createElement("div", {
         "class": "col-12"
       }, isAuthenticated ? _react["default"].createElement("div", null, _react["default"].createElement(_postIndex["default"], null)) : _react["default"].createElement("div", null))), _react["default"].createElement("div", {
         "class": "d-flex justify-content-center"
       }, _react["default"].createElement("div", {
         "class": "container-fluid"
       }, _react["default"].createElement("div", {
-        "class": "row pb-2 col d-flex justify-content-center"
-      }, userPageDisplay == '1' ? _react["default"].createElement("div", null, " ", Object.keys(this.postFinder()).map(function (object, i) {
+        "class": "row"
+      }, userPageDisplay == '1' ? _react["default"].createElement("div", {
+        "class": "row d-flex justify-content-center postsArea"
+      }, " ", Object.keys(this.postFinder()).map(function (object, i) {
         return _react["default"].createElement("div", {
           obj: object,
           key: i
@@ -494,7 +529,7 @@ function (_Component) {
       }, _react["default"].createElement("a", {
         href: this.state.creatorTwitterURL,
         target: "_blank"
-      }, _react["default"].createElement(TwitterIcon, null), " ", this.state.creatorTwitter)))), this.state.creatorFacebook === "" ? _react["default"].createElement("div", null) : _react["default"].createElement("div", {
+      }, _react["default"].createElement(_userProfileStyling.TwitterIcon, null), " ", this.state.creatorTwitter)))), this.state.creatorFacebook === "" ? _react["default"].createElement("div", null) : _react["default"].createElement("div", {
         "class": "col-12"
       }, _react["default"].createElement("div", {
         "class": "row d-block mx-auto"
@@ -503,7 +538,7 @@ function (_Component) {
       }, _react["default"].createElement("a", {
         href: this.state.creatorFacebookURL,
         target: "_blank"
-      }, _react["default"].createElement(FacebookIcon, null), " ", this.state.creatorFacebook)))), this.state.creatorInstagram === "" ? _react["default"].createElement("div", null) : _react["default"].createElement("div", {
+      }, _react["default"].createElement(_userProfileStyling.FacebookIcon, null), " ", this.state.creatorFacebook)))), this.state.creatorInstagram === "" ? _react["default"].createElement("div", null) : _react["default"].createElement("div", {
         "class": "col-12"
       }, _react["default"].createElement("div", {
         "class": "row d-block mx-auto"
@@ -512,7 +547,7 @@ function (_Component) {
       }, _react["default"].createElement("a", {
         href: this.state.creatorInstagramURL,
         target: "_blank"
-      }, _react["default"].createElement(InstagramIcon, null), " ", this.state.creatorInstagram)))))) : _react["default"].createElement("div", null), userPageDisplay == '3' ? _react["default"].createElement("div", null, "   ", Object.keys(this.followerFinder()).map(function (object, i) {
+      }, _react["default"].createElement(_userProfileStyling.InstagramIcon, null), " ", this.state.creatorInstagram)))))) : _react["default"].createElement("div", null), userPageDisplay == '3' ? _react["default"].createElement("div", null, "   ", Object.keys(this.followerFinder()).map(function (object, i) {
         return _react["default"].createElement("div", {
           "class": "col-3"
         }, _react["default"].createElement(_reactRouterDom.Link, {
@@ -556,7 +591,117 @@ function (_Component) {
         }, _react["default"].createElement("h6", {
           "class": "col-12"
         }, _this3.followFinder()[i].followUsername))));
-      })) : _react["default"].createElement("div", null))))));
+      })) : _react["default"].createElement("div", null)))))), _react["default"].createElement("div", {
+        "class": "d-xl-none container-fluid"
+      }, " ", _react["default"].createElement("img", {
+        "class": "mx-auto d-block sousePostImage",
+        src: creatorImage,
+        alt: "sousePostImage",
+        width: "1080px",
+        height: "1080px"
+      }), _react["default"].createElement("div", {
+        "class": "row"
+      }, _react["default"].createElement("h5", {
+        "class": "col-12"
+      }, creatorUsername), _react["default"].createElement("h6", {
+        "class": "col-12"
+      }, creatorLocation)), _react["default"].createElement("div", {
+        "class": "row"
+      }, _react["default"].createElement("div", {
+        "class": "col-6"
+      }, isAuthenticated ? _react["default"].createElement("div", null, creatorId !== loggedInUserId ? _react["default"].createElement("div", null, Array.isArray(this.followerFinder()) && this.followerFinder()[0] ? _react["default"].createElement("div", null, this.followerFinder()[0].followerUserId == loggedInUserId ? _react["default"].createElement("div", null, _react["default"].createElement("button", {
+        type: "submit",
+        "class": "waves-effect waves-light btn-large",
+        onClick: function onClick(e) {
+          _this3.onSetDeleteFollow(e);
+
+          _this3.onSetDeleteFollower(e);
+        }
+      }, _react["default"].createElement("p", {
+        "class": "lead buttonFont"
+      }, "Unfollow"))) : _react["default"].createElement("div", null)) : _react["default"].createElement("div", null, _react["default"].createElement("button", {
+        type: "submit",
+        "class": "waves-effect waves-light btn-large",
+        onClick: function onClick(e) {
+          _this3.onSetFollow(e);
+
+          _this3.onSetFollower(e);
+        }
+      }, _react["default"].createElement("p", {
+        "class": "lead buttonFont"
+      }, "Follow")))) : _react["default"].createElement(_reactRouterDom.Link, {
+        "class": "d-block mx-auto",
+        to: {
+          pathname: "/u/edit/" + loggedInUserId,
+          state: {
+            creatorId: creatorId,
+            creatorUsername: creatorUsername,
+            creatorFirstName: creatorFirstName,
+            creatorLastName: creatorLastName,
+            creatorEmail: creatorEmail,
+            creatorPassword: creatorPassword,
+            creatorSignUpDate: creatorSignUpDate,
+            creatorUnixTimestamp: creatorUnixTimestamp,
+            creatorImage: creatorImage,
+            creatorTwitter: creatorTwitter,
+            creatorFacebook: creatorFacebook,
+            creatorInstagram: creatorInstagram,
+            creatorLocation: creatorLocation,
+            creatorBio: creatorBio
+          }
+        }
+      }, _react["default"].createElement("button", {
+        type: "submit",
+        "class": "waves-effect waves-light btn-large"
+      }, _react["default"].createElement("p", {
+        "class": "lead buttonFont"
+      }, "Edit Profile")))) : _react["default"].createElement("div", null)), _react["default"].createElement("div", {
+        "class": "userButtonsRow col-6"
+      }, _react["default"].createElement("div", {
+        "class": "float-right"
+      }, _react["default"].createElement("div", {
+        "class": "col-12"
+      }, this.state.totalDisplayPosts === postsTotal ? _react["default"].createElement("h6", {
+        onClick: this.listClicked = function (e) {
+          _this3.setState({
+            userPageDisplay: '1'
+          });
+        }
+      }, _react["default"].createElement("b", null, postsTotal), " Post") : _react["default"].createElement("h6", {
+        onClick: this.listClicked = function (e) {
+          _this3.setState({
+            userPageDisplay: '1'
+          });
+        }
+      }, _react["default"].createElement("b", null, postsTotal), " Posts")), _react["default"].createElement("div", {
+        "class": "col-12"
+      }, this.state.totalDisplayFollowers === followersTotal ? _react["default"].createElement("h6", {
+        onClick: this.listClicked = function (e) {
+          _this3.setState({
+            userPageDisplay: '3'
+          });
+        }
+      }, _react["default"].createElement("b", null, followersTotal), " Follower") : _react["default"].createElement("h6", {
+        onClick: this.listClicked = function (e) {
+          _this3.setState({
+            userPageDisplay: '3'
+          });
+        }
+      }, _react["default"].createElement("b", null, followersTotal), " Followers")), _react["default"].createElement("div", {
+        "class": "col-12"
+      }, this.state.totalDisplayFollows === followsTotal ? _react["default"].createElement("h6", {
+        onClick: this.listClicked = function (e) {
+          _this3.setState({
+            userPageDisplay: '4'
+          });
+        }
+      }, _react["default"].createElement("b", null, followsTotal), " Follow") : _react["default"].createElement("h6", {
+        onClick: this.listClicked = function (e) {
+          _this3.setState({
+            userPageDisplay: '4'
+          });
+        }
+      }, _react["default"].createElement("b", null, followsTotal), " Follows")))))));
     }
   }]);
 

@@ -27,6 +27,18 @@ souseRouter.route('/u/update/:id')
 souseRouter.route('/u/delete/:id')
     .get(userController.delete_user);
 
+souseRouter.route('/u/p/delete/:id')
+    .get(userController.delete_posts);
+
+souseRouter.route('/u/c/delete/:id')
+    .get(userController.delete_comments);
+
+souseRouter.route('/u/follows/delete/:id')
+    .get(userController.delete_follows);
+
+souseRouter.route('/u/followers/delete/:id')
+    .get(userController.delete_followers);
+
 // Routes for Posts
 souseRouter.route('/p/add')
     .post(postController.create_post);
@@ -53,6 +65,11 @@ souseRouter.route('/c')
 souseRouter.route('/c/delete/:id')
     .get(commentController.delete_comment);
 
+/*
+souseRouter.route('/c/delete') // Bulk Delete Comments
+    .get(commentController.delete_comments);
+*/
+
 // Routes for Follows
 souseRouter.route('/follows/add') // Follow
     .post(userConnectionController.follows);
@@ -63,6 +80,11 @@ souseRouter.route('/follows')
 souseRouter.route('/follows/delete/:id') // Unfollow
     .get(userConnectionController.delete_follow);
 
+/*
+souseRouter.route('/follows/delete') // Bulk Delete Follows
+    .get(userConnectionController.delete_follows);
+*/
+
 // Routes for Followers
 souseRouter.route('/followers/add')
     .post(userConnectionController.add_follower);
@@ -72,5 +94,10 @@ souseRouter.route('/followers')
 
 souseRouter.route('/followers/delete/:id') // Being Unfollowed
     .get(userConnectionController.delete_follower);
+
+/*
+souseRouter.route('/followers/delete') // Bulk Delete Followers
+    .get(userConnectionController.delete_followers);
+*/
 
 module.exports = souseRouter;

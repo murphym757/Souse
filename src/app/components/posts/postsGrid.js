@@ -78,7 +78,7 @@ class PostsGrid extends Component {
             width: 1.5em;
         `;
         return (
-            <div class="mx-auto d-block pt-1">
+            <div class="mx-auto d-block pt-5">
                 <div class="d-none d-xl-block container"> {/* For larger Sceens */}
                     <div class="row pt-5">
                         <div class="col-8">

@@ -15,6 +15,16 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _reactRedux = require("react-redux");
 
+var _styledComponents = _interopRequireDefault(require("styled-components"));
+
+var _v = require("@bootstrap-styled/v4");
+
+var _provider = _interopRequireDefault(require("@bootstrap-styled/provider"));
+
+var _theme = require("bootstrap-styled/lib/theme");
+
+var _globalTheme = require("../assets/styles/globalTheme");
+
 var _loginForm = _interopRequireDefault(require("./registration/loginForm"));
 
 var _signUpForm = _interopRequireDefault(require("./registration/signUpForm"));
@@ -179,10 +189,19 @@ function (_Component) {
       var souseComments = this.state.comments;
       var souseFollowers = this.state.followers;
       var souseFollows = this.state.follows;
-      console.log(souseComments);
+      var gucci = 'green';
+      var darkTheme = (0, _theme.makeTheme)({
+        '$body-color': gucci,
+        '$card-bg': 'rgb(228, 209, 209)',
+        '$font-family-base': 'Helvetica'
+      });
       return _react["default"].createElement(_reactRouterDom.BrowserRouter, null, _react["default"].createElement("div", {
-        "class": "entireProject"
-      }, _react["default"].createElement(_navbar["default"], null), _react["default"].createElement("div", null, _react["default"].createElement(_reactRouterDom.Switch, null, _react["default"].createElement(_reactRouterDom.Route, {
+        "class": "container-fluid entireProjectContainer"
+      }, _react["default"].createElement(_provider["default"], {
+        theme: _globalTheme.souseDefaultTheme
+      }, _react["default"].createElement(_v.Card, {
+        className: "d-flex align-content-stretch flex-wrap entireProjectCard m-0"
+      }, _react["default"].createElement(_v.CardBlock, null, _react["default"].createElement(_navbar["default"], null), _react["default"].createElement(_reactRouterDom.Switch, null, _react["default"].createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/",
         render: function render(props) {
@@ -216,7 +235,14 @@ function (_Component) {
       }), _react["default"].createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/u/edit/:id",
-        component: _editUserProfile["default"]
+        render: function render(props) {
+          return _react["default"].createElement(_editUserProfile["default"], _extends({}, props, {
+            sousePostData: sousePosts,
+            souseCommentData: souseComments,
+            souseFollowerData: souseFollowers,
+            souseFollowData: souseFollows
+          }));
+        }
       }), _react["default"].createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/p/:id",
@@ -237,7 +263,7 @@ function (_Component) {
         component: _commentDeleteSection["default"]
       }), _react["default"].createElement(_reactRouterDom.Route, {
         component: _Page["default"]
-      })))));
+      })))))));
     }
   }]);
 

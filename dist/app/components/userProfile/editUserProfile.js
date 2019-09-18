@@ -15,6 +15,8 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _reactRedux = require("react-redux");
 
+var _authentication = require("../../../server/actions/authentication");
+
 var _classnames = _interopRequireDefault(require("classnames"));
 
 var _styledSpinkit = require("styled-spinkit");
@@ -26,6 +28,8 @@ var _config = _interopRequireDefault(require("../../../server/config"));
 var _materializeCss = _interopRequireDefault(require("materialize-css"));
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
+
+var _globalTheme = require("../../assets/styles/globalTheme");
 
 var _Twitter = require("styled-icons/feather/Twitter");
 
@@ -239,10 +243,85 @@ function (_Component) {
     _this.onUpdateUserBio = _this.onUpdateUserBio.bind(_assertThisInitialized(_this));
     _this.onImageUpload = _this.onImageUpload.bind(_assertThisInitialized(_this));
     _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
+    _this.deleteUser = _this.deleteUser.bind(_assertThisInitialized(_this));
+    _this.deleteUserPosts = _this.deleteUserPosts.bind(_assertThisInitialized(_this));
+    _this.deleteUserComments = _this.deleteUserComments.bind(_assertThisInitialized(_this));
+    _this.deleteUserFollowers = _this.deleteUserFollowers.bind(_assertThisInitialized(_this));
+    _this.deleteUserFollows = _this.deleteUserFollows.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(editUserProfile, [{
+    key: "deleteProfileModal",
+    value: function deleteProfileModal() {}
+  }, {
+    key: "deleteProfile",
+    value: function deleteProfile() {
+      this.deleteUserPosts();
+      this.deleteUserFollowers();
+      this.deleteUserFollows();
+      this.deleteUserComments();
+      this.deleteUser();
+      this.props.history.push("/");
+      this.props.logoutUser(this.props.history);
+      window.location.reload();
+    }
+  }, {
+    key: "deleteUserPosts",
+    value: function deleteUserPosts() {
+      var userId = this.state.userId;
+      var apiRoute = "/souseAPI";
+      var deleteRoute = "/u/p/delete";
+
+      _axios["default"].get(apiRoute + deleteRoute + "/" + userId).then(console.log('Posts Deleted'))["catch"](function (err) {
+        return console.log(err);
+      });
+    }
+  }, {
+    key: "deleteUserComments",
+    value: function deleteUserComments() {
+      var userId = this.state.userId;
+      var apiRoute = "/souseAPI";
+      var deleteRoute = "/u/c/delete";
+
+      _axios["default"].get(apiRoute + deleteRoute + "/" + userId).then(console.log('Comments Deleted'))["catch"](function (err) {
+        return console.log(err);
+      });
+    }
+  }, {
+    key: "deleteUserFollowers",
+    value: function deleteUserFollowers() {
+      var userId = this.state.userId;
+      var apiRoute = "/souseAPI";
+      var deleteRoute = "/u/followers/delete";
+
+      _axios["default"].get(apiRoute + deleteRoute + "/" + userId).then(console.log('Followers Deleted'))["catch"](function (err) {
+        return console.log(err);
+      });
+    }
+  }, {
+    key: "deleteUserFollows",
+    value: function deleteUserFollows() {
+      var userId = this.state.userId;
+      var apiRoute = "/souseAPI";
+      var deleteRoute = "/u/follows/delete";
+
+      _axios["default"].get(apiRoute + deleteRoute + "/" + userId).then(console.log('Follows Deleted'))["catch"](function (err) {
+        return console.log(err);
+      });
+    }
+  }, {
+    key: "deleteUser",
+    value: function deleteUser() {
+      var userId = this.state.userId;
+      var apiRoute = "/souseAPI";
+      var deleteRoute = "/u/delete";
+
+      _axios["default"].get(apiRoute + deleteRoute + "/" + userId).then(console.log('Deleted'))["catch"](function (err) {
+        return console.log(err);
+      });
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       var _this2 = this;
@@ -273,7 +352,15 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
       var errors = this.state.errors;
+
+      var deleteAccountFont = _styledComponents["default"].h6.withConfig({
+        displayName: "editUserProfile__deleteAccountFont",
+        componentId: "sc-1mza6ne-0"
+      })(["color:", ";font-weight:900;"], _globalTheme.softBlack);
+
       return _react["default"].createElement("div", {
         "class": "container-fluid"
       }, _react["default"].createElement("form", {
@@ -431,7 +518,12 @@ function (_Component) {
       }, _react["default"].createElement("button", {
         type: "submit",
         "class": "waves-effect waves-light btn-large d-block mx-auto"
-      }, "Update User")))));
+      }, "Update User")), _react["default"].createElement("div", {
+        onClick: function onClick(e) {
+          _this3.deleteProfile(e);
+        },
+        "class": "pt-2"
+      }, _react["default"].createElement("deleteAccountFont", null, "Delete Account")))));
     }
   }]);
 
@@ -448,6 +540,8 @@ var mapStateToProps = function mapStateToProps(state) {
   };
 };
 
-var _default = (0, _reactRedux.connect)(mapStateToProps)(editUserProfile);
+var _default = (0, _reactRedux.connect)(mapStateToProps, {
+  logoutUser: _authentication.logoutUser
+})(editUserProfile);
 
 exports["default"] = _default;

@@ -59,6 +59,10 @@ const UserSchema = new mongoose.Schema({
     userTwitter: {
         type: String,
         default: ""
+    }, 
+    userTheme: {
+        type: String,
+        default: "souseDefaultTheme"
     },
     signUpDate: {
         type: Date,
@@ -73,11 +77,11 @@ const UserSchema = new mongoose.Schema({
         ref: 'Comments'
     }],
     followers: [{
-        type: mongoose.Schema.Types.Mixed,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Followers'
     }],
     follows: [{
-        type: mongoose.Schema.Types.Mixed,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Follows'
     }]
 });
@@ -123,7 +127,7 @@ const PostSchema = new mongoose.Schema({
         }
     },
     comments: [{
-        type: mongoose.Schema.Types.Mixed,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Comments'
     }]
 });

@@ -111,7 +111,7 @@ function (_Component) {
       return _react["default"].createElement("div", null, _react["default"].createElement("nav", {
         "class": "z-depth-0"
       }, _react["default"].createElement("div", {
-        "class": "nav-wrapper container-fluid"
+        "class": "nav-wrapper"
       }, _react["default"].createElement(_reactRouterDom.Link, {
         "class": "brand-logo d-md-none py-3",
         to: "/"
