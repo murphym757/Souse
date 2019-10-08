@@ -19,7 +19,9 @@ var _postsGrid = _interopRequireDefault(require("../posts/postsGrid"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -60,34 +62,18 @@ function (_Component) {
     _this.state = {
       originalPostId: postIdFound,
       postCreatorId: '',
-      postCreatorImage: "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg"
+      postCreatorImage: ''
     };
     return _this;
   }
 
   _createClass(PostPage, [{
-    key: "postFinder",
-    value: function postFinder() {
-      var _this2 = this;
-
+    key: "postCreatorIDFinder",
+    value: function postCreatorIDFinder() {
       var sousePostData = this.props.sousePostData;
-      var filteredPostData = Object.keys(sousePostData).filter( // Finds Specific Post
-      function (i) {
-        return sousePostData[i]._id === "" + _this2.state.originalPostId + "";
-      }),
-          postIdFinder = Object.keys(sousePostData).map(function (object, i) {
-        return sousePostData[filteredPostData]._id;
-      }),
-          postId = postIdFinder.find(function (i) {
-        return "" + postIdFinder[0] + "";
-      });
-      var sousePostList = ["" + postId + ""],
-          sousePostsList = new Set(sousePostList),
-          souseFilterPosts = sousePostData.filter(function (sousePostData) {
-        return sousePostsList.has(sousePostData._id);
-      });
+      var postId = this.state.originalPostId;
       var filteredPostCreator = Object.keys(sousePostData).filter(function (i) {
-        return sousePostData[i]._id === "" + _this2.state.originalPostId + "";
+        return sousePostData[i]._id === "" + postId + "";
       }),
           postCreatorIdFinder = Object.keys(sousePostData).map(function (object, i) {
         return sousePostData[filteredPostCreator].postCreator;
@@ -95,10 +81,17 @@ function (_Component) {
           postCreatorId = postCreatorIdFinder.find(function (i) {
         return "" + postCreatorIdFinder[0] + "";
       });
+      return postCreatorId;
+    }
+  }, {
+    key: "postCreatorUsernameFinder",
+    value: function postCreatorUsernameFinder() {
+      var _this2 = this;
+
       var souseUserData = this.props.souseUserData;
       var filteredUsernameData = Object.keys(souseUserData).filter( // Finds Username in souseUsersDB and display data from it (Username)
       function (i) {
-        return souseUserData[i]._id === "" + postCreatorId + "";
+        return souseUserData[i]._id === "" + _this2.postCreatorIDFinder() + "";
       }),
           postUserNameFinder = Object.keys(souseUserData).map(function (object, i) {
         return souseUserData[filteredUsernameData].username;
@@ -106,9 +99,41 @@ function (_Component) {
           postUserName = postUserNameFinder.find(function (i) {
         return "" + postUserNameFinder[0] + "";
       });
-      var sousePostCreatorName = postUserName;
-      var sousePostCreatorImage = this.state.postCreatorImage;
+      return postUserName;
+    }
+  }, {
+    key: "postCreatorImageFinder",
+    value: function postCreatorImageFinder() {
+      var _this3 = this;
+
+      var souseUserData = this.props.souseUserData;
+      var filteredUsernameData = Object.keys(souseUserData).filter( // Finds Username in souseUsersDB and display data from it (Username)
+      function (i) {
+        return souseUserData[i]._id === "" + _this3.postCreatorIDFinder() + "";
+      }),
+          postUserImageFinder = Object.keys(souseUserData).map(function (object, i) {
+        return souseUserData[filteredUsernameData].userImage;
+      }),
+          postUserImage = postUserImageFinder.find(function (i) {
+        return "" + postUserImageFinder[0] + "";
+      });
+      return postUserImage;
+    }
+  }, {
+    key: "foundUserData",
+    value: function foundUserData() {
+      var souseUserData = this.props.souseUserData;
       var souseCommentData = this.props.souseCommentData;
+      var sousePostData = this.props.sousePostData;
+      var postId = this.state.originalPostId;
+      var sousePostCreatorName = this.postCreatorUsernameFinder();
+      var sousePostCreatorImage = this.postCreatorImageFinder();
+      console.log(sousePostCreatorImage);
+      var sousePostList = ["" + postId + ""],
+          sousePostsList = new Set(sousePostList),
+          souseFilterPosts = sousePostData.filter(function (sousePostData) {
+        return sousePostsList.has(sousePostData._id);
+      });
       var userData = souseFilterPosts.map(function (object, i) {
         return _react["default"].createElement(_postsGrid["default"], {
           obj: object,
@@ -127,7 +152,7 @@ function (_Component) {
       var _this$props$auth2 = this.props.auth,
           isAuthenticated = _this$props$auth2.isAuthenticated,
           user = _this$props$auth2.user;
-      return _react["default"].createElement("div", null, isAuthenticated ? _react["default"].createElement("div", null, this.postFinder()) : _react["default"].createElement("div", null, this.postFinder()));
+      return _react["default"].createElement("div", null, isAuthenticated ? _react["default"].createElement("div", null, this.foundUserData()) : _react["default"].createElement("div", null, this.foundUserData()));
     }
   }]);
 

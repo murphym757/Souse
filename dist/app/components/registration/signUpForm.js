@@ -17,9 +17,13 @@ var _authentication = require("../../../server/actions/authentication");
 
 var _classnames = _interopRequireDefault(require("classnames"));
 
+var _mainStyling = require("../../assets/styles/mainStyling");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -111,7 +115,7 @@ function (_Component) {
       var errors = this.state.errors;
       return _react["default"].createElement("div", {
         "class": "container-fluid"
-      }, _react["default"].createElement("form", {
+      }, _react["default"].createElement(_mainStyling.SouseForm, {
         onSubmit: this.onSubmit
       }, _react["default"].createElement("div", {
         "class": "input-field"
@@ -206,10 +210,12 @@ function (_Component) {
         "class": "invalid-feedback"
       }, errors.password_confirm)), _react["default"].createElement("div", {
         "class": "form-group"
-      }, _react["default"].createElement("button", {
+      }, _react["default"].createElement(_mainStyling.SouseButton, {
         type: "submit",
-        "class": "waves-effect waves-light btn-large"
-      }, "Sign Up"))));
+        className: "waves-effect waves-light btn-large"
+      }, _react["default"].createElement("p", {
+        "class": "lead buttonFont"
+      }, "Sign Up")))));
     }
   }]);
 

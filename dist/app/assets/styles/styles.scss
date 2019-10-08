@@ -38,22 +38,15 @@ span {
     padding-left: 0px;
 }
 
-.card.entireProjectCard {
-    height: 62.5vw;
-    color: $softBlack;
-    font-family: 'Nunito Sans', sans-serif;
-    font-weight: 400;
-}
-
 .fixed-action-btn { 
     position: initial;
 }
 
+// Scrolling Area for Moblie
 .postsArea {
     max-width: auto;
-    max-height: 30%;
-    border: 1px solid gray;
-
+    height: 22vw;
+    border: 1px solid none;
     overflow-y: scroll;
     scrollbar-width: none;
     /* Firefox */
@@ -66,96 +59,12 @@ span {
     width: 0px;
 }
 
-// Navbar
-/* ---------------------------------------------------- */
-nav {
-    background-color: $primaryColor;
-    box-shadow: none;
-}
-
-nav ul a {
-    color: $secondaryColor;
-}
-
-.sidenav {
-    background-color: $primaryColor;
-    color: $secondaryColor;
-}
-
-.sidenav li>a {
-    color: $secondaryColor;
-}
-
-.input-field .prefix {
-    color: $secondaryColor;
-}
-
-.input-field .prefix.active {
-    color: $primaryColorAlt;
-}
-
-a:not([href]):not([tabindex]) {
-    color: $secondaryColor;
-    text-decoration: none;
-}
-/* ---------------------------------------------------- */
-
 .souseFooter {
     color: $secondaryColor;
 }
 // User Profile Page
 /* ---------------------------------------------------- */
-.userProfileUserInfoUL {
-    padding: 0;
-    list-style: none;
-    display: inline-flex;
-    text-align: center;
-}
 
-.userProfileUserInfoLI {
-    display: table-cell;
-    position: relative;
-    padding: 15px 0;
-}
-
-.bioOption.selected,
-.postsOption.selected {
-    color: $white;
-}
-
-.bioOption,
-.postsOption {
-    color: $secondaryColor;
-    font-weight: 600;
-}
-
-.userProfileUserInfoLink {
-    color: $white;
-    text-transform: uppercase;
-    text-decoration: none;
-    letter-spacing: 0.15em;
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    position: relative;
-}
-
-.userProfileUserInfoLink:after {
-    background: none repeat scroll 0 0 transparent;
-    bottom: 0;
-    content: "";
-    display: block;
-    height: 2px;
-    left: 50%;
-    position: absolute;
-    background: $white;
-    transition: width 0.3s ease 0s, left 0.3s ease 0s;
-    width: 0;
-}
-
-.userProfileUserInfoLink:hover:after {
-    width: 100%;
-    left: 0;
-}
 /* ---------------------------------------------------- */
 
 // Post Page (postGrid)
@@ -247,55 +156,6 @@ a:not([href]):not([tabindex]) {
     font-size: 0.7em;
 }
 
-#modal1 {
-    height: 15%;
-    width: 25%;
-    top: 50% !important;
-}
-
-.modal .modal-footer {
-    background-color: $white;
-}
-
-.modal-footer> :not(:last-child) {
-    margin-right: 0rem;
-}
-
-.modal-content {
-    border: 0px;
-}
-
-.z-depth-1,
-nav,
-.card-panel,
-.card,
-.toast,
-.btn,
-.btn-large,
-.btn-small,
-.btn-floating,
-.dropdown-content,
-.collapsible,
-.sidenav {
-    -webkit-box-shadow: none;
-    box-shadow: none;
-}
-
-.z-depth-1:hover,
-nav:hover,
-.card-panel:hover,
-.card:hover,
-.toast:hover,
-.btn:hover,
-.btn-large:hover,
-.btn-small:hover,
-.btn-floating:hover,
-.dropdown-content:hover,
-.collapsible:hover,
-.sidenav:hover {
-    -webkit-box-shadow: none;
-    box-shadow: none;
-}
 
 .commentDataColumn {
     padding-left: 0.5rem;
@@ -346,16 +206,6 @@ nav:hover,
     align-items: center;
 }
 
-.souseUserPostsUserHomePage {
-    object-fit: cover;
-    width: 15vw;
-    height: 15vw;
-}
-
-.souseUserPostsUserHomePage:hover {
-    border: 1px solid $secondaryColor;
-}
-
 .souseUserIconUserHomePage.followIcons {
     height: 8vw;
     width: 8vw;
@@ -371,169 +221,6 @@ nav:hover,
     justify-content: center;
     align-items: center;
 }
-/* ---------------------------------------------------- */
-
-// Buttons
-/* ---------------------------------------------------- */
-
-.btn-large,
-.btn-small,
-.btn-large:visited,
-.btn-large:active,
-.btn-large:focus,
-.btn-small:visited,
-.btn-small:active,
-.btn-small:focus {
-    background-color: $secondaryColor;
-}
-
-.btn-large:hover {
-    background-color: $primaryColorAlt;
-}
-
-.buttonFont {
-    text-transform: uppercase;
-    font-size: 0.696em; //10px
-}
-
-/* ---------------------------------------------------- */
-
-// Links
-/* ---------------------------------------------------- */
-
-a:link,
-a:visited,
-a:hover,
-a:active {
-    color: $secondaryColor;
-    text-decoration: none;
-}
-
-a.profileNameLink:link,
-a.profileNameLink:visited,
-a.profileNameLink:hover,
-a.profileNameLink:active {
-    color: $white;
-    font-weight: 300;
-    font-size: 1.4em;
-}
-
-/* ---------------------------------------------------- */
-
-// Forms
-/* ---------------------------------------------------- */
-
-/* label focus color */
-
-.input-field input:focus+label {
-    color: $secondaryColor !important;
-}
-
-/* label underline focus color */
-
-.row .input-field input:focus {
-    border-bottom: 1px solid $secondaryColor !important;
-    box-shadow: 0 1px 0 0 $secondaryColor !important
-}
-
-input:not([type]),
-input[type=text]:not(.browser-default),
-input[type=password]:not(.browser-default),
-input[type=email]:not(.browser-default),
-input[type=url]:not(.browser-default),
-input[type=time]:not(.browser-default),
-input[type=date]:not(.browser-default),
-input[type=datetime]:not(.browser-default),
-input[type=datetime-local]:not(.browser-default),
-input[type=tel]:not(.browser-default),
-input[type=number]:not(.browser-default),
-input[type=search]:not(.browser-default),
-textarea.materialize-textarea {
-
-    // Focused input style
-    &:focus:not([readonly]) {
-        border-bottom: 1px solid $secondaryColor;
-        box-shadow: 0 1px 0 0 $secondaryColor;
-    }
-
-    // Focused label style
-    &:focus:not([readonly])+label {
-        color: $secondaryColor;
-    }
-}
-
-/* Change Autocomplete styles in Chrome*/
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-    -webkit-animation: autofill 0s forwards;
-    animation: autofill 0s forwards;
-}
-
-@keyframes autofill {
-    100% {
-        background: transparent;
-        color: inherit;
-    }
-}
-
-@-webkit-keyframes autofill {
-    100% {
-        background: transparent;
-        color: inherit;
-    }
-}
-
-/* ---------------------------------------------------- */
-// Bootstrap Button (Modal)
-/* ---------------------------------------------------- */
-.btn-modalButton {
-    color: $secondaryColor;
-    background-color: $white;
-    border-color: $white;
-}
-
-.btn-modalButton:hover,
-.btn-modalButton:focus,
-.btn-modalButton:active,
-.btn-modalButton.active,
-.open .dropdown-toggle.btn-modalButton {
-    color: $secondaryColor;
-    background-color: $white;
-    border-color: $white;
-}
-
-.btn-modalButton:active,
-.btn-modalButton.active,
-.open .dropdown-toggle.btn-modalButton {
-    background-image: none;
-}
-
-.btn-modalButton.disabled,
-.btn-modalButton[disabled],
-fieldset[disabled] .btn-modalButton,
-.btn-modalButton.disabled:hover,
-.btn-modalButton[disabled]:hover,
-fieldset[disabled] .btn-modalButton:hover,
-.btn-modalButton.disabled:focus,
-.btn-modalButton[disabled]:focus,
-fieldset[disabled] .btn-modalButton:focus,
-.btn-modalButton.disabled:active,
-.btn-modalButton[disabled]:active,
-fieldset[disabled] .btn-modalButton:active,
-.btn-modalButton.disabled.active,
-.btn-modalButton[disabled].active,
-fieldset[disabled] .btn-modalButton.active {
-    background-color: $white;
-    border-color: $white;
-}
-
-.btn-modalButton .badge {
-    color: $white;
-    background-color: $secondaryColor;
-}
-
 /* ---------------------------------------------------- */
 .souseFooter,
 .addPostButton {

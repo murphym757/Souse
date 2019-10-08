@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect, withRouter } fr
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import UserPage from '../userProfile/usersPage';
+import { SouseButton } from '../../assets/styles/mainStyling';
 import { SouseUserPageIcon } from '../../assets/styles/userProfileStyling';
 
 class LandingPage extends Component {
@@ -13,7 +14,6 @@ class LandingPage extends Component {
         const souseUserList = ["" + loggedinUserId + ""],
             souseUsersList = new Set(souseUserList),
             souseFilterUserData = souseUserData.filter(souseUsersData => souseUsersList.has(souseUsersData._id));
-        console.log(souseFilterUserData);
         return souseFilterUserData;
     }
 
@@ -24,7 +24,6 @@ class LandingPage extends Component {
         const sousePostList = ["" + loggedinUserId + ""],
             sousePostsList = new Set(sousePostList),
             souseFilterPostData = sousePostData.filter(sousePostsData => sousePostsList.has(sousePostsData.postCreator));
-        console.log(souseFilterPostData);
         return souseFilterPostData;
     }
 
@@ -35,7 +34,6 @@ class LandingPage extends Component {
         const souseFollowList = ["" + loggedinUserId + ""],
             souseFollowsList = new Set(souseFollowList),
             souseFilterFollowData = souseFollowData.filter(souseFollowsData => souseFollowsList.has(souseFollowsData.initiatedFollowuserId));
-        console.log(souseFilterFollowData);
         return souseFilterFollowData;
 }
 
@@ -46,7 +44,6 @@ class LandingPage extends Component {
         const souseFollowerList = ["" + loggedinUserId + ""],
             souseFollowersList = new Set(souseFollowerList),
             souseFilterFollowerData = souseFollowerData.filter(souseFollowersData => souseFollowersList.has(souseFollowersData.receivedFollowUserId));
-        console.log(souseFilterFollowerData);
         return souseFilterFollowerData;
     }
 
@@ -110,7 +107,7 @@ class LandingPage extends Component {
                                             }
                                         }>
                                             <div class="row d-flex justify-content-center">   {/* Confirmation Button Row */}
-                                                <button type="submit" class="waves-effect waves-light btn-large"><p class="lead buttonFont">Confirm</p></button>
+                                                <SouseButton type="submit" className="waves-effect waves-light btn-large"><p class="lead buttonFont">Confirm</p></SouseButton>
                                             </div>
                                         </Link>
                                     </div>

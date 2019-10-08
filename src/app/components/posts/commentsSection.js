@@ -59,7 +59,6 @@ class CommentsSection extends Component {
         const souseCommentList = ["" + this.state.originalPostId + ""],
             souseCommentsList = new Set(souseCommentList),
             souseFilterData = souseCommentData.filter(souseCommentsData => souseCommentsList.has(souseCommentsData.originalPostId));
-            console.log(souseFilterData);
         return souseFilterData;
     }
 
@@ -139,30 +138,6 @@ class CommentsSection extends Component {
                                                 </h6>
                                                 <div class="row souseCommentsDataReply no-gutters">
                                                     <h6 class="col-3 commentTime"><Timestamp relative time={Date} relativeTo={this.commentsFinder()[i].commentCreatedDate} /></h6>
-                                                    <h6 class="col-9 commentEdit">
-                                                    {this.commentsFinder()[i].commentCreatorUsername == loggedinUser
-                                                        ? <div>
-                                                            <h6>
-                                                                <div class="modal-trigger" href="#modal1" onClick={this.deleteClicked = (e) => {this.setState({deleteCommentSelected: true, commentId: this.commentsFinder()[i]._id})}}>
-                                                                    <DotsHorizontalRoundedIcon />
-                                                                </div>
-                                                            </h6>
-                                                                <div id="modal1" class="modal">
-                                                                    <div class="container-fluid">
-                                                                        <div class="modal-content">
-                                                                            <div class="row d-flex justify-content-center">
-                                                                                <div class="container">
-                                                                                    <button type="button" class="btn btn-modalButton btn-lg btn-block" onClick={this.delete}>Delete</button>
-                                                                                    <button type="button" class="btn btn-modalButton btn-lg btn-block modal-close" onClick={this.deleteClickedAlt}>Cancel</button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                        </div>
-                                                        : <div></div>
-                                                    }
-                                                    </h6> {/* Should first disply the user who creator post */}
                                                 </div>
                                             </div>
                                         </div>
@@ -172,7 +147,7 @@ class CommentsSection extends Component {
                     </div>
                         {isAuthenticated 
                             ? <div class="row commentsFormSection container-fluid">
-                            <form class="col s12" onSubmit={this.onSubmitComment}>
+                            <SouseForm class="col s12" onSubmit={this.onSubmitComment}>
                                 <div class="row pl-4">
                                     <div class="input-field col s6">
                                         <input 
@@ -185,7 +160,7 @@ class CommentsSection extends Component {
                                         <label for="souse_comment">Add a Comment ({this.state.postComment.length}/1000)</label>
                                     </div>
                                 </div>
-                            </form>
+                            </SouseForm>
                         </div>
                             : <div></div>
                         }

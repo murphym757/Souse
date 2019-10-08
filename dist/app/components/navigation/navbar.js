@@ -15,11 +15,15 @@ var _reactRedux = require("react-redux");
 
 var _authentication = require("../../../server/actions/authentication");
 
+var _navbarStyling = require("../../assets/styles/navbarStyling");
+
 var _materializeCss = _interopRequireDefault(require("materialize-css"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -44,18 +48,12 @@ var Navbar =
 function (_Component) {
   _inherits(Navbar, _Component);
 
-  function Navbar() {
-    var _getPrototypeOf2;
-
+  function Navbar(props) {
     var _this;
 
     _classCallCheck(this, Navbar);
 
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Navbar)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Navbar).call(this, props));
 
     _this.onLogout = function (e) {
       e.preventDefault();
@@ -63,6 +61,17 @@ function (_Component) {
       _this.props.logoutUser(_this.props.history);
     };
 
+    var _this$props$auth = _this.props.auth,
+        isAuthenticated = _this$props$auth.isAuthenticated,
+        user = _this$props$auth.user;
+    var loggedinUser = user.id;
+    var loggedinUsername = user.username;
+    var loggedinUserTheme = user.userTheme;
+    console.log(loggedinUserTheme);
+    _this.state = {
+      navbarImage: "",
+      currentTheme: "souseIMTheme"
+    };
     return _this;
   }
 
@@ -70,21 +79,77 @@ function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       _materializeCss["default"].Autocomplete.init(this.autocomplete);
+
+      {
+        /* Theme Finder */
+      }
+      var _this$props$auth2 = this.props.auth,
+          isAuthenticated = _this$props$auth2.isAuthenticated,
+          user = _this$props$auth2.user;
+      var theme1 = "souseDefaultTheme";
+      var theme2 = "souseIMTheme";
+      var theme3 = "souseFPTheme";
+      var theme4 = "souseViceTheme";
+      var theme5 = "souseVapeTheme";
+      var theme1Image = "../../src/app/assets/images/souseBigLogo.svg";
+      var theme2Image = "../../src/app/assets/images/souseBigLogoIM.svg";
+      var theme3Image = "../../src/app/assets/images/souseBigLogoFP.svg";
+      var theme4Image = "../../src/app/assets/images/souseBigLogoVice.svg";
+      var theme5Image = "../../src/app/assets/images/souseBigLogoVape.svg";
+
+      if (isAuthenticated) {
+        var currentTheme = this.state.currentTheme;
+
+        if (currentTheme == theme1) {
+          this.setState({
+            navbarImage: theme1Image
+          });
+        } else if (currentTheme == theme2) {
+          this.setState({
+            navbarImage: theme2Image
+          });
+        } else if (currentTheme == theme3) {
+          this.setState({
+            navbarImage: theme3Image
+          });
+        } else if (currentTheme == theme4) {
+          this.setState({
+            navbarImage: theme4Image
+          });
+        } else if (currentTheme == theme5) {
+          this.setState({
+            navbarImage: theme5Image
+          });
+        } else if (currentTheme == undefined) {
+          this.setState({
+            navbarImage: theme1Image
+          });
+        }
+      } else {
+        this.setState({
+          navbarImage: theme1Image
+        });
+      }
     }
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
-
-      var _this$props$auth = this.props.auth,
-          isAuthenticated = _this$props$auth.isAuthenticated,
-          user = _this$props$auth.user;
+      var _this$props$auth3 = this.props.auth,
+          isAuthenticated = _this$props$auth3.isAuthenticated,
+          user = _this$props$auth3.user;
       var loggedinUser = user.username;
+      var loggedinUserImage = user.userImage;
 
-      var loggedInLinks = _react["default"].createElement("div", null, _react["default"].createElement("li", null, _react["default"].createElement("a", {
+      var loggedInLinks = _react["default"].createElement("div", null, _react["default"].createElement("li", null, _react["default"].createElement(_reactRouterDom.Link, {
+        "class": "sidenav-close",
+        to: "/".concat(loggedinUser),
+        onClick: function onClick() {
+          return window.location.refresh();
+        }
+      }, _react["default"].createElement(_navbarStyling.LoggedInUserIcon, null))), _react["default"].createElement("li", null, _react["default"].createElement("a", {
         "class": "sidenav-close logoutClose",
         onClick: this.onLogout.bind(this)
-      }, "Log Out")));
+      }, _react["default"].createElement(_navbarStyling.LogoutUserIcon, null))));
 
       var guestLinks = _react["default"].createElement("div", null, _react["default"].createElement("li", null, _react["default"].createElement(_reactRouterDom.Link, {
         "class": "sidenav-close",
@@ -92,32 +157,21 @@ function (_Component) {
       }, "Sign Up")), _react["default"].createElement("li", null, _react["default"].createElement(_reactRouterDom.Link, {
         "class": "sidenav-close",
         to: "/login"
-      }, "Login")), _react["default"].createElement("li", null, _react["default"].createElement("div", {
-        "class": "input-field col s6"
-      }, _react["default"].createElement("i", {
-        "class": "material-icons prefix"
-      }, "search"), _react["default"].createElement("input", {
-        type: "text",
-        placeholder: "",
-        id: "autocomplete-input",
-        "class": "autocomplete",
-        ref: function ref(autocomplete) {
-          _this2.autocomplete = autocomplete;
-        }
-      }), _react["default"].createElement("label", {
-        "for": "autocomplete-input"
-      }, "Search"))));
+      }, "Login")));
 
-      return _react["default"].createElement("div", null, _react["default"].createElement("nav", {
-        "class": "z-depth-0"
+      var navbarImage = this.state.navbarImage;
+      return _react["default"].createElement("div", null, _react["default"].createElement("div", {
+        "class": "navbar-fixed"
+      }, _react["default"].createElement(_navbarStyling.SouseNav, {
+        className: "z-depth-0"
       }, _react["default"].createElement("div", {
-        "class": "nav-wrapper"
+        "class": "nav-wrapper container"
       }, _react["default"].createElement(_reactRouterDom.Link, {
         "class": "brand-logo d-md-none py-3",
         to: "/"
       }, _react["default"].createElement("img", {
         "class": "souseHomeLogo-navbar",
-        src: "../../src/app/assets/images/souseBigLogo.svg",
+        src: navbarImage,
         width: "125",
         alt: "logo"
       })), _react["default"].createElement(_reactRouterDom.Link, {
@@ -125,7 +179,7 @@ function (_Component) {
         to: "/"
       }, _react["default"].createElement("img", {
         "class": "souseHomeLogo-navbar",
-        src: "../../src/app/assets/images/souseBigLogo.svg",
+        src: navbarImage,
         width: "125",
         alt: "logo"
       })), _react["default"].createElement("a", {
@@ -136,10 +190,10 @@ function (_Component) {
         "class": "fas fa-ellipsis-h"
       }))), _react["default"].createElement("ul", {
         "class": "right hide-on-med-and-down"
-      }, isAuthenticated ? loggedInLinks : guestLinks))), _react["default"].createElement("ul", {
-        "class": "sidenav",
+      }, isAuthenticated ? loggedInLinks : guestLinks))), _react["default"].createElement(_navbarStyling.SouseSideNav, {
+        className: "sidenav",
         id: "slide-out"
-      }, isAuthenticated ? loggedInLinks : guestLinks));
+      }, isAuthenticated ? loggedInLinks : guestLinks)));
     }
   }]);
 

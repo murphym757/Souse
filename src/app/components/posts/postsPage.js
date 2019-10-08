@@ -17,25 +17,15 @@ class PostPage extends Component {
         this.state = {
             originalPostId: postIdFound,
             postCreatorId: '',
-            postCreatorImage: "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg"
+            postCreatorImage: ''
         };
     }
-    postFinder() {
+
+    postCreatorIDFinder() {
         const sousePostData = this.props.sousePostData;
-        const filteredPostData = Object.keys(sousePostData).filter( // Finds Specific Post
-            i => sousePostData[i]._id === "" + this.state.originalPostId + ""
-        ),
-        postIdFinder = Object.keys(sousePostData).map(
-            (object, i) => sousePostData[filteredPostData]._id
-        ),
-        postId = postIdFinder.find(
-            i => "" + postIdFinder[0] + ""
-        );
-        const sousePostList = ["" + postId + ""],
-            sousePostsList = new Set(sousePostList),
-            souseFilterPosts = sousePostData.filter(sousePostData => sousePostsList.has(sousePostData._id));
+        const postId = this.state.originalPostId;
         const filteredPostCreator = Object.keys(sousePostData).filter(
-            i => sousePostData[i]._id === "" + this.state.originalPostId + ""
+            i => sousePostData[i]._id === "" + postId + ""
         ),
             postCreatorIdFinder = Object.keys(sousePostData).map(
                 (object, i) => sousePostData[filteredPostCreator].postCreator
@@ -43,19 +33,48 @@ class PostPage extends Component {
             postCreatorId = postCreatorIdFinder.find(
                 i => "" + postCreatorIdFinder[0] + ""
             );
+        return postCreatorId;
+    }
+
+    postCreatorUsernameFinder() {
         const souseUserData = this.props.souseUserData;
         const filteredUsernameData = Object.keys(souseUserData).filter( // Finds Username in souseUsersDB and display data from it (Username)
-                i => souseUserData[i]._id === "" + postCreatorId + ""
+                i => souseUserData[i]._id === "" + this.postCreatorIDFinder() + ""
             ),
             postUserNameFinder = Object.keys(souseUserData).map(
                 (object, i) => souseUserData[filteredUsernameData].username
             ),
             postUserName = postUserNameFinder.find(
                 i => "" + postUserNameFinder[0] + ""
-            );         
-        const sousePostCreatorName = postUserName; 
-        const sousePostCreatorImage = this.state.postCreatorImage;
+            );
+            return postUserName;
+    }
+
+    postCreatorImageFinder() {
+        const souseUserData = this.props.souseUserData;
+        const filteredUsernameData = Object.keys(souseUserData).filter( // Finds Username in souseUsersDB and display data from it (Username)
+                i => souseUserData[i]._id === "" + this.postCreatorIDFinder() + ""
+            ),
+            postUserImageFinder = Object.keys(souseUserData).map(
+                (object, i) => souseUserData[filteredUsernameData].userImage
+            ),
+            postUserImage = postUserImageFinder.find(
+                i => "" + postUserImageFinder[0] + ""
+            );
+            return postUserImage;
+    }
+
+    foundUserData(){
+        const souseUserData = this.props.souseUserData;
         const souseCommentData = this.props.souseCommentData;
+        const sousePostData = this.props.sousePostData;
+        const postId = this.state.originalPostId;
+        const sousePostCreatorName = this.postCreatorUsernameFinder();
+        const sousePostCreatorImage = this.postCreatorImageFinder();
+        console.log(sousePostCreatorImage);
+        const sousePostList = ["" + postId + ""],
+            sousePostsList = new Set(sousePostList),
+            souseFilterPosts = sousePostData.filter(sousePostData => sousePostsList.has(sousePostData._id));
         const userData = souseFilterPosts.map(
           (object, i) => <PostsGrid 
             obj={object} 
@@ -74,10 +93,10 @@ class PostPage extends Component {
             <div>
             {isAuthenticated 
                     ? <div>
-                        {this.postFinder()}
+                        {this.foundUserData()}
                     </div>
                     : <div>
-                        {this.postFinder()}
+                        {this.foundUserData()}
                     </div>
                 }
             </div>

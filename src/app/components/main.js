@@ -7,7 +7,14 @@ import styled from 'styled-components';
 import { Card, CardBlock } from '@bootstrap-styled/v4';
 import BootstrapProvider from '@bootstrap-styled/provider';
 import { makeTheme } from 'bootstrap-styled/lib/theme';
-import { souseDefaultTheme } from '../assets/styles/globalTheme';
+import { GlobalStyle } from '../assets/styles/globalStyling';
+import {
+    souseDefaultTheme,
+    souseIMTheme,
+    souseFPTheme,
+    souseViceTheme,
+    souseVapeTheme
+} from '../assets/styles/globalTheme';
 
 import LoginForm from './registration/loginForm';
 import SignUpForm from './registration/signUpForm';
@@ -29,7 +36,8 @@ class MainSource extends Component {
             users: [],
             comments: [],
             followers: [],
-            follows: []
+            follows: [],
+            currentTheme: ""
         };
     }
     componentDidMount() {
@@ -52,7 +60,6 @@ class MainSource extends Component {
         axios.get(apiRoute + findUserRoute)
             .then(res => {
                 const users = res.data;
-                console.log(users);
                 this.setState({
                     users: users
                 });
@@ -65,7 +72,6 @@ class MainSource extends Component {
         axios.get(apiRoute + findCommentRoute)
             .then(res => {
                 const comments = res.data;
-                console.log(comments);
                 this.setState({
                     comments: comments
                 });
@@ -78,7 +84,6 @@ class MainSource extends Component {
         axios.get(apiRoute + findFollowerRoute)
             .then(res => {
                 const followers = res.data;
-                console.log(followers);
                 this.setState({
                     followers: followers
                 });
@@ -91,7 +96,6 @@ class MainSource extends Component {
         axios.get(apiRoute + findFollowRoute)
             .then(res => {
                 const follows = res.data;
-                console.log(follows);
                 this.setState({
                     follows: follows
                 });
@@ -99,9 +103,36 @@ class MainSource extends Component {
             .catch(function (error) {
                 console.log(error);
             })
+        { /* Theme Finder */}
+        const {isAuthenticated, user} = this.props.auth; 
+        let theme1 = souseDefaultTheme;
+        let theme2 = souseIMTheme;
+        let theme3 = souseFPTheme;
+        let theme4 = souseViceTheme;
+        let theme5 = souseVapeTheme;
+        if (isAuthenticated) {
+            let userTheme = user.userTheme.slice(0);
+            if (userTheme = theme1) {
+                this.setState({currentTheme: souseDefaultTheme});
+            } else if (userTheme = theme2) {
+                this.setState({currentTheme: souseIMTheme});
+            } else if (userTheme = theme3) {
+                this.setState({currentTheme: souseFPTheme});
+            } else if (userTheme = theme4) {
+                this.setState({currentTheme: souseViceTheme});
+            } else if (userTheme = theme5) {
+                this.setState({currentTheme: souseVapeTheme});
+            } else if (userTheme = undefined) {
+                this.setState({currentTheme: souseDefaultTheme});
+            } 
+        } else {
+            this.setState({currentTheme: souseDefaultTheme});
+        }
     }
+
+
     render() {
-      const {isAuthenticated, user} = this.props.auth;
+      const {isAuthenticated, user} = this.props.auth;   
       const souseUsers = this.state.users;
       const sousePosts = this.state.posts;
       const souseComments = this.state.comments;
@@ -113,55 +144,126 @@ class MainSource extends Component {
           '$card-bg': 'rgb(228, 209, 209)',
           '$font-family-base': 'Helvetica'
       });
+        const Card = styled.div`
+            display: block;
+            z-index: 9999;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            overflow: auto;
+            background-color: ${props => props.theme.primaryColor};
+            color: ${props => props.theme.secondaryColor};
+            font-family: 'Nunito Sans', sans-serif;
+            font-weight: 400;
+        `;
+            
+
         return (
             <Router>
                 <div class="container-fluid entireProjectContainer">
-                <BootstrapProvider theme={souseDefaultTheme}>
-                    <Card className="d-flex align-content-stretch flex-wrap entireProjectCard m-0">
-                        <CardBlock>
-                        <Navbar />
-                        <Switch>
-                            <Route exact path="/" 
-                            render={
-                                (props) => <LandingPage {...props} 
-                                souseUserData={souseUsers} 
-                                sousePostData={sousePosts} 
-                                souseCommentData={souseComments}
-                                souseFollowerData={souseFollowers}
-                                souseFollowData={souseFollows} />
-                            }/>
-                            <Route exact path="/signup" component={SignUpForm}/>
-                            <Route exact path="/login" component={LoginForm}/>
-                            <Route exact path="/:username" 
-                            render={
-                                (props) => <UserPage {...props} 
-                                souseUserData={souseUsers} 
-                                sousePostData={sousePosts} 
-                                souseFollowerData={souseFollowers} 
-                                souseFollowData={souseFollows}/>
-                                }/>
-                            <Route exact path="/u/edit/:id" 
-                            render={
-                                (props) => <EditUserProfile {...props} 
-                                sousePostData={sousePosts} 
-                                souseCommentData={souseComments}
-                                souseFollowerData={souseFollowers} 
-                                souseFollowData={souseFollows}/>
-                                }/>
-                            <Route exact path="/p/:id" 
-                            render={
-                                (props) => <PostPage {...props} 
-                                souseUserData={souseUsers} 
-                                sousePostData={sousePosts} 
-                                souseCommentData={souseComments} />
-                            }/>
-                            <Route exact path="/p/edit/:id" component={PostEdit}/>
-                            <Route exact path="/c/delete/:id" component={CommentDelete}/>
-                            <Route component={RouteNotFound} />
-                        </Switch>
-                        </CardBlock>
-                    </Card>
+                {isAuthenticated
+                    ?   <BootstrapProvider theme={souseIMTheme}>
+                            <GlobalStyle />
+                                <Card className="align-content-stretch flex-wrap entireProjectCard m-0">
+                                    <CardBlock>
+                                    <Navbar 
+                                        souseUserData={souseUsers} />
+                                    <Switch>
+                                        <Route exact path="/" 
+                                        render={
+                                            (props) => <LandingPage {...props} 
+                                            souseUserData={souseUsers} 
+                                            sousePostData={sousePosts} 
+                                            souseCommentData={souseComments}
+                                            souseFollowerData={souseFollowers}
+                                            souseFollowData={souseFollows} />
+                                        }/>
+                                        <Route exact path="/signup" component={SignUpForm}/>
+                                        <Route exact path="/login" component={LoginForm}/>
+                                        <Route exact path="/:username" 
+                                        render={
+                                            (props) => <UserPage {...props} 
+                                            souseUserData={souseUsers} 
+                                            sousePostData={sousePosts} 
+                                            souseFollowerData={souseFollowers} 
+                                            souseFollowData={souseFollows}/>
+                                            }/>
+                                        <Route exact path="/u/edit/:id" 
+                                        render={
+                                            (props) => <EditUserProfile {...props} 
+                                            sousePostData={sousePosts} 
+                                            souseCommentData={souseComments}
+                                            souseFollowerData={souseFollowers} 
+                                            souseFollowData={souseFollows}/>
+                                            }/>
+                                        <Route exact path="/p/:id" 
+                                        render={
+                                            (props) => <PostPage {...props} 
+                                            souseUserData={souseUsers} 
+                                            sousePostData={sousePosts} 
+                                            souseCommentData={souseComments} />
+                                        }/>
+                                        <Route exact path="/p/edit/:id" component={PostEdit}/>
+                                        <Route exact path="/c/delete/:id" component={CommentDelete}/>
+                                        <Route component={RouteNotFound} />
+                                    </Switch>
+                                    </CardBlock>
+                                </Card>
                 </BootstrapProvider>
+                    :   <BootstrapProvider theme={souseDefaultTheme}>
+                            <GlobalStyle />
+                                <Card className="align-content-stretch flex-wrap entireProjectCard m-0">
+                                    <CardBlock>
+                                    <Navbar 
+                                        souseUserData={souseUsers} />
+                                    <Switch>
+                                        <Route exact path="/" 
+                                        render={
+                                            (props) => <LandingPage {...props} 
+                                            souseUserData={souseUsers} 
+                                            sousePostData={sousePosts} 
+                                            souseCommentData={souseComments}
+                                            souseFollowerData={souseFollowers}
+                                            souseFollowData={souseFollows} />
+                                        }/>
+                                        <Route exact path="/signup" component={SignUpForm}/>
+                                        <Route exact path="/login" component={LoginForm}/>
+                                        <Route exact path="/:username" 
+                                        render={
+                                            (props) => <UserPage {...props} 
+                                            souseUserData={souseUsers} 
+                                            sousePostData={sousePosts} 
+                                            souseFollowerData={souseFollowers} 
+                                            souseFollowData={souseFollows}/>
+                                            }/>
+                                        <Route exact path="/u/edit/:id" 
+                                        render={
+                                            (props) => <EditUserProfile {...props} 
+                                            sousePostData={sousePosts} 
+                                            souseCommentData={souseComments}
+                                            souseFollowerData={souseFollowers} 
+                                            souseFollowData={souseFollows}/>
+                                            }/>
+                                        <Route exact path="/p/:id" 
+                                        render={
+                                            (props) => <PostPage {...props} 
+                                            souseUserData={souseUsers} 
+                                            sousePostData={sousePosts} 
+                                            souseCommentData={souseComments} />
+                                        }/>
+                                        <Route exact path="/p/edit/:id" component={PostEdit}/>
+                                        <Route exact path="/c/delete/:id" component={CommentDelete}/>
+                                        <Route component={RouteNotFound} />
+                                    </Switch>
+                                    </CardBlock>
+                                </Card>
+                </BootstrapProvider>
+                }
+                
                 </div>
             </Router>
         );

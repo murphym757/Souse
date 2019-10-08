@@ -17,6 +17,8 @@ var _reactRedux = require("react-redux");
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
+var _mainStyling = require("../../assets/styles/mainStyling");
+
 var _styledSpinkit = require("styled-spinkit");
 
 var _awsS = _interopRequireDefault(require("aws-s3"));
@@ -25,7 +27,9 @@ var _config = _interopRequireDefault(require("../../../server/config"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -87,8 +91,6 @@ function (_Component) {
       var S3Client = new _awsS["default"](config);
       var newFileName = "" + _this.state.postUnixTimestamp + "";
       S3Client.uploadFile(e.target.files[0], newFileName).then(function (data) {
-        console.log(data.location);
-
         _this.setState({
           postImageURL: data.location,
           isLoading: true
@@ -184,7 +186,6 @@ function (_Component) {
       var apiRoute = "/souseAPI";
       var editRoute = "/p/edit";
       var postId = this.state.originalPostId;
-      console.log(postId);
 
       _axios["default"].get(apiRoute + editRoute + "/" + postId).then(function (res) {
         _this2.setState({
@@ -239,7 +240,7 @@ function (_Component) {
       };
       return _react["default"].createElement("div", null, isAuthenticated && postCreatorId == loggedInUser ? _react["default"].createElement("div", {
         "class": "container"
-      }, _react["default"].createElement("form", {
+      }, _react["default"].createElement(_mainStyling.SouseForm, {
         onSubmit: this.onSubmit
       }, _react["default"].createElement(TestFont, null, "Hi There"), _react["default"].createElement("div", {
         "class": "row pt-5"
@@ -274,9 +275,11 @@ function (_Component) {
         color: "#c45758"
       })) : _react["default"].createElement("div", {
         "class": "file-field input-field d-block mx-auto"
-      }, _react["default"].createElement("div", {
-        "class": "btn-large"
-      }, _react["default"].createElement("span", null, "Upload"), _react["default"].createElement("input", {
+      }, _react["default"].createElement(_mainStyling.SouseUploadButton, {
+        className: "btn-large"
+      }, _react["default"].createElement("p", {
+        "class": "lead buttonFont"
+      }, "Upload"), _react["default"].createElement("input", {
         type: "file",
         name: "souseImage",
         id: "souseImagePost",
@@ -302,16 +305,20 @@ function (_Component) {
         height: "1080px"
       }))))), _react["default"].createElement("div", {
         "class": "form-group col d-flex justify-content-center"
-      }, _react["default"].createElement("button", {
+      }, _react["default"].createElement(_mainStyling.SouseButton, {
         onClick: this.onUpdateImageDelete,
         type: "submit",
-        "class": "waves-effect waves-light btn-large"
-      }, "Update")))), _react["default"].createElement("div", {
+        className: "waves-effect waves-light btn-large"
+      }, _react["default"].createElement("p", {
+        "class": "lead buttonFont"
+      }, "Update"))))), _react["default"].createElement("div", {
         "class": "form-group col d-flex justify-content-center pt-3"
-      }, _react["default"].createElement("button", {
+      }, _react["default"].createElement(_mainStyling.SouseButton, {
         onClick: this["delete"],
-        "class": "waves-effect waves-light btn-large"
-      }, "Delete"))) : _react["default"].createElement("div", null));
+        className: "waves-effect waves-light btn-large"
+      }, _react["default"].createElement("p", {
+        "class": "lead buttonFont"
+      }, "Delete")))) : _react["default"].createElement("div", null));
     }
   }]);
 

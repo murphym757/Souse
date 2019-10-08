@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loginUser } from '../../../server/actions/authentication';
 import classnames from 'classnames';
+import {
+    SouseButton,
+    SouseForm
+} from '../../assets/styles/mainStyling';
 
 class LoginForm extends Component {
     constructor(props) {
@@ -29,18 +33,19 @@ class LoginForm extends Component {
             password: this.state.password
         }
         this.props.loginUser(user);
-        window.location.reload();
     }
 
     componentDidMount() {
         if (this.props.auth.isAuthenticated) {
             this.props.history.push('/');
+            window.location.reload();
         }
     }
     
     componentWillReceiveProps(nextProps) {
         if (nextProps.auth.isAuthenticated) {
             this.props.history.push('/');
+            window.location.reload();
         }
         if (nextProps.errors) {
             this.setState({
@@ -53,7 +58,7 @@ class LoginForm extends Component {
         const { errors } = this.state;
         return (
             <div class="container-fluid">
-                <form onSubmit={this.onSubmit}>
+                <SouseForm onSubmit={this.onSubmit}>
                     <div class="input-field">
                         <input 
                             type="email"
@@ -84,9 +89,11 @@ class LoginForm extends Component {
                         {errors.password && (<div class="invalid-feedback">{errors.password}</div>)}
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="waves-effect waves-light btn-large">Login</button>
+                        <SouseButton type="submit" className="waves-effect waves-light btn-large">
+                            <p class="lead buttonFont">Login</p>
+                        </SouseButton>
                     </div>
-                </form>
+                </SouseForm>
             </div>
           );
       }

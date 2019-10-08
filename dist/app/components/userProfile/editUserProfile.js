@@ -21,6 +21,8 @@ var _classnames = _interopRequireDefault(require("classnames"));
 
 var _styledSpinkit = require("styled-spinkit");
 
+var _reactSwitch = _interopRequireDefault(require("react-switch"));
+
 var _awsS = _interopRequireDefault(require("aws-s3"));
 
 var _config = _interopRequireDefault(require("../../../server/config"));
@@ -29,17 +31,21 @@ var _materializeCss = _interopRequireDefault(require("materialize-css"));
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
-var _globalTheme = require("../../assets/styles/globalTheme");
-
 var _Twitter = require("styled-icons/feather/Twitter");
 
 var _Facebook = require("styled-icons/feather/Facebook");
 
 var _Instagram = require("styled-icons/feather/Instagram");
 
+var _mainStyling = require("../../assets/styles/mainStyling");
+
+var _userProfileStyling = require("../../assets/styles/userProfileStyling");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -59,17 +65,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var editUserProfile =
+var EditUserProfile =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(editUserProfile, _Component);
+  _inherits(EditUserProfile, _Component);
 
-  function editUserProfile(props) {
+  function EditUserProfile(props) {
     var _this;
 
-    _classCallCheck(this, editUserProfile);
+    _classCallCheck(this, EditUserProfile);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(editUserProfile).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(EditUserProfile).call(this, props));
 
     _this.onUpdateUsername = function (e) {
       _this.setState({
@@ -131,6 +137,12 @@ function (_Component) {
       });
     };
 
+    _this.onUpdateUserTheme = function (e) {
+      _this.setState({
+        userTheme: e.target.value
+      });
+    };
+
     _this.onImageUpload = function (e) {
       var config = {
         bucketName: _config["default"].AWS_BUCKET_NAME,
@@ -172,6 +184,7 @@ function (_Component) {
         lastName: _this.state.lastName,
         email: _this.state.email,
         userImage: _this.state.userImage,
+        userTheme: _this.state.userTheme,
         userInstagram: _this.state.userInstagram,
         userFacebook: _this.state.userFacebook,
         userTwitter: _this.state.userTwitter,
@@ -207,6 +220,7 @@ function (_Component) {
         creatorSignUpDate = _this$props$location$.creatorSignUpDate,
         creatorUnixTimestamp = _this$props$location$.creatorUnixTimestamp,
         creatorImage = _this$props$location$.creatorImage,
+        creatorTheme = _this$props$location$.creatorTheme,
         creatorTwitter = _this$props$location$.creatorTwitter,
         creatorFacebook = _this$props$location$.creatorFacebook,
         creatorInstagram = _this$props$location$.creatorInstagram,
@@ -222,6 +236,7 @@ function (_Component) {
       signUpDate: creatorSignUpDate,
       unixTimestamp: creatorUnixTimestamp,
       userImage: creatorImage,
+      userTheme: creatorTheme,
       userInstagram: creatorInstagram,
       userFacebook: creatorFacebook,
       userTwitter: creatorTwitter,
@@ -229,6 +244,12 @@ function (_Component) {
       userBio: creatorBio,
       isLoading: false,
       fullPostUploadLoader: false,
+      deleteUser: false,
+      deleteUserConfirm: false,
+      switchColor: "",
+      switchHandleColor: "",
+      currentTheme: "souseIMTheme",
+      //loggedinUserTheme
       errors: {}
     };
     _this.onUpdateUsername = _this.onUpdateUsername.bind(_assertThisInitialized(_this));
@@ -241,6 +262,7 @@ function (_Component) {
     _this.onUpdateUserTwitter = _this.onUpdateUserTwitter.bind(_assertThisInitialized(_this));
     _this.onUpdateUserLocation = _this.onUpdateUserLocation.bind(_assertThisInitialized(_this));
     _this.onUpdateUserBio = _this.onUpdateUserBio.bind(_assertThisInitialized(_this));
+    _this.onUpdateUserTheme = _this.onUpdateUserTheme.bind(_assertThisInitialized(_this));
     _this.onImageUpload = _this.onImageUpload.bind(_assertThisInitialized(_this));
     _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
     _this.deleteUser = _this.deleteUser.bind(_assertThisInitialized(_this));
@@ -248,13 +270,12 @@ function (_Component) {
     _this.deleteUserComments = _this.deleteUserComments.bind(_assertThisInitialized(_this));
     _this.deleteUserFollowers = _this.deleteUserFollowers.bind(_assertThisInitialized(_this));
     _this.deleteUserFollows = _this.deleteUserFollows.bind(_assertThisInitialized(_this));
+    _this.handleChangeDelete = _this.handleChangeDelete.bind(_assertThisInitialized(_this));
+    _this.handleChangeDeleteConfirm = _this.handleChangeDeleteConfirm.bind(_assertThisInitialized(_this));
     return _this;
   }
 
-  _createClass(editUserProfile, [{
-    key: "deleteProfileModal",
-    value: function deleteProfileModal() {}
-  }, {
+  _createClass(EditUserProfile, [{
     key: "deleteProfile",
     value: function deleteProfile() {
       this.deleteUserPosts();
@@ -322,11 +343,69 @@ function (_Component) {
       });
     }
   }, {
+    key: "handleChangeDelete",
+    value: function handleChangeDelete(deleteUser) {
+      this.setState({
+        deleteUser: deleteUser
+      });
+    }
+  }, {
+    key: "handleChangeDeleteConfirm",
+    value: function handleChangeDeleteConfirm(deleteUserConfirm) {
+      this.setState({
+        deleteUserConfirm: deleteUserConfirm
+      });
+      this.deleteProfile();
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       var _this2 = this;
 
       _materializeCss["default"].AutoInit();
+
+      {
+        /* Theme Finder */
+      }
+      var _this$props$auth3 = this.props.auth,
+          isAuthenticated = _this$props$auth3.isAuthenticated,
+          user = _this$props$auth3.user;
+      var theme1 = "souseDefaultTheme";
+      var theme2 = "souseIMTheme";
+      var theme3 = "souseFPTheme";
+      var theme4 = "souseViceTheme";
+      var theme5 = "souseVapeTheme";
+
+      if (isAuthenticated) {
+        var currentTheme = this.state.currentTheme;
+
+        if (currentTheme == theme1) {
+          this.setState({
+            switchColor: "#ff9496",
+            switchHandleColor: "#c45758"
+          });
+        } else if (currentTheme == theme2) {
+          this.setState({
+            switchColor: "#797878",
+            switchHandleColor: "#231f20"
+          });
+        } else if (currentTheme == theme3) {
+          this.setState({
+            switchColor: "#4b6fa3",
+            switchHandleColor: "#2c4160"
+          });
+        } else if (currentTheme == theme4) {
+          this.setState({
+            switchColor: "#a0ecff",
+            switchHandleColor: "#d780b5"
+          });
+        } else if (currentTheme == theme5) {
+          this.setState({
+            switchColor: "#aaffff",
+            switchHandleColor: "#64c3a7"
+          });
+        }
+      }
 
       {
         /* Edit Post Command */
@@ -352,19 +431,21 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
-
+      var _this$props$auth4 = this.props.auth,
+          isAuthenticated = _this$props$auth4.isAuthenticated,
+          user = _this$props$auth4.user;
+      var loggedinUserImage = user.userImage;
       var errors = this.state.errors;
-
-      var deleteAccountFont = _styledComponents["default"].h6.withConfig({
-        displayName: "editUserProfile__deleteAccountFont",
-        componentId: "sc-1mza6ne-0"
-      })(["color:", ";font-weight:900;"], _globalTheme.softBlack);
-
+      var switchColor = this.state.switchColor;
+      var switchHandleColor = this.state.switchHandleColor;
       return _react["default"].createElement("div", {
         "class": "container-fluid"
-      }, _react["default"].createElement("form", {
+      }, _react["default"].createElement(_mainStyling.SouseForm, {
         onSubmit: this.onSubmit
+      }, _react["default"].createElement("div", {
+        "class": "row"
+      }, _react["default"].createElement("div", {
+        "class": "col-6"
       }, _react["default"].createElement("div", {
         "class": "input-field"
       }, " ", _react["default"].createElement("input", {
@@ -491,19 +572,25 @@ function (_Component) {
       }), _react["default"].createElement("label", {
         "class": "active",
         "for": "souseUserBio"
-      }, "Bio (", this.state.userBio.length, "/150)")), this.state.fullPostUploadLoader ? _react["default"].createElement("div", null, this.state.isLoading ? _react["default"].createElement("div", null, _react["default"].createElement("h6", null, "User Image Updated"), _react["default"].createElement("div", {
+      }, "Bio (", this.state.userBio.length, "/150)"))), _react["default"].createElement("div", {
+        "class": "col-6"
+      }, this.state.fullPostUploadLoader ? _react["default"].createElement("div", null, this.state.isLoading ? _react["default"].createElement("div", null, _react["default"].createElement("h6", null, "User Image Updated"), _react["default"].createElement("div", {
         "class": "form-group"
-      }, _react["default"].createElement("button", {
+      }, _react["default"].createElement(_mainStyling.SouseButton, {
         type: "submit",
-        "class": "waves-effect waves-light btn-large d-block mx-auto"
-      }, "Update User"))) : _react["default"].createElement(_styledSpinkit.WaveLoading, {
+        className: "waves-effect waves-light btn-large d-block mx-auto"
+      }, _react["default"].createElement("p", {
+        "class": "lead buttonFont"
+      }, "Update User")))) : _react["default"].createElement(_styledSpinkit.WaveLoading, {
         "__styled-spinkit__Wave": true,
         color: "#c45758"
       })) : _react["default"].createElement("div", null, _react["default"].createElement("div", {
         "class": "file-field input-field"
-      }, _react["default"].createElement("div", {
-        "class": "btn-large"
-      }, _react["default"].createElement("span", null, "Upload"), _react["default"].createElement("input", {
+      }, _react["default"].createElement(_mainStyling.SouseUploadButton, {
+        className: "btn-large"
+      }, _react["default"].createElement("p", {
+        "class": "lead buttonFont"
+      }, "Upload"), _react["default"].createElement("input", {
         type: "file",
         name: "userImage",
         id: "souseUserImage",
@@ -515,22 +602,71 @@ function (_Component) {
         type: "text"
       }))), _react["default"].createElement("div", {
         "class": "form-group"
-      }, _react["default"].createElement("button", {
+      }, loggedinUserImage == "" ? _react["default"].createElement("h4", {
+        "class": "d-flex justify-content-center"
+      }, "Please upload a profile image to complete the setup process") : _react["default"].createElement(_mainStyling.SouseButton, {
         type: "submit",
-        "class": "waves-effect waves-light btn-large d-block mx-auto"
-      }, "Update User")), _react["default"].createElement("div", {
-        onClick: function onClick(e) {
-          _this3.deleteProfile(e);
-        },
-        "class": "pt-2"
-      }, _react["default"].createElement("deleteAccountFont", null, "Delete Account")))));
+        className: "waves-effect waves-light btn-large d-block mx-auto"
+      }, _react["default"].createElement("p", {
+        "class": "lead buttonFont"
+      }, "Update User"))), _react["default"].createElement("div", {
+        "class": "pt-2 container"
+      }, _react["default"].createElement("div", {
+        "class": "row"
+      }, _react["default"].createElement("div", {
+        "class": "col-3"
+      }, _react["default"].createElement("deleteAccountFont", null, _react["default"].createElement("h4", {
+        "class": "deleteAccountFont"
+      }, "Delete Account"))), _react["default"].createElement("div", {
+        "class": "col-6"
+      }, _react["default"].createElement("label", {
+        "class": "row d-flex justify-content-center"
+      }, _react["default"].createElement(_userProfileStyling.EditUserProfileOptionsFont, null, "No"), _react["default"].createElement(_reactSwitch["default"], {
+        checked: this.state.deleteUser,
+        onChange: this.handleChangeDelete,
+        onColor: switchColor,
+        onHandleColor: switchHandleColor,
+        handleDiameter: 30,
+        uncheckedIcon: false,
+        checkedIcon: false,
+        boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.6)",
+        activeBoxShadow: "0px 0px 1px 10px rgba(0, 0, 0, 0.2)",
+        height: 20,
+        width: 48,
+        className: "react-switch col-3",
+        id: "material-switch"
+      }), _react["default"].createElement(_userProfileStyling.EditUserProfileOptionsFont, null, "Yes")))), this.state.deleteUser ? _react["default"].createElement("div", null, _react["default"].createElement("div", {
+        "class": "row"
+      }, _react["default"].createElement("div", {
+        "class": "col-3"
+      }, _react["default"].createElement("deleteAccountFont", null, _react["default"].createElement("h4", {
+        "class": "deleteAccountFont"
+      }, "Are you sure?"))), _react["default"].createElement("div", {
+        "class": "col-6"
+      }, _react["default"].createElement("label", {
+        "class": "row d-flex justify-content-center"
+      }, _react["default"].createElement(_userProfileStyling.EditUserProfileOptionsFont, null, "No"), _react["default"].createElement(_reactSwitch["default"], {
+        checked: this.state.deleteUserConfirm,
+        onChange: this.handleChangeDeleteConfirm,
+        onColor: switchColor,
+        onHandleColor: switchHandleColor,
+        handleDiameter: 30,
+        uncheckedIcon: false,
+        checkedIcon: false,
+        boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.6)",
+        activeBoxShadow: "0px 0px 1px 10px rgba(0, 0, 0, 0.2)",
+        height: 20,
+        width: 48,
+        className: "react-switch col-3",
+        id: "material-switch"
+      }), _react["default"].createElement(_userProfileStyling.EditUserProfileOptionsFont, null, "Yes"))))) : _react["default"].createElement("div", null)))))));
     }
   }]);
 
-  return editUserProfile;
+  return EditUserProfile;
 }(_react.Component);
 
-editUserProfile.propTypes = {
+EditUserProfile.propTypes = {
   auth: _propTypes["default"].object.isRequired
 };
 
@@ -542,6 +678,6 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps, {
   logoutUser: _authentication.logoutUser
-})(editUserProfile);
+})(EditUserProfile);
 
 exports["default"] = _default;

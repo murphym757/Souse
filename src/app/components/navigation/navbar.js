@@ -3,9 +3,28 @@ import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../../server/actions/authentication';
+import {
+  SouseSideNav,
+  SouseNav, 
+  LoggedInUserIcon,
+  LogoutUserIcon
+} from '../../assets/styles/navbarStyling';
 import M from 'materialize-css';
 
 class Navbar extends Component {
+  constructor(props) {
+        super(props);
+        const {isAuthenticated, user} = this.props.auth;
+        const loggedinUser = user.id;
+        const loggedinUsername = user.username;
+        const loggedinUserTheme = user.userTheme;
+        console.log(loggedinUserTheme);
+        this.state = {
+            navbarImage: "",
+            currentTheme: "souseIMTheme"
+        };
+        
+    }
   onLogout = (e) => {
     e.preventDefault();
     this.props.logoutUser(this.props.history);
@@ -13,41 +32,64 @@ class Navbar extends Component {
 
   componentDidMount() {
     M.Autocomplete.init(this.autocomplete);
+    { /* Theme Finder */}
+    const {isAuthenticated, user} = this.props.auth; 
+    let theme1 = "souseDefaultTheme";
+    let theme2 = "souseIMTheme";
+    let theme3 = "souseFPTheme";
+    let theme4 = "souseViceTheme";
+    let theme5 = "souseVapeTheme";
+    let theme1Image = "../../src/app/assets/images/souseBigLogo.svg";
+    let theme2Image = "../../src/app/assets/images/souseBigLogoIM.svg";
+    let theme3Image = "../../src/app/assets/images/souseBigLogoFP.svg";
+    let theme4Image = "../../src/app/assets/images/souseBigLogoVice.svg";
+    let theme5Image = "../../src/app/assets/images/souseBigLogoVape.svg";
+    if (isAuthenticated) {
+        let currentTheme = this.state.currentTheme;
+        if (currentTheme == theme1) {
+            this.setState({navbarImage: theme1Image});
+        } else if (currentTheme == theme2) {
+            this.setState({navbarImage: theme2Image});
+        } else if (currentTheme == theme3) {
+            this.setState({navbarImage: theme3Image});
+        } else if (currentTheme == theme4) {
+            this.setState({navbarImage: theme4Image});
+        } else if (currentTheme == theme5) {
+            this.setState({navbarImage: theme5Image});
+        } else if (currentTheme == undefined) {
+            this.setState({navbarImage: theme1Image});
+        } 
+    } else {
+        this.setState({navbarImage: theme1Image});
+    }
   }
   
     render() {
       const {isAuthenticated, user} = this.props.auth;
       const loggedinUser = user.username;
+      const loggedinUserImage = user.userImage;
       const loggedInLinks = (
         <div>
-          <li><a class="sidenav-close logoutClose" onClick={this.onLogout.bind(this)}>Log Out</a></li>
+          <li><Link class="sidenav-close" to={`/${loggedinUser}`} onClick={() => window.location.refresh()}><LoggedInUserIcon /></Link></li>
+          <li><a class="sidenav-close logoutClose" onClick={this.onLogout.bind(this)}><LogoutUserIcon /></a></li>
         </div>
       )
       const guestLinks = (
         <div>
           <li><Link class="sidenav-close" to="/signup">Sign Up</Link></li>
           <li><Link class="sidenav-close" to="/login">Login</Link></li>
-          <li>
-            <div class="input-field col s6">
-              <i class="material-icons prefix">search</i>
-              <input type="text" 
-                placeholder="" 
-                id="autocomplete-input" 
-                class="autocomplete" 
-                ref={ (autocomplete) => {this.autocomplete = autocomplete} } />
-              <label for="autocomplete-input">Search</label>
-            </div>
-          </li>
         </div>
       )
+      const navbarImage = this.state.navbarImage;
         return (
             <div>
-                <nav class="z-depth-0">
-                  <div class="nav-wrapper">
+              <div class="navbar-fixed">
+                <SouseNav className="z-depth-0">
+                  <div class="nav-wrapper container">
                     <Link class="brand-logo d-md-none py-3" to="/">
                       <img 
                           class="souseHomeLogo-navbar" 
-                          src = "../../src/app/assets/images/souseBigLogo.svg"
+                          src={navbarImage}
                           width="125" 
                           alt="logo" 
                       />
@@ -55,7 +97,7 @@ class Navbar extends Component {
                     <Link class="brand-logo d-none d-md-block pl-3 py-3 px-4" to="/">
                       <img 
                           class="souseHomeLogo-navbar" 
-                          src = "../../src/app/assets/images/souseBigLogo.svg"
+                          src={navbarImage}
                           width="125" 
                           alt="logo" 
                       />
@@ -65,11 +107,12 @@ class Navbar extends Component {
                       {isAuthenticated ? loggedInLinks : guestLinks}
                     </ul>
                   </div>
-                </nav>
+                </SouseNav>
 
-                <ul class="sidenav" id="slide-out">
+                <SouseSideNav className="sidenav" id="slide-out">
                   {isAuthenticated ? loggedInLinks : guestLinks}
-                </ul>
+                </SouseSideNav>
+              </div>
             </div>
           );
         }

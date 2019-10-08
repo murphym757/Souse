@@ -4,6 +4,11 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import {
+    SouseButton,
+    SouseUploadButton,
+    SouseForm
+} from '../../assets/styles/mainStyling';
 import { WaveLoading } from 'styled-spinkit';
 import S3 from 'aws-s3';
 import awsConfig from '../../../server/config';
@@ -69,7 +74,6 @@ class PostEdit extends Component {
          const newFileName = "" + this.state.postUnixTimestamp + "";
          S3Client.uploadFile(e.target.files[0], newFileName)
              .then((data) => {
-                 console.log(data.location);
                  this.setState({
                      postImageURL: data.location,
                      isLoading: true
@@ -108,7 +112,6 @@ class PostEdit extends Component {
         const apiRoute = "/souseAPI";
         const editRoute = "/p/edit";
         const postId = this.state.originalPostId;
-        console.log(postId);
         axios.get(apiRoute + editRoute + "/" + postId)
           .then(res => {
               this.setState({ 
@@ -175,7 +178,7 @@ class PostEdit extends Component {
             <div>
                 {isAuthenticated && postCreatorId == loggedInUser
                     ? <div class="container">
-                            <form onSubmit={this.onSubmit}>
+                            <SouseForm onSubmit={this.onSubmit}>
                             <TestFont>Hi There</TestFont>
                                 <div class="row pt-5">
                                     <div class="input-field col-6">
@@ -210,15 +213,15 @@ class PostEdit extends Component {
                                                                 }
                                                             </div>
                                                         :   <div class="file-field input-field d-block mx-auto">
-                                                                <div class="btn-large">
-                                                                    <span>Upload</span>
+                                                                <SouseUploadButton className="btn-large">
+                                                                    <p class="lead buttonFont">Upload</p>
                                                                     <input 
                                                                         type="file" 
                                                                         name="souseImage"
                                                                         id="souseImagePost"
                                                                         onChange={this.onImageUpload}
                                                                     />
-                                                                </div>
+                                                                </SouseUploadButton>
                                                                 <div class="file-path-wrapper">
                                                                     <input class="file-path validate" type="text" />
                                                                 </div>
@@ -242,12 +245,16 @@ class PostEdit extends Component {
                                         }
                                 </div>
                                     <div class="form-group col d-flex justify-content-center">
-                                        <button onClick={this.onUpdateImageDelete} type="submit" class="waves-effect waves-light btn-large">Update</button>
+                                        <SouseButton onClick={this.onUpdateImageDelete} type="submit" className="waves-effect waves-light btn-large">
+                                            <p class="lead buttonFont">Update</p>
+                                        </SouseButton>
                                     </div>
                                 </div>
-                            </form>
+                            </SouseForm>
                         <div class="form-group col d-flex justify-content-center pt-3">
-                            <button onClick={this.delete} class="waves-effect waves-light btn-large">Delete</button>
+                            <SouseButton onClick={this.delete} className="waves-effect waves-light btn-large">
+                                <p class="lead buttonFont">Delete</p>
+                            </SouseButton>
                         </div>
                     </div>
                     : <div></div>

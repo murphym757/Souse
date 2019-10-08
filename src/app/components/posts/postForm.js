@@ -4,6 +4,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import S3 from 'aws-s3';
 import awsConfig from '../../../server/config';
+import {
+    SouseLoadingIcon,
+    SouseLoadingIcon2,
+    SouseLoadingIcon3,
+    SouseButton,
+    SouseUploadButton,
+    SouseForm
+} from '../../assets/styles/mainStyling';
 
 class PostCreate extends Component {
     constructor(props) {
@@ -48,7 +56,6 @@ class PostCreate extends Component {
         const newFileName = "" + this.state.postUnixTimestamp + "";
         S3Client.uploadFile(e.target.files[0], newFileName)
         .then((data) => {
-            console.log(data.location);
             this.setState({
                 postImageURL: data.location,
                 isLoading: false
@@ -102,7 +109,7 @@ class PostCreate extends Component {
         const {isAuthenticated, user} = this.props.auth;
         return (
             <div class="container">
-                <form onSubmit={this.onSubmit}>
+                <SouseForm onSubmit={this.onSubmit}>
                 {this.state.imageUploadOption 
                     ?   <div>
                             <div class="input-field">
@@ -123,7 +130,9 @@ class PostCreate extends Component {
                                 </a>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="waves-effect waves-light btn-large">Share</button>
+                                <SouseButton type="submit" className="waves-effect waves-light btn-large">
+                                    <p class="lead buttonFont">Share</p>
+                                </SouseButton>
                             </div>
                         </div>
                     
@@ -143,28 +152,38 @@ class PostCreate extends Component {
                         <div>
                             {this.state.fullPostUploadLoader
                                 ?   <div class="file-field input-field">
-                                        <div class="btn-large">
-                                            <span>Upload</span>
+                                        <SouseUploadButton className="btn-large">
+                                            <p class="lead buttonFont">Upload</p>
                                             <input 
                                                 type="file" 
                                                 name="souseImage"
                                                 id="souseImagePost"
                                                 onChange={this.onImageUpload}
                                             />
-                                        </div>
+                                        </SouseUploadButton>
                                         <div class="file-path-wrapper">
                                             <input class="file-path validate" type="text" />
                                         </div>
                                     </div>
                                 :   <div>
                                         {this.state.isLoading
-                                            ?   <div class="progress">
-                                                    <div class="indeterminate"></div>
+                                            ?    <div class="row d-flex justify-content-center">
+                                                    <SouseLoadingIcon className="spinner-grow" role="status">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </SouseLoadingIcon>
+                                                    <SouseLoadingIcon2 className="spinner-grow" role="status">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </SouseLoadingIcon2>
+                                                    <SouseLoadingIcon3 className="spinner-grow" role="status">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </SouseLoadingIcon3>
                                                 </div>
                                             :   <div>
                                                     <h6>Image Successfully Uploaded</h6>
                                                     <div class="form-group">
-                                                        <button type="submit" class="waves-effect waves-light btn-large">Share</button>
+                                                        <SouseButton type="submit" className="waves-effect waves-light btn-large">
+                                                            <p class="lead buttonFont">Share</p>
+                                                        </SouseButton>
                                                     </div>
                                                 </div>   
                                         }
@@ -173,7 +192,7 @@ class PostCreate extends Component {
                         </div>
                     </div>
                 } 
-                </form>
+                </SouseForm>
             </div>
           );
       }

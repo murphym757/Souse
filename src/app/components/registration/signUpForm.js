@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { registerUser } from '../../../server/actions/authentication';
 import classnames from 'classnames';
-
+import {
+    SouseButton,
+    SouseForm
+} from '../../assets/styles/mainStyling';
 
 class SignUpForm extends Component {
     constructor(props) {
@@ -62,7 +65,7 @@ class SignUpForm extends Component {
         const { errors } = this.state;
         return (
             <div class="container-fluid">
-                <form onSubmit={this.onSubmit}>
+                <SouseForm onSubmit={this.onSubmit}>
                     <div class="input-field">
                         <input 
                             type="email"
@@ -149,9 +152,11 @@ class SignUpForm extends Component {
                         {errors.password_confirm && (<div class="invalid-feedback">{errors.password_confirm}</div>)}
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="waves-effect waves-light btn-large">Sign Up</button>
+                        <SouseButton type="submit" className="waves-effect waves-light btn-large">
+                            <p class="lead buttonFont">Sign Up</p>
+                        </SouseButton>
                     </div>
-                </form>
+                </SouseForm>
             </div>
           );
       }

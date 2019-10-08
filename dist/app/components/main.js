@@ -23,6 +23,8 @@ var _provider = _interopRequireDefault(require("@bootstrap-styled/provider"));
 
 var _theme = require("bootstrap-styled/lib/theme");
 
+var _globalStyling = require("../assets/styles/globalStyling");
+
 var _globalTheme = require("../assets/styles/globalTheme");
 
 var _loginForm = _interopRequireDefault(require("./registration/loginForm"));
@@ -49,7 +51,9 @@ var _editUserProfile = _interopRequireDefault(require("./userProfile/editUserPro
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -87,7 +91,8 @@ function (_Component) {
       users: [],
       comments: [],
       followers: [],
-      follows: []
+      follows: [],
+      currentTheme: ""
     };
     return _this;
   }
@@ -121,7 +126,6 @@ function (_Component) {
 
       _axios["default"].get(apiRoute + findUserRoute).then(function (res) {
         var users = res.data;
-        console.log(users);
 
         _this2.setState({
           users: users
@@ -137,7 +141,6 @@ function (_Component) {
 
       _axios["default"].get(apiRoute + findCommentRoute).then(function (res) {
         var comments = res.data;
-        console.log(comments);
 
         _this2.setState({
           comments: comments
@@ -153,7 +156,6 @@ function (_Component) {
 
       _axios["default"].get(apiRoute + findFollowerRoute).then(function (res) {
         var followers = res.data;
-        console.log(followers);
 
         _this2.setState({
           followers: followers
@@ -169,7 +171,6 @@ function (_Component) {
 
       _axios["default"].get(apiRoute + findFollowRoute).then(function (res) {
         var follows = res.data;
-        console.log(follows);
 
         _this2.setState({
           follows: follows
@@ -177,13 +178,59 @@ function (_Component) {
       })["catch"](function (error) {
         console.log(error);
       });
+
+      {
+        /* Theme Finder */
+      }
+      var _this$props$auth = this.props.auth,
+          isAuthenticated = _this$props$auth.isAuthenticated,
+          user = _this$props$auth.user;
+      var theme1 = _globalTheme.souseDefaultTheme;
+      var theme2 = _globalTheme.souseIMTheme;
+      var theme3 = _globalTheme.souseFPTheme;
+      var theme4 = _globalTheme.souseViceTheme;
+      var theme5 = _globalTheme.souseVapeTheme;
+
+      if (isAuthenticated) {
+        var userTheme = user.userTheme.slice(0);
+
+        if (userTheme = theme1) {
+          this.setState({
+            currentTheme: _globalTheme.souseDefaultTheme
+          });
+        } else if (userTheme = theme2) {
+          this.setState({
+            currentTheme: _globalTheme.souseIMTheme
+          });
+        } else if (userTheme = theme3) {
+          this.setState({
+            currentTheme: _globalTheme.souseFPTheme
+          });
+        } else if (userTheme = theme4) {
+          this.setState({
+            currentTheme: _globalTheme.souseViceTheme
+          });
+        } else if (userTheme = theme5) {
+          this.setState({
+            currentTheme: _globalTheme.souseVapeTheme
+          });
+        } else if (userTheme = undefined) {
+          this.setState({
+            currentTheme: _globalTheme.souseDefaultTheme
+          });
+        }
+      } else {
+        this.setState({
+          currentTheme: _globalTheme.souseDefaultTheme
+        });
+      }
     }
   }, {
     key: "render",
     value: function render() {
-      var _this$props$auth = this.props.auth,
-          isAuthenticated = _this$props$auth.isAuthenticated,
-          user = _this$props$auth.user;
+      var _this$props$auth2 = this.props.auth,
+          isAuthenticated = _this$props$auth2.isAuthenticated,
+          user = _this$props$auth2.user;
       var souseUsers = this.state.users;
       var sousePosts = this.state.posts;
       var souseComments = this.state.comments;
@@ -195,13 +242,93 @@ function (_Component) {
         '$card-bg': 'rgb(228, 209, 209)',
         '$font-family-base': 'Helvetica'
       });
+
+      var Card = _styledComponents["default"].div.withConfig({
+        displayName: "main__Card",
+        componentId: "sc-1ucehs2-0"
+      })(["display:block;z-index:9999;position:fixed;width:100%;height:100%;top:0;right:0;left:0;bottom:0;overflow:auto;background-color:", ";color:", ";font-family:'Nunito Sans',sans-serif;font-weight:400;"], function (props) {
+        return props.theme.primaryColor;
+      }, function (props) {
+        return props.theme.secondaryColor;
+      });
+
       return _react["default"].createElement(_reactRouterDom.BrowserRouter, null, _react["default"].createElement("div", {
         "class": "container-fluid entireProjectContainer"
-      }, _react["default"].createElement(_provider["default"], {
+      }, isAuthenticated ? _react["default"].createElement(_provider["default"], {
+        theme: _globalTheme.souseIMTheme
+      }, _react["default"].createElement(_globalStyling.GlobalStyle, null), _react["default"].createElement(Card, {
+        className: "align-content-stretch flex-wrap entireProjectCard m-0"
+      }, _react["default"].createElement(_v.CardBlock, null, _react["default"].createElement(_navbar["default"], {
+        souseUserData: souseUsers
+      }), _react["default"].createElement(_reactRouterDom.Switch, null, _react["default"].createElement(_reactRouterDom.Route, {
+        exact: true,
+        path: "/",
+        render: function render(props) {
+          return _react["default"].createElement(_LandingPage["default"], _extends({}, props, {
+            souseUserData: souseUsers,
+            sousePostData: sousePosts,
+            souseCommentData: souseComments,
+            souseFollowerData: souseFollowers,
+            souseFollowData: souseFollows
+          }));
+        }
+      }), _react["default"].createElement(_reactRouterDom.Route, {
+        exact: true,
+        path: "/signup",
+        component: _signUpForm["default"]
+      }), _react["default"].createElement(_reactRouterDom.Route, {
+        exact: true,
+        path: "/login",
+        component: _loginForm["default"]
+      }), _react["default"].createElement(_reactRouterDom.Route, {
+        exact: true,
+        path: "/:username",
+        render: function render(props) {
+          return _react["default"].createElement(_usersPage["default"], _extends({}, props, {
+            souseUserData: souseUsers,
+            sousePostData: sousePosts,
+            souseFollowerData: souseFollowers,
+            souseFollowData: souseFollows
+          }));
+        }
+      }), _react["default"].createElement(_reactRouterDom.Route, {
+        exact: true,
+        path: "/u/edit/:id",
+        render: function render(props) {
+          return _react["default"].createElement(_editUserProfile["default"], _extends({}, props, {
+            sousePostData: sousePosts,
+            souseCommentData: souseComments,
+            souseFollowerData: souseFollowers,
+            souseFollowData: souseFollows
+          }));
+        }
+      }), _react["default"].createElement(_reactRouterDom.Route, {
+        exact: true,
+        path: "/p/:id",
+        render: function render(props) {
+          return _react["default"].createElement(_postsPage["default"], _extends({}, props, {
+            souseUserData: souseUsers,
+            sousePostData: sousePosts,
+            souseCommentData: souseComments
+          }));
+        }
+      }), _react["default"].createElement(_reactRouterDom.Route, {
+        exact: true,
+        path: "/p/edit/:id",
+        component: _postEditForm["default"]
+      }), _react["default"].createElement(_reactRouterDom.Route, {
+        exact: true,
+        path: "/c/delete/:id",
+        component: _commentDeleteSection["default"]
+      }), _react["default"].createElement(_reactRouterDom.Route, {
+        component: _Page["default"]
+      }))))) : _react["default"].createElement(_provider["default"], {
         theme: _globalTheme.souseDefaultTheme
-      }, _react["default"].createElement(_v.Card, {
-        className: "d-flex align-content-stretch flex-wrap entireProjectCard m-0"
-      }, _react["default"].createElement(_v.CardBlock, null, _react["default"].createElement(_navbar["default"], null), _react["default"].createElement(_reactRouterDom.Switch, null, _react["default"].createElement(_reactRouterDom.Route, {
+      }, _react["default"].createElement(_globalStyling.GlobalStyle, null), _react["default"].createElement(Card, {
+        className: "align-content-stretch flex-wrap entireProjectCard m-0"
+      }, _react["default"].createElement(_v.CardBlock, null, _react["default"].createElement(_navbar["default"], {
+        souseUserData: souseUsers
+      }), _react["default"].createElement(_reactRouterDom.Switch, null, _react["default"].createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/",
         render: function render(props) {
