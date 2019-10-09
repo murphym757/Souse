@@ -9,6 +9,13 @@ import {
   LoggedInUserIcon,
   LogoutUserIcon
 } from '../../assets/styles/navbarStyling';
+import {
+  souseDefaultLogo,
+  souseIMLogo,
+  souseFPLogo,
+  souseViceLogo,
+  souseVapeLogo
+} from '../../assets/images/souseLogos';
 import M from 'materialize-css';
 
 class Navbar extends Component {
@@ -39,11 +46,11 @@ class Navbar extends Component {
     let theme3 = "souseFPTheme";
     let theme4 = "souseViceTheme";
     let theme5 = "souseVapeTheme";
-    let theme1Image = "../../src/app/assets/images/souseBigLogo.svg";
-    let theme2Image = "../../src/app/assets/images/souseBigLogoIM.svg";
-    let theme3Image = "../../src/app/assets/images/souseBigLogoFP.svg";
-    let theme4Image = "../../src/app/assets/images/souseBigLogoVice.svg";
-    let theme5Image = "../../src/app/assets/images/souseBigLogoVape.svg";
+    let theme1Image = souseDefaultLogo;
+    let theme2Image = souseIMLogo;
+    let theme3Image = souseFPLogo;
+    let theme4Image = souseViceLogo;
+    let theme5Image = souseVapeLogo;
     if (isAuthenticated) {
         let currentTheme = this.state.currentTheme;
         if (currentTheme == theme1) {

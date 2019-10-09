@@ -17,6 +17,8 @@ var _authentication = require("../../../server/actions/authentication");
 
 var _navbarStyling = require("../../assets/styles/navbarStyling");
 
+var _souseLogos = require("../../assets/images/souseLogos");
+
 var _materializeCss = _interopRequireDefault(require("materialize-css"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -91,11 +93,11 @@ function (_Component) {
       var theme3 = "souseFPTheme";
       var theme4 = "souseViceTheme";
       var theme5 = "souseVapeTheme";
-      var theme1Image = "../../src/app/assets/images/souseBigLogo.svg";
-      var theme2Image = "../../src/app/assets/images/souseBigLogoIM.svg";
-      var theme3Image = "../../src/app/assets/images/souseBigLogoFP.svg";
-      var theme4Image = "../../src/app/assets/images/souseBigLogoVice.svg";
-      var theme5Image = "../../src/app/assets/images/souseBigLogoVape.svg";
+      var theme1Image = _souseLogos.souseDefaultLogo;
+      var theme2Image = _souseLogos.souseIMLogo;
+      var theme3Image = _souseLogos.souseFPLogo;
+      var theme4Image = _souseLogos.souseViceLogo;
+      var theme5Image = _souseLogos.souseVapeLogo;
 
       if (isAuthenticated) {
         var currentTheme = this.state.currentTheme;
