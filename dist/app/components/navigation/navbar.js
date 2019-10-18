@@ -72,7 +72,7 @@ function (_Component) {
     console.log(loggedinUserTheme);
     _this.state = {
       navbarImage: "",
-      currentTheme: "souseIMTheme"
+      currentTheme: "souseDefaultTheme"
     };
     return _this;
   }

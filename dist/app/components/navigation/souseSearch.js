@@ -15,6 +15,8 @@ var _reactRedux = require("react-redux");
 
 var _mainStyling = require("../../assets/styles/mainStyling");
 
+var _userProfileStyling = require("../../assets/styles/userProfileStyling");
+
 var _materializeCss = _interopRequireDefault(require("materialize-css"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -96,18 +98,49 @@ function (_Component) {
         name: "postCaption"
       }, _defineProperty(_React$createElement, "id", "souseCaptionPost"), _defineProperty(_React$createElement, "rows", "1"), _defineProperty(_React$createElement, "value", this.state.userSearch), _defineProperty(_React$createElement, "onChange", this.handleChange), _React$createElement)), _react["default"].createElement("label", {
         "for": "souseCaptionPost"
-      }, "Search"))), Object.keys(this.props.souseSearchedUsers).map(function (object, i) {
-        return _react["default"].createElement(_reactRouterDom.Link, {
+      }, "Search"))), _react["default"].createElement("div", {
+        "class": "row"
+      }, Object.keys(this.props.souseSearchedUsers).map(function (object, i) {
+        return _react["default"].createElement("div", {
+          "class": "col-3",
+          obj: object,
+          key: i
+        }, _react["default"].createElement(_mainStyling.SouseStyledLink, {
           to: "/".concat(_this2.props.souseSearchedUsers[i].username),
           onClick: function onClick() {
             return window.location.refresh();
           }
         }, _react["default"].createElement("div", {
           "class": "row"
-        }, _react["default"].createElement("h6", {
-          "class": "col-9"
-        }, _this2.props.souseSearchedUsers[i].username)));
-      }));
+        }, _react["default"].createElement("div", {
+          "class": "col-12"
+        }, " ", _react["default"].createElement("div", {
+          "class": "container"
+        }, _react["default"].createElement("div", {
+          "class": "row"
+        }, _react["default"].createElement(_userProfileStyling.SouseSearchUserIcon, {
+          className: "mx-auto d-block justify-content-center"
+        }, _react["default"].createElement("img", {
+          className: "souseUserSearchImage userHomeSearchImageBorder",
+          src: _this2.props.souseSearchedUsers[i].userImage,
+          alt: "souseUserIcon",
+          width: "45px",
+          height: "45px"
+        }))))), _react["default"].createElement("div", {
+          "class": "col-12"
+        }, " ", _react["default"].createElement("div", {
+          "class": "container"
+        }, _react["default"].createElement("div", {
+          "class": "row"
+        }, _react["default"].createElement(_mainStyling.LinkFontH6, {
+          className: "col-12 p-0 m-0 d-flex justify-content-center",
+          style: {
+            fontWeight: 600
+          }
+        }, _this2.props.souseSearchedUsers[i].username), _react["default"].createElement(_mainStyling.LinkFontH6, {
+          className: "col-12 p-0 m-0 d-flex justify-content-center"
+        }, _this2.props.souseSearchedUsers[i].firstName + " " + _this2.props.souseSearchedUsers[i].lastName)))))));
+      })));
     }
   }]);
 

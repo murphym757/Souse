@@ -83,7 +83,7 @@ function (_Component) {
       filteredUsers: [],
       switchColor: "",
       switchHandleColor: "",
-      currentTheme: "souseIMTheme" //loggedinUserTheme
+      currentTheme: "souseDefaultTheme" //loggedinUserTheme
 
     };
     _this.handleThemeChange = _this.handleThemeChange.bind(_assertThisInitialized(_this));
@@ -166,14 +166,14 @@ function (_Component) {
       var souseFormState = this.state.souseFormState;
       var switchColor = this.state.switchColor;
       var switchHandleColor = this.state.switchHandleColor;
-      return _react["default"].createElement("div", null, isAuthenticated ? _react["default"].createElement("div", null, usernameUserPage === loggedInUsername ? _react["default"].createElement("div", null, _react["default"].createElement("h6", null, "Loggedin and OG User")) : _react["default"].createElement("div", null, _react["default"].createElement("h6", null, "Loggedin, but not OG User"))) : _react["default"].createElement("div", null, _react["default"].createElement("h6", null, "Just visiting")), _react["default"].createElement("div", {
+      return _react["default"].createElement("div", null, _react["default"].createElement("div", {
         "class": "collapse",
         id: "postCreateCollapse"
       }, _react["default"].createElement("div", {
         "class": "postCreateCollapse"
       }, _react["default"].createElement("div", {
         "class": "container"
-      }, _react["default"].createElement("div", {
+      }, isAuthenticated ? _react["default"].createElement("div", null, usernameUserPage === loggedInUsername ? _react["default"].createElement("div", {
         "class": "row"
       }, _react["default"].createElement("div", {
         "class": "col-10"
@@ -197,7 +197,23 @@ function (_Component) {
         width: 48,
         className: "react-switch",
         id: "material-switch"
-      }), "On")))))), _react["default"].createElement("div", {
+      }), "On"))) : _react["default"].createElement("div", {
+        "class": "row"
+      }, _react["default"].createElement("div", {
+        "class": "col-12"
+      }, _react["default"].createElement(_souseSearch["default"], {
+        souseSearchedUsers: this.state.filteredUsers,
+        match: this.props.match,
+        onChange: this.filterList
+      })))) : _react["default"].createElement("div", {
+        "class": "row"
+      }, _react["default"].createElement("div", {
+        "class": "col-12"
+      }, _react["default"].createElement(_souseSearch["default"], {
+        souseSearchedUsers: this.state.filteredUsers,
+        match: this.props.match,
+        onChange: this.filterList
+      })))))), _react["default"].createElement("div", {
         "class": "collapse",
         id: "searchCollapse"
       }, _react["default"].createElement("div", {

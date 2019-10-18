@@ -10,10 +10,15 @@ import { makeTheme } from 'bootstrap-styled/lib/theme';
 import { GlobalStyle } from '../assets/styles/globalStyling';
 import {
     souseDefaultTheme,
+    souseDefaultThemeDark,
     souseIMTheme,
+    souseIMThemeDark,
     souseFPTheme,
+    souseFPThemeDark,
     souseViceTheme,
-    souseVapeTheme
+    souseViceThemeDark,
+    souseVapeTheme,
+    souseVapeThemeDark
 } from '../assets/styles/globalTheme';
 
 import LoginForm from './registration/loginForm';
@@ -37,7 +42,9 @@ class MainSource extends Component {
             comments: [],
             followers: [],
             follows: [],
-            currentTheme: ""
+            currentTheme: "souseDefaultTheme",
+            themeType: "Light"
+
         };
     }
     componentDidMount() {
@@ -105,6 +112,7 @@ class MainSource extends Component {
             })
         { /* Theme Finder */}
         const {isAuthenticated, user} = this.props.auth; 
+        const themeType = this.state.themeType;
         let theme1 = souseDefaultTheme;
         let theme2 = souseIMTheme;
         let theme3 = souseFPTheme;
@@ -113,15 +121,35 @@ class MainSource extends Component {
         if (isAuthenticated) {
             let userTheme = user.userTheme.slice(0);
             if (userTheme = theme1) {
-                this.setState({currentTheme: souseDefaultTheme});
+                if (themeType == "Light") {
+                    this.setState({currentTheme: souseDefaultTheme});
+                } else {
+                    this.setState({currentTheme: souseDefaultThemeDark});
+                }
             } else if (userTheme = theme2) {
-                this.setState({currentTheme: souseIMTheme});
+                if (themeType == "Light") {
+                    this.setState({currentTheme: souseIMTheme});
+                } else {
+                    this.setState({currentTheme: souseIMThemeDark});
+                }
             } else if (userTheme = theme3) {
-                this.setState({currentTheme: souseFPTheme});
+                if (themeType == "Light") {
+                    this.setState({currentTheme: souseFPTheme});
+                } else {
+                    this.setState({currentTheme: souseFPThemeDark});
+                }
             } else if (userTheme = theme4) {
-                this.setState({currentTheme: souseViceTheme});
+                if (themeType == "Light") {
+                    this.setState({currentTheme: souseViceTheme});
+                } else {
+                    this.setState({currentTheme: souseViceThemeDark});
+                }
             } else if (userTheme = theme5) {
-                this.setState({currentTheme: souseVapeTheme});
+                if (themeType == "Light") {
+                    this.setState({currentTheme: souseVapeTheme});
+                } else {
+                    this.setState({currentTheme: souseVapeThemeDark});
+                }
             } else if (userTheme = undefined) {
                 this.setState({currentTheme: souseDefaultTheme});
             } 
@@ -138,12 +166,7 @@ class MainSource extends Component {
       const souseComments = this.state.comments;
       const souseFollowers = this.state.followers;
       const souseFollows = this.state.follows;
-      const gucci = 'green';
-      const darkTheme = makeTheme({
-          '$body-color': gucci,
-          '$card-bg': 'rgb(228, 209, 209)',
-          '$font-family-base': 'Helvetica'
-      });
+
         const Card = styled.div`
             display: block;
             z-index: 9999;
@@ -166,7 +189,7 @@ class MainSource extends Component {
             <Router>
                 <div class="container-fluid entireProjectContainer">
                 {isAuthenticated
-                    ?   <BootstrapProvider theme={souseIMTheme}>
+                    ?   <BootstrapProvider theme={this.state.currentTheme}>
                             <GlobalStyle />
                                 <Card className="align-content-stretch flex-wrap entireProjectCard m-0">
                                     <CardBlock>

@@ -179,14 +179,7 @@ function (_Component) {
         "class": "souseLinkFont"
       }, _react["default"].createElement("h6", null, "Upload Image Here ", _react["default"].createElement("i", {
         "class": "fas fa-camera fa-lg"
-      })))), _react["default"].createElement("div", {
-        "class": "form-group"
-      }, _react["default"].createElement(_mainStyling.SouseButton, {
-        type: "submit",
-        className: "waves-effect waves-light btn-large"
-      }, _react["default"].createElement("p", {
-        "class": "lead buttonFont"
-      }, "Share")))) : _react["default"].createElement("div", null, _react["default"].createElement("div", {
+      }))))) : _react["default"].createElement("div", null, _react["default"].createElement("div", {
         "class": "input-field"
       }, _react["default"].createElement("textarea", (_React$createElement2 = {
         id: "souseCaptionPost",
@@ -196,7 +189,7 @@ function (_Component) {
         "for": "souseCaptionPost"
       }, "Caption")), _react["default"].createElement("div", null, this.state.fullPostUploadLoader ? _react["default"].createElement("div", {
         "class": "file-field input-field"
-      }, _react["default"].createElement(_mainStyling.SouseUploadButton, {
+      }, _react["default"].createElement(_mainStyling.SouseButton, {
         className: "btn-large"
       }, _react["default"].createElement("p", {
         "class": "lead buttonFont"

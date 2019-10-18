@@ -305,21 +305,6 @@ function (_Component) {
       var postsTotal = "" + this.postFinder().length + "";
       var followersTotal = "" + this.followerFinder().length + "";
       var followsTotal = "" + this.followFinder().length + "";
-
-      var UsernameUserPage = _styledComponents["default"].h2.withConfig({
-        displayName: "userProfile__UsernameUserPage",
-        componentId: "sc-16lkwtc-0"
-      })(["color:", ";"], function (props) {
-        return props.theme.secondaryColor;
-      });
-
-      var UserDataUserPage = _styledComponents["default"].h5.withConfig({
-        displayName: "userProfile__UserDataUserPage",
-        componentId: "sc-16lkwtc-1"
-      })(["color:", ";"], function (props) {
-        return props.theme.secondaryColor;
-      });
-
       return _react["default"].createElement("div", null, loggedInUserImage === "" ? _react["default"].createElement(_reactRouterDom.Redirect, {
         to: {
           pathname: "/u/edit/" + loggedInUserId,
@@ -348,32 +333,34 @@ function (_Component) {
       }, " ", _react["default"].createElement("div", {
         "class": "row userHeaderSection d-flex justify-content-center"
       }, _react["default"].createElement("div", {
-        "class": "profilePageUserImage d-flex justify-content-center"
-      }, " ", _react["default"].createElement("div", {
-        "class": "souseUserCreatorPage col-8 d-flex"
+        "class": "container"
       }, _react["default"].createElement("div", {
-        "class": "container-fluid d-flex justify-content-center"
-      }, _react["default"].createElement(_userProfileStyling.SouseUserPageIcon, null, _react["default"].createElement("img", {
+        "class": "col-12"
+      }, _react["default"].createElement("div", {
+        "class": "row"
+      }, " ", _react["default"].createElement("div", {
+        "class": "col-6 d-flex justify-content-end pr-5"
+      }, " ", _react["default"].createElement(_userProfileStyling.SouseUserPageIcon, null, _react["default"].createElement("img", {
         className: "souseUserPageImage userHomePageImageBorder",
         src: creatorImage,
         alt: "souseUserIcon",
         width: "85px",
         height: "85px"
-      })))), _react["default"].createElement("div", {
-        "class": "profilePageUserData col-12"
-      }, " ", _react["default"].createElement("div", null, _react["default"].createElement("div", {
+      }))), _react["default"].createElement("div", {
+        "class": "col-6 pl-5"
+      }, " ", _react["default"].createElement("div", {
         "class": "row userNameRow"
-      }, _react["default"].createElement(UsernameUserPage, null, creatorUsername)), _react["default"].createElement("div", {
+      }, _react["default"].createElement(_userProfileStyling.UsernameUserPage, null, creatorUsername)), _react["default"].createElement("div", {
         "class": "row userButtonsRow"
       }, _react["default"].createElement("div", null, _react["default"].createElement("div", {
         "class": "col-12"
-      }, _react["default"].createElement(UserDataUserPage, null), this.state.totalDisplayPosts === postsTotal ? _react["default"].createElement(UserDataUserPage, {
+      }, _react["default"].createElement(_userProfileStyling.UserDataUserPage, null), this.state.totalDisplayPosts === postsTotal ? _react["default"].createElement(_userProfileStyling.UserDataUserPage, {
         onClick: this.listClicked = function (e) {
           _this3.setState({
             userPageDisplay: '1'
           });
         }
-      }, _react["default"].createElement("b", null, postsTotal), " Post") : _react["default"].createElement(UserDataUserPage, {
+      }, _react["default"].createElement("b", null, postsTotal), " Post") : _react["default"].createElement(_userProfileStyling.UserDataUserPage, {
         onClick: this.listClicked = function (e) {
           _this3.setState({
             userPageDisplay: '1'
@@ -381,13 +368,13 @@ function (_Component) {
         }
       }, _react["default"].createElement("b", null, postsTotal), " Posts")), _react["default"].createElement("div", {
         "class": "col-12"
-      }, this.state.totalDisplayFollowers === followersTotal ? _react["default"].createElement(UserDataUserPage, {
+      }, this.state.totalDisplayFollowers === followersTotal ? _react["default"].createElement(_userProfileStyling.UserDataUserPage, {
         onClick: this.listClicked = function (e) {
           _this3.setState({
             userPageDisplay: '3'
           });
         }
-      }, _react["default"].createElement("b", null, followersTotal), " Follower") : _react["default"].createElement(UserDataUserPage, {
+      }, _react["default"].createElement("b", null, followersTotal), " Follower") : _react["default"].createElement(_userProfileStyling.UserDataUserPage, {
         onClick: this.listClicked = function (e) {
           _this3.setState({
             userPageDisplay: '3'
@@ -395,36 +382,19 @@ function (_Component) {
         }
       }, _react["default"].createElement("b", null, followersTotal), " Followers")), _react["default"].createElement("div", {
         "class": "col-12"
-      }, this.state.totalDisplayFollows === followsTotal ? _react["default"].createElement(UserDataUserPage, {
+      }, this.state.totalDisplayFollows === followsTotal ? _react["default"].createElement(_userProfileStyling.UserDataUserPage, {
         onClick: this.listClicked = function (e) {
           _this3.setState({
             userPageDisplay: '4'
           });
         }
-      }, _react["default"].createElement("b", null, followsTotal), " Follow") : _react["default"].createElement(UserDataUserPage, {
+      }, _react["default"].createElement("b", null, followsTotal), " Follow") : _react["default"].createElement(_userProfileStyling.UserDataUserPage, {
         onClick: this.listClicked = function (e) {
           _this3.setState({
             userPageDisplay: '4'
           });
         }
-      }, _react["default"].createElement("b", null, followsTotal), " Follows")), _react["default"].createElement("div", {
-        "class": "row d-flex justify-content-center"
-      }, _react["default"].createElement(_mainStyling.SouseLoadingIcon, {
-        className: "spinner-grow",
-        role: "status"
-      }, _react["default"].createElement("span", {
-        "class": "sr-only"
-      }, "Loading...")), _react["default"].createElement(_mainStyling.SouseLoadingIcon2, {
-        className: "spinner-grow",
-        role: "status"
-      }, _react["default"].createElement("span", {
-        "class": "sr-only"
-      }, "Loading...")), _react["default"].createElement(_mainStyling.SouseLoadingIcon3, {
-        className: "spinner-grow",
-        role: "status"
-      }, _react["default"].createElement("span", {
-        "class": "sr-only"
-      }, "Loading...")))), isAuthenticated ? _react["default"].createElement("div", null, creatorId !== loggedInUserId ? _react["default"].createElement("div", null, Array.isArray(this.followerFinder()) && this.followerFinder()[0] ? _react["default"].createElement("div", null, this.followerFinder()[0].followerUserId == loggedInUserId ? _react["default"].createElement("div", null, _react["default"].createElement(_mainStyling.SouseButton, {
+      }, _react["default"].createElement("b", null, followsTotal), " Follows"))), isAuthenticated ? _react["default"].createElement("div", null, creatorId !== loggedInUserId ? _react["default"].createElement("div", null, Array.isArray(this.followerFinder()) && this.followerFinder()[0] ? _react["default"].createElement("div", null, this.followerFinder()[0].followerUserId == loggedInUserId ? _react["default"].createElement("div", null, _react["default"].createElement(_mainStyling.SouseButton, {
         type: "submit",
         className: "waves-effect waves-light btn-large",
         onClick: function onClick(e) {
@@ -471,14 +441,12 @@ function (_Component) {
         className: "waves-effect waves-light btn-large"
       }, _react["default"].createElement("p", {
         "class": "lead buttonFont"
-      }, "Edit Profile")))) : _react["default"].createElement("div", null)), _react["default"].createElement("div", {
-        "class": "row"
-      }, _react["default"].createElement("div", {
+      }, "Edit Profile")))) : _react["default"].createElement("div", null))))), _react["default"].createElement("div", {
         "class": "col-12"
       }, _react["default"].createElement("div", {
         "class": "row m-0"
-      }, _react["default"].createElement(_userProfileStyling.UserPageOptionsUL, {
-        className: "userProfileUserInfoUL"
+      }, " ", _react["default"].createElement(_userProfileStyling.UserPageOptionsUL, {
+        className: "userProfileUserInfoUL col-12 d-flex justify-content-center"
       }, userPageDisplay == '2' ? _react["default"].createElement("div", null, _react["default"].createElement(_userProfileStyling.UserPageOptionsLI, {
         className: "userProfileUserInfoLI"
       }, _react["default"].createElement(_userProfileStyling.UserPageOptionsLink, {
@@ -531,19 +499,15 @@ function (_Component) {
             userPageDisplay: '1'
           });
         }
-      }, "Posts")))))))))))), _react["default"].createElement("div", {
+      }, "Posts")))))), _react["default"].createElement("div", {
         "class": "col-12"
       }, _react["default"].createElement(_souseIndex["default"], {
         userPageCreatorUsername: creatorUsername,
         loggedInUsername: loggedInUsername,
         souseUserData: souseUserData
       }))), _react["default"].createElement("div", {
-        "class": "d-flex justify-content-center"
-      }, _react["default"].createElement("div", {
-        "class": "container"
-      }, _react["default"].createElement("div", {
         "class": "row"
-      }, userPageDisplay == '1' ? _react["default"].createElement("div", {
+      }, " ", userPageDisplay == '1' ? _react["default"].createElement("div", {
         "class": "row d-flex justify-content-center"
       }, " ", Object.keys(this.postFinder()).map(function (object, i) {
         return _react["default"].createElement("div", {
@@ -602,7 +566,7 @@ function (_Component) {
         target: "_blank"
       }, _react["default"].createElement(_userProfileStyling.InstagramIcon, null), " ", this.state.creatorInstagram))))), creatorBio === "" ? _react["default"].createElement("div", null) : _react["default"].createElement("div", {
         "class": "col"
-      }, _react["default"].createElement("h5", null, creatorBio)))) : _react["default"].createElement("div", null), userPageDisplay == '3' ? _react["default"].createElement("div", null, "   ", Object.keys(this.followerFinder()).map(function (object, i) {
+      }, _react["default"].createElement(_userProfileStyling.UserBio, null, creatorBio)))) : _react["default"].createElement("div", null), userPageDisplay == '3' ? _react["default"].createElement("div", null, "   ", Object.keys(this.followerFinder()).map(function (object, i) {
         return _react["default"].createElement("div", {
           "class": "col-3"
         }, _react["default"].createElement(_reactRouterDom.Link, {
@@ -646,15 +610,23 @@ function (_Component) {
         }, _react["default"].createElement("h6", {
           "class": "col-12"
         }, _this3.followFinder()[i].followUsername))));
-      })) : _react["default"].createElement("div", null)))))), _react["default"].createElement("div", {
+      })) : _react["default"].createElement("div", null))))))), _react["default"].createElement("div", {
         "class": "d-xl-none container-fluid"
-      }, " ", _react["default"].createElement("img", {
-        "class": "mx-auto d-block sousePostImage",
+      }, " ", _react["default"].createElement("div", {
+        "class": "row d-flex p-1 bd-highlight"
+      }, _react["default"].createElement("div", {
+        "class": "col-xs-5 col-sm-5 p-0"
+      }, _react["default"].createElement(_userProfileStyling.SouseUserPageIcon, null, _react["default"].createElement("img", {
+        className: "souseUserPageImage",
         src: creatorImage,
         alt: "sousePostImage",
         width: "1080px",
         height: "1080px"
-      }), _react["default"].createElement("div", {
+      }))), _react["default"].createElement("div", {
+        "class": "col-xs-7 col-sm-7"
+      }, _react["default"].createElement("div", {
+        "class": "container-fluid"
+      }, _react["default"].createElement("div", {
         "class": "row"
       }, _react["default"].createElement("h5", {
         "class": "col-12"
@@ -756,7 +728,7 @@ function (_Component) {
             userPageDisplay: '4'
           });
         }
-      }, _react["default"].createElement("b", null, followsTotal), " Follows"))))))));
+      }, _react["default"].createElement("b", null, followsTotal), " Follows")))))))))));
     }
   }]);
 

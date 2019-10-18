@@ -29,14 +29,6 @@ var _config = _interopRequireDefault(require("../../../server/config"));
 
 var _materializeCss = _interopRequireDefault(require("materialize-css"));
 
-var _styledComponents = _interopRequireDefault(require("styled-components"));
-
-var _Twitter = require("styled-icons/feather/Twitter");
-
-var _Facebook = require("styled-icons/feather/Facebook");
-
-var _Instagram = require("styled-icons/feather/Instagram");
-
 var _mainStyling = require("../../assets/styles/mainStyling");
 
 var _userProfileStyling = require("../../assets/styles/userProfileStyling");
@@ -516,7 +508,7 @@ function (_Component) {
       }, " ", _react["default"].createElement("input", {
         type: "text",
         name: "userTwitter",
-        "class": "validate",
+        className: "validate form-control",
         id: "souseUserTwitter",
         value: this.state.userTwitter,
         onChange: this.onUpdateUserTwitter
@@ -528,7 +520,7 @@ function (_Component) {
       }, " ", _react["default"].createElement("input", {
         type: "text",
         name: "userFacebook",
-        "class": "validate",
+        className: "validate form-control",
         id: "souseUserFacebook",
         value: this.state.userFacebook,
         onChange: this.onUpdateUserFacebook
@@ -540,7 +532,7 @@ function (_Component) {
       }, " ", _react["default"].createElement("input", {
         type: "text",
         name: "userInstagram",
-        "class": "validate",
+        className: "validate form-control",
         id: "souseUserInstagram",
         value: this.state.userInstagram,
         onChange: this.onUpdateUserInstagram
@@ -552,7 +544,7 @@ function (_Component) {
       }, " ", _react["default"].createElement("input", {
         type: "text",
         name: "userLocation",
-        "class": "validate",
+        className: "validate form-control",
         id: "souseUserLocation",
         value: this.state.userLocation,
         onChange: this.onUpdateUserLocation
@@ -563,7 +555,7 @@ function (_Component) {
         "class": "input-field"
       }, " ", _react["default"].createElement("textarea", {
         id: "souseUserBio",
-        "class": "materialize-textarea",
+        className: "materialize-textarea form-control",
         name: "userBio",
         maxLength: 150,
         rows: "2",
@@ -581,12 +573,26 @@ function (_Component) {
         className: "waves-effect waves-light btn-large d-block mx-auto"
       }, _react["default"].createElement("p", {
         "class": "lead buttonFont"
-      }, "Update User")))) : _react["default"].createElement(_styledSpinkit.WaveLoading, {
-        "__styled-spinkit__Wave": true,
-        color: "#c45758"
-      })) : _react["default"].createElement("div", null, _react["default"].createElement("div", {
+      }, "Update User")))) : _react["default"].createElement("div", {
+        "class": "row d-flex justify-content-center"
+      }, " ", _react["default"].createElement(_mainStyling.SouseLoadingIcon, {
+        className: "spinner-grow",
+        role: "status"
+      }, _react["default"].createElement("span", {
+        "class": "sr-only"
+      }, "Loading...")), _react["default"].createElement(_mainStyling.SouseLoadingIcon2, {
+        className: "spinner-grow",
+        role: "status"
+      }, _react["default"].createElement("span", {
+        "class": "sr-only"
+      }, "Loading...")), _react["default"].createElement(_mainStyling.SouseLoadingIcon3, {
+        className: "spinner-grow",
+        role: "status"
+      }, _react["default"].createElement("span", {
+        "class": "sr-only"
+      }, "Loading...")))) : _react["default"].createElement("div", null, _react["default"].createElement("div", {
         "class": "file-field input-field"
-      }, _react["default"].createElement(_mainStyling.SouseUploadButton, {
+      }, _react["default"].createElement(_mainStyling.SouseButton, {
         className: "btn-large"
       }, _react["default"].createElement("p", {
         "class": "lead buttonFont"

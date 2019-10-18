@@ -24,7 +24,7 @@ class SouseIndex extends Component {
             filteredUsers: [],
             switchColor: "",
             switchHandleColor: "",
-            currentTheme: "souseIMTheme" //loggedinUserTheme
+            currentTheme: "souseDefaultTheme" //loggedinUserTheme
         };
         this.handleThemeChange = this.handleThemeChange.bind(this);
     }
@@ -103,57 +103,64 @@ class SouseIndex extends Component {
         
         return (
             <div>
-            {isAuthenticated 
-                ?   <div>
-                        {usernameUserPage === loggedInUsername
-                            ?   <div>   
-                                    <h6>Loggedin and OG User</h6>
-                                </div>
-                            :   <div>
-                                    <h6>Loggedin, but not OG User</h6>
-                                </div>
-                        } 
-                    </div>      
-                :   <div>
-                        <h6>Just visiting</h6>
-                    </div>
-            }
                 <div class="collapse" id="postCreateCollapse">
                     <div class="postCreateCollapse">
                         <div class="container">
-                            <div class="row">
-                                <div class="col-10">
-                                {this.state.checked 
-                                    ?   <SouseSearch 
-                                            souseSearchedUsers={this.state.filteredUsers} 
-                                            match={this.props.match} 
-                                            onChange={this.filterList}/> 
-                                    :   <PostCreate/>
-                                }
-                                    
-                                </div>
-                                <div class="col-2">
-                                    <label>
-                                            Off
-                                        <Switch
-                                            checked={this.state.checked}
-                                            onChange={this.handleThemeChange}
-                                            onColor={switchColor}
-                                            onHandleColor={switchHandleColor}
-                                            handleDiameter={30}
-                                            uncheckedIcon={false}
-                                            checkedIcon={false}
-                                            boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
-                                            activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
-                                            height={20}
-                                            width={48}
-                                            className="react-switch"
-                                            id="material-switch"
-                                        />
-                                            On
-                                    </label>
-                                </div>
-                            </div>
+                            {isAuthenticated 
+                                ?   <div>
+                                        {usernameUserPage === loggedInUsername
+                                            ?   <div class="row">   
+                                                    <div class="col-10">
+                                                        {this.state.checked 
+                                                            ?   <SouseSearch 
+                                                                    souseSearchedUsers={this.state.filteredUsers} 
+                                                                    match={this.props.match} 
+                                                                    onChange={this.filterList}/> 
+                                                            :   <PostCreate/>
+                                                        }
+                                                            
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <label>
+                                                                Off
+                                                            <Switch
+                                                                checked={this.state.checked}
+                                                                onChange={this.handleThemeChange}
+                                                                onColor={switchColor}
+                                                                onHandleColor={switchHandleColor}
+                                                                handleDiameter={30}
+                                                                uncheckedIcon={false}
+                                                                checkedIcon={false}
+                                                                boxShadow="0px 1px 5px rgba(0, 0, 0, 0.6)"
+                                                                activeBoxShadow="0px 0px 1px 10px rgba(0, 0, 0, 0.2)"
+                                                                height={20}
+                                                                width={48}
+                                                                className="react-switch"
+                                                                id="material-switch"
+                                                            />
+                                                                On
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            :   <div class="row">
+                                                    <div class="col-12">
+                                                        <SouseSearch 
+                                                            souseSearchedUsers={this.state.filteredUsers} 
+                                                            match={this.props.match} 
+                                                            onChange={this.filterList}/>
+                                                    </div>
+                                                </div>
+                                        } 
+                                    </div>      
+                                :   <div class="row">
+                                        <div class="col-12">
+                                                <SouseSearch 
+                                                    souseSearchedUsers={this.state.filteredUsers} 
+                                                    match={this.props.match} 
+                                                    onChange={this.filterList}/>
+                                            </div>
+                                    </div>
+                            }
                         </div>
                     </div>
                 </div>

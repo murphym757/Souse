@@ -92,7 +92,8 @@ function (_Component) {
       comments: [],
       followers: [],
       follows: [],
-      currentTheme: ""
+      currentTheme: "souseDefaultTheme",
+      themeType: "Light"
     };
     return _this;
   }
@@ -185,6 +186,7 @@ function (_Component) {
       var _this$props$auth = this.props.auth,
           isAuthenticated = _this$props$auth.isAuthenticated,
           user = _this$props$auth.user;
+      var themeType = this.state.themeType;
       var theme1 = _globalTheme.souseDefaultTheme;
       var theme2 = _globalTheme.souseIMTheme;
       var theme3 = _globalTheme.souseFPTheme;
@@ -195,25 +197,55 @@ function (_Component) {
         var userTheme = user.userTheme.slice(0);
 
         if (userTheme = theme1) {
-          this.setState({
-            currentTheme: _globalTheme.souseDefaultTheme
-          });
+          if (themeType == "Light") {
+            this.setState({
+              currentTheme: _globalTheme.souseDefaultTheme
+            });
+          } else {
+            this.setState({
+              currentTheme: _globalTheme.souseDefaultThemeDark
+            });
+          }
         } else if (userTheme = theme2) {
-          this.setState({
-            currentTheme: _globalTheme.souseIMTheme
-          });
+          if (themeType == "Light") {
+            this.setState({
+              currentTheme: _globalTheme.souseIMTheme
+            });
+          } else {
+            this.setState({
+              currentTheme: _globalTheme.souseIMThemeDark
+            });
+          }
         } else if (userTheme = theme3) {
-          this.setState({
-            currentTheme: _globalTheme.souseFPTheme
-          });
+          if (themeType == "Light") {
+            this.setState({
+              currentTheme: _globalTheme.souseFPTheme
+            });
+          } else {
+            this.setState({
+              currentTheme: _globalTheme.souseFPThemeDark
+            });
+          }
         } else if (userTheme = theme4) {
-          this.setState({
-            currentTheme: _globalTheme.souseViceTheme
-          });
+          if (themeType == "Light") {
+            this.setState({
+              currentTheme: _globalTheme.souseViceTheme
+            });
+          } else {
+            this.setState({
+              currentTheme: _globalTheme.souseViceThemeDark
+            });
+          }
         } else if (userTheme = theme5) {
-          this.setState({
-            currentTheme: _globalTheme.souseVapeTheme
-          });
+          if (themeType == "Light") {
+            this.setState({
+              currentTheme: _globalTheme.souseVapeTheme
+            });
+          } else {
+            this.setState({
+              currentTheme: _globalTheme.souseVapeThemeDark
+            });
+          }
         } else if (userTheme = undefined) {
           this.setState({
             currentTheme: _globalTheme.souseDefaultTheme
@@ -236,12 +268,6 @@ function (_Component) {
       var souseComments = this.state.comments;
       var souseFollowers = this.state.followers;
       var souseFollows = this.state.follows;
-      var gucci = 'green';
-      var darkTheme = (0, _theme.makeTheme)({
-        '$body-color': gucci,
-        '$card-bg': 'rgb(228, 209, 209)',
-        '$font-family-base': 'Helvetica'
-      });
 
       var Card = _styledComponents["default"].div.withConfig({
         displayName: "main__Card",
@@ -255,7 +281,7 @@ function (_Component) {
       return _react["default"].createElement(_reactRouterDom.BrowserRouter, null, _react["default"].createElement("div", {
         "class": "container-fluid entireProjectContainer"
       }, isAuthenticated ? _react["default"].createElement(_provider["default"], {
-        theme: _globalTheme.souseIMTheme
+        theme: this.state.currentTheme
       }, _react["default"].createElement(_globalStyling.GlobalStyle, null), _react["default"].createElement(Card, {
         className: "align-content-stretch flex-wrap entireProjectCard m-0"
       }, _react["default"].createElement(_v.CardBlock, null, _react["default"].createElement(_navbar["default"], {

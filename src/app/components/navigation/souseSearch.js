@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link, Switch, Redirect, withRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
-    SouseForm
+    SouseForm,
+    LinkFontH6,
+    SouseStyledLink
 } from '../../assets/styles/mainStyling';
+import { 
+    SouseSearchUserIcon
+} from '../../assets/styles/userProfileStyling';
 
 import M from 'materialize-css';
 class SouseSearch extends Component {
@@ -44,14 +49,38 @@ class SouseSearch extends Component {
                         <label for="souseCaptionPost">Search</label>
                     </div>
                 </SouseForm>
-                {Object.keys(this.props.souseSearchedUsers)
-                    .map((object, i) => (
-                        <Link to={`/${this.props.souseSearchedUsers[i].username}`} onClick={() => window.location.refresh()}>
-                            <div class="row">
-                                <h6 class="col-9">{this.props.souseSearchedUsers[i].username}</h6>
+                <div class="row">
+                    {Object.keys(this.props.souseSearchedUsers)
+                        .map((object, i) => {
+                            return <div class="col-3" obj={object} key={i}>
+                                <SouseStyledLink to={`/${this.props.souseSearchedUsers[i].username}`} onClick={() => window.location.refresh()}>
+                                    <div class="row">
+                                        <div class="col-12"> {/* User Icon */}
+                                            <div class="container">
+                                                <div class="row">
+                                                    <SouseSearchUserIcon className="mx-auto d-block justify-content-center">
+                                                        <img className="souseUserSearchImage userHomeSearchImageBorder"
+                                                            src={this.props.souseSearchedUsers[i].userImage}
+                                                            alt="souseUserIcon"
+                                                            width="45px" 
+                                                            height="45px"/>
+                                                    </SouseSearchUserIcon>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12"> {/* Username and User's Name */}
+                                            <div class="container">
+                                                <div class="row">
+                                                    <LinkFontH6 className="col-12 p-0 m-0 d-flex justify-content-center" style={{fontWeight: 600}}>{this.props.souseSearchedUsers[i].username}</LinkFontH6>
+                                                    <LinkFontH6 className="col-12 p-0 m-0 d-flex justify-content-center">{this.props.souseSearchedUsers[i].firstName + " " +this.props.souseSearchedUsers[i].lastName}</LinkFontH6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </SouseStyledLink>
                             </div>
-                        </Link>
-                    ))}
+                    })}
+                </div>
             </div>   
           );
       }

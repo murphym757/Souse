@@ -28,7 +28,7 @@ class Navbar extends Component {
         console.log(loggedinUserTheme);
         this.state = {
             navbarImage: "",
-            currentTheme: "souseIMTheme"
+            currentTheme: "souseDefaultTheme"
         };
         
     }

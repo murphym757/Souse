@@ -275,7 +275,7 @@ function (_Component) {
         color: "#c45758"
       })) : _react["default"].createElement("div", {
         "class": "file-field input-field d-block mx-auto"
-      }, _react["default"].createElement(_mainStyling.SouseUploadButton, {
+      }, _react["default"].createElement(_mainStyling.SouseButton, {
         className: "btn-large"
       }, _react["default"].createElement("p", {
         "class": "lead buttonFont"

@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import {
     SouseButton,
-    SouseUploadButton,
     SouseForm
 } from '../../assets/styles/mainStyling';
 import { WaveLoading } from 'styled-spinkit';
@@ -213,7 +212,7 @@ class PostEdit extends Component {
                                                                 }
                                                             </div>
                                                         :   <div class="file-field input-field d-block mx-auto">
-                                                                <SouseUploadButton className="btn-large">
+                                                                <SouseButton className="btn-large">
                                                                     <p class="lead buttonFont">Upload</p>
                                                                     <input 
                                                                         type="file" 
@@ -221,7 +220,7 @@ class PostEdit extends Component {
                                                                         id="souseImagePost"
                                                                         onChange={this.onImageUpload}
                                                                     />
-                                                                </SouseUploadButton>
+                                                                </SouseButton>
                                                                 <div class="file-path-wrapper">
                                                                     <input class="file-path validate" type="text" />
                                                                 </div>

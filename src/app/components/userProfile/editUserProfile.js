@@ -10,13 +10,11 @@ import SwitchTheme from "react-switch";
 import S3 from 'aws-s3';
 import awsConfig from '../../../server/config';
 import M from 'materialize-css';
-import styled from 'styled-components';
-import { Twitter } from 'styled-icons/feather/Twitter';
-import { Facebook } from 'styled-icons/feather/Facebook';
-import { Instagram } from 'styled-icons/feather/Instagram';
 import {
+    SouseLoadingIcon,
+    SouseLoadingIcon2,
+    SouseLoadingIcon3,
     SouseButton,
-    SouseUploadButton,
     SouseForm
 } from '../../assets/styles/mainStyling';
 import { EditUserProfileOptionsFont } from '../../assets/styles/userProfileStyling';
@@ -410,7 +408,7 @@ class EditUserProfile extends Component {
                                 <input 
                                     type="text"
                                     name="userTwitter" 
-                                    class="validate"
+                                    className="validate form-control"
                                     id="souseUserTwitter"
                                     value={this.state.userTwitter}
                                     onChange={this.onUpdateUserTwitter} 
@@ -421,7 +419,7 @@ class EditUserProfile extends Component {
                                 <input 
                                     type="text"
                                     name="userFacebook" 
-                                    class="validate"
+                                    className="validate form-control"
                                     id="souseUserFacebook"
                                     value={this.state.userFacebook}
                                     onChange={this.onUpdateUserFacebook} 
@@ -432,7 +430,7 @@ class EditUserProfile extends Component {
                                 <input 
                                     type="text"
                                     name="userInstagram" 
-                                    class="validate"
+                                    className="validate form-control"
                                     id="souseUserInstagram"
                                     value={this.state.userInstagram}
                                     onChange={this.onUpdateUserInstagram} 
@@ -443,17 +441,17 @@ class EditUserProfile extends Component {
                                 <input 
                                     type="text"
                                     name="userLocation" 
-                                    class="validate"
+                                    className="validate form-control"
                                     id="souseUserLocation"
                                     value={this.state.userLocation}
                                     onChange={this.onUpdateUserLocation} 
                                 />
                                 <label class="active" for="souseUserLocation">Location</label>
                             </div>
-                            <div class="input-field"> {/* Location Field */}
+                            <div class="input-field"> {/* Bio Field */}
                                 <textarea 
                                     id = "souseUserBio"
-                                    class="materialize-textarea"
+                                    className="materialize-textarea form-control"
                                     name = "userBio"
                                     maxLength={150}
                                     rows="2"
@@ -475,12 +473,22 @@ class EditUserProfile extends Component {
                                                         </SouseButton>
                                                     </div>
                                                 </div>
-                                            :   <WaveLoading __styled-spinkit__Wave color="#c45758" />
+                                        :   <div class="row d-flex justify-content-center"> {/* Custom Loader */}
+                                                    <SouseLoadingIcon className="spinner-grow" role="status">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </SouseLoadingIcon>
+                                                    <SouseLoadingIcon2 className="spinner-grow" role="status">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </SouseLoadingIcon2>
+                                                    <SouseLoadingIcon3 className="spinner-grow" role="status">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </SouseLoadingIcon3>
+                                                </div>
                                         }
                                     </div>
                                 :   <div>
                                         <div class="file-field input-field">
-                                            <SouseUploadButton className="btn-large">
+                                            <SouseButton className="btn-large">
                                                 <p class="lead buttonFont">Upload</p>
                                                 <input 
                                                     type="file" 
@@ -488,7 +496,7 @@ class EditUserProfile extends Component {
                                                     id="souseUserImage"
                                                     onChange={this.onImageUpload}
                                                 />
-                                            </SouseUploadButton>
+                                            </SouseButton>
                                             <div class="file-path-wrapper">
                                                 <input class="file-path validate" type="text" />
                                             </div>

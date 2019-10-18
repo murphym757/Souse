@@ -7,9 +7,12 @@ import SouseIndex from '../navigation/souseIndex';
 import EditUserProfile from '../userProfile/editUserProfile';
 import styled from 'styled-components';
 import {
+    UsernameUserPage,
+    UserDataUserPage,
     TwitterIcon,
     FacebookIcon,
     InstagramIcon,
+    UserBio,
     SouseUserPageIcon,
     UserPostIcons,
     UserPageOptionsUL,
@@ -19,9 +22,6 @@ import {
     UserPageOptionsH5Selected
 } from '../../assets/styles/userProfileStyling';
 import {
-    SouseLoadingIcon,
-    SouseLoadingIcon2,
-    SouseLoadingIcon3,
     SouseButton,
     SouseLink
 } from '../../assets/styles/mainStyling';
@@ -232,13 +232,6 @@ class UserProfile extends Component {
         const postsTotal = "" + this.postFinder().length + "";
         const followersTotal = "" + this.followerFinder().length + "";
         const followsTotal = "" + this.followFinder().length + "";
-        const UsernameUserPage = styled.h2`
-            color: ${props => props.theme.secondaryColor};
-        `;
-        const UserDataUserPage = styled.h5`
-            color: ${props => props.theme.secondaryColor};
-        `;
-    
         return (
             <div>
                 {loggedInUserImage === ""
@@ -268,178 +261,160 @@ class UserProfile extends Component {
                     :   <div class="mx-auto d-block pt-1">
                             <div class="d-none d-xl-block container-fluid pt-5"> {/* For larger Sceens */}
                                 <div class="row userHeaderSection d-flex justify-content-center">
-                                    <div class="profilePageUserImage d-flex justify-content-center"> {/* User Image Section */}
-                                        <div class="souseUserCreatorPage col-8 d-flex">
-                                            <div class="container-fluid d-flex justify-content-center">
-                                                <SouseUserPageIcon>
-                                                    <img className="souseUserPageImage userHomePageImageBorder"
-                                                        src={creatorImage}
-                                                        alt="souseUserIcon"
-                                                        width="85px" 
-                                                        height="85px"/>
-                                                </SouseUserPageIcon>   
-                                            </div>
-                                        </div>
-                                        <div class="profilePageUserData col-12"> {/* User Data Section */}
-                                            <div>
-                                                <div class="row userNameRow">
-                                                    <UsernameUserPage>
-                                                        {creatorUsername}
-                                                    </UsernameUserPage>
+                                    <div class="container">
+                                        <div class="col-12">
+                                            <div class="row"> {/* Top content row */}
+                                                <div class="col-6 d-flex justify-content-end pr-5"> {/* User Image */}
+                                                    <SouseUserPageIcon>
+                                                        <img className="souseUserPageImage userHomePageImageBorder"
+                                                            src={creatorImage}
+                                                            alt="souseUserIcon"
+                                                            width="85px" 
+                                                            height="85px"/>
+                                                    </SouseUserPageIcon>   
                                                 </div>
-                                                <div class="row userButtonsRow">
-                                                    <div>
-                                                        <div class="col-12">
-                                                        <UserDataUserPage></UserDataUserPage>
-                                                            {this.state.totalDisplayPosts === postsTotal
-                                                                ?   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Post</UserDataUserPage>
-                                                                :   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Posts</UserDataUserPage>
-                                                            }
-                                                        </div>
-                                                        <div class="col-12">
-                                                            {this.state.totalDisplayFollowers === followersTotal
-                                                                ?   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Follower</UserDataUserPage>
-                                                                :   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Followers</UserDataUserPage>
-                                                            }
-                                                        </div>
-                                                        <div class="col-12">
-                                                            {this.state.totalDisplayFollows === followsTotal
-                                                                ?   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follow</UserDataUserPage>
-                                                                :   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follows</UserDataUserPage> 
-                                                            }
-                                                        </div>
-                                                        <div class="row d-flex justify-content-center">
-                                                                <SouseLoadingIcon className="spinner-grow" role="status">
-                                                                    <span class="sr-only">Loading...</span>
-                                                                </SouseLoadingIcon>
-                                                                <SouseLoadingIcon2 className="spinner-grow" role="status">
-                                                                    <span class="sr-only">Loading...</span>
-                                                                </SouseLoadingIcon2>
-                                                                <SouseLoadingIcon3 className="spinner-grow" role="status">
-                                                                    <span class="sr-only">Loading...</span>
-                                                                </SouseLoadingIcon3>
-                                                            </div>
+                                                <div class="col-6 pl-5"> {/* General User Content */}
+                                                    <div class="row userNameRow">
+                                                        <UsernameUserPage>
+                                                            {creatorUsername}
+                                                        </UsernameUserPage>
                                                     </div>
-                                                    {isAuthenticated 
-                                                        ?   <div>
-                                                                {creatorId !== loggedInUserId
-                                                                    ?   <div>
-                                                                            {Array.isArray(this.followerFinder()) && this.followerFinder()[0]
-                                                                                ?   <div>
-                                                                                            {this.followerFinder()[0].followerUserId == loggedInUserId
-                                                                                                ?   <div>
-                                                                                                        <SouseButton type="submit" className="waves-effect waves-light btn-large" onClick={(e) => {this.onSetDeleteFollow(e); this.onSetDeleteFollower(e)}}><p class="lead buttonFont">Unfollow</p></SouseButton>
-                                                                                                    </div>
-                                                                                                :   <div></div>
-                                                                                            } 
-                                                                                    </div>
-                                                                                :   <div>
-                                                                                        <SouseButton type="submit" className="waves-effect waves-light btn-large" onClick={(e) => {this.onSetFollow(e); this.onSetFollower(e)}}><p class="lead buttonFont">Follow</p></SouseButton>
-                                                                                    </div>
-                                                                            }
-                                                                        </div>
-                                                                    :   <Link class="d-block mx-auto" to={
-                                                                            {
-                                                                                pathname: "/u/edit/" + loggedInUserId,
-                                                                                state: {
-                                                                                    creatorId: creatorId,
-                                                                                    creatorUsername: creatorUsername,
-                                                                                    creatorFirstName: creatorFirstName,
-                                                                                    creatorLastName: creatorLastName,
-                                                                                    creatorEmail: creatorEmail,
-                                                                                    creatorPassword: creatorPassword,
-                                                                                    creatorSignUpDate: creatorSignUpDate,
-                                                                                    creatorUnixTimestamp: creatorUnixTimestamp,
-                                                                                    creatorImage: creatorImage,
-                                                                                    creatorTheme: creatorTheme,
-                                                                                    creatorTwitter: creatorTwitter,
-                                                                                    creatorFacebook: creatorFacebook,
-                                                                                    creatorInstagram: creatorInstagram,
-                                                                                    creatorLocation: creatorLocation,
-                                                                                    creatorBio: creatorBio
-                                                                                }
-                                                                            }
-                                                                        }>
-                                                                            <SouseButton type="submit" className="waves-effect waves-light btn-large"><p class="lead buttonFont">Edit Profile</p></SouseButton>
-                                                                        </Link>
+                                                    <div class="row userButtonsRow">
+                                                        <div>
+                                                            <div class="col-12">
+                                                            <UserDataUserPage></UserDataUserPage>
+                                                                {this.state.totalDisplayPosts === postsTotal
+                                                                    ?   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Post</UserDataUserPage>
+                                                                    :   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Posts</UserDataUserPage>
                                                                 }
                                                             </div>
-                                                        :   <div>
+                                                            <div class="col-12">
+                                                                {this.state.totalDisplayFollowers === followersTotal
+                                                                    ?   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Follower</UserDataUserPage>
+                                                                    :   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Followers</UserDataUserPage>
+                                                                }
                                                             </div>
-                                                    }
+                                                            <div class="col-12">
+                                                                {this.state.totalDisplayFollows === followsTotal
+                                                                    ?   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follow</UserDataUserPage>
+                                                                    :   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follows</UserDataUserPage> 
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                        {isAuthenticated 
+                                                            ?   <div>
+                                                                    {creatorId !== loggedInUserId
+                                                                        ?   <div>
+                                                                                {Array.isArray(this.followerFinder()) && this.followerFinder()[0]
+                                                                                    ?   <div>
+                                                                                                {this.followerFinder()[0].followerUserId == loggedInUserId
+                                                                                                    ?   <div>
+                                                                                                            <SouseButton type="submit" className="waves-effect waves-light btn-large" onClick={(e) => {this.onSetDeleteFollow(e); this.onSetDeleteFollower(e)}}><p class="lead buttonFont">Unfollow</p></SouseButton>
+                                                                                                        </div>
+                                                                                                    :   <div></div>
+                                                                                                } 
+                                                                                        </div>
+                                                                                    :   <div>
+                                                                                            <SouseButton type="submit" className="waves-effect waves-light btn-large" onClick={(e) => {this.onSetFollow(e); this.onSetFollower(e)}}><p class="lead buttonFont">Follow</p></SouseButton>
+                                                                                        </div>
+                                                                                }
+                                                                            </div>
+                                                                        :   <Link class="d-block mx-auto" to={
+                                                                                {
+                                                                                    pathname: "/u/edit/" + loggedInUserId,
+                                                                                    state: {
+                                                                                        creatorId: creatorId,
+                                                                                        creatorUsername: creatorUsername,
+                                                                                        creatorFirstName: creatorFirstName,
+                                                                                        creatorLastName: creatorLastName,
+                                                                                        creatorEmail: creatorEmail,
+                                                                                        creatorPassword: creatorPassword,
+                                                                                        creatorSignUpDate: creatorSignUpDate,
+                                                                                        creatorUnixTimestamp: creatorUnixTimestamp,
+                                                                                        creatorImage: creatorImage,
+                                                                                        creatorTheme: creatorTheme,
+                                                                                        creatorTwitter: creatorTwitter,
+                                                                                        creatorFacebook: creatorFacebook,
+                                                                                        creatorInstagram: creatorInstagram,
+                                                                                        creatorLocation: creatorLocation,
+                                                                                        creatorBio: creatorBio
+                                                                                    }
+                                                                                }
+                                                                            }>
+                                                                                <SouseButton type="submit" className="waves-effect waves-light btn-large"><p class="lead buttonFont">Edit Profile</p></SouseButton>
+                                                                            </Link>
+                                                                    }
+                                                                </div>
+                                                            :   <div>
+                                                                </div>
+                                                        }
+                                                    </div>
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <div class="row m-0">
-                                                            <UserPageOptionsUL className="userProfileUserInfoUL">
-                                                            {userPageDisplay == '2'
-                                                                ?   <div>
-                                                                        <UserPageOptionsLI className="userProfileUserInfoLI">
-                                                                            <UserPageOptionsLink className="userProfileUserInfoLink">
-                                                                                <div class="col-12"> {/* Bio Link */}
-                                                                                    <UserPageOptionsH5Selected className="d-block justify-content-center bioOption selected" onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '2'})}}>Bio</UserPageOptionsH5Selected>
-                                                                                </div>
-                                                                            </UserPageOptionsLink>
-                                                                        </UserPageOptionsLI>
-                                                                    </div>
-                                                                :   <div>
-                                                                        <UserPageOptionsLI className="userProfileUserInfoLI">
-                                                                            <UserPageOptionsLink className="userProfileUserInfoLink">
-                                                                                <div class="col-12"> {/* Bio Link */}
-                                                                                    <UserPageOptionsH5 className="d-block justify-content-center bioOption" onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '2'})}}>Bio</UserPageOptionsH5>
-                                                                                </div>
-                                                                            </UserPageOptionsLink>
-                                                                        </UserPageOptionsLI>
-                                                                    </div>
-                                                            }
-                                                                {/* 
-                                                                {userPageDisplay == '5'}
-                                                                <UserPageOptionsLI className="userProfileUserInfoLI likesOption">
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="row m-0"> {/* Middle content row */}
+                                                <UserPageOptionsUL className="userProfileUserInfoUL col-12 d-flex justify-content-center">
+                                                    {userPageDisplay == '2'
+                                                        ?   <div>
+                                                                <UserPageOptionsLI className="userProfileUserInfoLI">
                                                                     <UserPageOptionsLink className="userProfileUserInfoLink">
-                                                                        <div class="col-12"> // Likes/Favorites Link
-                                                                            <UserPageOptions className="d-block justify-content-center"></UserPageOptions>
+                                                                        <div class="col-12"> {/* Bio Link */}
+                                                                            <UserPageOptionsH5Selected className="d-block justify-content-center bioOption selected" onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '2'})}}>Bio</UserPageOptionsH5Selected>
                                                                         </div>
                                                                     </UserPageOptionsLink>
                                                                 </UserPageOptionsLI>
-                                                                */}
-                                                            {userPageDisplay == '1'
-                                                                ?   <div>
-                                                                        <UserPageOptionsLI className="userProfileUserInfoLI">
-                                                                            <UserPageOptionsLink className="userProfileUserInfoLink">
-                                                                                <div class="col-12"> {/* Posts Link */}
-                                                                                    <UserPageOptionsH5Selected className="d-block justify-content-center postsOption selected" onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}>Posts</UserPageOptionsH5Selected>
-                                                                                </div>
-                                                                            </UserPageOptionsLink>
-                                                                        </UserPageOptionsLI>
-                                                                    </div>
-                                                                :   <div>
-                                                                        <UserPageOptionsLI className="userProfileUserInfoLI">
-                                                                            <UserPageOptionsLink className="userProfileUserInfoLink">
-                                                                                <div class="col-12"> {/* Posts Link */}
-                                                                                    <UserPageOptionsH5 className="d-block justify-content-center postsOption" onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}>Posts</UserPageOptionsH5>
-                                                                                </div>
-                                                                            </UserPageOptionsLink>
-                                                                        </UserPageOptionsLI>
-                                                                    </div>
-                                                            }
-                                                            </UserPageOptionsUL>
-                                                        </div>
-                                                    </div>
-                                                </div> 
+                                                            </div>
+                                                        :   <div>
+                                                                <UserPageOptionsLI className="userProfileUserInfoLI">
+                                                                    <UserPageOptionsLink className="userProfileUserInfoLink">
+                                                                        <div class="col-12"> {/* Bio Link */}
+                                                                            <UserPageOptionsH5 className="d-block justify-content-center bioOption" onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '2'})}}>Bio</UserPageOptionsH5>
+                                                                        </div>
+                                                                    </UserPageOptionsLink>
+                                                                </UserPageOptionsLI>
+                                                            </div>
+                                                    }
+                                                        {/* 
+                                                        {userPageDisplay == '5'}
+                                                        <UserPageOptionsLI className="userProfileUserInfoLI likesOption">
+                                                            <UserPageOptionsLink className="userProfileUserInfoLink">
+                                                                <div class="col-12"> // Likes/Favorites Link
+                                                                    <UserPageOptions className="d-block justify-content-center"></UserPageOptions>
+                                                                </div>
+                                                            </UserPageOptionsLink>
+                                                        </UserPageOptionsLI>
+                                                        */}
+                                                    {userPageDisplay == '1'
+                                                        ?   <div>
+                                                                <UserPageOptionsLI className="userProfileUserInfoLI">
+                                                                    <UserPageOptionsLink className="userProfileUserInfoLink">
+                                                                        <div class="col-12"> {/* Posts Link */}
+                                                                            <UserPageOptionsH5Selected className="d-block justify-content-center postsOption selected" onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}>Posts</UserPageOptionsH5Selected>
+                                                                        </div>
+                                                                    </UserPageOptionsLink>
+                                                                </UserPageOptionsLI>
+                                                            </div>
+                                                        :   <div>
+                                                                <UserPageOptionsLI className="userProfileUserInfoLI">
+                                                                    <UserPageOptionsLink className="userProfileUserInfoLink">
+                                                                        <div class="col-12"> {/* Posts Link */}
+                                                                            <UserPageOptionsH5 className="d-block justify-content-center postsOption" onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}>Posts</UserPageOptionsH5>
+                                                                        </div>
+                                                                    </UserPageOptionsLink>
+                                                                </UserPageOptionsLI>
+                                                            </div>
+                                                    }
+                                                </UserPageOptionsUL>
+                                                <div class="col-12">
+                                                    <SouseIndex 
+                                                        userPageCreatorUsername={creatorUsername}
+                                                        loggedInUsername={loggedInUsername}
+                                                        souseUserData={souseUserData}/ >
+                                                </div>
                                             </div>
-                                        </div>      
-                                    </div>
-                                    <div class="col-12">
-                                        <SouseIndex 
-                                            userPageCreatorUsername={creatorUsername}
-                                            loggedInUsername={loggedInUsername}
-                                            souseUserData={souseUserData}/ >
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-center">
-                                    <div class="container">
-                                        <div class="row">
-                                            {userPageDisplay == '1'
+                                            <div class="row"> {/* Bottom content row */}
+                                                {userPageDisplay == '1'
                                                 ?   <div class="row d-flex justify-content-center"> {/* Loads Posts by default */}
                                                         {Object.keys(this.postFinder()).map((object, i) => {
                                                             return <div class="col-3 p-0 m-0" obj={object} key={i}>
@@ -503,7 +478,7 @@ class UserProfile extends Component {
                                                                         {creatorBio === ""
                                                                             ?   <div></div>
                                                                             :   <div class="col">
-                                                                                <h5>{creatorBio}</h5>
+                                                                                <UserBio>{creatorBio}</UserBio>
                                                                             </div>
                                                                         }
                                                                     </div>
@@ -566,89 +541,100 @@ class UserProfile extends Component {
                                                     */}
                                                     </div>
                                             }
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="d-xl-none container-fluid"> {/* For smaller Sceens */}
-                                    <img class="mx-auto d-block sousePostImage" 
-                                        src={creatorImage}
-                                        alt="sousePostImage"
-                                        width="1080px" 
-                                        height="1080px"/>
-                                <div class="row">
-                                    <h5 class="col-12">{creatorUsername}</h5>
-                                    <h6 class="col-12">{creatorLocation}</h6>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        {isAuthenticated 
-                                            ?   <div>
-                                                    {creatorId !== loggedInUserId
+                                <div class="row d-flex p-1 bd-highlight">
+                                    <div class="col-xs-5 col-sm-5 p-0">
+                                        <SouseUserPageIcon>
+                                            <img className="souseUserPageImage" 
+                                                src={creatorImage}
+                                                alt="sousePostImage"
+                                                width="1080px" 
+                                                height="1080px"/>
+                                        </SouseUserPageIcon>
+                                    </div>
+                                    <div class="col-xs-7 col-sm-7">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <h5 class="col-12">{creatorUsername}</h5>
+                                                <h6 class="col-12">{creatorLocation}</h6>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    {isAuthenticated 
                                                         ?   <div>
-                                                                {Array.isArray(this.followerFinder()) && this.followerFinder()[0]
+                                                                {creatorId !== loggedInUserId
                                                                     ?   <div>
-                                                                                {this.followerFinder()[0].followerUserId == loggedInUserId
-                                                                                    ?   <div>
-                                                                                            <SouseButton type="submit" className="waves-effect waves-light btn-large" onClick={(e) => {this.onSetDeleteFollow(e); this.onSetDeleteFollower(e)}}><p class="lead buttonFont">Unfollow</p></SouseButton>
-                                                                                        </div>
-                                                                                    :   <div></div>
-                                                                                } 
+                                                                            {Array.isArray(this.followerFinder()) && this.followerFinder()[0]
+                                                                                ?   <div>
+                                                                                            {this.followerFinder()[0].followerUserId == loggedInUserId
+                                                                                                ?   <div>
+                                                                                                        <SouseButton type="submit" className="waves-effect waves-light btn-large" onClick={(e) => {this.onSetDeleteFollow(e); this.onSetDeleteFollower(e)}}><p class="lead buttonFont">Unfollow</p></SouseButton>
+                                                                                                    </div>
+                                                                                                :   <div></div>
+                                                                                            } 
+                                                                                    </div>
+                                                                                :   <div>
+                                                                                        <SouseButton type="submit" className="waves-effect waves-light btn-large" onClick={(e) => {this.onSetFollow(e); this.onSetFollower(e)}}><p class="lead buttonFont">Follow</p></SouseButton>
+                                                                                    </div>
+                                                                            }
                                                                         </div>
-                                                                    :   <div>
-                                                                            <SouseButton type="submit" className="waves-effect waves-light btn-large" onClick={(e) => {this.onSetFollow(e); this.onSetFollower(e)}}><p class="lead buttonFont">Follow</p></SouseButton>
-                                                                        </div>
+                                                                    :   <Link class="d-block mx-auto" to={
+                                                                            {
+                                                                                pathname: "/u/edit/" + loggedInUserId,
+                                                                                state: {
+                                                                                    creatorId: creatorId,
+                                                                                    creatorUsername: creatorUsername,
+                                                                                    creatorFirstName: creatorFirstName,
+                                                                                    creatorLastName: creatorLastName,
+                                                                                    creatorEmail: creatorEmail,
+                                                                                    creatorPassword: creatorPassword,
+                                                                                    creatorSignUpDate: creatorSignUpDate,
+                                                                                    creatorUnixTimestamp: creatorUnixTimestamp,
+                                                                                    creatorImage: creatorImage,
+                                                                                    creatorTwitter: creatorTwitter,
+                                                                                    creatorFacebook: creatorFacebook,
+                                                                                    creatorInstagram: creatorInstagram,
+                                                                                    creatorLocation: creatorLocation,
+                                                                                    creatorBio: creatorBio
+                                                                                }
+                                                                            }
+                                                                        }>
+                                                                            <SouseButton type="submit" className="waves-effect waves-light btn-large"><p class="lead buttonFont">Edit Profile</p></SouseButton>
+                                                                        </Link>
                                                                 }
                                                             </div>
-                                                        :   <Link class="d-block mx-auto" to={
-                                                                {
-                                                                    pathname: "/u/edit/" + loggedInUserId,
-                                                                    state: {
-                                                                        creatorId: creatorId,
-                                                                        creatorUsername: creatorUsername,
-                                                                        creatorFirstName: creatorFirstName,
-                                                                        creatorLastName: creatorLastName,
-                                                                        creatorEmail: creatorEmail,
-                                                                        creatorPassword: creatorPassword,
-                                                                        creatorSignUpDate: creatorSignUpDate,
-                                                                        creatorUnixTimestamp: creatorUnixTimestamp,
-                                                                        creatorImage: creatorImage,
-                                                                        creatorTwitter: creatorTwitter,
-                                                                        creatorFacebook: creatorFacebook,
-                                                                        creatorInstagram: creatorInstagram,
-                                                                        creatorLocation: creatorLocation,
-                                                                        creatorBio: creatorBio
-                                                                    }
-                                                                }
-                                                            }>
-                                                                <SouseButton type="submit" className="waves-effect waves-light btn-large"><p class="lead buttonFont">Edit Profile</p></SouseButton>
-                                                            </Link>
+                                                        :   <div>
+                                                            </div>
                                                     }
                                                 </div>
-                                            :   <div>
-                                                </div>
-                                        }
-                                    </div>
-                                    <div class="userButtonsRow col-6">
-                                        <div class="float-right">
-                                            <div class="col-12">
-                                                {this.state.totalDisplayPosts === postsTotal
-                                                    ?   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Post</h6>
-                                                    :   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Posts</h6>
-                                                }
-                                            </div>
-                                            <div class="col-12">
-                                                {this.state.totalDisplayFollowers === followersTotal
-                                                    ?   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Follower</h6>
-                                                    :   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Followers</h6>
+                                                <div class="userButtonsRow col-6">
+                                                    <div class="float-right">
+                                                        <div class="col-12">
+                                                            {this.state.totalDisplayPosts === postsTotal
+                                                                ?   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Post</h6>
+                                                                :   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Posts</h6>
+                                                            }
+                                                        </div>
+                                                        <div class="col-12">
+                                                            {this.state.totalDisplayFollowers === followersTotal
+                                                                ?   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Follower</h6>
+                                                                :   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Followers</h6>
 
-                                                }
-                                            </div>
-                                            <div class="col-12">
-                                                {this.state.totalDisplayFollows === followsTotal
-                                                    ?   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follow</h6>
-                                                    :   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follows</h6>  
-                                                }
+                                                            }
+                                                        </div>
+                                                        <div class="col-12">
+                                                            {this.state.totalDisplayFollows === followsTotal
+                                                                ?   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follow</h6>
+                                                                :   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follows</h6>  
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

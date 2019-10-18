@@ -9,7 +9,6 @@ import {
     SouseLoadingIcon2,
     SouseLoadingIcon3,
     SouseButton,
-    SouseUploadButton,
     SouseForm
 } from '../../assets/styles/mainStyling';
 
@@ -129,11 +128,6 @@ class PostCreate extends Component {
                                     <h6>Upload Image Here <i class="fas fa-camera fa-lg"></i></h6>
                                 </a>
                             </div>
-                            <div class="form-group">
-                                <SouseButton type="submit" className="waves-effect waves-light btn-large">
-                                    <p class="lead buttonFont">Share</p>
-                                </SouseButton>
-                            </div>
                         </div>
                     
                    : <div>
@@ -152,7 +146,7 @@ class PostCreate extends Component {
                         <div>
                             {this.state.fullPostUploadLoader
                                 ?   <div class="file-field input-field">
-                                        <SouseUploadButton className="btn-large">
+                                        <SouseButton className="btn-large">
                                             <p class="lead buttonFont">Upload</p>
                                             <input 
                                                 type="file" 
@@ -160,7 +154,7 @@ class PostCreate extends Component {
                                                 id="souseImagePost"
                                                 onChange={this.onImageUpload}
                                             />
-                                        </SouseUploadButton>
+                                        </SouseButton>
                                         <div class="file-path-wrapper">
                                             <input class="file-path validate" type="text" />
                                         </div>
