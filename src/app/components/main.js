@@ -4,10 +4,10 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Card, CardBlock } from '@bootstrap-styled/v4';
 import BootstrapProvider from '@bootstrap-styled/provider';
 import { makeTheme } from 'bootstrap-styled/lib/theme';
 import { GlobalStyle } from '../assets/styles/globalStyling';
+import { Card, CardBlock } from '@bootstrap-styled/v4';
 import {
     souseDefaultTheme,
     souseDefaultThemeDark,
@@ -43,7 +43,7 @@ class MainSource extends Component {
             followers: [],
             follows: [],
             currentTheme: "souseDefaultTheme",
-            themeType: "Light"
+            userThemeType: "Light"
 
         };
     }
@@ -111,46 +111,48 @@ class MainSource extends Component {
                 console.log(error);
             })
         { /* Theme Finder */}
-        const {isAuthenticated, user} = this.props.auth; 
-        const themeType = this.state.themeType;
-        let theme1 = souseDefaultTheme;
-        let theme2 = souseIMTheme;
-        let theme3 = souseFPTheme;
-        let theme4 = souseViceTheme;
-        let theme5 = souseVapeTheme;
+        const {isAuthenticated, user} = this.props.auth;
+        const userThemeOG = user.userTheme;
+        const themeTypeOG = user.userThemeType;
+        let theme1 = "souseDefaultTheme";
+        let theme2 = "souseIMTheme";
+        let theme3 = "souseFPTheme";
+        let theme4 = "souseViceTheme";
+        let theme5 = "souseVapeTheme";
         if (isAuthenticated) {
-            let userTheme = user.userTheme.slice(0);
-            if (userTheme = theme1) {
+            let userTheme = userThemeOG;
+            let themeType = themeTypeOG;
+            if (userTheme == theme1) {
                 if (themeType == "Light") {
                     this.setState({currentTheme: souseDefaultTheme});
                 } else {
                     this.setState({currentTheme: souseDefaultThemeDark});
                 }
-            } else if (userTheme = theme2) {
+            } else if (userTheme == theme2) {
                 if (themeType == "Light") {
                     this.setState({currentTheme: souseIMTheme});
                 } else {
                     this.setState({currentTheme: souseIMThemeDark});
                 }
-            } else if (userTheme = theme3) {
+            } else if (userTheme == theme3) {
                 if (themeType == "Light") {
                     this.setState({currentTheme: souseFPTheme});
                 } else {
                     this.setState({currentTheme: souseFPThemeDark});
                 }
-            } else if (userTheme = theme4) {
+            } else if (userTheme == theme4) {
                 if (themeType == "Light") {
                     this.setState({currentTheme: souseViceTheme});
                 } else {
                     this.setState({currentTheme: souseViceThemeDark});
                 }
-            } else if (userTheme = theme5) {
+            } else if (userTheme == theme5) {
                 if (themeType == "Light") {
                     this.setState({currentTheme: souseVapeTheme});
                 } else {
                     this.setState({currentTheme: souseVapeThemeDark});
                 }
-            } else if (userTheme = undefined) {
+            } else if (userTheme == undefined) {
                 this.setState({currentTheme: souseDefaultTheme});
             } 
         } else {
@@ -166,24 +168,22 @@ class MainSource extends Component {
       const souseComments = this.state.comments;
       const souseFollowers = this.state.followers;
       const souseFollows = this.state.follows;
-
-        const Card = styled.div`
-            display: block;
-            z-index: 9999;
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            right: 0;
-            left: 0;
-            bottom: 0;
-            overflow: auto;
-            background-color: ${props => props.theme.primaryColor};
-            color: ${props => props.theme.secondaryColor};
-            font-family: 'Nunito Sans', sans-serif;
-            font-weight: 400;
-        `;
-            
+      const Card = styled.div `
+        display: block;
+        z-index: 9999;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        overflow: auto;
+        background-color: ${props => props.theme.primaryColor};
+        color: ${props => props.theme.secondaryColor};
+        font-family: 'Nunito Sans', sans-serif;
+        font-weight: 400;
+    `;
 
         return (
             <Router>

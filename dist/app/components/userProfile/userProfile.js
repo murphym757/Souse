@@ -305,7 +305,7 @@ function (_Component) {
       var postsTotal = "" + this.postFinder().length + "";
       var followersTotal = "" + this.followerFinder().length + "";
       var followsTotal = "" + this.followFinder().length + "";
-      return _react["default"].createElement("div", null, loggedInUserImage === "" ? _react["default"].createElement(_reactRouterDom.Redirect, {
+      return _react["default"].createElement("div", null, creatorImage === "" && loggedInUserId == creatorId ? _react["default"].createElement(_reactRouterDom.Redirect, {
         to: {
           pathname: "/u/edit/" + loggedInUserId,
           state: {
@@ -341,7 +341,7 @@ function (_Component) {
       }, " ", _react["default"].createElement("div", {
         "class": "col-6 d-flex justify-content-end pr-5"
       }, " ", _react["default"].createElement(_userProfileStyling.SouseUserPageIcon, null, _react["default"].createElement("img", {
-        className: "souseUserPageImage userHomePageImageBorder",
+        className: "souseUserPageImage",
         src: creatorImage,
         alt: "souseUserIcon",
         width: "85px",

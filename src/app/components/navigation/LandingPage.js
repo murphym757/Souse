@@ -62,7 +62,7 @@ class LandingPage extends Component {
                         <div class="container">
                             <div class="row d-flex justify-content-center">   {/* Image Row */}
                                 <SouseUserPageIcon>
-                                    <img className="souseUserPageImage userHomePageImageBorder"
+                                    <img className="souseUserPageImage"
                                         src={this.userFinder()[i].userImage}
                                         alt="souseUserIcon"
                                         width="85px" 

@@ -53,31 +53,34 @@ class SouseSearch extends Component {
                     {Object.keys(this.props.souseSearchedUsers)
                         .map((object, i) => {
                             return <div class="col-3" obj={object} key={i}>
-                                <SouseStyledLink to={`/${this.props.souseSearchedUsers[i].username}`} onClick={() => window.location.refresh()}>
-                                    <div class="row">
-                                        <div class="col-12"> {/* User Icon */}
-                                            <div class="container">
-                                                <div class="row">
-                                                    <SouseSearchUserIcon className="mx-auto d-block justify-content-center">
-                                                        <img className="souseUserSearchImage userHomeSearchImageBorder"
-                                                            src={this.props.souseSearchedUsers[i].userImage}
-                                                            alt="souseUserIcon"
-                                                            width="45px" 
-                                                            height="45px"/>
-                                                    </SouseSearchUserIcon>
+                            {this.state.usersFilter == ""
+                                ?   <div></div>
+                                :   <SouseStyledLink to={`/${this.props.souseSearchedUsers[i].username}`} onClick={() => window.location.refresh()}>
+                                        <div class="row">
+                                            <div class="col-12"> {/* User Icon */}
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <SouseSearchUserIcon className="mx-auto d-block justify-content-center">
+                                                            <img className="souseUserSearchImage userHomeSearchImageBorder"
+                                                                src={this.props.souseSearchedUsers[i].userImage}
+                                                                alt="souseUserIcon"
+                                                                width="45px" 
+                                                                height="45px"/>
+                                                        </SouseSearchUserIcon>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12"> {/* Username and User's Name */}
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <LinkFontH6 className="col-12 p-0 m-0 d-flex justify-content-center" style={{fontWeight: 600}}>{this.props.souseSearchedUsers[i].username}</LinkFontH6>
+                                                        <LinkFontH6 className="col-12 p-0 m-0 d-flex justify-content-center">{this.props.souseSearchedUsers[i].firstName + " " +this.props.souseSearchedUsers[i].lastName}</LinkFontH6>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12"> {/* Username and User's Name */}
-                                            <div class="container">
-                                                <div class="row">
-                                                    <LinkFontH6 className="col-12 p-0 m-0 d-flex justify-content-center" style={{fontWeight: 600}}>{this.props.souseSearchedUsers[i].username}</LinkFontH6>
-                                                    <LinkFontH6 className="col-12 p-0 m-0 d-flex justify-content-center">{this.props.souseSearchedUsers[i].firstName + " " +this.props.souseSearchedUsers[i].lastName}</LinkFontH6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </SouseStyledLink>
+                                    </SouseStyledLink>
+                            }
                             </div>
                     })}
                 </div>

@@ -105,7 +105,7 @@ function (_Component) {
           "class": "col-3",
           obj: object,
           key: i
-        }, _react["default"].createElement(_mainStyling.SouseStyledLink, {
+        }, _this2.state.usersFilter == "" ? _react["default"].createElement("div", null) : _react["default"].createElement(_mainStyling.SouseStyledLink, {
           to: "/".concat(_this2.props.souseSearchedUsers[i].username),
           onClick: function onClick() {
             return window.location.refresh();

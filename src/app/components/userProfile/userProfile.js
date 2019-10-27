@@ -234,7 +234,7 @@ class UserProfile extends Component {
         const followsTotal = "" + this.followFinder().length + "";
         return (
             <div>
-                {loggedInUserImage === ""
+                {creatorImage === "" && loggedInUserId == creatorId
                     ?   <Redirect to={
                             {
                                 pathname: "/u/edit/" + loggedInUserId,
@@ -266,7 +266,7 @@ class UserProfile extends Component {
                                             <div class="row"> {/* Top content row */}
                                                 <div class="col-6 d-flex justify-content-end pr-5"> {/* User Image */}
                                                     <SouseUserPageIcon>
-                                                        <img className="souseUserPageImage userHomePageImageBorder"
+                                                        <img className="souseUserPageImage"
                                                             src={creatorImage}
                                                             alt="souseUserIcon"
                                                             width="85px" 

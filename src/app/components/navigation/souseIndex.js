@@ -164,11 +164,6 @@ class SouseIndex extends Component {
                         </div>
                     </div>
                 </div>
-                <div class="collapse" id="searchCollapse">
-                    <div class="searchCollapse">
-                        <h3>test space</h3>
-                    </div>
-                </div>
                 <div class="row d-flex justify-content-center">
                 <div class="fixed-action-btn pb-2"> {/* Form Display Button */}
                     <CreateIconLink className="btn-floating btn-large addPostButton">

@@ -35,12 +35,14 @@ class Navbar extends Component {
   onLogout = (e) => {
     e.preventDefault();
     this.props.logoutUser(this.props.history);
+    window.location.reload();
   }
 
   componentDidMount() {
     M.Autocomplete.init(this.autocomplete);
     { /* Theme Finder */}
-    const {isAuthenticated, user} = this.props.auth; 
+    const {isAuthenticated, user} = this.props.auth;
+    const userThemeOG = user.userTheme;
     let theme1 = "souseDefaultTheme";
     let theme2 = "souseIMTheme";
     let theme3 = "souseFPTheme";
@@ -52,7 +54,7 @@ class Navbar extends Component {
     let theme4Image = souseViceLogo;
     let theme5Image = souseVapeLogo;
     if (isAuthenticated) {
-        let currentTheme = this.state.currentTheme;
+        let currentTheme = userThemeOG;
         if (currentTheme == theme1) {
             this.setState({navbarImage: theme1Image});
         } else if (currentTheme == theme2) {

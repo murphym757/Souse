@@ -61,6 +61,8 @@ function (_Component) {
       e.preventDefault();
 
       _this.props.logoutUser(_this.props.history);
+
+      window.location.reload();
     };
 
     var _this$props$auth = _this.props.auth,
@@ -88,6 +90,7 @@ function (_Component) {
       var _this$props$auth2 = this.props.auth,
           isAuthenticated = _this$props$auth2.isAuthenticated,
           user = _this$props$auth2.user;
+      var userThemeOG = user.userTheme;
       var theme1 = "souseDefaultTheme";
       var theme2 = "souseIMTheme";
       var theme3 = "souseFPTheme";
@@ -100,7 +103,7 @@ function (_Component) {
       var theme5Image = _souseLogos.souseVapeLogo;
 
       if (isAuthenticated) {
-        var currentTheme = this.state.currentTheme;
+        var currentTheme = userThemeOG;
 
         if (currentTheme == theme1) {
           this.setState({

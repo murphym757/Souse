@@ -17,13 +17,13 @@ var _reactRedux = require("react-redux");
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
-var _v = require("@bootstrap-styled/v4");
-
 var _provider = _interopRequireDefault(require("@bootstrap-styled/provider"));
 
 var _theme = require("bootstrap-styled/lib/theme");
 
 var _globalStyling = require("../assets/styles/globalStyling");
+
+var _v = require("@bootstrap-styled/v4");
 
 var _globalTheme = require("../assets/styles/globalTheme");
 
@@ -93,7 +93,7 @@ function (_Component) {
       followers: [],
       follows: [],
       currentTheme: "souseDefaultTheme",
-      themeType: "Light"
+      userThemeType: "Light"
     };
     return _this;
   }
@@ -186,17 +186,19 @@ function (_Component) {
       var _this$props$auth = this.props.auth,
           isAuthenticated = _this$props$auth.isAuthenticated,
           user = _this$props$auth.user;
-      var themeType = this.state.themeType;
-      var theme1 = _globalTheme.souseDefaultTheme;
-      var theme2 = _globalTheme.souseIMTheme;
-      var theme3 = _globalTheme.souseFPTheme;
-      var theme4 = _globalTheme.souseViceTheme;
-      var theme5 = _globalTheme.souseVapeTheme;
+      var userThemeOG = user.userTheme;
+      var themeTypeOG = user.userThemeType;
+      var theme1 = "souseDefaultTheme";
+      var theme2 = "souseIMTheme";
+      var theme3 = "souseFPTheme";
+      var theme4 = "souseViceTheme";
+      var theme5 = "souseVapeTheme";
 
       if (isAuthenticated) {
-        var userTheme = user.userTheme.slice(0);
+        var userTheme = userThemeOG;
+        var themeType = themeTypeOG;
 
-        if (userTheme = theme1) {
+        if (userTheme == theme1) {
           if (themeType == "Light") {
             this.setState({
               currentTheme: _globalTheme.souseDefaultTheme
@@ -206,7 +208,7 @@ function (_Component) {
               currentTheme: _globalTheme.souseDefaultThemeDark
             });
           }
-        } else if (userTheme = theme2) {
+        } else if (userTheme == theme2) {
           if (themeType == "Light") {
             this.setState({
               currentTheme: _globalTheme.souseIMTheme
@@ -216,7 +218,7 @@ function (_Component) {
               currentTheme: _globalTheme.souseIMThemeDark
             });
           }
-        } else if (userTheme = theme3) {
+        } else if (userTheme == theme3) {
           if (themeType == "Light") {
             this.setState({
               currentTheme: _globalTheme.souseFPTheme
@@ -226,7 +228,7 @@ function (_Component) {
               currentTheme: _globalTheme.souseFPThemeDark
             });
           }
-        } else if (userTheme = theme4) {
+        } else if (userTheme == theme4) {
           if (themeType == "Light") {
             this.setState({
               currentTheme: _globalTheme.souseViceTheme
@@ -236,7 +238,7 @@ function (_Component) {
               currentTheme: _globalTheme.souseViceThemeDark
             });
           }
-        } else if (userTheme = theme5) {
+        } else if (userTheme == theme5) {
           if (themeType == "Light") {
             this.setState({
               currentTheme: _globalTheme.souseVapeTheme
@@ -246,7 +248,7 @@ function (_Component) {
               currentTheme: _globalTheme.souseVapeThemeDark
             });
           }
-        } else if (userTheme = undefined) {
+        } else if (userTheme == undefined) {
           this.setState({
             currentTheme: _globalTheme.souseDefaultTheme
           });

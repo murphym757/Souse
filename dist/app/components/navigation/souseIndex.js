@@ -214,11 +214,6 @@ function (_Component) {
         match: this.props.match,
         onChange: this.filterList
       })))))), _react["default"].createElement("div", {
-        "class": "collapse",
-        id: "searchCollapse"
-      }, _react["default"].createElement("div", {
-        "class": "searchCollapse"
-      }, _react["default"].createElement("h3", null, "test space"))), _react["default"].createElement("div", {
         "class": "row d-flex justify-content-center"
       }, _react["default"].createElement("div", {
         "class": "fixed-action-btn pb-2"

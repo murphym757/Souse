@@ -1,6 +1,10 @@
 import { Twitter } from 'styled-icons/feather/Twitter';
 import { Facebook } from 'styled-icons/feather/Facebook';
 import { Instagram } from 'styled-icons/feather/Instagram';
+import { Delete } from 'styled-icons/feather/Delete';
+import { InvertColors } from 'styled-icons/material/InvertColors';
+import { Sun } from 'styled-icons/fa-regular/Sun';
+import { Moon } from 'styled-icons/fa-regular/Moon';
 import styled from 'styled-components';
 import { souseMediaQueries } from './mainStyling';
 
@@ -26,11 +30,6 @@ export const SouseUserPageIcon = styled.div `
         justify-content: center;
         align-items: center;
     }
-
-    .userHomePageImageBorder {
-        padding: 0rem;
-        border: 0.3rem solid ${props => props.theme.secondaryColor};
-    } 
     /* Media Queries */
     /* ----------------------------------------- */
     /* Small Mobile Phones */
@@ -245,4 +244,263 @@ export const EditUserProfileOptionsFont = styled.h4 `
     color: ${props => props.theme.secondaryColor};
     font-weight: 600;
 
+`;
+export const DeleteIcon = styled(Delete) `
+    & {
+        height: 6em;
+        width: 6em;
+        stroke: ${props => props.theme.white};
+        stroke-width: 1;
+        fill: ${props => props.theme.secondaryColor};
+    }
+`;
+
+export const InvertColorsIcon = styled(InvertColors) `
+    & {
+        height: 6em;
+        width: 6em;
+        stroke: ${props => props.theme.white};
+        stroke-width: 1;
+        fill: ${props => props.theme.secondaryColor};
+    }
+`;
+
+export const SouseStyleSelectorIcon = styled.div `
+    .souseStyleImage {
+        height: 12vw;
+        width: 12vw;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .souseStyleImageRise {
+            -webkit-animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+                    animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+            @-webkit-keyframes slide-top {
+                0% {
+                    -webkit-transform: translateY(0);
+                            transform: translateY(0);
+                }
+                100% {
+                    -webkit-transform: translateY(-100px);
+                            transform: translateY(-100px);
+                }
+            }
+            @keyframes slide-top {
+                0% {
+                    -webkit-transform: translateY(0);
+                            transform: translateY(0);
+                }
+                100% {
+                    -webkit-transform: translateY(-100px);
+                            transform: translateY(-100px);
+                }
+            }
+        }
+        .souseStyleImageClose {
+            -webkit-animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) reverse both;
+            animation: slide-top 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) reverse both;
+            @-webkit-keyframes slide-top {
+                0% {
+                -webkit-transform: translateY(0);
+                        transform: translateY(0);
+                }
+                100% {
+                -webkit-transform: translateY(-100px);
+                        transform: translateY(-100px);
+                }
+            }
+            @keyframes slide-top {
+                0% {
+                -webkit-transform: translateY(0);
+                        transform: translateY(0);
+                }
+                100% {
+                -webkit-transform: translateY(-100px);
+                        transform: translateY(-100px);
+                }
+            }
+        }
+    /* Media Queries */
+    /* ----------------------------------------- */
+    /* Small Mobile Phones */
+    @media ${souseMediaQueries.mobileS.portrait} {
+        .souseStyleImage {
+            height: 20vw;
+            width: 20vw;
+        }
+    }
+    @media ${souseMediaQueries.mobileS.landscape} {
+        .souseStyleImage {
+            height: 20vw;
+            width: 20vw;
+        }
+    } 
+    /* Medium Mobile Phones */
+    @media ${souseMediaQueries.mobileM.portrait} {
+        .souseStyleImage {
+            height: 20vw;
+            width: 20vw;
+        }
+    }
+    @media ${souseMediaQueries.mobileM.landscape} {
+        .souseStyleImage {
+            height: 20vw;
+            width: 20vw;
+        }
+    } 
+    /* Large Mobile Phones */
+    @media ${souseMediaQueries.mobileL.portrait} {
+        .souseStyleImage {
+            height: 20vw;
+            width: 20vw;
+        }
+    }
+    @media ${souseMediaQueries.mobileL.landscape} {
+        .souseStyleImage {
+            height: 20vw;
+            width: 20vw;
+        }
+    } 
+    /* Tablets */
+    @media ${souseMediaQueries.tablet.portrait} {
+        .souseStyleImage {
+            height: 20vw;
+            width: 20vw;
+        }
+    }
+    @media ${souseMediaQueries.tablet.landscape} {
+        .souseStyleImage {
+            height: 9vw;
+            width: 9vw;
+        }
+    } 
+    /* Laptops and Large Tablets */
+    @media ${souseMediaQueries.laptop.portrait} {
+        .souseStyleImage {
+            width: 13vw;
+            height: 13vw;
+        }
+    }
+    @media ${souseMediaQueries.laptop.landscape} {
+        .souseStyleImage {
+            height: 9vw;
+            width: 9vw;
+        }
+    } 
+    /* Large Laptops */
+    @media ${souseMediaQueries.laptopL.landscape} {
+        .souseStyleImage {
+            height: 9vw;
+            width: 9vw;
+        }
+    } 
+    /* Desktops */
+    @media ${souseMediaQueries.desktop.landscape} {
+        .souseStyleImage {
+            height: 9vw;
+            width: 9vw;
+        }
+    } 
+`
+/* ----------------------------------------- */
+
+// Theme Selector Chips
+/* ---------------------------------------------------- */
+export const SouseDefaultChip = styled.div `
+    background: rgb(228, 209, 209) !important;
+    border: rgb(196, 87, 88) solid;
+
+    .chipFont {
+        color: rgb(196, 87, 88) !important;
+        font-weight: 600;
+    }
+`;
+export const SouseIMChip = styled.div `
+    background: rgb(247, 181, 205) !important;
+    border: rgb(255, 255, 255) solid;
+
+    .chipFont {
+        color: rgb(35, 31, 32) !important;
+        font-weight: 600;
+    }
+`;
+export const SouseFPChip = styled.div `
+    background: rgb(44, 65, 96) !important; 
+    border: rgb(255, 255, 255) solid;
+
+    .chipFont {
+        color: rgb(188, 153, 86) !important;
+        font-weight: 600;
+    }
+`;
+export const SouseViceChip = styled.div `
+    background: rgb(255, 255, 255) !important;   
+    border: rgb(65,182,230) solid;
+
+    .chipFont {
+        color: rgb(100, 195, 167) !important;
+        font-weight: 600;
+    }
+`;
+export const SouseVapeChip = styled.div `
+    background: rgb(226, 226, 226) !important; 
+    border: rgb(255, 181, 198) solid;
+
+    .chipFont {
+        color: rgb(255, 181, 198) !important;
+        font-weight: 600;
+    }
+`;
+/* ---------------------------------------------------- */
+export const SouseImageSwitchComboHide = styled.div `
+    position: absolute;
+    top: 5.5vw;
+    z-index: -1;
+`;
+export const SouseImageSwitchComboShow = styled.div `
+    position: absolute;
+    top: 5.5vw;
+    z-index: 2;
+    .switchFadeIn {
+        -webkit-animation: fade-in 3.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) 4.5s both;
+                animation: fade-in 3.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) 4.5s both;
+        @-webkit-keyframes fade-in {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        @keyframes fade-in {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    }
+`;
+
+export const SunIcon = styled(Sun) `
+    & {
+        height: 2em;
+        width: 2em;
+        stroke: ${props => props.theme.white};
+        stroke-width: 1;
+        fill: ${props => props.theme.secondaryColor};
+    }
+`;
+
+export const MoonIcon = styled(Moon) `
+    & {
+        height: 2em;
+        width: 2em;
+        stroke: ${props => props.theme.white};
+        stroke-width: 1;
+        fill: ${props => props.theme.secondaryColor};
+    }
 `;

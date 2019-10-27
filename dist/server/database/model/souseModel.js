@@ -66,6 +66,10 @@ var UserSchema = new mongoose.Schema({
     type: String,
     "default": "souseDefaultTheme"
   },
+  userThemeType: {
+    type: String,
+    "default": "Light"
+  },
   signUpDate: {
     type: Date,
     "default": Date.now

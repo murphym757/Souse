@@ -83,7 +83,8 @@ exports.login_user = function (req, res, next) {
           id: user.id,
           username: user.username,
           userImage: user.userImage,
-          userTheme: user.userTheme
+          userTheme: user.userTheme,
+          userThemeType: user.userThemeType
         };
         jwt.sign(payload, 'secret', {
           expiresIn: 3600
@@ -131,6 +132,7 @@ exports.update_user = function (req, res, next) {
     email: req.body.email,
     userImage: req.body.userImage,
     userTheme: req.body.userTheme,
+    userThemeType: req.body.userThemeType,
     userInstagram: req.body.userInstagram,
     userFacebook: req.body.userFacebook,
     userTwitter: req.body.userTwitter,
@@ -238,6 +240,7 @@ exports.user_account = passport.authenticate('jwt', {
     username: req.user.username,
     userImage: req.user.userImage,
     userTheme: req.user.userTheme,
+    userThemeType: req.user.userThemeType,
     email: req.user.email
   });
 };

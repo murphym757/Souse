@@ -136,7 +136,7 @@ function (_Component) {
         }, _react["default"].createElement("div", {
           "class": "row d-flex justify-content-center"
         }, "   ", _react["default"].createElement(_userProfileStyling.SouseUserPageIcon, null, _react["default"].createElement("img", {
-          className: "souseUserPageImage userHomePageImageBorder",
+          className: "souseUserPageImage",
           src: _this.userFinder()[i].userImage,
           alt: "souseUserIcon",
           width: "85px",
