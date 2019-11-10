@@ -62,6 +62,27 @@ export const CreateIconLink = styled.a `
     }
 `;
 
+export const ConnectionOptionsLink = styled.h6 `
+    font-weight: 600;
+    cursor: pointer;
+    color: ${props => props.theme.secondaryColor};
+        text-decoration: none;
+        &:focus {
+            color: ${props => props.theme.secondaryColor};
+        }   
+        &:link {
+            color: ${props => props.theme.secondaryColor};
+        }
+        &:visited {
+            color: ${props => props.theme.secondaryColor};
+        }
+        &:hover {
+            color: ${props => props.theme.secondaryColor};
+        }
+        &:active {
+            color: ${props => props.theme.secondaryColor};
+        }
+`;
 
 //Souse Button
 /* ---------------------------------------------------- */
@@ -209,12 +230,12 @@ const breakpoint = {
     laptopL: {
         landscape: {
             minWidth: '90em', //1440px
-            maxWidth: '159.9375em' //2559px
+            maxWidth: '134.9375em' //2159px
         }
     },
     desktop: {
         landscape: {
-            minWidth: '160em' //2560px
+            minWidth: '135em' //2160px
         }
     }
 }

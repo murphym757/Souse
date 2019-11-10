@@ -105,8 +105,10 @@ function (_Component) {
     key: "render",
     value: function render() {
       var errors = this.state.errors;
-      return _react["default"].createElement("div", {
-        "class": "container-fluid"
+      return _react["default"].createElement("div", null, _react["default"].createElement("div", {
+        "class": "d-none d-xl-block"
+      }, " ", _react["default"].createElement("div", {
+        "class": "col-12"
       }, _react["default"].createElement(_mainStyling.SouseForm, {
         onSubmit: this.onSubmit
       }, _react["default"].createElement("div", {
@@ -150,7 +152,54 @@ function (_Component) {
         className: "waves-effect waves-light btn-large"
       }, _react["default"].createElement("p", {
         "class": "lead buttonFont"
-      }, "Login")))));
+      }, "Login")))))), _react["default"].createElement("div", {
+        "class": "d-xl-none"
+      }, " ", _react["default"].createElement("div", {
+        "class": "col-12 mx-auto"
+      }, _react["default"].createElement(_mainStyling.SouseForm, {
+        onSubmit: this.onSubmit
+      }, _react["default"].createElement("div", {
+        "class": "input-field"
+      }, _react["default"].createElement("input", {
+        type: "email",
+        name: "email",
+        "class": (0, _classnames["default"])('form-control', {
+          'is-invalid': errors.email
+        }),
+        id: "souseEmail",
+        value: this.state.email,
+        onChange: this.onChange
+      }), _react["default"].createElement("label", {
+        "for": "email"
+      }, "Email"), _react["default"].createElement("span", {
+        "class": "helper-text",
+        "data-error": "wrong",
+        "data-success": "right"
+      }, "We'll never share your email with anyone else."), errors.email && _react["default"].createElement("div", {
+        "class": "invalid-feedback"
+      }, errors.email)), _react["default"].createElement("div", {
+        "class": "input-field"
+      }, _react["default"].createElement("input", {
+        type: "password",
+        name: "password",
+        "class": (0, _classnames["default"])('form-control', {
+          'is-invalid': errors.password
+        }),
+        id: "sousePassword",
+        value: this.state.password,
+        onChange: this.onChange
+      }), _react["default"].createElement("label", {
+        "for": "password"
+      }, "Password"), errors.password && _react["default"].createElement("div", {
+        "class": "invalid-feedback"
+      }, errors.password)), _react["default"].createElement("div", {
+        "class": "form-group"
+      }, _react["default"].createElement(_mainStyling.SouseButton, {
+        type: "submit",
+        className: "waves-effect waves-light btn-large"
+      }, _react["default"].createElement("p", {
+        "class": "lead buttonFont"
+      }, "Login")))))));
     }
   }]);
 

@@ -53,12 +53,12 @@ class UserPage extends Component {
         return (
             <div>
             {isAuthenticated 
-                    ? <div>
-                        {this.userFinder()}
-                    </div>
-                    : <div>
-                        {this.userFinder()}
-                    </div>
+                    ?   <div>
+                            {this.userFinder()}
+                        </div>
+                    :   <div>
+                            {this.userFinder()}
+                        </div>
                 }
             </div>
           );

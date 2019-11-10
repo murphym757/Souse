@@ -21,6 +21,8 @@ var _ThumbsOk = require("styled-icons/typicons/ThumbsOk");
 
 var _ThumbsDown = require("styled-icons/typicons/ThumbsDown");
 
+var _postsStyling = require("../../assets/styles/postsStyling");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -112,14 +114,12 @@ function (_Component) {
         "class": "souseCommentInput"
       }, " ", _react["default"].createElement("div", {
         "class": "commentsPostsSection"
-      }, _react["default"].createElement("div", {
-        "class": "pre-scrollable"
-      }, _react["default"].createElement("div", {
+      }, _react["default"].createElement(_postsStyling.PreScrollable, null, _react["default"].createElement("div", {
         "class": "row no-gutters commentsSectionBody"
       }, _react["default"].createElement("div", {
         "class": "col-2"
-      }, _react["default"].createElement("img", {
-        "class": "souseUserIconComments",
+      }, _react["default"].createElement(PostPageIcon, {
+        className: "souseUserIconComments",
         src: "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg",
         alt: "souseUserIconComments",
         width: "25px",

@@ -14,8 +14,13 @@ import { souseMediaQueries } from './mainStyling';
     color: ${props => props.theme.secondaryColor};
     font-weight: 600;
 `;
+export const UserLocationUserPage = styled.h4 `
+    color: ${props => props.theme.secondaryColor};
+    font-weight: 500;
+`;
  export const UserDataUserPage = styled.h5 `
     color: ${props => props.theme.secondaryColor};
+    cursor: pointer;
 `;
 /* ---------------------------------------------------- */
 
@@ -23,6 +28,9 @@ import { souseMediaQueries } from './mainStyling';
 /* ---------------------------------------------------- */
 export const SouseUserPageIcon = styled.div `
     .souseUserPageImage {
+        border-radius: 50%;
+        border: 0.25em solid ${props => props.theme.secondaryColor};
+        position: relative;
         height: 15vw;
         width: 15vw;
         overflow: hidden;
@@ -93,8 +101,8 @@ export const SouseUserPageIcon = styled.div `
     }
     @media ${souseMediaQueries.laptop.landscape} {
         .souseUserPageImage {
-            height: 15vw;
-            width: 15vw;
+            height: 17vw;
+            width: 17vw;
         }
     } 
     /* Large Laptops */
@@ -107,8 +115,8 @@ export const SouseUserPageIcon = styled.div `
     /* Desktops */
     @media ${souseMediaQueries.desktop.landscape} {
         .souseUserPageImage {
-            height: 15vw;
-            width: 15vw;
+            height: 10vw;
+            width: 10vw;
         }
     } 
     /* ----------------------------------------- */
@@ -154,14 +162,72 @@ export const UserBio = styled.h5 `
 // User's Posts
 /* ---------------------------------------------------- */
 export const UserPostIcons = styled.img `
-    .souseUserPostsUserHomePage {
         object-fit: cover;
-        width: 15vw;
-        height: 15vw;
-    }
+        width: 14vw;
+        height: 14vw;
     &:hover {
-        border: 1px solid ${props => props.theme.secondaryColor};
+        border: 0.25em solid ${props => props.theme.secondaryColor};
     }
+    /* Media Queries */
+    /* ----------------------------------------- */
+    /* Small Mobile Phones */
+    @media ${souseMediaQueries.mobileS.portrait} {
+        height: 100vw;
+        width: 100vw;
+    }
+    @media ${souseMediaQueries.mobileS.landscape} {
+        height: 36vw;
+        width: 36vw;
+    } 
+    /* Medium Mobile Phones */
+    @media ${souseMediaQueries.mobileM.portrait} {
+        height: 100vw;
+        width: 100vw;
+    }
+    @media ${souseMediaQueries.mobileM.landscape} {
+        height: 36vw;
+        width: 36vw;
+    } 
+    /* Large Mobile Phones */
+    @media ${souseMediaQueries.mobileL.portrait} {
+        height: 100vw;
+        width: 100vw;
+    }
+    @media ${souseMediaQueries.mobileL.landscape} {
+        height: 47vw;
+        width: 47vw;
+    } 
+    /* Tablets */
+    @media ${souseMediaQueries.tablet.portrait} {
+        height: 40vw;
+        width: 40vw;
+    }
+    @media ${souseMediaQueries.tablet.landscape} {
+        height: 40vw;
+        width: 40vw;
+    } 
+    /* Laptops and Large Tablets */
+    @media ${souseMediaQueries.laptop.portrait} {
+        .souseUserPageImage {
+            width: 40vw;
+            height: 40vw;
+        }
+    }
+    @media ${souseMediaQueries.laptop.landscape} {
+        height: 15vw;
+        width: 15vw;
+    } 
+    /* Large Laptops */
+    @media ${souseMediaQueries.laptopL.landscape} {
+        height: 12vw;
+        width: 12vw;
+    } 
+    /* Desktops */
+    @media ${souseMediaQueries.desktop.landscape} {
+        height: 10vw;
+        width: 10vw;
+    } 
+    /* ----------------------------------------- */
 `;
 /* ---------------------------------------------------- */
 
@@ -170,10 +236,12 @@ export const UserPostIcons = styled.img `
 export const UserPageOptionsH5 = styled.h5 `
         color: ${props => props.theme.secondaryColor};
         font-weight: 600;
+        cursor: pointer;
 `;
 export const UserPageOptionsH5Selected = styled.h5 `
         color: ${props => props.theme.white};
         font-weight: 600;
+        cursor: pointer;
 `;
 
 
@@ -199,6 +267,7 @@ export const UserPageOptionsLink = styled.a `
         display: inline-block;
         padding: 0.5rem 1rem;
         position: relative;
+        cursor: pointer;
         &:after {
             background: none repeat scroll 0 0 transparent;
             bottom: 0;

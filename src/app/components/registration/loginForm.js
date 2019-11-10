@@ -57,43 +57,87 @@ class LoginForm extends Component {
     render() {
         const { errors } = this.state;
         return (
-            <div class="container-fluid">
-                <SouseForm onSubmit={this.onSubmit}>
-                    <div class="input-field">
-                        <input 
-                            type="email"
-                            name="email" 
-                            class={classnames('form-control', {
-                                    'is-invalid': errors.email
-                                })} 
-                            id="souseEmail"
-                            value={this.state.email}
-                            onChange={this.onChange}
-                        />
-                        <label for="email">Email</label>
-                        <span class="helper-text" data-error="wrong" data-success="right">{"We'll never share your email with anyone else."}</span>
-                        {errors.email && (<div class="invalid-feedback">{errors.email}</div>)}
+            <div>
+                <div class="d-none d-xl-block"> {/* For larger Sceens */}
+                    <div class="col-12">
+                        <SouseForm onSubmit={this.onSubmit}>
+                            <div class="input-field">
+                                <input 
+                                    type="email"
+                                    name="email" 
+                                    class={classnames('form-control', {
+                                            'is-invalid': errors.email
+                                        })} 
+                                    id="souseEmail"
+                                    value={this.state.email}
+                                    onChange={this.onChange}
+                                />
+                                <label for="email">Email</label>
+                                <span class="helper-text" data-error="wrong" data-success="right">{"We'll never share your email with anyone else."}</span>
+                                {errors.email && (<div class="invalid-feedback">{errors.email}</div>)}
+                            </div>
+                            <div class="input-field">
+                                <input 
+                                    type="password"
+                                    name="password" 
+                                    class={classnames('form-control', {
+                                            'is-invalid': errors.password
+                                        })} 
+                                    id="sousePassword"
+                                    value={this.state.password}
+                                    onChange={this.onChange} 
+                                />
+                                <label for="password">Password</label>
+                                {errors.password && (<div class="invalid-feedback">{errors.password}</div>)}
+                            </div>
+                            <div class="form-group">
+                                <SouseButton type="submit" className="waves-effect waves-light btn-large">
+                                    <p class="lead buttonFont">Login</p>
+                                </SouseButton>
+                            </div>
+                        </SouseForm>
                     </div>
-                    <div class="input-field">
-                        <input 
-                            type="password"
-                            name="password" 
-                            class={classnames('form-control', {
-                                    'is-invalid': errors.password
-                                })} 
-                            id="sousePassword"
-                            value={this.state.password}
-                            onChange={this.onChange} 
-                        />
-                        <label for="password">Password</label>
-                        {errors.password && (<div class="invalid-feedback">{errors.password}</div>)}
+                </div>
+                <div class="d-xl-none"> {/* For smaller Sceens */}
+                    <div class="col-12 mx-auto">
+                        <SouseForm onSubmit={this.onSubmit}>
+                            <div class="input-field">
+                                <input 
+                                    type="email"
+                                    name="email" 
+                                    class={classnames('form-control', {
+                                            'is-invalid': errors.email
+                                        })} 
+                                    id="souseEmail"
+                                    value={this.state.email}
+                                    onChange={this.onChange}
+                                />
+                                <label for="email">Email</label>
+                                <span class="helper-text" data-error="wrong" data-success="right">{"We'll never share your email with anyone else."}</span>
+                                {errors.email && (<div class="invalid-feedback">{errors.email}</div>)}
+                            </div>
+                            <div class="input-field">
+                                <input 
+                                    type="password"
+                                    name="password" 
+                                    class={classnames('form-control', {
+                                            'is-invalid': errors.password
+                                        })} 
+                                    id="sousePassword"
+                                    value={this.state.password}
+                                    onChange={this.onChange} 
+                                />
+                                <label for="password">Password</label>
+                                {errors.password && (<div class="invalid-feedback">{errors.password}</div>)}
+                            </div>
+                            <div class="form-group">
+                                <SouseButton type="submit" className="waves-effect waves-light btn-large">
+                                    <p class="lead buttonFont">Login</p>
+                                </SouseButton>
+                            </div>
+                        </SouseForm>
                     </div>
-                    <div class="form-group">
-                        <SouseButton type="submit" className="waves-effect waves-light btn-large">
-                            <p class="lead buttonFont">Login</p>
-                        </SouseButton>
-                    </div>
-                </SouseForm>
+                </div>
             </div>
           );
       }

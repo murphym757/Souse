@@ -482,7 +482,7 @@ function (_Component) {
       }, " ", _react["default"].createElement("input", {
         type: "text",
         name: "userTwitter",
-        className: "validate form-control",
+        className: "form-control",
         id: "souseUserTwitter",
         value: this.state.userTwitter,
         onChange: this.onUpdateUserTwitter
@@ -496,7 +496,7 @@ function (_Component) {
       }, " ", _react["default"].createElement("input", {
         type: "text",
         name: "userFacebook",
-        className: "validate form-control",
+        className: "form-control",
         id: "souseUserFacebook",
         value: this.state.userFacebook,
         onChange: this.onUpdateUserFacebook
@@ -510,7 +510,7 @@ function (_Component) {
       }, " ", _react["default"].createElement("input", {
         type: "text",
         name: "userInstagram",
-        className: "validate form-control",
+        className: "form-control",
         id: "souseUserInstagram",
         value: this.state.userInstagram,
         onChange: this.onUpdateUserInstagram
@@ -522,7 +522,7 @@ function (_Component) {
       }, " ", _react["default"].createElement("input", {
         type: "text",
         name: "userLocation",
-        className: "validate form-control",
+        className: "form-control",
         id: "souseUserLocation",
         value: this.state.userLocation,
         onChange: this.onUpdateUserLocation

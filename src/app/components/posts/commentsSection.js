@@ -11,6 +11,17 @@ import { ThumbsDown } from 'styled-icons/typicons/ThumbsDown';
 import { DotsHorizontalRounded } from 'styled-icons/boxicons-regular/DotsHorizontalRounded';
 import Timestamp from 'react-timestamp';
 import CommentDelete from './commentDeleteSection';
+import {
+    SouseForm
+} from '../../assets/styles/mainStyling';
+import { 
+    CommentsUserIcon,
+    CommentCreatorFont,
+    CommentCaptionFont
+} from '../../assets/styles/commentStyling';
+import {
+    PreScrollable
+} from '../../assets/styles/postsStyling';
 
 class CommentsSection extends Component {
     constructor(props) {
@@ -18,6 +29,7 @@ class CommentsSection extends Component {
         const {isAuthenticated, user} = this.props.auth;
         const loggedinUser = user.id;
         const loggedinUsername = user.username;
+        const souseCommentorImage = this.props.souseCommentorImage;
         const originalPostData = this.props.originalPostData;
         const originalPostId = this.props.originalPostData._id;
         this.state = {
@@ -27,7 +39,7 @@ class CommentsSection extends Component {
             commentId: '',
             postComment: '',
             deleteCommentSelected: false,
-            userIcon: 'http://www.venmond.com/demo/vendroid/img/avatar/big.jpg'
+            userIcon: souseCommentorImage
         };
         this.onChangePostComment = this.onChangePostComment.bind(this);
         this.onSubmitComment = this.onSubmitComment.bind(this);
@@ -117,47 +129,55 @@ class CommentsSection extends Component {
             width: 1.5em;
         `;
         return (
-            <div>
+            <div class="container-fluid p-0 m-0">
                 <div class="souseCommentInput"> {/* Should go on seperate comments page */}
                     <div class="commentsPostsSection">
-                        <div class="pre-scrollable">
+                        <PreScrollable>
                             {Object.keys(this.commentsFinder())
                                 .map((object, i) => (
                                     <div class="row no-gutters commentsSectionBody mt-0 mb-0">
                                         <div class="col-2">
-                                            <img class="souseUserIconComments" 
+                                            <CommentsUserIcon className="souseUserIconComments" 
                                                 src= {this.state.userIcon}
                                                 alt="souseUserIconComments"
                                                 width="25px" 
                                                 height="25px"/>
                                         </div>
+                                        {isAuthenticated
+                                            ?   <div></div>
+                                            :   <div></div>
+                                        }
                                         <div class="col-10">
                                             <div class="commentDataColumn">
-                                                <h6 class="souseCommentsCaption pr-3">
-                                                    <span class="pr-1"><Link to={`/${this.commentsFinder()[i].commentCreatorUsername}`}>{this.commentsFinder()[i].commentCreatorUsername}</Link> </span>{this.commentsFinder()[i].souseComment}
-                                                </h6>
+                                                <CommentCaptionFont className="pr-3">
+                                                    <span className="pr-1"><CommentCreatorFont to={`/${this.commentsFinder()[i].commentCreatorUsername}`}>{this.commentsFinder()[i].commentCreatorUsername}</CommentCreatorFont> </span>{this.commentsFinder()[i].souseComment}
+                                                </CommentCaptionFont>
                                                 <div class="row souseCommentsDataReply no-gutters">
                                                     <h6 class="col-3 commentTime"><Timestamp relative time={Date} relativeTo={this.commentsFinder()[i].commentCreatedDate} /></h6>
+                                                </div>
+                                                <div class="row"> {/* Comment Edit Options */}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                             ))}
-                        </div>
+                        </PreScrollable>
                     </div>
                         {isAuthenticated 
-                            ? <div class="row commentsFormSection container-fluid">
-                            <SouseForm class="col s12" onSubmit={this.onSubmitComment}>
-                                <div class="row pl-4">
-                                    <div class="input-field col s6">
+                            ? <div class="commentsFormSection">
+                            <SouseForm class="col-12" onSubmit={this.onSubmitComment}>
+                                <div class="row">
+                                    <div class="input-field col-12">
+                                        <div class="container">
                                         <input 
                                             id="souse_comment" 
                                             type="text"
                                             maxLength={1000} 
-                                            class="validate" 
+                                            className="validate" 
                                             value={this.state.postComment}
                                             onChange={this.onChangePostComment} />
                                         <label for="souse_comment">Add a Comment ({this.state.postComment.length}/1000)</label>
+                                    </div>
                                     </div>
                                 </div>
                             </SouseForm>

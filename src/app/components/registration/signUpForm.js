@@ -9,6 +9,10 @@ import {
     SouseForm
 } from '../../assets/styles/mainStyling';
 
+import {
+    SouseColumn
+} from '../../assets/styles/registrationStyling';
+
 class SignUpForm extends Component {
     constructor(props) {
         super(props);
@@ -64,99 +68,219 @@ class SignUpForm extends Component {
     render() {
         const { errors } = this.state;
         return (
-            <div class="container-fluid">
-                <SouseForm onSubmit={this.onSubmit}>
-                    <div class="input-field">
-                        <input 
-                            type="email"
-                            name="email" 
-                            class={classnames('form-control', {
-                                'is-invalid': errors.email
-                            })}
-                            id="souseEmail"
-                            value={this.state.email}
-                            onChange={this.onChange} 
-                        />
-                        <label for="souseEmail">Email</label>
-                        {errors.email && (<div class="invalid-feedback">{errors.email}</div>)}
+            <div>
+                <div class="d-none d-xl-block"> {/* For larger Sceens */}
+                    <div class="col-6 mx-auto">
+                        <SouseForm className="container-fluid" onSubmit={this.onSubmit}>
+                            <div class="row">
+                                <SouseColumn>
+                                    <div class="input-field">
+                                        <input 
+                                            type="email"
+                                            name="email" 
+                                            class={classnames('form-control', {
+                                                'is-invalid': errors.email
+                                            })}
+                                            id="souseEmail"
+                                            value={this.state.email}
+                                            onChange={this.onChange} 
+                                        />
+                                        <label for="souseEmail">Email</label>
+                                        {errors.email && (<div class="invalid-feedback">{errors.email}</div>)}
+                                    </div>
+                                    <div class="input-field">
+                                        <input 
+                                            type="text"
+                                            name="username" 
+                                            class={classnames('form-control', {
+                                                'is-invalid': errors.username
+                                            })} 
+                                            id = "souseUsername"
+                                            maxLength={30}
+                                            value={this.state.username}
+                                            onChange={this.onChange} 
+                                        />
+                                        <label for="souseUsername">Username ({this.state.username.length}/30)</label>
+                                        {errors.username && (<div class="invalid-feedback">{errors.username}</div>)}
+                                    </div>  
+                                </SouseColumn>
+                                <SouseColumn>
+                                    <div class="input-field">
+                                        <input 
+                                            type="text"
+                                            name="firstName" 
+                                            class={classnames('form-control', {
+                                                'is-invalid': errors.firstName
+                                            })} 
+                                            id = "souseFirstName"
+                                            value={this.state.firstName}
+                                            onChange={this.onChange}
+                                        />
+                                        <label for="souseFirstName">First Name  ({this.state.firstName.length}/30)</label>
+                                        {errors.firstName && (<div class="invalid-feedback">{errors.firstName}</div>)}
+                                    </div>
+                                    <div class="input-field">
+                                        <input 
+                                            type="text"
+                                            name="lastName" 
+                                            class={classnames('form-control', {
+                                                'is-invalid': errors.lastName
+                                            })} 
+                                            id="souseLastName"
+                                            value={this.state.lastName}
+                                            onChange={this.onChange}
+                                        />
+                                        <label for="souseLastName">Last Name  ({this.state.lastName.length}/30)</label>
+                                        {errors.lastName && (<div class="invalid-feedback">{errors.lastName}</div>)}
+                                    </div>
+                                </SouseColumn>
+                                <SouseColumn>
+                                    <div class="input-field">
+                                        <input 
+                                            type="password"
+                                            name="password"
+                                            class={classnames('form-control', {
+                                                'is-invalid': errors.password
+                                            })} 
+                                            id="sousePassword"
+                                            value={this.state.password}
+                                            onChange={this.onChange}
+                                        />
+                                        <label for="sousePassword">Password</label>
+                                        {errors.password && (<div class="invalid-feedback">{errors.password}</div>)}
+                                    </div>
+                                    <div class="input-field">
+                                        <input 
+                                            type="password"
+                                            name="password_confirm"
+                                            class={classnames('form-control', {
+                                                'is-invalid': errors.password_confirm
+                                            })} 
+                                            id="sousePasswordConfirm"
+                                            value={this.state.password_confirm}
+                                            onChange={this.onChange}
+                                        />
+                                        <label for="sousePasswordConfirm">Password Confirm</label>
+                                        {errors.password_confirm && (<div class="invalid-feedback">{errors.password_confirm}</div>)}
+                                    </div>
+                                </SouseColumn>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <SouseButton type="submit" className="waves-effect waves-light btn-large">
+                                        <p class="lead buttonFont">Sign Up</p>
+                                    </SouseButton>
+                                </div>
+                            </div>
+                        </SouseForm>
                     </div>
-                    <div class="input-field">
-                        <input 
-                            type="text"
-                            name="username" 
-                            class={classnames('form-control', {
-                                'is-invalid': errors.username
-                            })} 
-                            id = "souseUsername"
-                            maxLength={30}
-                            value={this.state.username}
-                            onChange={this.onChange} 
-                        />
-                        <label for="souseUsername">Username ({this.state.username.length}/30)</label>
-                        {errors.username && (<div class="invalid-feedback">{errors.username}</div>)}
+                </div>
+                <div class="d-xl-none"> {/* For smaller Sceens */}
+                    <div class="col-12 mx-auto">
+                        <SouseForm className="container-fluid" onSubmit={this.onSubmit}>
+                            <div class="row">
+                                <SouseColumn>
+                                    <div class="input-field">
+                                        <input 
+                                            type="email"
+                                            name="email" 
+                                            class={classnames('form-control', {
+                                                'is-invalid': errors.email
+                                            })}
+                                            id="souseEmail"
+                                            value={this.state.email}
+                                            onChange={this.onChange} 
+                                        />
+                                        <label for="souseEmail">Email</label>
+                                        {errors.email && (<div class="invalid-feedback">{errors.email}</div>)}
+                                    </div>
+                                    <div class="input-field">
+                                        <input 
+                                            type="text"
+                                            name="username" 
+                                            class={classnames('form-control', {
+                                                'is-invalid': errors.username
+                                            })} 
+                                            id = "souseUsername"
+                                            maxLength={30}
+                                            value={this.state.username}
+                                            onChange={this.onChange} 
+                                        />
+                                        <label for="souseUsername">Username ({this.state.username.length}/30)</label>
+                                        {errors.username && (<div class="invalid-feedback">{errors.username}</div>)}
+                                    </div>  
+                                </SouseColumn>
+                                <SouseColumn>
+                                    <div class="input-field">
+                                        <input 
+                                            type="text"
+                                            name="firstName" 
+                                            class={classnames('form-control', {
+                                                'is-invalid': errors.firstName
+                                            })} 
+                                            id = "souseFirstName"
+                                            value={this.state.firstName}
+                                            onChange={this.onChange}
+                                        />
+                                        <label for="souseFirstName">First Name  ({this.state.firstName.length}/30)</label>
+                                        {errors.firstName && (<div class="invalid-feedback">{errors.firstName}</div>)}
+                                    </div>
+                                    <div class="input-field">
+                                        <input 
+                                            type="text"
+                                            name="lastName" 
+                                            class={classnames('form-control', {
+                                                'is-invalid': errors.lastName
+                                            })} 
+                                            id="souseLastName"
+                                            value={this.state.lastName}
+                                            onChange={this.onChange}
+                                        />
+                                        <label for="souseLastName">Last Name  ({this.state.lastName.length}/30)</label>
+                                        {errors.lastName && (<div class="invalid-feedback">{errors.lastName}</div>)}
+                                    </div>
+                                </SouseColumn>
+                                <SouseColumn>
+                                    <div class="input-field">
+                                        <input 
+                                            type="password"
+                                            name="password"
+                                            class={classnames('form-control', {
+                                                'is-invalid': errors.password
+                                            })} 
+                                            id="sousePassword"
+                                            value={this.state.password}
+                                            onChange={this.onChange}
+                                        />
+                                        <label for="sousePassword">Password</label>
+                                        {errors.password && (<div class="invalid-feedback">{errors.password}</div>)}
+                                    </div>
+                                    <div class="input-field">
+                                        <input 
+                                            type="password"
+                                            name="password_confirm"
+                                            class={classnames('form-control', {
+                                                'is-invalid': errors.password_confirm
+                                            })} 
+                                            id="sousePasswordConfirm"
+                                            value={this.state.password_confirm}
+                                            onChange={this.onChange}
+                                        />
+                                        <label for="sousePasswordConfirm">Password Confirm</label>
+                                        {errors.password_confirm && (<div class="invalid-feedback">{errors.password_confirm}</div>)}
+                                    </div>
+                                </SouseColumn>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+                                    <SouseButton type="submit" className="waves-effect waves-light btn-large">
+                                        <p class="lead buttonFont">Sign Up</p>
+                                    </SouseButton>
+                                </div>
+                            </div>
+                        </SouseForm>
                     </div>
-                    <div class="input-field">
-                        <input 
-                            type="text"
-                            name="firstName" 
-                            class={classnames('form-control', {
-                                'is-invalid': errors.firstName
-                            })} 
-                            id = "souseFirstName"
-                            value={this.state.firstName}
-                            onChange={this.onChange}
-                        />
-                        <label for="souseFirstName">First Name  ({this.state.firstName.length}/30)</label>
-                        {errors.firstName && (<div class="invalid-feedback">{errors.firstName}</div>)}
-                    </div>
-                    <div class="input-field">
-                        <input 
-                            type="text"
-                            name="lastName" 
-                            class={classnames('form-control', {
-                                'is-invalid': errors.lastName
-                            })} 
-                            id="souseLastName"
-                            value={this.state.lastName}
-                            onChange={this.onChange}
-                        />
-                        <label for="souseLastName">Last Name  ({this.state.lastName.length}/30)</label>
-                        {errors.lastName && (<div class="invalid-feedback">{errors.lastName}</div>)}
-                    </div>
-                    <div class="input-field">
-                        <input 
-                            type="password"
-                            name="password"
-                            class={classnames('form-control', {
-                                'is-invalid': errors.password
-                            })} 
-                            id="sousePassword"
-                            value={this.state.password}
-                            onChange={this.onChange}
-                        />
-                        <label for="sousePassword">Password</label>
-                        {errors.password && (<div class="invalid-feedback">{errors.password}</div>)}
-                    </div>
-                    <div class="input-field">
-                        <input 
-                            type="password"
-                            name="password_confirm"
-                            class={classnames('form-control', {
-                                'is-invalid': errors.password_confirm
-                            })} 
-                            id="sousePasswordConfirm"
-                            value={this.state.password_confirm}
-                            onChange={this.onChange}
-                        />
-                        <label for="sousePasswordConfirm">Password Confirm</label>
-                        {errors.password_confirm && (<div class="invalid-feedback">{errors.password_confirm}</div>)}
-                    </div>
-                    <div class="form-group">
-                        <SouseButton type="submit" className="waves-effect waves-light btn-large">
-                            <p class="lead buttonFont">Sign Up</p>
-                        </SouseButton>
-                    </div>
-                </SouseForm>
+                </div>
             </div>
           );
       }

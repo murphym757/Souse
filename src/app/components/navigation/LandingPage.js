@@ -5,8 +5,26 @@ import { connect } from 'react-redux';
 import UserPage from '../userProfile/usersPage';
 import { SouseButton } from '../../assets/styles/mainStyling';
 import { SouseUserPageIcon } from '../../assets/styles/userProfileStyling';
+import SignUpForm from '../registration/signUpForm';
+import LoginForm from '../registration/loginForm';
+import {
+    ConnectionOptionsLink
+} from '../../assets/styles/mainStyling';
 
+import {
+    IphoneContainer,
+    IphoneOuterImage,
+    FormContainer
+} from '../../assets/styles/registrationStyling';
 class LandingPage extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            connectionOption: "1",
+        };
+        
+    }
+
     userFinder() {
         const {isAuthenticated, user} = this.props.auth;
         const loggedinUserId = user.id;
@@ -52,15 +70,16 @@ class LandingPage extends Component {
         const souseUserData = this.props.souseUserData;
         const loggedinUser = user.username;
         const loggedinUserId = user.id;
+        const connectionOption = this.state.connectionOption;
         const postsTotal = "" + this.postFinder().length + "";
         const followersTotal = "" + this.followerFinder().length + "";
         const followsTotal = "" + this.followFinder().length + "";
         return (
-            <div class="container-fluid">
+            <div>
                 {Object.keys(this.userFinder())
                     .map((object, i) => (
-                        <div class="container">
-                            <div class="row d-flex justify-content-center">   {/* Image Row */}
+                        <div class="container-fluid">
+                            <div class="row h-100 m-0 p-0 d-flex justify-content-center">   {/* Image Row */}
                                 <SouseUserPageIcon>
                                     <img className="souseUserPageImage"
                                         src={this.userFinder()[i].userImage}
@@ -83,7 +102,7 @@ class LandingPage extends Component {
                                     <h4 class="float-left">{followsTotal} Follows</h4>
                                 </div>
                             </div>
-                             {Object.keys(this.userFinder())
+                            {Object.keys(this.userFinder())
                                 .map((object, i) => (
                                     <div>
                                         <Link to={
@@ -115,23 +134,36 @@ class LandingPage extends Component {
                             }
                         </div>
                     ))}
-                {isAuthenticated 
-                    ?   <div></div>
-                    :   <div class="container">
-                            <div class="row">
-                                <div class="col-6">
-                                    <img 
-                                        class="souseHomeLogo-navbar d-block justify-content-center" 
-                                        src = "../../src/app/assets/images/iPhoneXSMaxSouse.svg"
-                                        width="450" 
-                                        alt="logo" 
-                                    />
-                                </div>
-                                <div class="col-6">
-                                    <h1 class="d-block justify-content-center">Forms</h1>
-                                </div>
-                            </div>
-                        </div> 
+                    {isAuthenticated 
+                        ?   <div></div>
+                        :   <div class="container-fluid">
+                                {connectionOption == '1'
+                                    ?   <div class="row h-100 m-0 p-0">
+                                            <IphoneContainer className="col-sm-6">
+                                                <IphoneOuterImage 
+                                                    class="souseHomeLogo-navbar d-block justify-content-center pt-5" 
+                                                    src = "../../src/app/assets/images/iPhoneXSMaxSouse.svg"
+                                                    width="450" 
+                                                    alt="logo" 
+                                                />
+                                            </IphoneContainer>
+                                            <FormContainer className="col-sm-6">
+                                                <div class="my-auto">
+                                                    <LoginForm />
+                                                </div>
+                                                <ConnectionOptionsLink className="pt-2 d-flex justify-content-center" onClick={this.optionClicked = (e) => {this.setState({connectionOption: '2'})}}>Sign Up</ConnectionOptionsLink>
+                                            </FormContainer>  
+                                        </div>
+                                    :   <div class="row h-100 m-0 p-0">
+                                            <div class="col-sm-12 mx-auto my-auto">
+                                                <div class="container-fluid m-0 p-0">
+                                                    <SignUpForm />
+                                                    <ConnectionOptionsLink className="pt-2 d-flex justify-content-center" onClick={this.optionClicked = (e) => {this.setState({connectionOption: '1'})}}>Log In</ConnectionOptionsLink>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                }
+                            </div> 
                 }
             </div>
           );

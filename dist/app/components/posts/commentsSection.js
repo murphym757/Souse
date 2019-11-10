@@ -31,6 +31,12 @@ var _reactTimestamp = _interopRequireDefault(require("react-timestamp"));
 
 var _commentDeleteSection = _interopRequireDefault(require("./commentDeleteSection"));
 
+var _mainStyling = require("../../assets/styles/mainStyling");
+
+var _commentStyling = require("../../assets/styles/commentStyling");
+
+var _postsStyling = require("../../assets/styles/postsStyling");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -103,6 +109,7 @@ function (_Component) {
         user = _this$props$auth.user;
     var loggedinUser = user.id;
     var loggedinUsername = user.username;
+    var souseCommentorImage = _this.props.souseCommentorImage;
     var originalPostData = _this.props.originalPostData;
     var originalPostId = _this.props.originalPostData._id;
     _this.state = {
@@ -112,7 +119,7 @@ function (_Component) {
       commentId: '',
       postComment: '',
       deleteCommentSelected: false,
-      userIcon: 'http://www.venmond.com/demo/vendroid/img/avatar/big.jpg'
+      userIcon: souseCommentorImage
     };
     _this.onChangePostComment = _this.onChangePostComment.bind(_assertThisInitialized(_this));
     _this.onSubmitComment = _this.onSubmitComment.bind(_assertThisInitialized(_this));
@@ -181,32 +188,32 @@ function (_Component) {
         displayName: "commentsSection__ThumbsDownIcon",
         componentId: "wmizgj-3"
       })(["color:#C45758;height:1.1em;width:1.5em;"]);
-      return _react["default"].createElement("div", null, _react["default"].createElement("div", {
+      return _react["default"].createElement("div", {
+        "class": "container-fluid p-0 m-0"
+      }, _react["default"].createElement("div", {
         "class": "souseCommentInput"
       }, " ", _react["default"].createElement("div", {
         "class": "commentsPostsSection"
-      }, _react["default"].createElement("div", {
-        "class": "pre-scrollable"
-      }, Object.keys(this.commentsFinder()).map(function (object, i) {
+      }, _react["default"].createElement(_postsStyling.PreScrollable, null, Object.keys(this.commentsFinder()).map(function (object, i) {
         return _react["default"].createElement("div", {
           "class": "row no-gutters commentsSectionBody mt-0 mb-0"
         }, _react["default"].createElement("div", {
           "class": "col-2"
-        }, _react["default"].createElement("img", {
-          "class": "souseUserIconComments",
+        }, _react["default"].createElement(_commentStyling.CommentsUserIcon, {
+          className: "souseUserIconComments",
           src: _this2.state.userIcon,
           alt: "souseUserIconComments",
           width: "25px",
           height: "25px"
-        })), _react["default"].createElement("div", {
+        })), isAuthenticated ? _react["default"].createElement("div", null) : _react["default"].createElement("div", null), _react["default"].createElement("div", {
           "class": "col-10"
         }, _react["default"].createElement("div", {
           "class": "commentDataColumn"
-        }, _react["default"].createElement("h6", {
-          "class": "souseCommentsCaption pr-3"
+        }, _react["default"].createElement(_commentStyling.CommentCaptionFont, {
+          className: "pr-3"
         }, _react["default"].createElement("span", {
-          "class": "pr-1"
-        }, _react["default"].createElement(_reactRouterDom.Link, {
+          className: "pr-1"
+        }, _react["default"].createElement(_commentStyling.CommentCreatorFont, {
           to: "/".concat(_this2.commentsFinder()[i].commentCreatorUsername)
         }, _this2.commentsFinder()[i].commentCreatorUsername), " "), _this2.commentsFinder()[i].souseComment), _react["default"].createElement("div", {
           "class": "row souseCommentsDataReply no-gutters"
@@ -216,26 +223,30 @@ function (_Component) {
           relative: true,
           time: Date,
           relativeTo: _this2.commentsFinder()[i].commentCreatedDate
-        }))))));
+        }))), _react["default"].createElement("div", {
+          "class": "row"
+        }, " "))));
       }))), isAuthenticated ? _react["default"].createElement("div", {
-        "class": "row commentsFormSection container-fluid"
-      }, _react["default"].createElement(SouseForm, {
-        "class": "col s12",
+        "class": "commentsFormSection"
+      }, _react["default"].createElement(_mainStyling.SouseForm, {
+        "class": "col-12",
         onSubmit: this.onSubmitComment
       }, _react["default"].createElement("div", {
-        "class": "row pl-4"
+        "class": "row"
       }, _react["default"].createElement("div", {
-        "class": "input-field col s6"
+        "class": "input-field col-12"
+      }, _react["default"].createElement("div", {
+        "class": "container"
       }, _react["default"].createElement("input", {
         id: "souse_comment",
         type: "text",
         maxLength: 1000,
-        "class": "validate",
+        className: "validate",
         value: this.state.postComment,
         onChange: this.onChangePostComment
       }), _react["default"].createElement("label", {
         "for": "souse_comment"
-      }, "Add a Comment (", this.state.postComment.length, "/1000)"))))) : _react["default"].createElement("div", null)));
+      }, "Add a Comment (", this.state.postComment.length, "/1000)")))))) : _react["default"].createElement("div", null)));
     }
   }]);
 

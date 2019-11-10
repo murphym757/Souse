@@ -6,6 +6,9 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { ThumbsOk } from 'styled-icons/typicons/ThumbsOk';
 import { ThumbsDown } from 'styled-icons/typicons/ThumbsDown';
+import {
+    PreScrollable
+} from '../../assets/styles/postsStyling';
 
 class CommentDelete extends Component {
     constructor(props) {
@@ -58,10 +61,10 @@ class CommentDelete extends Component {
             <div>
                 <div class="souseCommentInput"> {/* Should go on seperate comments page */}
                     <div class="commentsPostsSection">
-                        <div class="pre-scrollable">
+                        <PreScrollable>
                             <div class="row no-gutters commentsSectionBody">
                             <div class="col-2">
-                                <img class="souseUserIconComments" 
+                                <PostPageIcon className="souseUserIconComments" 
                                     src = "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg"
                                     alt="souseUserIconComments"
                                     width="25px" 
@@ -76,7 +79,7 @@ class CommentDelete extends Component {
                                     </h6>
                                 </div>
                             </div>
-                        </div>
+                        </PreScrollable>
                     </div>
                 </div>
             </div>

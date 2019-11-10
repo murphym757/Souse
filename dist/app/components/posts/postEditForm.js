@@ -19,6 +19,10 @@ var _styledComponents = _interopRequireDefault(require("styled-components"));
 
 var _mainStyling = require("../../assets/styles/mainStyling");
 
+var _postsStyling = require("../../assets/styles/postsStyling");
+
+var _userProfileStyling = require("../../assets/styles/userProfileStyling");
+
 var _styledSpinkit = require("styled-spinkit");
 
 var _awsS = _interopRequireDefault(require("aws-s3"));
@@ -71,6 +75,12 @@ function (_Component) {
       });
     };
 
+    _this.onChangepostLocation = function (e) {
+      _this.setState({
+        postLocation: e.target.value
+      });
+    };
+
     _this.onUpdateImage = function (e) {
       _this.setState({
         updateImage: true
@@ -91,6 +101,8 @@ function (_Component) {
       var S3Client = new _awsS["default"](config);
       var newFileName = "" + _this.state.postUnixTimestamp + "";
       S3Client.uploadFile(e.target.files[0], newFileName).then(function (data) {
+        console.log(data.location);
+
         _this.setState({
           postImageURL: data.location,
           isLoading: true
@@ -131,6 +143,7 @@ function (_Component) {
       var postData = {
         postCreatorId: _this.state.postCreatorId,
         postCaption: _this.state.postCaption,
+        postLocation: _this.state.postLocation,
         postUnixTimestamp: _this.state.postUnixTimestamp,
         postImageFileType: _this.state.postImageFileType,
         postImageFileName: _this.state.newPostImageFileName,
@@ -145,6 +158,8 @@ function (_Component) {
       });
 
       _this.props.history.push("/p/" + postId);
+
+      window.location.reload();
     };
 
     var _this$props$auth = _this.props.auth,
@@ -161,12 +176,14 @@ function (_Component) {
       originalPostId: postIdFound,
       postCreatorId: '',
       postCaption: '',
+      postLocation: '',
       postImageURL: '',
       updateImage: false,
       updatedImage: false,
       isLoading: false
-    }, _defineProperty(_this$state, "postCreatorId", loggedInUserId), _defineProperty(_this$state, "postUnixTimestamp", postTimestamp), _defineProperty(_this$state, "postImageFileType", ''), _defineProperty(_this$state, "postImageFileName", ''), _defineProperty(_this$state, "newPostImageFileName", ''), _defineProperty(_this$state, "username", loggedInUsername), _defineProperty(_this$state, "fullPostUploadLoader", false), _this$state);
+    }, _defineProperty(_this$state, "postCreatorId", loggedInUserId), _defineProperty(_this$state, "postUnixTimestamp", postTimestamp), _defineProperty(_this$state, "postImageFileType", ''), _defineProperty(_this$state, "postImageFileName", ''), _defineProperty(_this$state, "newPostImageFileName", ''), _defineProperty(_this$state, "username", loggedInUsername), _defineProperty(_this$state, "fullPostUploadLoader", false), _defineProperty(_this$state, "deleteButtonClicked", false), _this$state);
     _this.onChangepostCaption = _this.onChangepostCaption.bind(_assertThisInitialized(_this));
+    _this.onChangepostLocation = _this.onChangepostLocation.bind(_assertThisInitialized(_this));
     _this.onUpdateImage = _this.onUpdateImage.bind(_assertThisInitialized(_this));
     _this.onImageUpload = _this.onImageUpload.bind(_assertThisInitialized(_this));
     _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
@@ -190,6 +207,7 @@ function (_Component) {
       _axios["default"].get(apiRoute + editRoute + "/" + postId).then(function (res) {
         _this2.setState({
           postCaption: res.data.sousePosts.postCaption,
+          postLocation: res.data.sousePosts.postLocation,
           postCreatorId: res.data.postCreator,
           postImageURL: res.data.sousePosts.postImageURL
         });
@@ -218,6 +236,8 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
       var _this$props$auth3 = this.props.auth,
           isAuthenticated = _this$props$auth3.isAuthenticated,
           user = _this$props$auth3.user;
@@ -225,56 +245,94 @@ function (_Component) {
       var postCreatorId = this.state.postCreatorId;
       var updateImage = this.state.updateImage;
       var updatedImage = this.state.updatedImage;
-
-      var TestFont = _styledComponents["default"].h6.withConfig({
-        displayName: "postEditForm__TestFont",
-        componentId: "sc-20ft5w-0"
-      })(["color:", ";"], function (props) {
-        return props.theme.main;
-      });
-
-      TestFont.defaultProps = {
-        theme: {
-          main: "palevioletred"
-        }
-      };
       return _react["default"].createElement("div", null, isAuthenticated && postCreatorId == loggedInUser ? _react["default"].createElement("div", {
-        "class": "container"
+        "class": "container-fluid"
       }, _react["default"].createElement(_mainStyling.SouseForm, {
         onSubmit: this.onSubmit
-      }, _react["default"].createElement(TestFont, null, "Hi There"), _react["default"].createElement("div", {
-        "class": "row pt-5"
       }, _react["default"].createElement("div", {
-        "class": "input-field col-6"
+        "class": "row container mx-auto pt-5"
+      }, _react["default"].createElement("div", {
+        "class": "col-sm-6"
+      }, _react["default"].createElement("div", {
+        "class": "input-field pb-5"
       }, _react["default"].createElement("textarea", {
         "class": "materialize-textarea editText",
         name: "postCaption",
         id: "souseCaptionPost",
         rows: "1",
+        maxLength: 1000,
         value: this.state.postCaption,
         onChange: this.onChangepostCaption
       }), _react["default"].createElement("label", {
         "class": "active",
         "for": "souseCaptionPost"
-      }, "Caption")), _react["default"].createElement("div", {
-        "class": "col-6"
-      }, updateImage ? _react["default"].createElement("div", null, this.state.fullPostUploadLoader ? _react["default"].createElement("div", null, this.state.isLoading ? _react["default"].createElement("div", null, _react["default"].createElement("label", {
-        "class": "d-block justify-content-center"
-      }, "Image updated"), _react["default"].createElement("div", {
-        "class": "thumbnail"
+      }, "Caption (", this.state.postCaption.length, "/1000)")), _react["default"].createElement("div", {
+        "class": "input-field"
+      }, _react["default"].createElement("input", {
+        type: "text",
+        name: "postLocation",
+        className: "form-control",
+        id: "souseLocationPost",
+        value: this.state.postLocation,
+        onChange: this.onChangepostLocation
+      }), _react["default"].createElement("label", {
+        "class": "active",
+        "for": "souseLocationPost"
+      }, "Location"))), _react["default"].createElement("div", {
+        "class": "col-sm-6"
       }, _react["default"].createElement("div", {
-        "class": "souseImageFormat"
-      }, _react["default"].createElement("img", {
-        "class": "d-flex mx-auto sousePostImage editPost pb-2",
-        src: this.state.postImageURL,
-        alt: "sousePostImage",
-        width: "1080px",
-        height: "1080px"
-      })))) : _react["default"].createElement(_styledSpinkit.WaveLoading, {
-        "__styled-spinkit__Wave": true,
-        color: "#c45758"
-      })) : _react["default"].createElement("div", {
-        "class": "file-field input-field d-block mx-auto"
+        "class": "row justify-content-end"
+      }, this.state.deleteButtonClicked == false ? _react["default"].createElement("div", {
+        "data-toggle": "collapse",
+        href: "#postDeleteCollapse",
+        role: "button",
+        "aria-expanded": "false",
+        "aria-controls": "postDeleteCollapse",
+        onClick: this.optionClicked = function (e) {
+          _this3.setState({
+            deleteButtonClicked: true
+          });
+        },
+        "class": "form-group col-6 d-flex justify-content-end pt-3"
+      }, _react["default"].createElement(_userProfileStyling.DeleteIcon, null)) : _react["default"].createElement("div", {
+        "data-toggle": "collapse",
+        href: "#postDeleteCollapse",
+        role: "button",
+        "aria-expanded": "false",
+        "aria-controls": "postDeleteCollapse",
+        onClick: this.optionClicked = function (e) {
+          _this3.setState({
+            deleteButtonClicked: false
+          });
+        },
+        "class": "form-group col-6 d-flex justify-content-end pt-3"
+      }, _react["default"].createElement(_userProfileStyling.DeleteIcon, null))), _react["default"].createElement("div", {
+        "class": "row justify-content-center"
+      }, _react["default"].createElement("div", {
+        "class": "form-group col d-flex justify-content-center"
+      }, this.state.deleteButtonClicked == false ? _react["default"].createElement("div", {
+        "class": "row justify-content-center col-12"
+      }, this.state.fullPostUploadLoader ? _react["default"].createElement("div", null, this.state.isLoading ? _react["default"].createElement("div", null, _react["default"].createElement("h4", {
+        "class": "d-flex justify-content-center pb-2"
+      }, "User Image Updated")) : _react["default"].createElement("div", {
+        "class": "row d-flex justify-content-center"
+      }, _react["default"].createElement(_mainStyling.SouseLoadingIcon, {
+        className: "spinner-grow",
+        role: "status"
+      }, _react["default"].createElement("span", {
+        "class": "sr-only"
+      }, "Loading...")), _react["default"].createElement(_mainStyling.SouseLoadingIcon2, {
+        className: "spinner-grow",
+        role: "status"
+      }, _react["default"].createElement("span", {
+        "class": "sr-only"
+      }, "Loading...")), _react["default"].createElement(_mainStyling.SouseLoadingIcon3, {
+        className: "spinner-grow",
+        role: "status"
+      }, _react["default"].createElement("span", {
+        "class": "sr-only"
+      }, "Loading...")))) : _react["default"].createElement("div", {
+        "class": "file-field input-field col-12"
       }, _react["default"].createElement(_mainStyling.SouseButton, {
         className: "btn-large"
       }, _react["default"].createElement("p", {
@@ -289,36 +347,18 @@ function (_Component) {
       }, _react["default"].createElement("input", {
         "class": "file-path validate",
         type: "text"
-      })))) : _react["default"].createElement("div", null, _react["default"].createElement("label", {
-        "class": "d-flex justify-content-center"
-      }, "Click image to update"), _react["default"].createElement("div", {
-        "class": "thumbnail"
-      }, _react["default"].createElement("div", {
-        "class": "souseImageFormat"
-      }, _react["default"].createElement("img", {
-        "class": "d-flex mx-auto sousePostImage editPost pb-2",
-        onClick: this.onUpdateImage,
-        onChange: this.onChangeImageFileType,
-        src: this.state.postImageURL,
-        alt: "sousePostImage",
-        width: "1080px",
-        height: "1080px"
-      }))))), _react["default"].createElement("div", {
-        "class": "form-group col d-flex justify-content-center"
-      }, _react["default"].createElement(_mainStyling.SouseButton, {
+      }))), _react["default"].createElement(_mainStyling.SouseButton, {
         onClick: this.onUpdateImageDelete,
         type: "submit",
         className: "waves-effect waves-light btn-large"
       }, _react["default"].createElement("p", {
         "class": "lead buttonFont"
-      }, "Update"))))), _react["default"].createElement("div", {
-        "class": "form-group col d-flex justify-content-center pt-3"
-      }, _react["default"].createElement(_mainStyling.SouseButton, {
+      }, "Update"))) : _react["default"].createElement(_mainStyling.SouseButton, {
         onClick: this["delete"],
         className: "waves-effect waves-light btn-large"
       }, _react["default"].createElement("p", {
         "class": "lead buttonFont"
-      }, "Delete")))) : _react["default"].createElement("div", null));
+      }, "Delete")))))))) : _react["default"].createElement("div", null));
     }
   }]);
 

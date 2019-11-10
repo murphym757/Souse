@@ -85,6 +85,7 @@ function (_Component) {
     var loggedinUser = user.id;
     var sousePostCreatorId = _this.props.obj.postCreator;
     var sousePostCaption = _this.props.obj.sousePosts.postCaption;
+    var sousePostLocation = _this.props.obj.sousePosts.postLocation;
     var sousePostImage = _this.props.obj.sousePosts.postImageURL;
     var sousePostUnixTimestamp = _this.props.obj.sousePosts.postUnixTimestamp;
     var sousePostCreatorName = _this.props.postCreatorName;
@@ -93,7 +94,7 @@ function (_Component) {
       sousePostCreatorId: loggedinUser,
       sousePostCreatorName: sousePostCreatorName,
       sousePostCreatorImage: sousePostCreatorImage
-    }, _defineProperty(_this$state, "sousePostCreatorId", sousePostCreatorId), _defineProperty(_this$state, "sousePostCaption", sousePostCaption), _defineProperty(_this$state, "sousePostImage", sousePostImage), _defineProperty(_this$state, "sousePostUnixTimestamp", sousePostUnixTimestamp), _defineProperty(_this$state, "commentSectionSelected", false), _defineProperty(_this$state, "currentYear", new Date().getFullYear()), _this$state);
+    }, _defineProperty(_this$state, "sousePostCreatorId", sousePostCreatorId), _defineProperty(_this$state, "sousePostCaption", sousePostCaption), _defineProperty(_this$state, "sousePostLocation", sousePostLocation), _defineProperty(_this$state, "sousePostImage", sousePostImage), _defineProperty(_this$state, "sousePostUnixTimestamp", sousePostUnixTimestamp), _defineProperty(_this$state, "commentSectionSelected", false), _defineProperty(_this$state, "currentYear", new Date().getFullYear()), _this$state);
     _this.displayComments = _this.displayComments.bind(_assertThisInitialized(_this));
     _this.closeComments = _this.closeComments.bind(_assertThisInitialized(_this));
     _this["delete"] = _this["delete"].bind(_assertThisInitialized(_this));
@@ -140,34 +141,35 @@ function (_Component) {
       var sousePostCreatorId = this.state.sousePostCreatorId;
       var sousePostImage = this.state.sousePostImage;
       var sousePostCaption = this.state.sousePostCaption;
+      var sousePostLocation = this.state.sousePostLocation;
       var sousePostUnixTimestamp = this.state.sousePostUnixTimestamp;
       var sousePostCreatorName = this.state.sousePostCreatorName;
       var sousePostCreatorImage = this.state.sousePostCreatorImage;
       var commentSectionSelected = this.state.commentSectionSelected;
       var commentsTotal = "" + this.commentsFinder().length + "";
       return _react["default"].createElement("div", {
-        "class": "mx-auto d-block pt-5"
+        "class": "mx-auto d-block"
       }, _react["default"].createElement("div", {
-        "class": "d-none d-xl-block container"
+        "class": "d-none d-xl-block pt-5 container"
       }, " ", _react["default"].createElement("div", {
-        "class": "row pt-5"
+        "class": "row pt-5 d-flex justify-content-center"
       }, _react["default"].createElement("div", {
-        "class": "col-8"
-      }, _react["default"].createElement("div", {
-        "class": "thumbnail"
-      }, _react["default"].createElement("div", {
-        "class": "souseImageFormat"
-      }, _react["default"].createElement("img", {
-        "class": "mx-auto d-block sousePostImage pb-2",
+        "class": "col-6 d-flex justify-content-center my-auto"
+      }, _react["default"].createElement(_postsStyling.PostPageImage, {
+        className: "souseUserPostsPage",
         src: sousePostImage,
         alt: "sousePostImage",
         width: "1080px",
         height: "1080px"
-      })))), _react["default"].createElement("div", {
-        "class": "col-4"
+      })), _react["default"].createElement("div", {
+        "class": "col-6"
       }, _react["default"].createElement("div", {
         "class": "container"
       }, commentSectionSelected ? _react["default"].createElement("div", null, _react["default"].createElement("div", {
+        "class": "row"
+      }, _react["default"].createElement("div", {
+        "class": "col-12"
+      }, _react["default"].createElement("div", {
         "class": "row"
       }, _react["default"].createElement("div", {
         "class": "container"
@@ -177,27 +179,30 @@ function (_Component) {
       }, _react["default"].createElement(_postsStyling.CloseIcon, null)))), _react["default"].createElement(_commentsSection["default"], {
         originalPostData: sousePostData,
         souseUserData: souseUserData,
+        souseCommentorImage: sousePostCreatorImage,
         souseCommentData: souseCommentData
-      }), " ") : _react["default"].createElement("div", null, _react["default"].createElement("div", {
+      }), " "))) : _react["default"].createElement("div", null, _react["default"].createElement("div", {
         "class": "container-fluid"
       }, _react["default"].createElement("div", {
         "class": "row"
-      }, _react["default"].createElement("div", null, _react["default"].createElement("img", {
-        "class": "souseUserIconComments",
+      }, _react["default"].createElement("div", {
+        "class": "col-2 p-0 m-0"
+      }, _react["default"].createElement(_postsStyling.PostPageIcon, {
+        className: "souseUserIconComments",
         src: sousePostCreatorImage,
         alt: "souseUserIconComments",
         width: "25px",
         height: "25px"
       })), _react["default"].createElement("div", {
-        "class": "d-flex align-items-center"
-      }, _react["default"].createElement("h5", {
-        "class": "sousePostCreatorName pl-4"
-      }, " ", sousePostCreatorName))), isAuthenticated && sousePostCreatorId === loggedinUser ? _react["default"].createElement("div", {
-        "class": "row"
-      }, " ", _react["default"].createElement("div", {
-        "class": "col-12 d-flex flex-row-reverse"
-      }, _react["default"].createElement("div", {
-        "class": "form-group pt-4"
+        "class": "pl-2 col-8 p-0 my-auto"
+      }, _react["default"].createElement(_postsStyling.PostCreatorName, {
+        className: "sousePostCreatorName d-flex align-items-top  p-0 m-0"
+      }, " ", sousePostCreatorName), _react["default"].createElement(_postsStyling.PostLocation, {
+        className: "sousePostLocation d-flex align-items-bottom  p-0 m-0"
+      }, " ", sousePostLocation)), isAuthenticated && sousePostCreatorId === loggedinUser ? _react["default"].createElement("div", {
+        "class": "col-1 my-auto"
+      }, " ", _react["default"].createElement("div", null, _react["default"].createElement("div", {
+        "class": "form-group"
       }, _react["default"].createElement(_reactRouterDom.Link, {
         to: {
           pathname: "/p/edit/" + this.props.obj._id,
@@ -205,31 +210,110 @@ function (_Component) {
             postTimestamp: sousePostUnixTimestamp
           }
         }
-      }, _react["default"].createElement(_mainStyling.SouseButton, {
-        type: "submit",
-        className: "waves-effect waves-light btn-large"
-      }, _react["default"].createElement("p", {
-        "class": "lead buttonFont"
-      }, "Edit Post")))))) : _react["default"].createElement("div", null)), _react["default"].createElement("div", {
+      }, _react["default"].createElement("h6", null, _react["default"].createElement(_postsStyling.EditIcon, null)))))) : _react["default"].createElement("div", null))), _react["default"].createElement("div", {
         "class": "row"
-      }, _react["default"].createElement("div", {
-        "class": "pre-scrollable"
+      }, _react["default"].createElement(_postsStyling.CaptionPreScrollable, {
+        className: "col-12"
       }, _react["default"].createElement("div", {
         "class": "col-12"
       }, _react["default"].createElement("h6", {
         "class": "sousePostCaption"
       }, sousePostCaption))), _react["default"].createElement("div", {
         "class": "col-12 no-gutters sousePostUserCommentsLink"
-      }, commentsTotal == 0 ? _react["default"].createElement("h6", {
-        "class": "souseCommentsLinkFont"
-      }, "This post has ", commentsTotal, " comments") : _react["default"].createElement("h6", {
-        "class": "souseCommentsLinkFont",
+      }, commentsTotal == 0 ? _react["default"].createElement(_postsStyling.CommentsLinkFont, {
+        className: "pt-3 pb-3"
+      }, "This post has ", commentsTotal, " comments") : _react["default"].createElement(_postsStyling.CommentsLinkFont, {
+        className: "pt-3 pb-3",
         onClick: this.displayComments
       }, "View all ", commentsTotal, " comments"))))), _react["default"].createElement("div", {
         "class": "souseFooter"
       }, _react["default"].createElement("h6", null, _react["default"].createElement("i", {
         "class": "far fa-copyright"
-      }), this.state.currentYear, " Souse"))))));
+      }), this.state.currentYear, " Souse"))))), _react["default"].createElement("div", {
+        "class": "d-xl-none container-fluid"
+      }, " ", _react["default"].createElement("div", {
+        "class": "row d-flex justify-content-center"
+      }, _react["default"].createElement(_postsStyling.SouseDiv, {
+        className: "d-flex justify-content-center my-auto p-0"
+      }, _react["default"].createElement("div", {
+        className: "m-0 p-0 sousePortrait souseLandscape"
+      }, _react["default"].createElement(_postsStyling.PostPageImage, {
+        className: "souseUserPostsPage",
+        src: sousePostImage,
+        alt: "sousePostImage",
+        width: "1080px",
+        height: "1080px"
+      }))), _react["default"].createElement(_postsStyling.SouseDiv, null, _react["default"].createElement("div", {
+        className: "sousePortrait souseLandscape"
+      }, _react["default"].createElement("div", {
+        "class": "container"
+      }, commentSectionSelected ? _react["default"].createElement("div", null, _react["default"].createElement("div", {
+        "class": "row"
+      }, _react["default"].createElement("div", {
+        "class": "col-12 p-0 m-0"
+      }, _react["default"].createElement("div", {
+        "class": "row"
+      }, _react["default"].createElement("div", {
+        "class": "container"
+      }, _react["default"].createElement("h6", {
+        "class": "float-right",
+        onClick: this.closeComments
+      }, _react["default"].createElement(_postsStyling.CloseIcon, null)))), _react["default"].createElement(_commentsSection["default"], {
+        originalPostData: sousePostData,
+        souseUserData: souseUserData,
+        souseCommentorImage: sousePostCreatorImage,
+        souseCommentData: souseCommentData
+      }), " "))) : _react["default"].createElement("div", null, _react["default"].createElement("div", {
+        "class": "container-fluid"
+      }, _react["default"].createElement("div", {
+        "class": "row pt-3"
+      }, _react["default"].createElement("div", {
+        "class": "col-2 p-0 m-0"
+      }, _react["default"].createElement(_postsStyling.PostPageIcon, {
+        className: "souseUserIconComments",
+        src: sousePostCreatorImage,
+        alt: "souseUserIconComments",
+        width: "25px",
+        height: "25px"
+      })), _react["default"].createElement("div", {
+        "class": "pl-2 col-8 p-0 my-auto"
+      }, _react["default"].createElement(_postsStyling.PostCreatorName, {
+        className: "sousePostCreatorName p-0 m-0"
+      }, " ", sousePostCreatorName), _react["default"].createElement(_postsStyling.PostLocation, {
+        className: "sousePostLocation p-0 m-0"
+      }, " ", sousePostLocation)), isAuthenticated && sousePostCreatorId === loggedinUser ? _react["default"].createElement("div", {
+        "class": "col-1 my-auto"
+      }, " ", _react["default"].createElement("div", null, _react["default"].createElement("div", {
+        "class": "form-group"
+      }, _react["default"].createElement(_reactRouterDom.Link, {
+        to: {
+          pathname: "/p/edit/" + this.props.obj._id,
+          state: {
+            postTimestamp: sousePostUnixTimestamp
+          }
+        }
+      }, _react["default"].createElement("h6", null, _react["default"].createElement(_postsStyling.EditIcon, null)))))) : _react["default"].createElement("div", null))), _react["default"].createElement("div", {
+        "class": "row"
+      }, isAuthenticated && sousePostCreatorId === loggedinUser ? _react["default"].createElement(_postsStyling.CaptionPreScrollableLoggedIn, null, _react["default"].createElement("div", {
+        "class": "col-12"
+      }, _react["default"].createElement("h6", {
+        "class": "sousePostCaption"
+      }, sousePostCaption))) : _react["default"].createElement(_postsStyling.CaptionPreScrollable, null, _react["default"].createElement("div", {
+        "class": "col-12"
+      }, _react["default"].createElement("h6", {
+        "class": "sousePostCaption"
+      }, sousePostCaption))), _react["default"].createElement("div", {
+        "class": "col-12 no-gutters sousePostUserCommentsLink"
+      }, commentsTotal == 0 ? _react["default"].createElement(_postsStyling.CommentsLinkFont, {
+        className: "pt-3 pb-3"
+      }, "This post has ", commentsTotal, " comments") : _react["default"].createElement(_postsStyling.CommentsLinkFont, {
+        className: "pt-3 pb-3",
+        onClick: this.displayComments
+      }, "View all ", commentsTotal, " comments"))))), _react["default"].createElement("div", {
+        "class": "souseFooter"
+      }, _react["default"].createElement("h6", null, _react["default"].createElement("i", {
+        "class": "far fa-copyright"
+      }), this.state.currentYear, " Souse")))))));
     }
   }]);
 

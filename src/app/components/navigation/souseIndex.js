@@ -58,14 +58,15 @@ class SouseIndex extends Component {
     componentDidMount(){
         M.AutoInit();
         { /* Theme Finder */}
-        const {isAuthenticated, user} = this.props.auth; 
+        const {isAuthenticated, user} = this.props.auth;
+        const userThemeOG = user.userTheme;
         let theme1 = "souseDefaultTheme";
         let theme2 = "souseIMTheme";
         let theme3 = "souseFPTheme";
         let theme4 = "souseViceTheme";
         let theme5 = "souseVapeTheme";
         if (isAuthenticated) {
-            let currentTheme = this.state.currentTheme;
+            let currentTheme = userThemeOG;
             if (currentTheme == theme1) {
                 this.setState({
                     switchColor: "#ff9496", 

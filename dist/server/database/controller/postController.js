@@ -19,6 +19,7 @@ exports.create_post = function (req, res, next) {
       postCreator: postCreatorId,
       sousePosts: {
         postCaption: req.body.postCaption,
+        postLocation: req.body.postLocation,
         postUnixTimestamp: req.body.postUnixTimestamp,
         postImageFileType: req.body.postImageFileType,
         postImageFileName: req.body.postImageFileName,
@@ -71,6 +72,7 @@ exports.update_post = function (req, res, next) {
     postCreator: req.body.postCreatorId,
     sousePosts: {
       postCaption: req.body.postCaption,
+      postLocation: req.body.postLocation,
       postUnixTimestamp: req.body.postUnixTimestamp,
       postImageFileType: req.body.postImageFileType,
       postImageFileName: req.body.postImageFileName,

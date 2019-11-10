@@ -19,6 +19,8 @@ var _classnames = _interopRequireDefault(require("classnames"));
 
 var _mainStyling = require("../../assets/styles/mainStyling");
 
+var _registrationStyling = require("../../assets/styles/registrationStyling");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -113,11 +115,16 @@ function (_Component) {
     key: "render",
     value: function render() {
       var errors = this.state.errors;
-      return _react["default"].createElement("div", {
-        "class": "container-fluid"
+      return _react["default"].createElement("div", null, _react["default"].createElement("div", {
+        "class": "d-none d-xl-block"
+      }, " ", _react["default"].createElement("div", {
+        "class": "col-6 mx-auto"
       }, _react["default"].createElement(_mainStyling.SouseForm, {
+        className: "container-fluid",
         onSubmit: this.onSubmit
       }, _react["default"].createElement("div", {
+        "class": "row"
+      }, _react["default"].createElement(_registrationStyling.SouseColumn, null, _react["default"].createElement("div", {
         "class": "input-field"
       }, _react["default"].createElement("input", {
         type: "email",
@@ -148,7 +155,7 @@ function (_Component) {
         "for": "souseUsername"
       }, "Username (", this.state.username.length, "/30)"), errors.username && _react["default"].createElement("div", {
         "class": "invalid-feedback"
-      }, errors.username)), _react["default"].createElement("div", {
+      }, errors.username))), _react["default"].createElement(_registrationStyling.SouseColumn, null, _react["default"].createElement("div", {
         "class": "input-field"
       }, _react["default"].createElement("input", {
         type: "text",
@@ -178,7 +185,7 @@ function (_Component) {
         "for": "souseLastName"
       }, "Last Name  (", this.state.lastName.length, "/30)"), errors.lastName && _react["default"].createElement("div", {
         "class": "invalid-feedback"
-      }, errors.lastName)), _react["default"].createElement("div", {
+      }, errors.lastName))), _react["default"].createElement(_registrationStyling.SouseColumn, null, _react["default"].createElement("div", {
         "class": "input-field"
       }, _react["default"].createElement("input", {
         type: "password",
@@ -208,14 +215,125 @@ function (_Component) {
         "for": "sousePasswordConfirm"
       }, "Password Confirm"), errors.password_confirm && _react["default"].createElement("div", {
         "class": "invalid-feedback"
-      }, errors.password_confirm)), _react["default"].createElement("div", {
+      }, errors.password_confirm)))), _react["default"].createElement("div", {
+        "class": "row"
+      }, _react["default"].createElement("div", {
         "class": "form-group"
       }, _react["default"].createElement(_mainStyling.SouseButton, {
         type: "submit",
         className: "waves-effect waves-light btn-large"
       }, _react["default"].createElement("p", {
         "class": "lead buttonFont"
-      }, "Sign Up")))));
+      }, "Sign Up"))))))), _react["default"].createElement("div", {
+        "class": "d-xl-none"
+      }, " ", _react["default"].createElement("div", {
+        "class": "col-12 mx-auto"
+      }, _react["default"].createElement(_mainStyling.SouseForm, {
+        className: "container-fluid",
+        onSubmit: this.onSubmit
+      }, _react["default"].createElement("div", {
+        "class": "row"
+      }, _react["default"].createElement(_registrationStyling.SouseColumn, null, _react["default"].createElement("div", {
+        "class": "input-field"
+      }, _react["default"].createElement("input", {
+        type: "email",
+        name: "email",
+        "class": (0, _classnames["default"])('form-control', {
+          'is-invalid': errors.email
+        }),
+        id: "souseEmail",
+        value: this.state.email,
+        onChange: this.onChange
+      }), _react["default"].createElement("label", {
+        "for": "souseEmail"
+      }, "Email"), errors.email && _react["default"].createElement("div", {
+        "class": "invalid-feedback"
+      }, errors.email)), _react["default"].createElement("div", {
+        "class": "input-field"
+      }, _react["default"].createElement("input", {
+        type: "text",
+        name: "username",
+        "class": (0, _classnames["default"])('form-control', {
+          'is-invalid': errors.username
+        }),
+        id: "souseUsername",
+        maxLength: 30,
+        value: this.state.username,
+        onChange: this.onChange
+      }), _react["default"].createElement("label", {
+        "for": "souseUsername"
+      }, "Username (", this.state.username.length, "/30)"), errors.username && _react["default"].createElement("div", {
+        "class": "invalid-feedback"
+      }, errors.username))), _react["default"].createElement(_registrationStyling.SouseColumn, null, _react["default"].createElement("div", {
+        "class": "input-field"
+      }, _react["default"].createElement("input", {
+        type: "text",
+        name: "firstName",
+        "class": (0, _classnames["default"])('form-control', {
+          'is-invalid': errors.firstName
+        }),
+        id: "souseFirstName",
+        value: this.state.firstName,
+        onChange: this.onChange
+      }), _react["default"].createElement("label", {
+        "for": "souseFirstName"
+      }, "First Name  (", this.state.firstName.length, "/30)"), errors.firstName && _react["default"].createElement("div", {
+        "class": "invalid-feedback"
+      }, errors.firstName)), _react["default"].createElement("div", {
+        "class": "input-field"
+      }, _react["default"].createElement("input", {
+        type: "text",
+        name: "lastName",
+        "class": (0, _classnames["default"])('form-control', {
+          'is-invalid': errors.lastName
+        }),
+        id: "souseLastName",
+        value: this.state.lastName,
+        onChange: this.onChange
+      }), _react["default"].createElement("label", {
+        "for": "souseLastName"
+      }, "Last Name  (", this.state.lastName.length, "/30)"), errors.lastName && _react["default"].createElement("div", {
+        "class": "invalid-feedback"
+      }, errors.lastName))), _react["default"].createElement(_registrationStyling.SouseColumn, null, _react["default"].createElement("div", {
+        "class": "input-field"
+      }, _react["default"].createElement("input", {
+        type: "password",
+        name: "password",
+        "class": (0, _classnames["default"])('form-control', {
+          'is-invalid': errors.password
+        }),
+        id: "sousePassword",
+        value: this.state.password,
+        onChange: this.onChange
+      }), _react["default"].createElement("label", {
+        "for": "sousePassword"
+      }, "Password"), errors.password && _react["default"].createElement("div", {
+        "class": "invalid-feedback"
+      }, errors.password)), _react["default"].createElement("div", {
+        "class": "input-field"
+      }, _react["default"].createElement("input", {
+        type: "password",
+        name: "password_confirm",
+        "class": (0, _classnames["default"])('form-control', {
+          'is-invalid': errors.password_confirm
+        }),
+        id: "sousePasswordConfirm",
+        value: this.state.password_confirm,
+        onChange: this.onChange
+      }), _react["default"].createElement("label", {
+        "for": "sousePasswordConfirm"
+      }, "Password Confirm"), errors.password_confirm && _react["default"].createElement("div", {
+        "class": "invalid-feedback"
+      }, errors.password_confirm)))), _react["default"].createElement("div", {
+        "class": "row"
+      }, _react["default"].createElement("div", {
+        "class": "form-group"
+      }, _react["default"].createElement(_mainStyling.SouseButton, {
+        type: "submit",
+        className: "waves-effect waves-light btn-large"
+      }, _react["default"].createElement("p", {
+        "class": "lead buttonFont"
+      }, "Sign Up"))))))));
     }
   }]);
 

@@ -19,6 +19,12 @@ var _mainStyling = require("../../assets/styles/mainStyling");
 
 var _userProfileStyling = require("../../assets/styles/userProfileStyling");
 
+var _signUpForm = _interopRequireDefault(require("../registration/signUpForm"));
+
+var _loginForm = _interopRequireDefault(require("../registration/loginForm"));
+
+var _registrationStyling = require("../../assets/styles/registrationStyling");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -48,10 +54,16 @@ var LandingPage =
 function (_Component) {
   _inherits(LandingPage, _Component);
 
-  function LandingPage() {
+  function LandingPage(props) {
+    var _this;
+
     _classCallCheck(this, LandingPage);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(LandingPage).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(LandingPage).call(this, props));
+    _this.state = {
+      connectionOption: "1"
+    };
+    return _this;
   }
 
   _createClass(LandingPage, [{
@@ -117,7 +129,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this2 = this;
 
       var _this$props$auth5 = this.props.auth,
           isAuthenticated = _this$props$auth5.isAuthenticated,
@@ -125,25 +137,24 @@ function (_Component) {
       var souseUserData = this.props.souseUserData;
       var loggedinUser = user.username;
       var loggedinUserId = user.id;
+      var connectionOption = this.state.connectionOption;
       var postsTotal = "" + this.postFinder().length + "";
       var followersTotal = "" + this.followerFinder().length + "";
       var followsTotal = "" + this.followFinder().length + "";
-      return _react["default"].createElement("div", {
-        "class": "container-fluid"
-      }, Object.keys(this.userFinder()).map(function (object, i) {
+      return _react["default"].createElement("div", null, Object.keys(this.userFinder()).map(function (object, i) {
         return _react["default"].createElement("div", {
-          "class": "container"
+          "class": "container-fluid"
         }, _react["default"].createElement("div", {
-          "class": "row d-flex justify-content-center"
+          "class": "row h-100 m-0 p-0 d-flex justify-content-center"
         }, "   ", _react["default"].createElement(_userProfileStyling.SouseUserPageIcon, null, _react["default"].createElement("img", {
           className: "souseUserPageImage",
-          src: _this.userFinder()[i].userImage,
+          src: _this2.userFinder()[i].userImage,
           alt: "souseUserIcon",
           width: "85px",
           height: "85px"
         }))), _react["default"].createElement("div", {
           "class": "row d-flex justify-content-center"
-        }, "   ", _react["default"].createElement("h2", null, _this.userFinder()[i].username)), _react["default"].createElement("div", {
+        }, "   ", _react["default"].createElement("h2", null, _this2.userFinder()[i].username)), _react["default"].createElement("div", {
           "class": "row d-flex justify-content-center"
         }, "   ", _react["default"].createElement("div", {
           "class": "col-4"
@@ -157,24 +168,24 @@ function (_Component) {
           "class": "col-4"
         }, _react["default"].createElement("h4", {
           "class": "float-left"
-        }, followsTotal, " Follows"))), Object.keys(_this.userFinder()).map(function (object, i) {
+        }, followsTotal, " Follows"))), Object.keys(_this2.userFinder()).map(function (object, i) {
           return _react["default"].createElement("div", null, _react["default"].createElement(_reactRouterDom.Link, {
             to: {
-              pathname: "/".concat(_this.userFinder()[i].username),
+              pathname: "/".concat(_this2.userFinder()[i].username),
               state: {
-                souseUserId: _this.userFinder()[i]._id,
-                souseUserUsername: _this.userFinder()[i].username,
-                souseUserFirstName: _this.userFinder()[i].firstName,
+                souseUserId: _this2.userFinder()[i]._id,
+                souseUserUsername: _this2.userFinder()[i].username,
+                souseUserFirstName: _this2.userFinder()[i].firstName,
                 souseUserLastName: souseUserData[i].lastName,
-                souseUserEmail: _this.userFinder()[i].email,
-                souseUserPassword: _this.userFinder()[i].password,
-                souseUserSignUpDate: _this.userFinder()[i].signUpDate,
-                souseUserImage: _this.userFinder()[i].userImage,
-                souseUserTwitter: _this.userFinder()[i].userTwitter,
-                souseUserFacebook: _this.userFinder()[i].userFacebook,
-                souseUserInstagram: _this.userFinder()[i].userInstagram,
-                souseUserLocation: _this.userFinder()[i].userLocation,
-                souseUserBio: _this.userFinder()[i].userBio
+                souseUserEmail: _this2.userFinder()[i].email,
+                souseUserPassword: _this2.userFinder()[i].password,
+                souseUserSignUpDate: _this2.userFinder()[i].signUpDate,
+                souseUserImage: _this2.userFinder()[i].userImage,
+                souseUserTwitter: _this2.userFinder()[i].userTwitter,
+                souseUserFacebook: _this2.userFinder()[i].userFacebook,
+                souseUserInstagram: _this2.userFinder()[i].userInstagram,
+                souseUserLocation: _this2.userFinder()[i].userLocation,
+                souseUserBio: _this2.userFinder()[i].userBio
               }
             }
           }, _react["default"].createElement("div", {
@@ -187,21 +198,41 @@ function (_Component) {
           }, "Confirm")))));
         }));
       }), isAuthenticated ? _react["default"].createElement("div", null) : _react["default"].createElement("div", {
-        "class": "container"
-      }, _react["default"].createElement("div", {
-        "class": "row"
-      }, _react["default"].createElement("div", {
-        "class": "col-6"
-      }, _react["default"].createElement("img", {
-        "class": "souseHomeLogo-navbar d-block justify-content-center",
+        "class": "container-fluid"
+      }, connectionOption == '1' ? _react["default"].createElement("div", {
+        "class": "row h-100 m-0 p-0"
+      }, _react["default"].createElement(_registrationStyling.IphoneContainer, {
+        className: "col-sm-6"
+      }, _react["default"].createElement(_registrationStyling.IphoneOuterImage, {
+        "class": "souseHomeLogo-navbar d-block justify-content-center pt-5",
         src: "../../src/app/assets/images/iPhoneXSMaxSouse.svg",
         width: "450",
         alt: "logo"
-      })), _react["default"].createElement("div", {
-        "class": "col-6"
-      }, _react["default"].createElement("h1", {
-        "class": "d-block justify-content-center"
-      }, "Forms")))));
+      })), _react["default"].createElement(_registrationStyling.FormContainer, {
+        className: "col-sm-6"
+      }, _react["default"].createElement("div", {
+        "class": "my-auto"
+      }, _react["default"].createElement(_loginForm["default"], null)), _react["default"].createElement(_mainStyling.ConnectionOptionsLink, {
+        className: "pt-2 d-flex justify-content-center",
+        onClick: this.optionClicked = function (e) {
+          _this2.setState({
+            connectionOption: '2'
+          });
+        }
+      }, "Sign Up"))) : _react["default"].createElement("div", {
+        "class": "row h-100 m-0 p-0"
+      }, _react["default"].createElement("div", {
+        "class": "col-sm-12 mx-auto my-auto"
+      }, _react["default"].createElement("div", {
+        "class": "container-fluid m-0 p-0"
+      }, _react["default"].createElement(_signUpForm["default"], null), _react["default"].createElement(_mainStyling.ConnectionOptionsLink, {
+        className: "pt-2 d-flex justify-content-center",
+        onClick: this.optionClicked = function (e) {
+          _this2.setState({
+            connectionOption: '1'
+          });
+        }
+      }, "Log In"))))));
     }
   }]);
 

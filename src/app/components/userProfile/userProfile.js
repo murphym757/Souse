@@ -8,6 +8,7 @@ import EditUserProfile from '../userProfile/editUserProfile';
 import styled from 'styled-components';
 import {
     UsernameUserPage,
+    UserLocationUserPage,
     UserDataUserPage,
     TwitterIcon,
     FacebookIcon,
@@ -258,10 +259,10 @@ class UserProfile extends Component {
                             }
                         }>
                         </Redirect>
-                    :   <div class="mx-auto d-block pt-1">
+                    :   <div class="mx-auto d-block pt-5">
                             <div class="d-none d-xl-block container-fluid pt-5"> {/* For larger Sceens */}
                                 <div class="row userHeaderSection d-flex justify-content-center">
-                                    <div class="container">
+                                    <div class="container pt-5">
                                         <div class="col-12">
                                             <div class="row"> {/* Top content row */}
                                                 <div class="col-6 d-flex justify-content-end pr-5"> {/* User Image */}
@@ -275,9 +276,12 @@ class UserProfile extends Component {
                                                 </div>
                                                 <div class="col-6 pl-5"> {/* General User Content */}
                                                     <div class="row userNameRow">
-                                                        <UsernameUserPage>
+                                                        <UsernameUserPage className="col-12">
                                                             {creatorUsername}
                                                         </UsernameUserPage>
+                                                        <UserLocationUserPage className="col-12">
+                                                            {creatorLocation}
+                                                        </UserLocationUserPage>
                                                     </div>
                                                     <div class="row userButtonsRow">
                                                         <div>
@@ -413,23 +417,19 @@ class UserProfile extends Component {
                                                         souseUserData={souseUserData}/ >
                                                 </div>
                                             </div>
-                                            <div class="row"> {/* Bottom content row */}
+                                            <div class="row d-flex justify-content-center"> {/* Bottom content row */}
                                                 {userPageDisplay == '1'
                                                 ?   <div class="row d-flex justify-content-center"> {/* Loads Posts by default */}
                                                         {Object.keys(this.postFinder()).map((object, i) => {
-                                                            return <div class="col-3 p-0 m-0" obj={object} key={i}>
+                                                            return <div class="col-3" obj={object} key={i}>
                                                                 <div class="pb-5">
                                                                     <Link to={`/p/${this.postFinder()[i]._id}`}>
-                                                                        <div class="img-wrapper">
-                                                                            <div class="img-responsive">
-                                                                                <div class="souseImageFormat d-flex justify-content-center">
-                                                                                    <UserPostIcons className="souseUserPostsUserHomePage" 
-                                                                                        src = {this.postFinder()[i].sousePosts.postImageURL}
-                                                                                        alt="souseUserPosts"
-                                                                                        width="250px" 
-                                                                                        height="250px"/>
-                                                                                </div>
-                                                                            </div>
+                                                                        <div class="souseImageFormat d-flex justify-content-center">
+                                                                            <UserPostIcons className="souseUserPostsUserHomePage" 
+                                                                                src={this.postFinder()[i].sousePosts.postImageURL}
+                                                                                alt="souseUserPosts"
+                                                                                width="250px" 
+                                                                                height="250px"/>
                                                                         </div>
                                                                     </Link>
                                                                 </div>
@@ -548,7 +548,7 @@ class UserProfile extends Component {
                             </div>
                             <div class="d-xl-none container-fluid"> {/* For smaller Sceens */}
                                 <div class="row d-flex p-1 bd-highlight">
-                                    <div class="col-xs-5 col-sm-5 p-0">
+                                    <div class="col-xs-4 col-sm-4 p-0">
                                         <SouseUserPageIcon>
                                             <img className="souseUserPageImage" 
                                                 src={creatorImage}
@@ -557,83 +557,87 @@ class UserProfile extends Component {
                                                 height="1080px"/>
                                         </SouseUserPageIcon>
                                     </div>
-                                    <div class="col-xs-7 col-sm-7">
+                                    <div class="col-xs-8 col-sm-8">
                                         <div class="container-fluid">
                                             <div class="row">
-                                                <h5 class="col-12">{creatorUsername}</h5>
-                                                <h6 class="col-12">{creatorLocation}</h6>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    {isAuthenticated 
-                                                        ?   <div>
-                                                                {creatorId !== loggedInUserId
-                                                                    ?   <div>
-                                                                            {Array.isArray(this.followerFinder()) && this.followerFinder()[0]
-                                                                                ?   <div>
-                                                                                            {this.followerFinder()[0].followerUserId == loggedInUserId
-                                                                                                ?   <div>
-                                                                                                        <SouseButton type="submit" className="waves-effect waves-light btn-large" onClick={(e) => {this.onSetDeleteFollow(e); this.onSetDeleteFollower(e)}}><p class="lead buttonFont">Unfollow</p></SouseButton>
-                                                                                                    </div>
-                                                                                                :   <div></div>
-                                                                                            } 
-                                                                                    </div>
-                                                                                :   <div>
-                                                                                        <SouseButton type="submit" className="waves-effect waves-light btn-large" onClick={(e) => {this.onSetFollow(e); this.onSetFollower(e)}}><p class="lead buttonFont">Follow</p></SouseButton>
-                                                                                    </div>
-                                                                            }
-                                                                        </div>
-                                                                    :   <Link class="d-block mx-auto" to={
-                                                                            {
-                                                                                pathname: "/u/edit/" + loggedInUserId,
-                                                                                state: {
-                                                                                    creatorId: creatorId,
-                                                                                    creatorUsername: creatorUsername,
-                                                                                    creatorFirstName: creatorFirstName,
-                                                                                    creatorLastName: creatorLastName,
-                                                                                    creatorEmail: creatorEmail,
-                                                                                    creatorPassword: creatorPassword,
-                                                                                    creatorSignUpDate: creatorSignUpDate,
-                                                                                    creatorUnixTimestamp: creatorUnixTimestamp,
-                                                                                    creatorImage: creatorImage,
-                                                                                    creatorTwitter: creatorTwitter,
-                                                                                    creatorFacebook: creatorFacebook,
-                                                                                    creatorInstagram: creatorInstagram,
-                                                                                    creatorLocation: creatorLocation,
-                                                                                    creatorBio: creatorBio
-                                                                                }
-                                                                            }
-                                                                        }>
-                                                                            <SouseButton type="submit" className="waves-effect waves-light btn-large"><p class="lead buttonFont">Edit Profile</p></SouseButton>
-                                                                        </Link>
-                                                                }
-                                                            </div>
-                                                        :   <div>
-                                                            </div>
-                                                    }
-                                                </div>
-                                                <div class="userButtonsRow col-6">
-                                                    <div class="float-right">
-                                                        <div class="col-12">
-                                                            {this.state.totalDisplayPosts === postsTotal
-                                                                ?   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Post</h6>
-                                                                :   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Posts</h6>
-                                                            }
-                                                        </div>
-                                                        <div class="col-12">
-                                                            {this.state.totalDisplayFollowers === followersTotal
-                                                                ?   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Follower</h6>
-                                                                :   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Followers</h6>
-
-                                                            }
-                                                        </div>
-                                                        <div class="col-12">
-                                                            {this.state.totalDisplayFollows === followsTotal
-                                                                ?   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follow</h6>
-                                                                :   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follows</h6>  
-                                                            }
-                                                        </div>
+                                                <div class="col-12">
+                                                    <div class="row">
+                                                        <h5 class="col-12">{creatorUsername}</h5>
+                                                        <h6 class="col-12">{creatorLocation}</h6>
                                                     </div>
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            {isAuthenticated 
+                                                                ?   <div>
+                                                                        {creatorId !== loggedInUserId
+                                                                            ?   <div>
+                                                                                    {Array.isArray(this.followerFinder()) && this.followerFinder()[0]
+                                                                                        ?   <div>
+                                                                                                    {this.followerFinder()[0].followerUserId == loggedInUserId
+                                                                                                        ?   <div>
+                                                                                                                <SouseButton type="submit" className="waves-effect waves-light btn-large" onClick={(e) => {this.onSetDeleteFollow(e); this.onSetDeleteFollower(e)}}><p class="lead buttonFont">Unfollow</p></SouseButton>
+                                                                                                            </div>
+                                                                                                        :   <div></div>
+                                                                                                    } 
+                                                                                            </div>
+                                                                                        :   <div>
+                                                                                                <SouseButton type="submit" className="waves-effect waves-light btn-large" onClick={(e) => {this.onSetFollow(e); this.onSetFollower(e)}}><p class="lead buttonFont">Follow</p></SouseButton>
+                                                                                            </div>
+                                                                                    }
+                                                                                </div>
+                                                                            :   <Link class="d-block mx-auto" to={
+                                                                                    {
+                                                                                        pathname: "/u/edit/" + loggedInUserId,
+                                                                                        state: {
+                                                                                            creatorId: creatorId,
+                                                                                            creatorUsername: creatorUsername,
+                                                                                            creatorFirstName: creatorFirstName,
+                                                                                            creatorLastName: creatorLastName,
+                                                                                            creatorEmail: creatorEmail,
+                                                                                            creatorPassword: creatorPassword,
+                                                                                            creatorSignUpDate: creatorSignUpDate,
+                                                                                            creatorUnixTimestamp: creatorUnixTimestamp,
+                                                                                            creatorImage: creatorImage,
+                                                                                            creatorTwitter: creatorTwitter,
+                                                                                            creatorFacebook: creatorFacebook,
+                                                                                            creatorInstagram: creatorInstagram,
+                                                                                            creatorLocation: creatorLocation,
+                                                                                            creatorBio: creatorBio
+                                                                                        }
+                                                                                    }
+                                                                                }>
+                                                                                    <SouseButton type="submit" className="waves-effect waves-light btn-large"><p class="lead buttonFont">Edit Profile</p></SouseButton>
+                                                                                </Link>
+                                                                        }
+                                                                    </div>
+                                                                :   <div>
+                                                                    </div>
+                                                            }
+                                                        </div>
+                                                        <div class="userButtonsRow col-6">
+                                                            <div class="float-right">
+                                                                <div class="col-12">
+                                                                    {this.state.totalDisplayPosts === postsTotal
+                                                                        ?   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Post</h6>
+                                                                        :   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Posts</h6>
+                                                                    }
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    {this.state.totalDisplayFollowers === followersTotal
+                                                                        ?   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Follower</h6>
+                                                                        :   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Followers</h6>
+
+                                                                    }
+                                                                </div>
+                                                                <div class="col-12">
+                                                                    {this.state.totalDisplayFollows === followsTotal
+                                                                        ?   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follow</h6>
+                                                                        :   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follows</h6>  
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>  
                                                 </div>
                                             </div>
                                         </div>

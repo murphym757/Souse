@@ -22,6 +22,7 @@ class PostCreate extends Component {
         this.state = {
             postCreatorId: loggedinUser,
             postCaption: '',
+            postLocation: '',
             postUnixTimestamp: new Date().valueOf(),
             postImageFileType: '',
             postImageFileName: '',
@@ -32,6 +33,7 @@ class PostCreate extends Component {
             fullPostUploadLoader: true
         };
         this.onChangepostCaption = this.onChangepostCaption.bind(this);
+        this.onChangepostLocation = this.onChangepostLocation.bind(this);
         this.onImageUpload = this.onImageUpload.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
@@ -39,6 +41,12 @@ class PostCreate extends Component {
     onChangepostCaption = (e) => {
         this.setState({
             postCaption: e.target.value
+        });
+    }
+
+    onChangepostLocation = (e) => {
+        this.setState({
+            postLocation: e.target.value
         });
     }
 
@@ -82,6 +90,7 @@ class PostCreate extends Component {
         const postData = {
             postCreatorId: this.state.postCreatorId,
             postCaption: this.state.postCaption,
+            postLocation: this.state.postLocation,
             postUnixTimestamp: this.state.postUnixTimestamp,
             postImageFileType: this.state.postImageFileType,
             postImageFileName: this.state.postImageFileName,
@@ -97,6 +106,7 @@ class PostCreate extends Component {
         this.setState({
             postCreatorId: '',
             postCaption: '',
+            postLocation: '',
             postUnixTimestamp: '',
             postImageFileType: '',
             postImageURL: ''
@@ -116,12 +126,25 @@ class PostCreate extends Component {
                                     id="souseCaptionPost" 
                                     class="materialize-textarea"
                                     name="postCaption"
-                                    id="souseCaptionPost"  
+                                    id="souseCaptionPost"
+                                    maxLength={1000}  
                                     rows="1"
                                     value={this.state.postCaption}
                                     onChange={this.onChangepostCaption}>
                                 </textarea>
-                                <label for="souseCaptionPost">Caption</label>
+                                <label for="souseCaptionPost">Caption ({this.state.postCaption.length}/1000)</label>
+                            </div>
+                            <div class="input-field">
+                                <textarea 
+                                    id="souseLocationPost" 
+                                    class="materialize-textarea"
+                                    name="postLocation"
+                                    id="souseLocationPost"  
+                                    rows="1"
+                                    value={this.state.postLocation}
+                                    onChange={this.onChangepostLocation}>
+                                </textarea>
+                                <label for="souseLocationPost">Location</label>
                             </div>
                             <div class="mx-auto" onClick={this.fullPostUpload}>
                                 <a class="souseLinkFont">
@@ -138,10 +161,23 @@ class PostCreate extends Component {
                                 name="postCaption"
                                 id="souseCaptionPost"  
                                 rows="1"
+                                maxLength={1000}
                                 value={this.state.postCaption}
                                 onChange={this.onChangepostCaption}>
                             </textarea>
-                            <label for="souseCaptionPost">Caption</label>
+                            <label for="souseCaptionPost">Caption ({this.state.postCaption.length}/1000)</label>
+                        </div>
+                        <div class="input-field">
+                            <textarea 
+                                id="souseLocationPost" 
+                                class="materialize-textarea"
+                                name="postLocation"
+                                id="souseLocationPost"  
+                                rows="1"
+                                value={this.state.postLocation}
+                                onChange={this.onChangepostLocation}>
+                            </textarea>
+                            <label for="souseLocationPost">Location</label>
                         </div>
                         <div>
                             {this.state.fullPostUploadLoader

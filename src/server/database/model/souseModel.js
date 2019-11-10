@@ -109,6 +109,11 @@ const PostSchema = new mongoose.Schema({
             trim: true,
             default: ""
         },
+        postLocation: {
+            type: String,
+            trim: true,
+            default: ""
+        },
         postUnixTimestamp: {
             type: String,
             trim: true,

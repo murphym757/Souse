@@ -193,47 +193,51 @@ class MainSource extends Component {
                             <GlobalStyle />
                                 <Card className="align-content-stretch flex-wrap entireProjectCard m-0">
                                     <CardBlock>
-                                    <Navbar 
-                                        souseUserData={souseUsers} />
-                                    <Switch>
-                                        <Route exact path="/" 
-                                        render={
-                                            (props) => <LandingPage {...props} 
-                                            souseUserData={souseUsers} 
-                                            sousePostData={sousePosts} 
-                                            souseCommentData={souseComments}
-                                            souseFollowerData={souseFollowers}
-                                            souseFollowData={souseFollows} />
-                                        }/>
-                                        <Route exact path="/signup" component={SignUpForm}/>
-                                        <Route exact path="/login" component={LoginForm}/>
-                                        <Route exact path="/:username" 
-                                        render={
-                                            (props) => <UserPage {...props} 
-                                            souseUserData={souseUsers} 
-                                            sousePostData={sousePosts} 
-                                            souseFollowerData={souseFollowers} 
-                                            souseFollowData={souseFollows}/>
-                                            }/>
-                                        <Route exact path="/u/edit/:id" 
-                                        render={
-                                            (props) => <EditUserProfile {...props} 
-                                            sousePostData={sousePosts} 
-                                            souseCommentData={souseComments}
-                                            souseFollowerData={souseFollowers} 
-                                            souseFollowData={souseFollows}/>
-                                            }/>
-                                        <Route exact path="/p/:id" 
-                                        render={
-                                            (props) => <PostPage {...props} 
-                                            souseUserData={souseUsers} 
-                                            sousePostData={sousePosts} 
-                                            souseCommentData={souseComments} />
-                                        }/>
-                                        <Route exact path="/p/edit/:id" component={PostEdit}/>
-                                        <Route exact path="/c/delete/:id" component={CommentDelete}/>
-                                        <Route component={RouteNotFound} />
-                                    </Switch>
+                                        <div class="row h-100 m-0 p-0">
+                                        <Navbar 
+                                            souseUserData={souseUsers} />
+                                            <div class="my-auto mx-auto col-12 p-0">
+                                                <Switch>
+                                                    <Route exact path="/" 
+                                                    render={
+                                                        (props) => <LandingPage {...props} 
+                                                        souseUserData={souseUsers} 
+                                                        sousePostData={sousePosts} 
+                                                        souseCommentData={souseComments}
+                                                        souseFollowerData={souseFollowers}
+                                                        souseFollowData={souseFollows} />
+                                                    }/>
+                                                    <Route exact path="/signup" component={SignUpForm}/>
+                                                    <Route exact path="/login" component={LoginForm}/>
+                                                    <Route exact path="/:username" 
+                                                    render={
+                                                        (props) => <UserPage {...props} 
+                                                        souseUserData={souseUsers} 
+                                                        sousePostData={sousePosts} 
+                                                        souseFollowerData={souseFollowers} 
+                                                        souseFollowData={souseFollows}/>
+                                                        }/>
+                                                    <Route exact path="/u/edit/:id" 
+                                                    render={
+                                                        (props) => <EditUserProfile {...props} 
+                                                        sousePostData={sousePosts} 
+                                                        souseCommentData={souseComments}
+                                                        souseFollowerData={souseFollowers} 
+                                                        souseFollowData={souseFollows}/>
+                                                        }/>
+                                                    <Route exact path="/p/:id" 
+                                                    render={
+                                                        (props) => <PostPage {...props} 
+                                                        souseUserData={souseUsers} 
+                                                        sousePostData={sousePosts} 
+                                                        souseCommentData={souseComments} />
+                                                    }/>
+                                                    <Route exact path="/p/edit/:id" component={PostEdit}/>
+                                                    <Route exact path="/c/delete/:id" component={CommentDelete}/>
+                                                    <Route component={RouteNotFound} />
+                                                </Switch>
+                                            </div>
+                                        </div>
                                     </CardBlock>
                                 </Card>
                 </BootstrapProvider>
@@ -241,47 +245,51 @@ class MainSource extends Component {
                             <GlobalStyle />
                                 <Card className="align-content-stretch flex-wrap entireProjectCard m-0">
                                     <CardBlock>
-                                    <Navbar 
-                                        souseUserData={souseUsers} />
-                                    <Switch>
-                                        <Route exact path="/" 
-                                        render={
-                                            (props) => <LandingPage {...props} 
-                                            souseUserData={souseUsers} 
-                                            sousePostData={sousePosts} 
-                                            souseCommentData={souseComments}
-                                            souseFollowerData={souseFollowers}
-                                            souseFollowData={souseFollows} />
-                                        }/>
-                                        <Route exact path="/signup" component={SignUpForm}/>
-                                        <Route exact path="/login" component={LoginForm}/>
-                                        <Route exact path="/:username" 
-                                        render={
-                                            (props) => <UserPage {...props} 
-                                            souseUserData={souseUsers} 
-                                            sousePostData={sousePosts} 
-                                            souseFollowerData={souseFollowers} 
-                                            souseFollowData={souseFollows}/>
-                                            }/>
-                                        <Route exact path="/u/edit/:id" 
-                                        render={
-                                            (props) => <EditUserProfile {...props} 
-                                            sousePostData={sousePosts} 
-                                            souseCommentData={souseComments}
-                                            souseFollowerData={souseFollowers} 
-                                            souseFollowData={souseFollows}/>
-                                            }/>
-                                        <Route exact path="/p/:id" 
-                                        render={
-                                            (props) => <PostPage {...props} 
-                                            souseUserData={souseUsers} 
-                                            sousePostData={sousePosts} 
-                                            souseCommentData={souseComments} />
-                                        }/>
-                                        <Route exact path="/p/edit/:id" component={PostEdit}/>
-                                        <Route exact path="/c/delete/:id" component={CommentDelete}/>
-                                        <Route component={RouteNotFound} />
-                                    </Switch>
+                                        <div class="row h-100 m-0 p-0">
+                                        <Navbar 
+                                            souseUserData={souseUsers} />
+                                            <div class="my-auto mx-auto col-12">
+                                                <Switch>
+                                                    <Route exact path="/" 
+                                                    render={
+                                                        (props) => <LandingPage {...props} 
+                                                        souseUserData={souseUsers} 
+                                                        sousePostData={sousePosts} 
+                                                        souseCommentData={souseComments}
+                                                        souseFollowerData={souseFollowers}
+                                                        souseFollowData={souseFollows} />
+                                                    }/>
+                                                    <Route exact path="/signup" component={SignUpForm}/>
+                                                    <Route exact path="/login" component={LoginForm}/>
+                                                    <Route exact path="/:username" 
+                                                    render={
+                                                        (props) => <UserPage {...props} 
+                                                        souseUserData={souseUsers} 
+                                                        sousePostData={sousePosts} 
+                                                        souseFollowerData={souseFollowers} 
+                                                        souseFollowData={souseFollows}/>
+                                                        }/>
+                                                    <Route exact path="/u/edit/:id" 
+                                                    render={
+                                                        (props) => <EditUserProfile {...props} 
+                                                        sousePostData={sousePosts} 
+                                                        souseCommentData={souseComments}
+                                                        souseFollowerData={souseFollowers} 
+                                                        souseFollowData={souseFollows}/>
+                                                        }/>
+                                                    <Route exact path="/p/:id" 
+                                                    render={
+                                                        (props) => <PostPage {...props} 
+                                                        souseUserData={souseUsers} 
+                                                        sousePostData={sousePosts} 
+                                                        souseCommentData={souseComments} />
+                                                    }/>
+                                                    <Route exact path="/p/edit/:id" component={PostEdit}/>
+                                                    <Route exact path="/c/delete/:id" component={CommentDelete}/>
+                                                    <Route component={RouteNotFound} />
+                                                </Switch>
+                                            </div>
+                                        </div>
                                     </CardBlock>
                                 </Card>
                 </BootstrapProvider>

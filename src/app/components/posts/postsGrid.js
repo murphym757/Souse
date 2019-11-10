@@ -8,7 +8,18 @@ import styled from 'styled-components';
 import { SouseButton } from '../../assets/styles/mainStyling';
 import PostEdit from './commentDeleteSection';
 import CommentsSection from './commentsSection';
-import { CloseIcon } from '../../assets/styles/postsStyling';
+import { 
+    CloseIcon,
+    EditIcon,
+    PostPageIcon,
+    PostPageImage,
+    CommentsLinkFont,
+    PostCreatorName,
+    PostLocation,
+    CaptionPreScrollable,
+    CaptionPreScrollableLoggedIn,
+    SouseDiv
+} from '../../assets/styles/postsStyling';
 
 class PostsGrid extends Component {
     constructor(props) {
@@ -17,6 +28,7 @@ class PostsGrid extends Component {
         const loggedinUser = user.id;
         const sousePostCreatorId = this.props.obj.postCreator;
         const sousePostCaption = this.props.obj.sousePosts.postCaption;
+        const sousePostLocation = this.props.obj.sousePosts.postLocation;
         const sousePostImage = this.props.obj.sousePosts.postImageURL;
         const sousePostUnixTimestamp = this.props.obj.sousePosts.postUnixTimestamp;
         const sousePostCreatorName = this.props.postCreatorName;
@@ -27,6 +39,7 @@ class PostsGrid extends Component {
             sousePostCreatorImage: sousePostCreatorImage,
             sousePostCreatorId: sousePostCreatorId,
             sousePostCaption: sousePostCaption,
+            sousePostLocation: sousePostLocation,
             sousePostImage: sousePostImage,
             sousePostUnixTimestamp: sousePostUnixTimestamp,     
             commentSectionSelected: false,
@@ -77,86 +90,89 @@ class PostsGrid extends Component {
         const sousePostCreatorId = this.state.sousePostCreatorId;
         const sousePostImage = this.state.sousePostImage;
         const sousePostCaption = this.state.sousePostCaption;
+        const sousePostLocation = this.state.sousePostLocation;
         const sousePostUnixTimestamp = this.state.sousePostUnixTimestamp;
         const sousePostCreatorName = this.state.sousePostCreatorName;
         const sousePostCreatorImage = this.state.sousePostCreatorImage;
         const commentSectionSelected = this.state.commentSectionSelected;
         const commentsTotal = "" + this.commentsFinder().length + "";  
         return (
-            <div class="mx-auto d-block pt-5">
-                <div class="d-none d-xl-block container"> {/* For larger Sceens */}
-                    <div class="row pt-5">
-                        <div class="col-8">
-                            <div class="thumbnail">
-                                    <div class="souseImageFormat">
-                                        <img class="mx-auto d-block sousePostImage pb-2" 
-                                            src={sousePostImage}
-                                            alt="sousePostImage"
-                                            width="1080px" 
-                                            height="1080px"/>
-                                    </div>
-                            </div>
+            <div class="mx-auto d-block">
+                <div class="d-none d-xl-block pt-5 container"> {/* For larger Sceens */}
+                    <div class="row pt-5 d-flex justify-content-center">
+                        <div class="col-6 d-flex justify-content-center my-auto">
+                            <PostPageImage className="souseUserPostsPage" 
+                                src={sousePostImage}
+                                alt="sousePostImage"
+                                width="1080px" 
+                                height="1080px"/>
                         </div>
-                        <div class="col-4">
+                        <div class="col-6">
                             <div class="container">
                             {commentSectionSelected  
                                 ?   <div>
                                         <div class="row">
-                                            <div class="container">
-                                                <h6 class="float-right" onClick={this.closeComments}><CloseIcon /></h6>
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <div class="container">
+                                                        <h6 class="float-right" onClick={this.closeComments}><CloseIcon /></h6>
+                                                    </div>
+                                                </div>
+                                                <CommentsSection 
+                                                    originalPostData={sousePostData}
+                                                    souseUserData={souseUserData} 
+                                                    souseCommentorImage={sousePostCreatorImage}
+                                                    souseCommentData={souseCommentData}/> {/* Comments */}
                                             </div>
                                         </div>
-                                        <CommentsSection 
-                                            originalPostData={sousePostData}
-                                            souseUserData={souseUserData} 
-                                            souseCommentData={souseCommentData}/> {/* Comments */}
                                     </div>
                                 :   <div>
                                         <div class="container-fluid">
                                             <div class="row">
-                                                <div>
-                                                    <img class="souseUserIconComments" 
+                                                <div class="col-2 p-0 m-0">
+                                                    <PostPageIcon className="souseUserIconComments" 
                                                         src={sousePostCreatorImage} 
                                                         alt="souseUserIconComments"
                                                         width="25px" 
                                                         height="25px"/>
                                                 </div>
-                                                <div class="d-flex align-items-center">
-                                                    <h5 class="sousePostCreatorName pl-4"> {sousePostCreatorName}</h5>
-                                                </div>
-                                            </div>
-                                            {isAuthenticated && sousePostCreatorId === loggedinUser
-                                                    ?  <div class="row"> {/*User Icon and Edit Button */}                                                  
-                                                            <div class="col-12 d-flex flex-row-reverse">
-                                                                <div class="form-group pt-4">
-                                                                    <Link to={
-                                                                        {
-                                                                            pathname: "/p/edit/" + this.props.obj._id,
-                                                                            state: {
-                                                                                postTimestamp: sousePostUnixTimestamp
+                                                <div class="pl-2 col-8 p-0 my-auto">
+                                                        <PostCreatorName className="sousePostCreatorName d-flex align-items-top  p-0 m-0"> {sousePostCreatorName}</PostCreatorName>
+                                                        <PostLocation className="sousePostLocation d-flex align-items-bottom  p-0 m-0"> {sousePostLocation}</PostLocation>
+                                                    </div>
+                                                {isAuthenticated && sousePostCreatorId === loggedinUser
+                                                        ?  <div class="col-1 my-auto"> {/*User Icon and Edit Button */}                                                  
+                                                                <div>
+                                                                    <div class="form-group">
+                                                                        <Link to={
+                                                                            {
+                                                                                pathname: "/p/edit/" + this.props.obj._id,
+                                                                                state: {
+                                                                                    postTimestamp: sousePostUnixTimestamp
+                                                                                }
                                                                             }
-                                                                        }
-                                                                    }>
-                                                                        <SouseButton type="submit" className="waves-effect waves-light btn-large"><p class="lead buttonFont">Edit Post</p></SouseButton>
-                                                                    </Link>
+                                                                        }>
+                                                                            <h6><EditIcon/></h6>
+                                                                        </Link>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                :   <div></div>
-                                            }
+                                                    :   <div></div>
+                                                }
+                                            </div>
                                         </div>
                                         <div class="row">
-                                            <div class="pre-scrollable">
+                                            <CaptionPreScrollable className="col-12">
                                                 <div class="col-12">
                                                     <h6 class="sousePostCaption">{sousePostCaption}</h6>
                                                 </div>
-                                            </div>
+                                            </CaptionPreScrollable>
                                             <div class="col-12 no-gutters sousePostUserCommentsLink">
-                                            {commentsTotal == 0
-                                                ?   <h6 class="souseCommentsLinkFont">This post has {commentsTotal} comments</h6>
-                                                :   <h6 class="souseCommentsLinkFont" onClick={this.displayComments}>View all {commentsTotal} comments</h6>
-                                                
-                                            }              
+                                                {commentsTotal == 0
+                                                    ?   <CommentsLinkFont className="pt-3 pb-3">This post has {commentsTotal} comments</CommentsLinkFont>
+                                                    :   <CommentsLinkFont className="pt-3 pb-3" onClick={this.displayComments}>View all {commentsTotal} comments</CommentsLinkFont>
+                                                    
+                                                }              
                                             </div>
                                         </div>
                                     </div>
@@ -166,6 +182,103 @@ class PostsGrid extends Component {
                                 <h6><i class="far fa-copyright"></i>{this.state.currentYear} Souse</h6>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="d-xl-none container-fluid"> {/* For smaller Sceens */}
+                     <div class="row d-flex justify-content-center">
+                        <SouseDiv className="d-flex justify-content-center my-auto p-0">
+                            <div className="m-0 p-0 sousePortrait souseLandscape">
+                                <PostPageImage className="souseUserPostsPage" 
+                                    src={sousePostImage}
+                                    alt="sousePostImage"
+                                    width="1080px" 
+                                    height="1080px"/>
+                            </div>
+                        </SouseDiv>
+                        <SouseDiv>
+                            <div className="sousePortrait souseLandscape">
+                                <div class="container">
+                                {commentSectionSelected  
+                                    ?   <div>
+                                            <div class="row">
+                                                <div class="col-12 p-0 m-0">
+                                                    <div class="row">
+                                                        <div class="container">
+                                                            <h6 class="float-right" onClick={this.closeComments}><CloseIcon /></h6>
+                                                        </div>
+                                                    </div>
+                                                    <CommentsSection 
+                                                        originalPostData={sousePostData}
+                                                        souseUserData={souseUserData} 
+                                                        souseCommentorImage={sousePostCreatorImage}
+                                                        souseCommentData={souseCommentData}/> {/* Comments */}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    :   <div>
+                                            <div class="container-fluid">
+                                                <div class="row pt-3">
+                                                    <div class="col-2 p-0 m-0">
+                                                        <PostPageIcon className="souseUserIconComments" 
+                                                            src={sousePostCreatorImage} 
+                                                            alt="souseUserIconComments"
+                                                            width="25px" 
+                                                            height="25px"/>
+                                                    </div>
+                                                    <div class="pl-2 col-8 p-0 my-auto">
+                                                        <PostCreatorName className="sousePostCreatorName p-0 m-0"> {sousePostCreatorName}</PostCreatorName>
+                                                        <PostLocation className="sousePostLocation p-0 m-0"> {sousePostLocation}</PostLocation>
+                                                    </div>
+                                                    {isAuthenticated && sousePostCreatorId === loggedinUser
+                                                            ?  <div class="col-1 my-auto"> {/*User Icon and Edit Button */}                                                  
+                                                                    <div>
+                                                                        <div class="form-group">
+                                                                            <Link to={
+                                                                                {
+                                                                                    pathname: "/p/edit/" + this.props.obj._id,
+                                                                                    state: {
+                                                                                        postTimestamp: sousePostUnixTimestamp
+                                                                                    }
+                                                                                }
+                                                                            }>
+                                                                                <h6><EditIcon/></h6>
+                                                                            </Link>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        :   <div></div>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                            {isAuthenticated && sousePostCreatorId === loggedinUser
+                                                ?   <CaptionPreScrollableLoggedIn>
+                                                        <div class="col-12">
+                                                            <h6 class="sousePostCaption">{sousePostCaption}</h6>
+                                                        </div>
+                                                    </CaptionPreScrollableLoggedIn>
+                                                :   <CaptionPreScrollable>
+                                                        <div class="col-12">
+                                                            <h6 class="sousePostCaption">{sousePostCaption}</h6>
+                                                        </div>
+                                                    </CaptionPreScrollable>               
+                                            }
+                                                <div class="col-12 no-gutters sousePostUserCommentsLink">
+                                                    {commentsTotal == 0
+                                                        ?   <CommentsLinkFont className="pt-3 pb-3">This post has {commentsTotal} comments</CommentsLinkFont>
+                                                        :   <CommentsLinkFont className="pt-3 pb-3" onClick={this.displayComments}>View all {commentsTotal} comments</CommentsLinkFont>
+                                                        
+                                                    }              
+                                                </div>
+                                            </div>
+                                        </div>
+                            }
+                                </div>
+                                <div class="souseFooter">
+                                    <h6><i class="far fa-copyright"></i>{this.state.currentYear} Souse</h6>
+                                </div>
+                            </div>
+                        </SouseDiv>
                     </div>
                 </div>
             </div>

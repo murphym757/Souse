@@ -286,9 +286,13 @@ function (_Component) {
         theme: this.state.currentTheme
       }, _react["default"].createElement(_globalStyling.GlobalStyle, null), _react["default"].createElement(Card, {
         className: "align-content-stretch flex-wrap entireProjectCard m-0"
-      }, _react["default"].createElement(_v.CardBlock, null, _react["default"].createElement(_navbar["default"], {
+      }, _react["default"].createElement(_v.CardBlock, null, _react["default"].createElement("div", {
+        "class": "row h-100 m-0 p-0"
+      }, _react["default"].createElement(_navbar["default"], {
         souseUserData: souseUsers
-      }), _react["default"].createElement(_reactRouterDom.Switch, null, _react["default"].createElement(_reactRouterDom.Route, {
+      }), _react["default"].createElement("div", {
+        "class": "my-auto mx-auto col-12 p-0"
+      }, _react["default"].createElement(_reactRouterDom.Switch, null, _react["default"].createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/",
         render: function render(props) {
@@ -350,13 +354,17 @@ function (_Component) {
         component: _commentDeleteSection["default"]
       }), _react["default"].createElement(_reactRouterDom.Route, {
         component: _Page["default"]
-      }))))) : _react["default"].createElement(_provider["default"], {
+      }))))))) : _react["default"].createElement(_provider["default"], {
         theme: _globalTheme.souseDefaultTheme
       }, _react["default"].createElement(_globalStyling.GlobalStyle, null), _react["default"].createElement(Card, {
         className: "align-content-stretch flex-wrap entireProjectCard m-0"
-      }, _react["default"].createElement(_v.CardBlock, null, _react["default"].createElement(_navbar["default"], {
+      }, _react["default"].createElement(_v.CardBlock, null, _react["default"].createElement("div", {
+        "class": "row h-100 m-0 p-0"
+      }, _react["default"].createElement(_navbar["default"], {
         souseUserData: souseUsers
-      }), _react["default"].createElement(_reactRouterDom.Switch, null, _react["default"].createElement(_reactRouterDom.Route, {
+      }), _react["default"].createElement("div", {
+        "class": "my-auto mx-auto col-12"
+      }, _react["default"].createElement(_reactRouterDom.Switch, null, _react["default"].createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/",
         render: function render(props) {
@@ -418,7 +426,7 @@ function (_Component) {
         component: _commentDeleteSection["default"]
       }), _react["default"].createElement(_reactRouterDom.Route, {
         component: _Page["default"]
-      })))))));
+      })))))))));
     }
   }]);
 

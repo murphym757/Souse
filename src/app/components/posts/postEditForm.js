@@ -6,8 +6,18 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import {
     SouseButton,
-    SouseForm
+    SouseForm,
+    SouseLoadingIcon,
+    SouseLoadingIcon2,
+    SouseLoadingIcon3
 } from '../../assets/styles/mainStyling';
+import {
+    SouseLabel
+} from '../../assets/styles/postsStyling';
+import {
+    DeleteIcon
+} from '../../assets/styles/userProfileStyling';
+
 import { WaveLoading } from 'styled-spinkit';
 import S3 from 'aws-s3';
 import awsConfig from '../../../server/config';
@@ -28,6 +38,7 @@ class PostEdit extends Component {
             originalPostId: postIdFound,
             postCreatorId: '',
             postCaption: '',
+            postLocation: '',
             postImageURL: '',
             updateImage: false,
             updatedImage: false,
@@ -38,9 +49,11 @@ class PostEdit extends Component {
             postImageFileName: '',
             newPostImageFileName: '',
             username: loggedInUsername,
-            fullPostUploadLoader: false
+            fullPostUploadLoader: false,
+            deleteButtonClicked: false
         };
         this.onChangepostCaption = this.onChangepostCaption.bind(this);
+        this.onChangepostLocation = this.onChangepostLocation.bind(this);
         this.onUpdateImage = this.onUpdateImage.bind(this);
         this.onImageUpload = this.onImageUpload.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -51,6 +64,12 @@ class PostEdit extends Component {
     onChangepostCaption = (e) => {
         this.setState({
             postCaption: e.target.value
+        });
+    }
+
+    onChangepostLocation = (e) => {
+        this.setState({
+            postLocation: e.target.value
         });
     }
 
@@ -73,6 +92,7 @@ class PostEdit extends Component {
          const newFileName = "" + this.state.postUnixTimestamp + "";
          S3Client.uploadFile(e.target.files[0], newFileName)
              .then((data) => {
+                 console.log(data.location);
                  this.setState({
                      postImageURL: data.location,
                      isLoading: true
@@ -115,6 +135,7 @@ class PostEdit extends Component {
           .then(res => {
               this.setState({ 
                 postCaption: res.data.sousePosts.postCaption,
+                postLocation: res.data.sousePosts.postLocation,
                 postCreatorId: res.data.postCreator,
                 postImageURL: res.data.sousePosts.postImageURL
                 });
@@ -142,6 +163,7 @@ class PostEdit extends Component {
         const postData = {
             postCreatorId: this.state.postCreatorId,
             postCaption: this.state.postCaption,
+            postLocation: this.state.postLocation,
             postUnixTimestamp: this.state.postUnixTimestamp,
             postImageFileType: this.state.postImageFileType,
             postImageFileName: this.state.newPostImageFileName,
@@ -153,8 +175,8 @@ class PostEdit extends Component {
 
         axios.post(apiRoute + updateRoute + "/" + postId, postData)
             .then(res => console.log(res.data));
-      
         this.props.history.push("/p/" +  postId);
+        window.location.reload();
     }
 
     render() {
@@ -163,55 +185,86 @@ class PostEdit extends Component {
         const postCreatorId = this.state.postCreatorId;
         const updateImage = this.state.updateImage;
         const updatedImage = this.state.updatedImage;
-        const TestFont = styled.h6`
-            color: ${props => props.theme.main};
-        `;
         
-        TestFont.defaultProps = {
-            theme: {
-                main: "palevioletred"
-            }
-        }
-         
         return (
             <div>
                 {isAuthenticated && postCreatorId == loggedInUser
-                    ? <div class="container">
+                    ? <div class="container-fluid">
                             <SouseForm onSubmit={this.onSubmit}>
-                            <TestFont>Hi There</TestFont>
-                                <div class="row pt-5">
-                                    <div class="input-field col-6">
-                                        <textarea 
-                                            class="materialize-textarea editText"
-                                            name="postCaption"
-                                            id="souseCaptionPost"  
-                                            rows="1"
-                                            value={this.state.postCaption}
-                                            onChange={this.onChangepostCaption}></textarea>
-                                        <label class="active" for="souseCaptionPost">Caption</label>
+                                <div class="row container mx-auto pt-5">
+                                    <div class="col-sm-6">
+                                        <div class="input-field pb-5">
+                                            <textarea 
+                                                class="materialize-textarea editText"
+                                                name="postCaption"
+                                                id="souseCaptionPost"  
+                                                rows="1"
+                                                maxLength={1000} 
+                                                value={this.state.postCaption}
+                                                onChange={this.onChangepostCaption}></textarea>
+                                            <label class="active" for="souseCaptionPost">Caption ({this.state.postCaption.length}/1000)</label>
+                                        </div>
+                                        <div class="input-field">
+                                            <input 
+                                                type="text"
+                                                name="postLocation" 
+                                                className="form-control"
+                                                id="souseLocationPost"
+                                                value={this.state.postLocation}
+                                                onChange={this.onChangepostLocation} 
+                                            />
+                                            <label class="active" for="souseLocationPost">Location</label>
+                                        </div>
                                     </div>
-                                    <div class="col-6">
-                                        {updateImage
-                                            ?   <div>
+                                    <div class="col-sm-6">
+                                        <div class="row justify-content-end">
+                                        {this.state.deleteButtonClicked == false
+                                            ?   <div 
+                                                    data-toggle="collapse" 
+                                                    href="#postDeleteCollapse" 
+                                                    role="button" 
+                                                    aria-expanded="false" 
+                                                    aria-controls="postDeleteCollapse"
+                                                    onClick={this.optionClicked = (e) => {this.setState({deleteButtonClicked: true})}}
+                                                    class="form-group col-6 d-flex justify-content-end pt-3">
+                                                        <DeleteIcon />
+                                                </div>
+                                            :   <div 
+                                                    data-toggle="collapse" 
+                                                    href="#postDeleteCollapse" 
+                                                    role="button" 
+                                                    aria-expanded="false" 
+                                                    aria-controls="postDeleteCollapse"
+                                                    onClick={this.optionClicked = (e) => {this.setState({deleteButtonClicked: false})}}
+                                                    class="form-group col-6 d-flex justify-content-end pt-3">
+                                                        <DeleteIcon />
+                                                </div>
+                                        }
+                                        </div>
+                                        <div class="row justify-content-center">
+                                            <div class="form-group col d-flex justify-content-center">
+                                            {this.state.deleteButtonClicked == false
+                                                ?   <div class="row justify-content-center col-12">
                                                     {this.state.fullPostUploadLoader
                                                         ?   <div>
                                                                 {this.state.isLoading
                                                                     ?   <div>
-                                                                            <label class="d-block justify-content-center">Image updated</label>
-                                                                                <div class="thumbnail">
-                                                                                    <div class="souseImageFormat">
-                                                                                        <img class="d-flex mx-auto sousePostImage editPost pb-2"
-                                                                                            src={this.state.postImageURL}
-                                                                                            alt="sousePostImage"
-                                                                                            width="1080px" 
-                                                                                            height="1080px"/>
-                                                                                    </div>
-                                                                                </div>
+                                                                            <h4 class="d-flex justify-content-center pb-2">User Image Updated</h4>
                                                                         </div>
-                                                                    :   <WaveLoading __styled-spinkit__Wave color="#c45758" />
+                                                                    :   <div class="row d-flex justify-content-center">
+                                                                            <SouseLoadingIcon className="spinner-grow" role="status">
+                                                                                <span class="sr-only">Loading...</span>
+                                                                            </SouseLoadingIcon>
+                                                                            <SouseLoadingIcon2 className="spinner-grow" role="status">
+                                                                                <span class="sr-only">Loading...</span>
+                                                                            </SouseLoadingIcon2>
+                                                                            <SouseLoadingIcon3 className="spinner-grow" role="status">
+                                                                                <span class="sr-only">Loading...</span>
+                                                                            </SouseLoadingIcon3>
+                                                                        </div>
                                                                 }
                                                             </div>
-                                                        :   <div class="file-field input-field d-block mx-auto">
+                                                        :   <div class="file-field input-field col-12">
                                                                 <SouseButton className="btn-large">
                                                                     <p class="lead buttonFont">Upload</p>
                                                                     <input 
@@ -226,35 +279,19 @@ class PostEdit extends Component {
                                                                 </div>
                                                             </div>
                                                     }
-                                                </div>
-                                            :   <div>
-                                                    <label class="d-flex justify-content-center">Click image to update</label>
-                                                        <div class="thumbnail">
-                                                            <div class="souseImageFormat">
-                                                                <img class="d-flex mx-auto sousePostImage editPost pb-2"
-                                                                    onClick={this.onUpdateImage} 
-                                                                    onChange={this.onChangeImageFileType}
-                                                                    src={this.state.postImageURL}
-                                                                    alt="sousePostImage"
-                                                                    width="1080px" 
-                                                                    height="1080px"/>
-                                                            </div>
-                                                        </div>
-                                                </div>
-                                        }
-                                </div>
-                                    <div class="form-group col d-flex justify-content-center">
-                                        <SouseButton onClick={this.onUpdateImageDelete} type="submit" className="waves-effect waves-light btn-large">
-                                            <p class="lead buttonFont">Update</p>
-                                        </SouseButton>
+                                                        <SouseButton onClick={this.onUpdateImageDelete} type="submit" className="waves-effect waves-light btn-large">
+                                                            <p class="lead buttonFont">Update</p>
+                                                        </SouseButton>
+                                                    </div>
+                                                :   <SouseButton onClick={this.delete} className="waves-effect waves-light btn-large">
+                                                        <p class="lead buttonFont">Delete</p>
+                                                    </SouseButton>
+                                            }
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </SouseForm>
-                        <div class="form-group col d-flex justify-content-center pt-3">
-                            <SouseButton onClick={this.delete} className="waves-effect waves-light btn-large">
-                                <p class="lead buttonFont">Delete</p>
-                            </SouseButton>
-                        </div>
                     </div>
                     : <div></div>
                 }

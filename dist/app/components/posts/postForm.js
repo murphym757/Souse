@@ -63,6 +63,12 @@ function (_Component) {
       });
     };
 
+    _this.onChangepostLocation = function (e) {
+      _this.setState({
+        postLocation: e.target.value
+      });
+    };
+
     _this.onImageUpload = function (e) {
       var config = {
         bucketName: _config["default"].AWS_BUCKET_NAME,
@@ -105,6 +111,7 @@ function (_Component) {
       var postData = {
         postCreatorId: _this.state.postCreatorId,
         postCaption: _this.state.postCaption,
+        postLocation: _this.state.postLocation,
         postUnixTimestamp: _this.state.postUnixTimestamp,
         postImageFileType: _this.state.postImageFileType,
         postImageFileName: _this.state.postImageFileName,
@@ -120,6 +127,7 @@ function (_Component) {
       _this.setState({
         postCreatorId: '',
         postCaption: '',
+        postLocation: '',
         postUnixTimestamp: '',
         postImageFileType: '',
         postImageURL: ''
@@ -137,6 +145,7 @@ function (_Component) {
     _this.state = {
       postCreatorId: loggedinUser,
       postCaption: '',
+      postLocation: '',
       postUnixTimestamp: new Date().valueOf(),
       postImageFileType: '',
       postImageFileName: '',
@@ -147,6 +156,7 @@ function (_Component) {
       fullPostUploadLoader: true
     };
     _this.onChangepostCaption = _this.onChangepostCaption.bind(_assertThisInitialized(_this));
+    _this.onChangepostLocation = _this.onChangepostLocation.bind(_assertThisInitialized(_this));
     _this.onImageUpload = _this.onImageUpload.bind(_assertThisInitialized(_this));
     _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
     return _this;
@@ -155,7 +165,7 @@ function (_Component) {
   _createClass(PostCreate, [{
     key: "render",
     value: function render() {
-      var _React$createElement, _React$createElement2;
+      var _React$createElement, _React$createElement2, _React$createElement3, _React$createElement4;
 
       var _this$props$auth2 = this.props.auth,
           isAuthenticated = _this$props$auth2.isAuthenticated,
@@ -170,9 +180,17 @@ function (_Component) {
         id: "souseCaptionPost",
         "class": "materialize-textarea",
         name: "postCaption"
-      }, _defineProperty(_React$createElement, "id", "souseCaptionPost"), _defineProperty(_React$createElement, "rows", "1"), _defineProperty(_React$createElement, "value", this.state.postCaption), _defineProperty(_React$createElement, "onChange", this.onChangepostCaption), _React$createElement)), _react["default"].createElement("label", {
+      }, _defineProperty(_React$createElement, "id", "souseCaptionPost"), _defineProperty(_React$createElement, "maxLength", 1000), _defineProperty(_React$createElement, "rows", "1"), _defineProperty(_React$createElement, "value", this.state.postCaption), _defineProperty(_React$createElement, "onChange", this.onChangepostCaption), _React$createElement)), _react["default"].createElement("label", {
         "for": "souseCaptionPost"
-      }, "Caption")), _react["default"].createElement("div", {
+      }, "Caption (", this.state.postCaption.length, "/1000)")), _react["default"].createElement("div", {
+        "class": "input-field"
+      }, _react["default"].createElement("textarea", (_React$createElement2 = {
+        id: "souseLocationPost",
+        "class": "materialize-textarea",
+        name: "postLocation"
+      }, _defineProperty(_React$createElement2, "id", "souseLocationPost"), _defineProperty(_React$createElement2, "rows", "1"), _defineProperty(_React$createElement2, "value", this.state.postLocation), _defineProperty(_React$createElement2, "onChange", this.onChangepostLocation), _React$createElement2)), _react["default"].createElement("label", {
+        "for": "souseLocationPost"
+      }, "Location")), _react["default"].createElement("div", {
         "class": "mx-auto",
         onClick: this.fullPostUpload
       }, _react["default"].createElement("a", {
@@ -181,13 +199,21 @@ function (_Component) {
         "class": "fas fa-camera fa-lg"
       }))))) : _react["default"].createElement("div", null, _react["default"].createElement("div", {
         "class": "input-field"
-      }, _react["default"].createElement("textarea", (_React$createElement2 = {
+      }, _react["default"].createElement("textarea", (_React$createElement3 = {
         id: "souseCaptionPost",
         "class": "materialize-textarea",
         name: "postCaption"
-      }, _defineProperty(_React$createElement2, "id", "souseCaptionPost"), _defineProperty(_React$createElement2, "rows", "1"), _defineProperty(_React$createElement2, "value", this.state.postCaption), _defineProperty(_React$createElement2, "onChange", this.onChangepostCaption), _React$createElement2)), _react["default"].createElement("label", {
+      }, _defineProperty(_React$createElement3, "id", "souseCaptionPost"), _defineProperty(_React$createElement3, "rows", "1"), _defineProperty(_React$createElement3, "maxLength", 1000), _defineProperty(_React$createElement3, "value", this.state.postCaption), _defineProperty(_React$createElement3, "onChange", this.onChangepostCaption), _React$createElement3)), _react["default"].createElement("label", {
         "for": "souseCaptionPost"
-      }, "Caption")), _react["default"].createElement("div", null, this.state.fullPostUploadLoader ? _react["default"].createElement("div", {
+      }, "Caption (", this.state.postCaption.length, "/1000)")), _react["default"].createElement("div", {
+        "class": "input-field"
+      }, _react["default"].createElement("textarea", (_React$createElement4 = {
+        id: "souseLocationPost",
+        "class": "materialize-textarea",
+        name: "postLocation"
+      }, _defineProperty(_React$createElement4, "id", "souseLocationPost"), _defineProperty(_React$createElement4, "rows", "1"), _defineProperty(_React$createElement4, "value", this.state.postLocation), _defineProperty(_React$createElement4, "onChange", this.onChangepostLocation), _React$createElement4)), _react["default"].createElement("label", {
+        "for": "souseLocationPost"
+      }, "Location")), _react["default"].createElement("div", null, this.state.fullPostUploadLoader ? _react["default"].createElement("div", {
         "class": "file-field input-field"
       }, _react["default"].createElement(_mainStyling.SouseButton, {
         className: "btn-large"
