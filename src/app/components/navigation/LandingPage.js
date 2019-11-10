@@ -4,12 +4,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import UserPage from '../userProfile/usersPage';
 import { SouseButton } from '../../assets/styles/mainStyling';
-import { SouseUserPageIcon } from '../../assets/styles/userProfileStyling';
+import { SouseUserPageIconLanding } from '../../assets/styles/userProfileStyling';
 import SignUpForm from '../registration/signUpForm';
 import LoginForm from '../registration/loginForm';
 import {
     ConnectionOptionsLink
 } from '../../assets/styles/mainStyling';
+import {
+    SouseColumnLanding
+} from '../../assets/styles/userProfileStyling';
 
 import {
     IphoneContainer,
@@ -79,59 +82,65 @@ class LandingPage extends Component {
                 {Object.keys(this.userFinder())
                     .map((object, i) => (
                         <div class="container-fluid">
-                            <div class="row h-100 m-0 p-0 d-flex justify-content-center">   {/* Image Row */}
-                                <SouseUserPageIcon>
-                                    <img className="souseUserPageImage"
-                                        src={this.userFinder()[i].userImage}
-                                        alt="souseUserIcon"
-                                        width="85px" 
-                                        height="85px"/>
-                                </SouseUserPageIcon>
-                            </div>
-                                <div class="row d-flex justify-content-center">   {/* Username Row */}
-                                <h2>{this.userFinder()[i].username}</h2>
-                            </div>
-                            <div class="row d-flex justify-content-center">   {/* Follow/Follower Row */}
-                                <div class="col-4">
-                                    <h4 class="float-right">{postsTotal} Posts</h4>
-                                </div>
-                                <div class="col-4">
-                                    <h4 class="d-flex justify-content-center">{followersTotal} Followers</h4>
-                                </div>
-                                <div class="col-4">
-                                    <h4 class="float-left">{followsTotal} Follows</h4>
-                                </div>
-                            </div>
-                            {Object.keys(this.userFinder())
-                                .map((object, i) => (
-                                    <div>
-                                        <Link to={
-                                            {
-                                                pathname: `/${this.userFinder()[i].username}`,
-                                                state: {
-                                                    souseUserId: this.userFinder()[i]._id,
-                                                    souseUserUsername: this.userFinder()[i].username,
-                                                    souseUserFirstName: this.userFinder()[i].firstName,
-                                                    souseUserLastName: souseUserData[i].lastName,
-                                                    souseUserEmail: this.userFinder()[i].email,
-                                                    souseUserPassword: this.userFinder()[i].password,
-                                                    souseUserSignUpDate: this.userFinder()[i].signUpDate,
-                                                    souseUserImage: this.userFinder()[i].userImage,
-                                                    souseUserTwitter: this.userFinder()[i].userTwitter,
-                                                    souseUserFacebook: this.userFinder()[i].userFacebook,
-                                                    souseUserInstagram: this.userFinder()[i].userInstagram,
-                                                    souseUserLocation: this.userFinder()[i].userLocation,
-                                                    souseUserBio: this.userFinder()[i].userBio
-                                                }
-                                            }
-                                        }>
-                                            <div class="row d-flex justify-content-center">   {/* Confirmation Button Row */}
-                                                <SouseButton type="submit" className="waves-effect waves-light btn-large"><p class="lead buttonFont">Confirm</p></SouseButton>
-                                            </div>
-                                        </Link>
+                            <div class="row mx-auto my-auto">
+                                <SouseColumnLanding className="mx-auto my-auto">
+                                    <div class="row d-flex justify-content-center">   {/* Image Row */}
+                                        <SouseUserPageIconLanding>
+                                            <img className="souseUserPageLandingImage"
+                                                src={this.userFinder()[i].userImage}
+                                                alt="souseUserIcon"
+                                                width="85px" 
+                                                height="85px"/>
+                                        </SouseUserPageIconLanding>
                                     </div>
-                                ))
-                            }
+                                </SouseColumnLanding>
+                                <SouseColumnLanding className="mx-auto my-auto">
+                                    <div class="row d-flex justify-content-center">   {/* Username Row */}
+                                        <h2>{this.userFinder()[i].username}</h2>
+                                    </div>
+                                    <div class="row d-flex justify-content-center">   {/* Follow/Follower Row */}
+                                        <div class="col-4 d-flex justify-content-center">
+                                            <h5>{postsTotal} Posts</h5>
+                                        </div>
+                                        <div class="col-4 d-flex justify-content-center">
+                                            <h5>{followersTotal} Followers</h5>
+                                        </div>
+                                        <div class="col-4 d-flex justify-content-center">
+                                            <h5>{followsTotal} Follows</h5>
+                                        </div>
+                                    </div>
+                                    {Object.keys(this.userFinder())
+                                        .map((object, i) => (
+                                            <div>
+                                                <Link to={
+                                                    {
+                                                        pathname: `/${this.userFinder()[i].username}`,
+                                                        state: {
+                                                            souseUserId: this.userFinder()[i]._id,
+                                                            souseUserUsername: this.userFinder()[i].username,
+                                                            souseUserFirstName: this.userFinder()[i].firstName,
+                                                            souseUserLastName: souseUserData[i].lastName,
+                                                            souseUserEmail: this.userFinder()[i].email,
+                                                            souseUserPassword: this.userFinder()[i].password,
+                                                            souseUserSignUpDate: this.userFinder()[i].signUpDate,
+                                                            souseUserImage: this.userFinder()[i].userImage,
+                                                            souseUserTwitter: this.userFinder()[i].userTwitter,
+                                                            souseUserFacebook: this.userFinder()[i].userFacebook,
+                                                            souseUserInstagram: this.userFinder()[i].userInstagram,
+                                                            souseUserLocation: this.userFinder()[i].userLocation,
+                                                            souseUserBio: this.userFinder()[i].userBio
+                                                        }
+                                                    }
+                                                }>
+                                                    <div class="row d-flex justify-content-center">   {/* Confirmation Button Row */}
+                                                        <SouseButton type="submit" className="waves-effect waves-light btn-large"><p class="lead buttonFont">Confirm</p></SouseButton>
+                                                    </div>
+                                                </Link>
+                                            </div>
+                                        ))
+                                    }
+                                </SouseColumnLanding>
+                            </div>
                         </div>
                     ))}
                     {isAuthenticated 

@@ -145,30 +145,30 @@ function (_Component) {
         return _react["default"].createElement("div", {
           "class": "container-fluid"
         }, _react["default"].createElement("div", {
-          "class": "row h-100 m-0 p-0 d-flex justify-content-center"
-        }, "   ", _react["default"].createElement(_userProfileStyling.SouseUserPageIcon, null, _react["default"].createElement("img", {
-          className: "souseUserPageImage",
+          "class": "row mx-auto my-auto"
+        }, _react["default"].createElement(_userProfileStyling.SouseColumnLanding, {
+          className: "mx-auto my-auto"
+        }, _react["default"].createElement("div", {
+          "class": "row d-flex justify-content-center"
+        }, "   ", _react["default"].createElement(_userProfileStyling.SouseUserPageIconLanding, null, _react["default"].createElement("img", {
+          className: "souseUserPageLandingImage",
           src: _this2.userFinder()[i].userImage,
           alt: "souseUserIcon",
           width: "85px",
           height: "85px"
-        }))), _react["default"].createElement("div", {
+        })))), _react["default"].createElement(_userProfileStyling.SouseColumnLanding, {
+          className: "mx-auto my-auto"
+        }, _react["default"].createElement("div", {
           "class": "row d-flex justify-content-center"
         }, "   ", _react["default"].createElement("h2", null, _this2.userFinder()[i].username)), _react["default"].createElement("div", {
           "class": "row d-flex justify-content-center"
         }, "   ", _react["default"].createElement("div", {
-          "class": "col-4"
-        }, _react["default"].createElement("h4", {
-          "class": "float-right"
-        }, postsTotal, " Posts")), _react["default"].createElement("div", {
-          "class": "col-4"
-        }, _react["default"].createElement("h4", {
-          "class": "d-flex justify-content-center"
-        }, followersTotal, " Followers")), _react["default"].createElement("div", {
-          "class": "col-4"
-        }, _react["default"].createElement("h4", {
-          "class": "float-left"
-        }, followsTotal, " Follows"))), Object.keys(_this2.userFinder()).map(function (object, i) {
+          "class": "col-4 d-flex justify-content-center"
+        }, _react["default"].createElement("h5", null, postsTotal, " Posts")), _react["default"].createElement("div", {
+          "class": "col-4 d-flex justify-content-center"
+        }, _react["default"].createElement("h5", null, followersTotal, " Followers")), _react["default"].createElement("div", {
+          "class": "col-4 d-flex justify-content-center"
+        }, _react["default"].createElement("h5", null, followsTotal, " Follows"))), Object.keys(_this2.userFinder()).map(function (object, i) {
           return _react["default"].createElement("div", null, _react["default"].createElement(_reactRouterDom.Link, {
             to: {
               pathname: "/".concat(_this2.userFinder()[i].username),
@@ -196,7 +196,7 @@ function (_Component) {
           }, _react["default"].createElement("p", {
             "class": "lead buttonFont"
           }, "Confirm")))));
-        }));
+        }))));
       }), isAuthenticated ? _react["default"].createElement("div", null) : _react["default"].createElement("div", {
         "class": "container-fluid"
       }, connectionOption == '1' ? _react["default"].createElement("div", {

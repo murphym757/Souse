@@ -187,6 +187,7 @@ export const FormContainer = styled.div `
 `;
 
 export const SouseColumn = styled.div `
+    /* Col-12 */
     @media ${souseMediaQueries.mobileS.portrait},
         ${souseMediaQueries.mobileM.portrait},
         ${souseMediaQueries.mobileL.portrait}
@@ -196,6 +197,7 @@ export const SouseColumn = styled.div `
             flex: 0 0 100%;
             max-width: 100%;
     }
+    /* Col-4 */
     @media ${souseMediaQueries.mobileS.landscape},
         ${souseMediaQueries.mobileM.landscape},
         ${souseMediaQueries.mobileL.landscape}

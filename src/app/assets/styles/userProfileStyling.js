@@ -123,6 +123,103 @@ export const SouseUserPageIcon = styled.div `
 `;
 /* ---------------------------------------------------- */
 
+// User Image (Landing)
+/* ---------------------------------------------------- */
+export const SouseUserPageIconLanding = styled.div `
+    .souseUserPageLandingImage {
+        border-radius: 50%;
+        border: 0.25em solid ${props => props.theme.secondaryColor};
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    @media ${souseMediaQueries.mobileS.portrait},
+        ${souseMediaQueries.mobileM.portrait},
+        ${souseMediaQueries.mobileL.portrait}
+        ${souseMediaQueries.tablet.portrait},
+        ${souseMediaQueries.laptop.portrait} {
+            height: 50vw;
+            width: 50vw;
+            .souseUserPageLandingImage{
+                height: 50vw;
+                width: 50vw;
+            }
+    }
+    @media ${souseMediaQueries.mobileS.landscape},
+        ${souseMediaQueries.mobileM.landscape},
+        ${souseMediaQueries.mobileL.landscape}
+        ${souseMediaQueries.tablet.landscape},
+        ${souseMediaQueries.laptop.landscape},
+        ${souseMediaQueries.laptopL.landscape},
+        ${souseMediaQueries.desktop.landscape} {
+            height: 25vw;
+            width: 25vw;
+    }
+`;
+/* ---------------------------------------------------- */
+
+// Custom Bootstrap Columns (Landing)
+/* ---------------------------------------------------- */
+export const SouseColumnLanding = styled.div `
+    img {
+        height: 25vw;
+        width: 25vw;
+    }
+    /* Col-12 */
+    @media ${souseMediaQueries.mobileS.portrait},
+        ${souseMediaQueries.mobileM.portrait},
+        ${souseMediaQueries.mobileL.portrait}
+        ${souseMediaQueries.tablet.portrait},
+        ${souseMediaQueries.laptop.portrait} {
+            -ms-flex: 0 0 100%;
+            flex: 0 0 100%;
+            max-width: 100%;
+            img {
+                height: 50vw;
+                width: 50vw;
+            }
+    }
+    /* Col-6 */
+    @media ${souseMediaQueries.mobileS.landscape},
+        ${souseMediaQueries.mobileM.landscape},
+        ${souseMediaQueries.mobileL.landscape}
+        ${souseMediaQueries.tablet.landscape},
+        ${souseMediaQueries.laptop.landscape},
+        ${souseMediaQueries.laptopL.landscape},
+        ${souseMediaQueries.desktop.landscape} {
+            -ms-flex: 0 0 50%;
+            flex: 0 0 50%;
+            max-width: 50%;
+            img {
+                height: 25vw;
+                width: 25vw;
+            }
+    }
+    /* Fonts */
+    @media ${souseMediaQueries.mobileS.landscape},
+        ${souseMediaQueries.mobileS.portrait} {
+            h5 {
+                font-size: 0.9rem;
+            }
+    }
+    @media ${souseMediaQueries.mobileL.landscape},
+        ${souseMediaQueries.mobileM.landscape},
+        ${souseMediaQueries.tablet.landscape}{
+        h5 {
+            font-size: 0.5rem;
+        }
+    }
+    @media ${souseMediaQueries.mobileL.portrait},
+        ${souseMediaQueries.mobileM.portrait} {
+         h5 {
+            font-size: 1rem;
+        }   
+    }
+`;
+/* ---------------------------------------------------- */
+
 // Bio Section
 /* ---------------------------------------------------- */
 export const TwitterIcon = styled(Twitter) `
