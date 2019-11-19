@@ -41,8 +41,15 @@ export const KeyboardBackspaceIcon = styled(KeyboardBackspace) `
 
 export const PreScrollable = styled.div `
     max-height: 31.25em; /* 500px */
-    overflow-y: auto;
     overflow-x: hidden !important;
+    overflow-y: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        &::-webkit-scrollbar {
+        /* WebKit */
+            width: 0;
+            height: 0;
+        }
         /* Media Queries */
     /* ----------------------------------------- */
     /* Small Mobile Phones */
@@ -357,8 +364,15 @@ export const SouseDiv = styled.div `
 
 export const CaptionPreScrollable = styled.div `
     max-height: 31.25em; /* 500px */
-    overflow-y: auto;
     overflow-x: hidden !important;
+    overflow-y: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        &::-webkit-scrollbar {
+        /* WebKit */
+            width: 0;
+            height: 0;
+        }
     /* Media Queries */
     /* ----------------------------------------- */
     /* Small Mobile Phones */
@@ -405,8 +419,15 @@ export const CaptionPreScrollable = styled.div `
 
 export const CaptionPreScrollableLoggedIn = styled.div `
     max-height: 31.25em; /* 500px */
-    overflow-y: auto;
     overflow-x: hidden !important;
+    overflow-y: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        &::-webkit-scrollbar {
+        /* WebKit */
+            width: 0;
+            height: 0;
+        }
     /* Media Queries */
     /* ----------------------------------------- */
     /* Small Mobile Phones */

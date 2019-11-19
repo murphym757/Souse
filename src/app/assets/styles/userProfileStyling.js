@@ -351,8 +351,8 @@ export const UserPostIcons = styled.img `
     } 
     /* Large Laptops */
     @media ${souseMediaQueries.laptopL.landscape} {
-        height: 17vw;
-        width: 17vw;
+        height: 12vw;
+        width: 12vw;
     } 
     /* Desktops */
     @media ${souseMediaQueries.desktop.landscape} {
@@ -643,8 +643,15 @@ export const SouseStyleSelectorIcon = styled.div `
 
 export const ProfilePreScrollable = styled.div `
     max-height: 31.25em; /* 500px */
-    overflow-y: auto;
     overflow-x: hidden !important;
+    overflow-y: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        &::-webkit-scrollbar {
+        /* WebKit */
+            width: 0;
+            height: 0;
+        }
     /* Media Queries */
     /* ----------------------------------------- */
     /* Small Mobile Phones */
