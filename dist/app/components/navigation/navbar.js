@@ -15,6 +15,8 @@ var _reactRedux = require("react-redux");
 
 var _authentication = require("../../../server/actions/authentication");
 
+var _souseFooter = _interopRequireDefault(require("./souseFooter"));
+
 var _navbarStyling = require("../../assets/styles/navbarStyling");
 
 var _souseLogos = require("../../assets/images/souseLogos");
@@ -195,10 +197,10 @@ function (_Component) {
         "class": "fas fa-ellipsis-h"
       }))), _react["default"].createElement("ul", {
         "class": "right hide-on-med-and-down"
-      }, isAuthenticated ? loggedInLinks : guestLinks))), _react["default"].createElement(_navbarStyling.SouseSideNav, {
+      }, isAuthenticated ? loggedInLinks : guestLinks)))), _react["default"].createElement(_navbarStyling.SouseSideNav, {
         className: "sidenav",
         id: "slide-out"
-      }, isAuthenticated ? loggedInLinks : guestLinks)));
+      }, isAuthenticated ? loggedInLinks : guestLinks));
     }
   }]);
 

@@ -11,6 +11,8 @@ var _User = require("styled-icons/feather/User");
 
 var _LogOut = require("styled-icons/feather/LogOut");
 
+var _mediaQueries = require("./mediaQueries");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var LoggedInUserIcon = (0, _styledComponents["default"])(_User.User).withConfig({
@@ -31,8 +33,10 @@ exports.LogoutUserIcon = LogoutUserIcon;
 var SouseSideNav = _styledComponents["default"].ul.withConfig({
   displayName: "navbarStyling__SouseSideNav",
   componentId: "sc-7lb5x-2"
-})(["background-color:", ";color:", ";& li > a{color:$secondaryColor;}"], function (props) {
+})(["background-color:", " !important;color:", " !important;& li > a{color:", " !important;}"], function (props) {
   return props.theme.primaryColor;
+}, function (props) {
+  return props.theme.secondaryColor;
 }, function (props) {
   return props.theme.secondaryColor;
 });

@@ -34,7 +34,7 @@ class SouseSearch extends Component {
     }
     render() {        
         return (
-            <div class="container">
+            <div class="container-fluid m-0 p-0">
                 <SouseForm onSubmit={this.onSubmit}>
                     <div class="input-field">
                         <textarea 

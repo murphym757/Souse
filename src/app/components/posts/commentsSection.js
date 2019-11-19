@@ -20,7 +20,8 @@ import {
     CommentCaptionFont
 } from '../../assets/styles/commentStyling';
 import {
-    PreScrollable
+    PreScrollable,
+    SouseDiv
 } from '../../assets/styles/postsStyling';
 
 class CommentsSection extends Component {
@@ -129,7 +130,7 @@ class CommentsSection extends Component {
             width: 1.5em;
         `;
         return (
-            <div class="container-fluid p-0 m-0">
+            <SouseDiv className="container-fluid">
                 <div class="souseCommentInput"> {/* Should go on seperate comments page */}
                     <div class="commentsPostsSection">
                         <PreScrollable>
@@ -185,7 +186,7 @@ class CommentsSection extends Component {
                             : <div></div>
                         }
                 </div>
-            </div>
+            </SouseDiv>
           );
       }
 }

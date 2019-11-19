@@ -9,14 +9,16 @@ var _styledComponents = _interopRequireDefault(require("styled-components"));
 
 var _reactRouterDom = require("react-router-dom");
 
-var _mainStyling = require("./mainStyling");
+var _mediaQueries = require("./mediaQueries");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var CommentsUserIcon = _styledComponents["default"].img.withConfig({
   displayName: "commentStyling__CommentsUserIcon",
   componentId: "d2ntyw-0"
-})(["border-radius:50%;height:2.5vw;width:2.5vw;overflow:hidden;display:flex;justify-content:center;align-items:center;@media ", "{}@media ", "{}@media ", "{}@media ", "{}@media ", "{height:12vw;width:12vw;}@media ", "{}@media ", "{}@media ", "{}@media ", "{}@media ", "{height:5.5vw;width:5.5vw;}@media ", "{height:4vw;width:4vw;}@media ", "{height:2.5vw;width:2.5vw;}"], _mainStyling.souseMediaQueries.mobileS.portrait, _mainStyling.souseMediaQueries.mobileS.landscape, _mainStyling.souseMediaQueries.mobileM.portrait, _mainStyling.souseMediaQueries.mobileM.landscape, _mainStyling.souseMediaQueries.mobileL.portrait, _mainStyling.souseMediaQueries.mobileL.landscape, _mainStyling.souseMediaQueries.tablet.portrait, _mainStyling.souseMediaQueries.tablet.landscape, _mainStyling.souseMediaQueries.laptop.portrait, _mainStyling.souseMediaQueries.laptop.landscape, _mainStyling.souseMediaQueries.laptopL.landscape, _mainStyling.souseMediaQueries.desktop.landscape);
+})(["border-radius:50%;border:0.25em solid ", ";position:relative;height:2.5vw;width:2.5vw;overflow:hidden;display:flex;justify-content:center;align-items:center;@media ", "{height:14vw;width:14vw;}@media ", "{height:7vw;width:7vw;}@media ", "{height:14vw;width:14vw;}@media ", "{height:7vw;width:7vw;}@media ", "{height:12vw;width:12vw;}@media ", "{height:8vw;width:8vw;}@media ", "{height:12vw;width:12vw;}@media ", "{height:8vw;width:8vw;}@media ", "{height:10vw;width:10vw;}@media ", "{height:8vw;width:8vw;}@media ", "{height:8vw;width:8vw;}@media ", "{height:5.5vw;width:5.5vw;}@media ", "{height:4vw;width:4vw;}@media ", "{height:2.5vw;width:2.5vw;}"], function (props) {
+  return props.theme.secondaryColor;
+}, _mediaQueries.souseMediaQueries.mobileS.portrait, _mediaQueries.souseMediaQueries.mobileS.landscape, _mediaQueries.souseMediaQueries.mobileM.portrait, _mediaQueries.souseMediaQueries.mobileM.landscape, _mediaQueries.souseMediaQueries.mobileL.portrait, _mediaQueries.souseMediaQueries.mobileL.landscape, _mediaQueries.souseMediaQueries.mobileLMax.portrait, _mediaQueries.souseMediaQueries.mobileLMax.landscape, _mediaQueries.souseMediaQueries.tablet.portrait, _mediaQueries.souseMediaQueries.tablet.landscape, _mediaQueries.souseMediaQueries.laptop.portrait, _mediaQueries.souseMediaQueries.laptop.landscape, _mediaQueries.souseMediaQueries.laptopL.landscape, _mediaQueries.souseMediaQueries.desktop.landscape);
 
 exports.CommentsUserIcon = CommentsUserIcon;
 var CommentCreatorFont = (0, _styledComponents["default"])(_reactRouterDom.Link).withConfig({

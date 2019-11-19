@@ -188,8 +188,8 @@ function (_Component) {
         displayName: "commentsSection__ThumbsDownIcon",
         componentId: "wmizgj-3"
       })(["color:#C45758;height:1.1em;width:1.5em;"]);
-      return _react["default"].createElement("div", {
-        "class": "container-fluid p-0 m-0"
+      return _react["default"].createElement(_postsStyling.SouseDiv, {
+        className: "container-fluid"
       }, _react["default"].createElement("div", {
         "class": "souseCommentInput"
       }, " ", _react["default"].createElement("div", {

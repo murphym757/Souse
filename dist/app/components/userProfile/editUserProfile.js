@@ -17,6 +17,8 @@ var _reactRedux = require("react-redux");
 
 var _authentication = require("../../../server/actions/authentication");
 
+var _Page = _interopRequireDefault(require("../navigation/404Page"));
+
 var _reactSwitch = _interopRequireDefault(require("react-switch"));
 
 var _classnames = _interopRequireDefault(require("classnames"));
@@ -384,12 +386,17 @@ function (_Component) {
           isAuthenticated = _this$props$auth4.isAuthenticated,
           user = _this$props$auth4.user;
       var loggedinUserImage = user.userImage;
+      var loggedinUserId = user.id;
       var errors = this.state.errors;
       var switchColor = this.state.switchColor;
       var switchHandleColor = this.state.switchHandleColor;
       var userOptionsDisplay = this.state.userOptionsDisplay;
+      var userIdPathname = window.location.pathname;
+      var userIdFound = userIdPathname.slice(8);
       return _react["default"].createElement("div", {
-        "class": "container-fluid"
+        "class": "pt-5"
+      }, isAuthenticated && loggedinUserId == userIdFound ? _react["default"].createElement("div", {
+        "class": "container-fluid pt-5"
       }, _react["default"].createElement(_mainStyling.SouseForm, {
         onSubmit: this.onSubmit
       }, _react["default"].createElement("div", {
@@ -698,7 +705,7 @@ function (_Component) {
         className: "waves-effect waves-light btn-large d-block mx-auto"
       }, _react["default"].createElement("p", {
         "class": "lead buttonFont"
-      }, "Update User")))))))));
+      }, "Update User"))))))))) : _react["default"].createElement(_Page["default"], null));
     }
   }]);
 

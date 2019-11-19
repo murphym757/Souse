@@ -23,6 +23,8 @@ var _theme = require("bootstrap-styled/lib/theme");
 
 var _globalStyling = require("../assets/styles/globalStyling");
 
+var _mainStyling = require("../assets/styles/mainStyling");
+
 var _v = require("@bootstrap-styled/v4");
 
 var _globalTheme = require("../assets/styles/globalTheme");
@@ -290,9 +292,7 @@ function (_Component) {
         "class": "row h-100 m-0 p-0"
       }, _react["default"].createElement(_navbar["default"], {
         souseUserData: souseUsers
-      }), _react["default"].createElement("div", {
-        "class": "my-auto mx-auto col-12 p-0"
-      }, _react["default"].createElement(_reactRouterDom.Switch, null, _react["default"].createElement(_reactRouterDom.Route, {
+      }), _react["default"].createElement(_mainStyling.SouseCenterContainer, null, _react["default"].createElement(_reactRouterDom.Switch, null, _react["default"].createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/",
         render: function render(props) {
@@ -362,9 +362,7 @@ function (_Component) {
         "class": "row h-100 m-0 p-0"
       }, _react["default"].createElement(_navbar["default"], {
         souseUserData: souseUsers
-      }), _react["default"].createElement("div", {
-        "class": "my-auto mx-auto col-12"
-      }, _react["default"].createElement(_reactRouterDom.Switch, null, _react["default"].createElement(_reactRouterDom.Route, {
+      }), _react["default"].createElement(_mainStyling.SouseCenterContainer, null, _react["default"].createElement(_reactRouterDom.Switch, null, _react["default"].createElement(_reactRouterDom.Route, {
         exact: true,
         path: "/",
         render: function render(props) {

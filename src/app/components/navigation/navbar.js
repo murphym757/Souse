@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../../server/actions/authentication';
+import SouseFooter from './souseFooter';
 import {
   SouseSideNav,
   SouseNav, 
@@ -117,11 +118,10 @@ class Navbar extends Component {
                     </ul>
                   </div>
                 </SouseNav>
-
-                <SouseSideNav className="sidenav" id="slide-out">
-                  {isAuthenticated ? loggedInLinks : guestLinks}
-                </SouseSideNav>
               </div>
+              <SouseSideNav className="sidenav" id="slide-out">
+                {isAuthenticated ? loggedInLinks : guestLinks}
+              </SouseSideNav>
             </div>
           );
         }

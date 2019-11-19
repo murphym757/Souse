@@ -19,6 +19,8 @@ var _reactSwitch = _interopRequireDefault(require("react-switch"));
 
 var _mainStyling = require("../../assets/styles/mainStyling");
 
+var _postsStyling = require("../../assets/styles/postsStyling");
+
 var _materializeCss = _interopRequireDefault(require("materialize-css"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -167,7 +169,9 @@ function (_Component) {
       var souseFormState = this.state.souseFormState;
       var switchColor = this.state.switchColor;
       var switchHandleColor = this.state.switchHandleColor;
-      return _react["default"].createElement("div", null, _react["default"].createElement("div", {
+      return _react["default"].createElement("div", {
+        "class": "col-12 m-0 p-0"
+      }, _react["default"].createElement("div", {
         "class": "collapse",
         id: "postCreateCollapse"
       }, _react["default"].createElement("div", {
@@ -184,7 +188,9 @@ function (_Component) {
         onChange: this.filterList
       }) : _react["default"].createElement(_postForm["default"], null)), _react["default"].createElement("div", {
         "class": "col-2"
-      }, _react["default"].createElement("label", null, "Off", _react["default"].createElement(_reactSwitch["default"], {
+      }, _react["default"].createElement("label", null, _react["default"].createElement("h6", {
+        "class": "d-flex justify-content-start"
+      }, _react["default"].createElement(_postsStyling.PencilIcon, null)), _react["default"].createElement(_reactSwitch["default"], {
         checked: this.state.checked,
         onChange: this.handleThemeChange,
         onColor: switchColor,
@@ -198,10 +204,12 @@ function (_Component) {
         width: 48,
         className: "react-switch",
         id: "material-switch"
-      }), "On"))) : _react["default"].createElement("div", {
+      }), _react["default"].createElement("h6", {
+        "class": "d-flex justify-content-end"
+      }, _react["default"].createElement(_postsStyling.SearchIcon, null))))) : _react["default"].createElement("div", {
         "class": "row"
       }, _react["default"].createElement("div", {
-        "class": "col-12"
+        "class": "col-12 m-0 p-0"
       }, _react["default"].createElement(_souseSearch["default"], {
         souseSearchedUsers: this.state.filteredUsers,
         match: this.props.match,
@@ -209,7 +217,7 @@ function (_Component) {
       })))) : _react["default"].createElement("div", {
         "class": "row"
       }, _react["default"].createElement("div", {
-        "class": "col-12"
+        "class": "col-12 m-0 p-0"
       }, _react["default"].createElement(_souseSearch["default"], {
         souseSearchedUsers: this.state.filteredUsers,
         match: this.props.match,

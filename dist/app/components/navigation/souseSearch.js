@@ -87,7 +87,7 @@ function (_Component) {
           _this2 = this;
 
       return _react["default"].createElement("div", {
-        "class": "container"
+        "class": "container-fluid m-0 p-0"
       }, _react["default"].createElement(_mainStyling.SouseForm, {
         onSubmit: this.onSubmit
       }, _react["default"].createElement("div", {

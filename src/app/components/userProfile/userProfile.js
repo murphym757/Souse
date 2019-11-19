@@ -14,6 +14,7 @@ import {
     FacebookIcon,
     InstagramIcon,
     UserBio,
+    ProfilePreScrollable,
     SouseUserPageIcon,
     UserPostIcons,
     UserPageOptionsUL,
@@ -26,6 +27,9 @@ import {
     SouseButton,
     SouseLink
 } from '../../assets/styles/mainStyling';
+import {
+    SouseDiv
+} from '../../assets/styles/postsStyling';
 
 class UserProfile extends Component {
     constructor(props) {
@@ -418,230 +422,428 @@ class UserProfile extends Component {
                                                 </div>
                                             </div>
                                             <div class="row d-flex justify-content-center"> {/* Bottom content row */}
-                                                {userPageDisplay == '1'
-                                                ?   <div class="row d-flex justify-content-center"> {/* Loads Posts by default */}
-                                                        {Object.keys(this.postFinder()).map((object, i) => {
-                                                            return <div class="col-3" obj={object} key={i}>
-                                                                <div class="pb-5">
-                                                                    <Link to={`/p/${this.postFinder()[i]._id}`}>
-                                                                        <div class="souseImageFormat d-flex justify-content-center">
-                                                                            <UserPostIcons className="souseUserPostsUserHomePage" 
-                                                                                src={this.postFinder()[i].sousePosts.postImageURL}
-                                                                                alt="souseUserPosts"
-                                                                                width="250px" 
-                                                                                height="250px"/>
+                                                <ProfilePreScrollable>
+                                                    {userPageDisplay == '1'
+                                                        ?   <div class="row d-flex justify-content-center"> {/* Loads Posts by default */}
+                                                                {Object.keys(this.postFinder()).map((object, i) => {
+                                                                    return <div class="col-3" obj={object} key={i}>
+                                                                        <div class="pb-5">
+                                                                            <Link to={`/p/${this.postFinder()[i]._id}`}>
+                                                                                <div class="souseImageFormat d-flex justify-content-center">
+                                                                                    <UserPostIcons className="souseUserPostsUserHomePage" 
+                                                                                        src={this.postFinder()[i].sousePosts.postImageURL}
+                                                                                        alt="souseUserPosts"
+                                                                                        width="250px" 
+                                                                                        height="250px"/>
+                                                                                </div>
+                                                                            </Link>
                                                                         </div>
-                                                                    </Link>
-                                                                </div>
-                                                            </div>
-                                                        })}
-                                                    </div>
-                                                :   <div> 
-                                                        {userPageDisplay == '2'
-                                                            ?   <div class="container-fluid">   {/* Loads Bio*/}
-                                                                    <div class="row">
-                                                                        <div class="col">
-                                                                            {this.state.creatorTwitter === ""
-                                                                                ?   <div></div>
-                                                                                :   <div class="col-12">
-                                                                                        <div class="row d-block mx-auto">
-                                                                                            <h5 class="d-flex justify-content-center m-0">
-                                                                                            <SouseLink href={this.state.creatorTwitterURL} target="_blank">
-                                                                                                <TwitterIcon /> {this.state.creatorTwitter}</SouseLink>
-                                                                                            </h5>
-                                                                                        </div>
-                                                                                    </div>
-                                                                            }
-                                                                            {this.state.creatorFacebook === ""
-                                                                                ?   <div></div>
-                                                                                :   <div class="col-12">
-                                                                                        <div class="row d-block mx-auto">
-                                                                                            <h5 class="d-flex justify-content-center m-0">
-                                                                                            <SouseLink href={this.state.creatorFacebookURL} target="_blank">
-                                                                                                <FacebookIcon /> {this.state.creatorFacebook}</SouseLink>
-                                                                                            </h5>
-                                                                                        </div>
-                                                                                    </div>
-                                                                            }
-                                                                            {this.state.creatorInstagram === ""
-                                                                                ?   <div></div>
-                                                                                :   <div class="col-12">
-                                                                                        <div class="row d-block mx-auto">
-                                                                                            <h5 class="d-flex justify-content-center m-0">
-                                                                                            <SouseLink href={this.state.creatorInstagramURL} target="_blank">
-                                                                                                <InstagramIcon /> {this.state.creatorInstagram}</SouseLink>
-                                                                                            </h5>
-                                                                                        </div>
-                                                                                    </div>
-                                                                            }  
-                                                                        </div>
-                                                                        {creatorBio === ""
-                                                                            ?   <div></div>
-                                                                            :   <div class="col">
-                                                                                <UserBio>{creatorBio}</UserBio>
-                                                                            </div>
-                                                                        }
                                                                     </div>
-                                                                </div>
-                                                            :   <div></div>
-
-                                                        }
-                                                        {userPageDisplay == '3'
-                                                            ?   <div>   {/* Load Followers */}
-                                                                    {Object.keys(this.followerFinder())
-                                                                        .map((object, i) => (
-                                                                            <div class="col-3">
-                                                                                <Link to={`/${this.followerFinder()[i].followerUsername}`} onClick={() => window.location.refresh()}>
-                                                                                    <div class="container-fluid d-flex justify-content-center">
-                                                                                        <img class="souseUserIconUserHomePage followIcons"
-                                                                                            src={this.followerFinder()[i].followerUserImage}
-                                                                                            alt="souseUserIcon"
-                                                                                            width="85px"
-                                                                                            height="85px" />
-                                                                                    </div>
-                                                                                    <div class="row">
-                                                                                        <h6 class="col-12">{this.followerFinder()[i].followerUsername}</h6>
-                                                                                    </div>
-                                                                                </Link>
+                                                                })}
+                                                            </div>
+                                                        :   <div> 
+                                                            {userPageDisplay == '2'
+                                                                ?   <div class="container-fluid">   {/* Loads Bio*/}
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                {this.state.creatorTwitter === ""
+                                                                                    ?   <div></div>
+                                                                                    :   <div class="col-12">
+                                                                                            <div class="row d-block mx-auto">
+                                                                                                <h5 class="d-flex justify-content-center m-0">
+                                                                                                <SouseLink href={this.state.creatorTwitterURL} target="_blank">
+                                                                                                    <TwitterIcon /> {this.state.creatorTwitter}</SouseLink>
+                                                                                                </h5>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                }
+                                                                                {this.state.creatorFacebook === ""
+                                                                                    ?   <div></div>
+                                                                                    :   <div class="col-12">
+                                                                                            <div class="row d-block mx-auto">
+                                                                                                <h5 class="d-flex justify-content-center m-0">
+                                                                                                <SouseLink href={this.state.creatorFacebookURL} target="_blank">
+                                                                                                    <FacebookIcon /> {this.state.creatorFacebook}</SouseLink>
+                                                                                                </h5>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                }
+                                                                                {this.state.creatorInstagram === ""
+                                                                                    ?   <div></div>
+                                                                                    :   <div class="col-12">
+                                                                                            <div class="row d-block mx-auto">
+                                                                                                <h5 class="d-flex justify-content-center m-0">
+                                                                                                <SouseLink href={this.state.creatorInstagramURL} target="_blank">
+                                                                                                    <InstagramIcon /> {this.state.creatorInstagram}</SouseLink>
+                                                                                                </h5>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                }  
                                                                             </div>
-                                                                        ))}
-                                                                </div>
-                                                            :   <div></div>
+                                                                            {creatorBio === ""
+                                                                                ?   <div></div>
+                                                                                :   <div class="col">
+                                                                                    <UserBio>{creatorBio}</UserBio>
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                :   <div></div>
 
-                                                        }
-                                                        {userPageDisplay == '4'
-                                                            ?   <div class="row">   {/* loads Follows */}
-                                                                    {Object.keys(this.followFinder())
-                                                                        .map((object, i) => (
-                                                                            <div class="col-3">
-                                                                                <Link to={`/${this.followFinder()[i].followUsername}`} onClick={() => window.location.refresh()}>
-                                                                                    <div class="container-fluid d-flex justify-content-center">
-                                                                                        <img class="souseUserIconUserHomePage followIcons"
-                                                                                            src={this.followFinder()[i].followUserImage}
-                                                                                            alt="souseUserIcon"
-                                                                                            width="85px"
-                                                                                            height="85px" />
-                                                                                    </div>
-                                                                                    <div class="row">
-                                                                                        <h6 class="col-12">{this.followFinder()[i].followUsername}</h6>
-                                                                                    </div>
-                                                                                </Link>
-                                                                            </div>
-                                                                        ))}
-                                                                </div>
-                                                            :   <div></div>
+                                                            }
+                                                            {userPageDisplay == '3'
+                                                                ?   <div>   {/* Load Followers */}
+                                                                        {Object.keys(this.followerFinder())
+                                                                            .map((object, i) => (
+                                                                                <div class="col-3">
+                                                                                    <Link to={`/${this.followerFinder()[i].followerUsername}`} onClick={() => window.location.refresh()}>
+                                                                                        <div class="container-fluid d-flex justify-content-center">
+                                                                                            <img class="souseUserIconUserHomePage followIcons"
+                                                                                                src={this.followerFinder()[i].followerUserImage}
+                                                                                                alt="souseUserIcon"
+                                                                                                width="85px"
+                                                                                                height="85px" />
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                            <h6 class="col-12">{this.followerFinder()[i].followerUsername}</h6>
+                                                                                        </div>
+                                                                                    </Link>
+                                                                                </div>
+                                                                            ))}
+                                                                    </div>
+                                                                :   <div></div>
 
-                                                        }
-                                                        { /* 
-                                                        {userPageDisplay == '5'
-                                                            ?   <div class="row"> // loads Likes/Favorites
-                                                                </div>
-                                                            :   <div></div>
-                                                        }
-                                                    */}
-                                                    </div>
-                                            }
+                                                            }
+                                                            {userPageDisplay == '4'
+                                                                ?   <div class="row">   {/* loads Follows */}
+                                                                        {Object.keys(this.followFinder())
+                                                                            .map((object, i) => (
+                                                                                <div class="col-3">
+                                                                                    <Link to={`/${this.followFinder()[i].followUsername}`} onClick={() => window.location.refresh()}>
+                                                                                        <div class="container-fluid d-flex justify-content-center">
+                                                                                            <img class="souseUserIconUserHomePage followIcons"
+                                                                                                src={this.followFinder()[i].followUserImage}
+                                                                                                alt="souseUserIcon"
+                                                                                                width="85px"
+                                                                                                height="85px" />
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                            <h6 class="col-12">{this.followFinder()[i].followUsername}</h6>
+                                                                                        </div>
+                                                                                    </Link>
+                                                                                </div>
+                                                                            ))}
+                                                                    </div>
+                                                                :   <div></div>
+
+                                                            }
+                                                            { /* 
+                                                            {userPageDisplay == '5'
+                                                                ?   <div class="row"> // loads Likes/Favorites
+                                                                    </div>
+                                                                :   <div></div>
+                                                            }
+                                                        */}
+                                                        </div>
+                                                    }
+                                                </ProfilePreScrollable> 
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="d-xl-none container-fluid"> {/* For smaller Sceens */}
-                                <div class="row d-flex p-1 bd-highlight">
-                                    <div class="col-xs-4 col-sm-4 p-0">
-                                        <SouseUserPageIcon>
-                                            <img className="souseUserPageImage" 
-                                                src={creatorImage}
-                                                alt="sousePostImage"
-                                                width="1080px" 
-                                                height="1080px"/>
-                                        </SouseUserPageIcon>
-                                    </div>
-                                    <div class="col-xs-8 col-sm-8">
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="row">
-                                                        <h5 class="col-12">{creatorUsername}</h5>
-                                                        <h6 class="col-12">{creatorLocation}</h6>
+                                <div class="row d-flex justify-content-center pt-5">
+                                    <SouseDiv className="d-flex justify-content-center my-auto p-0">
+                                        <div className="m-0 p-0 sousePortrait souseLandscape">
+                                            <SouseUserPageIcon>
+                                                <img className="souseUserPageImage mx-auto"
+                                                    src={creatorImage}
+                                                    alt="souseUserIcon"
+                                                    width="85px" 
+                                                    height="85px"/>
+                                            </SouseUserPageIcon> 
+                                            <div class="row userNameRow">
+                                                <UsernameUserPage className="col-12 d-flex justify-content-center">
+                                                    {creatorUsername}
+                                                </UsernameUserPage>
+                                                <UserLocationUserPage className="col-12 d-flex justify-content-center">
+                                                    {creatorLocation}
+                                                </UserLocationUserPage>
+                                            </div>
+                                        </div>
+                                    </SouseDiv>
+                                    <SouseDiv>
+                                        <div className="sousePortrait souseLandscape">
+                                            <ProfilePreScrollable className="d-flex justify-content-center p-0 m-0">
+                                                <div class="container-fluid">
+                                                    <div class="row d-flex justify-content-center">
+                                                        {isAuthenticated 
+                                                            ?   <div>
+                                                                    {creatorId !== loggedInUserId
+                                                                        ?   <div>
+                                                                                {Array.isArray(this.followerFinder()) && this.followerFinder()[0]
+                                                                                    ?   <div>
+                                                                                                {this.followerFinder()[0].followerUserId == loggedInUserId
+                                                                                                    ?   <div>
+                                                                                                            <SouseButton type="submit" className="waves-effect waves-light btn-large" onClick={(e) => {this.onSetDeleteFollow(e); this.onSetDeleteFollower(e)}}><p class="lead buttonFont">Unfollow</p></SouseButton>
+                                                                                                        </div>
+                                                                                                    :   <div></div>
+                                                                                                } 
+                                                                                        </div>
+                                                                                    :   <div>
+                                                                                            <SouseButton type="submit" className="waves-effect waves-light btn-large" onClick={(e) => {this.onSetFollow(e); this.onSetFollower(e)}}><p class="lead buttonFont">Follow</p></SouseButton>
+                                                                                        </div>
+                                                                                }
+                                                                            </div>
+                                                                        :   <Link class="d-block mx-auto" to={
+                                                                                {
+                                                                                    pathname: "/u/edit/" + loggedInUserId,
+                                                                                    state: {
+                                                                                        creatorId: creatorId,
+                                                                                        creatorUsername: creatorUsername,
+                                                                                        creatorFirstName: creatorFirstName,
+                                                                                        creatorLastName: creatorLastName,
+                                                                                        creatorEmail: creatorEmail,
+                                                                                        creatorPassword: creatorPassword,
+                                                                                        creatorSignUpDate: creatorSignUpDate,
+                                                                                        creatorUnixTimestamp: creatorUnixTimestamp,
+                                                                                        creatorImage: creatorImage,
+                                                                                        creatorTheme: creatorTheme,
+                                                                                        creatorTwitter: creatorTwitter,
+                                                                                        creatorFacebook: creatorFacebook,
+                                                                                        creatorInstagram: creatorInstagram,
+                                                                                        creatorLocation: creatorLocation,
+                                                                                        creatorBio: creatorBio
+                                                                                    }
+                                                                                }
+                                                                            }>
+                                                                                <SouseButton type="submit" className="waves-effect waves-light btn-large"><p class="lead buttonFont">Edit Profile</p></SouseButton>
+                                                                            </Link>
+                                                                    }
+                                                                </div>
+                                                            :   <div>
+                                                                </div>
+                                                        }
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-6">
-                                                            {isAuthenticated 
-                                                                ?   <div>
-                                                                        {creatorId !== loggedInUserId
-                                                                            ?   <div>
-                                                                                    {Array.isArray(this.followerFinder()) && this.followerFinder()[0]
-                                                                                        ?   <div>
-                                                                                                    {this.followerFinder()[0].followerUserId == loggedInUserId
-                                                                                                        ?   <div>
-                                                                                                                <SouseButton type="submit" className="waves-effect waves-light btn-large" onClick={(e) => {this.onSetDeleteFollow(e); this.onSetDeleteFollower(e)}}><p class="lead buttonFont">Unfollow</p></SouseButton>
-                                                                                                            </div>
-                                                                                                        :   <div></div>
-                                                                                                    } 
-                                                                                            </div>
-                                                                                        :   <div>
-                                                                                                <SouseButton type="submit" className="waves-effect waves-light btn-large" onClick={(e) => {this.onSetFollow(e); this.onSetFollower(e)}}><p class="lead buttonFont">Follow</p></SouseButton>
-                                                                                            </div>
-                                                                                    }
-                                                                                </div>
-                                                                            :   <Link class="d-block mx-auto" to={
-                                                                                    {
-                                                                                        pathname: "/u/edit/" + loggedInUserId,
-                                                                                        state: {
-                                                                                            creatorId: creatorId,
-                                                                                            creatorUsername: creatorUsername,
-                                                                                            creatorFirstName: creatorFirstName,
-                                                                                            creatorLastName: creatorLastName,
-                                                                                            creatorEmail: creatorEmail,
-                                                                                            creatorPassword: creatorPassword,
-                                                                                            creatorSignUpDate: creatorSignUpDate,
-                                                                                            creatorUnixTimestamp: creatorUnixTimestamp,
-                                                                                            creatorImage: creatorImage,
-                                                                                            creatorTwitter: creatorTwitter,
-                                                                                            creatorFacebook: creatorFacebook,
-                                                                                            creatorInstagram: creatorInstagram,
-                                                                                            creatorLocation: creatorLocation,
-                                                                                            creatorBio: creatorBio
-                                                                                        }
-                                                                                    }
-                                                                                }>
-                                                                                    <SouseButton type="submit" className="waves-effect waves-light btn-large"><p class="lead buttonFont">Edit Profile</p></SouseButton>
-                                                                                </Link>
-                                                                        }
-                                                                    </div>
-                                                                :   <div>
-                                                                    </div>
-                                                            }
-                                                        </div>
-                                                        <div class="userButtonsRow col-6">
-                                                            <div class="float-right">
-                                                                <div class="col-12">
+                                                    <div class="row userButtonsRow">
+                                                        <div class="col-12">
+                                                            <div class="row">
+                                                                <div class="col-4 my-auto d-flex justify-content-center">
+                                                                <UserDataUserPage></UserDataUserPage>
                                                                     {this.state.totalDisplayPosts === postsTotal
-                                                                        ?   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Post</h6>
-                                                                        :   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Posts</h6>
+                                                                        ?   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Post</UserDataUserPage>
+                                                                        :   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Posts</UserDataUserPage>
                                                                     }
                                                                 </div>
-                                                                <div class="col-12">
+                                                                <div class="col-4 my-auto d-flex justify-content-center">
                                                                     {this.state.totalDisplayFollowers === followersTotal
-                                                                        ?   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Follower</h6>
-                                                                        :   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Followers</h6>
-
+                                                                        ?   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Follower</UserDataUserPage>
+                                                                        :   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Followers</UserDataUserPage>
                                                                     }
                                                                 </div>
-                                                                <div class="col-12">
+                                                                <div class="col-4 my-auto d-flex justify-content-center">
                                                                     {this.state.totalDisplayFollows === followsTotal
-                                                                        ?   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follow</h6>
-                                                                        :   <h6 onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follows</h6>  
+                                                                        ?   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follow</UserDataUserPage>
+                                                                        :   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follows</UserDataUserPage> 
                                                                     }
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>  
+                                                    </div> {/* User general info */}
+                                                    <div class="row"> {/* Button and forms */}
+                                                        <div class="col-12"> {/* Middle content row */}
+                                                            <UserPageOptionsUL className="userProfileUserInfoUL col-12 d-flex justify-content-center">
+                                                                {userPageDisplay == '2'
+                                                                    ?   <div>
+                                                                            <UserPageOptionsLI className="userProfileUserInfoLI">
+                                                                                <UserPageOptionsLink className="userProfileUserInfoLink">
+                                                                                    <div class="col-12"> {/* Bio Link */}
+                                                                                        <UserPageOptionsH5Selected className="d-block justify-content-center bioOption selected" onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '2'})}}>Bio</UserPageOptionsH5Selected>
+                                                                                    </div>
+                                                                                </UserPageOptionsLink>
+                                                                            </UserPageOptionsLI>
+                                                                        </div>
+                                                                    :   <div>
+                                                                            <UserPageOptionsLI className="userProfileUserInfoLI">
+                                                                                <UserPageOptionsLink className="userProfileUserInfoLink">
+                                                                                    <div class="col-12"> {/* Bio Link */}
+                                                                                        <UserPageOptionsH5 className="d-block justify-content-center bioOption" onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '2'})}}>Bio</UserPageOptionsH5>
+                                                                                    </div>
+                                                                                </UserPageOptionsLink>
+                                                                            </UserPageOptionsLI>
+                                                                        </div>
+                                                                }
+                                                                    {/* 
+                                                                    {userPageDisplay == '5'}
+                                                                    <UserPageOptionsLI className="userProfileUserInfoLI likesOption">
+                                                                        <UserPageOptionsLink className="userProfileUserInfoLink">
+                                                                            <div class="col-12"> // Likes/Favorites Link
+                                                                                <UserPageOptions className="d-block justify-content-center"></UserPageOptions>
+                                                                            </div>
+                                                                        </UserPageOptionsLink>
+                                                                    </UserPageOptionsLI>
+                                                                    */}
+                                                                {userPageDisplay == '1'
+                                                                    ?   <div>
+                                                                            <UserPageOptionsLI className="userProfileUserInfoLI">
+                                                                                <UserPageOptionsLink className="userProfileUserInfoLink">
+                                                                                    <div class="col-12"> {/* Posts Link */}
+                                                                                        <UserPageOptionsH5Selected className="d-block justify-content-center postsOption selected" onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}>Posts</UserPageOptionsH5Selected>
+                                                                                    </div>
+                                                                                </UserPageOptionsLink>
+                                                                            </UserPageOptionsLI>
+                                                                        </div>
+                                                                    :   <div>
+                                                                            <UserPageOptionsLI className="userProfileUserInfoLI">
+                                                                                <UserPageOptionsLink className="userProfileUserInfoLink">
+                                                                                    <div class="col-12"> {/* Posts Link */}
+                                                                                        <UserPageOptionsH5 className="d-block justify-content-center postsOption" onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}>Posts</UserPageOptionsH5>
+                                                                                    </div>
+                                                                                </UserPageOptionsLink>
+                                                                            </UserPageOptionsLI>
+                                                                        </div>
+                                                                }
+                                                            </UserPageOptionsUL>
+                                                            <div class="col-12 d-flex justify-content-center">
+                                                                <SouseIndex 
+                                                                    userPageCreatorUsername={creatorUsername}
+                                                                    loggedInUsername={loggedInUsername}
+                                                                    souseUserData={souseUserData}/ >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="container-fluid">
+                                                        <div class="row d-flex justify-content-center"> {/* Bottom content row */}
+                                                            {userPageDisplay == '1'
+                                                            ?   <div class="row d-flex justify-content-center"> {/* Loads Posts by default */}
+                                                                    {Object.keys(this.postFinder()).map((object, i) => {
+                                                                        return <div class="col-3 m-0 p-0" obj={object} key={i}>
+                                                                            <div>
+                                                                                <Link to={`/p/${this.postFinder()[i]._id}`}>
+                                                                                    <div class="souseImageFormat d-flex justify-content-center">
+                                                                                        <UserPostIcons className="souseUserPostsUserHomePage" 
+                                                                                            src={this.postFinder()[i].sousePosts.postImageURL}
+                                                                                            alt="souseUserPosts"
+                                                                                            width="250px" 
+                                                                                            height="250px"/>
+                                                                                    </div>
+                                                                                </Link>
+                                                                            </div>
+                                                                        </div>
+                                                                    })}
+                                                                </div>
+                                                            :   <div> 
+                                                                    {userPageDisplay == '2'
+                                                                        ?   <div class="container-fluid">   {/* Loads Bio*/}
+                                                                                <div class="row">
+                                                                                    <div class="col">
+                                                                                        {this.state.creatorTwitter === ""
+                                                                                            ?   <div></div>
+                                                                                            :   <div class="col-12">
+                                                                                                    <div class="row d-block mx-auto">
+                                                                                                        <h5 class="d-flex justify-content-center m-0">
+                                                                                                        <SouseLink href={this.state.creatorTwitterURL} target="_blank">
+                                                                                                            <TwitterIcon /> {this.state.creatorTwitter}</SouseLink>
+                                                                                                        </h5>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                        }
+                                                                                        {this.state.creatorFacebook === ""
+                                                                                            ?   <div></div>
+                                                                                            :   <div class="col-12">
+                                                                                                    <div class="row d-block mx-auto">
+                                                                                                        <h5 class="d-flex justify-content-center m-0">
+                                                                                                        <SouseLink href={this.state.creatorFacebookURL} target="_blank">
+                                                                                                            <FacebookIcon /> {this.state.creatorFacebook}</SouseLink>
+                                                                                                        </h5>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                        }
+                                                                                        {this.state.creatorInstagram === ""
+                                                                                            ?   <div></div>
+                                                                                            :   <div class="col-12">
+                                                                                                    <div class="row d-block mx-auto">
+                                                                                                        <h5 class="d-flex justify-content-center m-0">
+                                                                                                        <SouseLink href={this.state.creatorInstagramURL} target="_blank">
+                                                                                                            <InstagramIcon /> {this.state.creatorInstagram}</SouseLink>
+                                                                                                        </h5>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                        }  
+                                                                                    </div>
+                                                                                    {creatorBio === ""
+                                                                                        ?   <div></div>
+                                                                                        :   <div class="col">
+                                                                                            <UserBio>{creatorBio}</UserBio>
+                                                                                        </div>
+                                                                                    }
+                                                                                </div>
+                                                                            </div>
+                                                                        :   <div></div>
+
+                                                                    }
+                                                                    {userPageDisplay == '3'
+                                                                        ?   <div>   {/* Load Followers */}
+                                                                                {Object.keys(this.followerFinder())
+                                                                                    .map((object, i) => (
+                                                                                        <div class="col-3">
+                                                                                            <Link to={`/${this.followerFinder()[i].followerUsername}`} onClick={() => window.location.refresh()}>
+                                                                                                <div class="container-fluid d-flex justify-content-center">
+                                                                                                    <img class="souseUserIconUserHomePage followIcons"
+                                                                                                        src={this.followerFinder()[i].followerUserImage}
+                                                                                                        alt="souseUserIcon"
+                                                                                                        width="85px"
+                                                                                                        height="85px" />
+                                                                                                </div>
+                                                                                                <div class="row">
+                                                                                                    <h6 class="col-12">{this.followerFinder()[i].followerUsername}</h6>
+                                                                                                </div>
+                                                                                            </Link>
+                                                                                        </div>
+                                                                                    ))}
+                                                                            </div>
+                                                                        :   <div></div>
+
+                                                                    }
+                                                                    {userPageDisplay == '4'
+                                                                        ?   <div class="row">   {/* loads Follows */}
+                                                                                {Object.keys(this.followFinder())
+                                                                                    .map((object, i) => (
+                                                                                        <div class="col-3">
+                                                                                            <Link to={`/${this.followFinder()[i].followUsername}`} onClick={() => window.location.refresh()}>
+                                                                                                <div class="container-fluid d-flex justify-content-center">
+                                                                                                    <img class="souseUserIconUserHomePage followIcons"
+                                                                                                        src={this.followFinder()[i].followUserImage}
+                                                                                                        alt="souseUserIcon"
+                                                                                                        width="85px"
+                                                                                                        height="85px" />
+                                                                                                </div>
+                                                                                                <div class="row">
+                                                                                                    <h6 class="col-12">{this.followFinder()[i].followUsername}</h6>
+                                                                                                </div>
+                                                                                            </Link>
+                                                                                        </div>
+                                                                                    ))}
+                                                                            </div>
+                                                                        :   <div></div>
+
+                                                                    }
+                                                                    { /* 
+                                                                    {userPageDisplay == '5'
+                                                                        ?   <div class="row"> // loads Likes/Favorites
+                                                                            </div>
+                                                                        :   <div></div>
+                                                                    }
+                                                                */}
+                                                                </div>
+                                                        }
+                                                        </div>
+                                                    </div> 
                                                 </div>
-                                            </div>
+                                                </ProfilePreScrollable>
                                         </div>
-                                    </div>
+                                    </SouseDiv>
                                 </div>
                             </div>
                         </div>

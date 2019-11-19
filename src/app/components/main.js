@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import BootstrapProvider from '@bootstrap-styled/provider';
 import { makeTheme } from 'bootstrap-styled/lib/theme';
 import { GlobalStyle } from '../assets/styles/globalStyling';
+import { SouseCenterContainer } from '../assets/styles/mainStyling';
 import { Card, CardBlock } from '@bootstrap-styled/v4';
 import {
     souseDefaultTheme,
@@ -196,7 +197,7 @@ class MainSource extends Component {
                                         <div class="row h-100 m-0 p-0">
                                         <Navbar 
                                             souseUserData={souseUsers} />
-                                            <div class="my-auto mx-auto col-12 p-0">
+                                            <SouseCenterContainer>
                                                 <Switch>
                                                     <Route exact path="/" 
                                                     render={
@@ -236,7 +237,7 @@ class MainSource extends Component {
                                                     <Route exact path="/c/delete/:id" component={CommentDelete}/>
                                                     <Route component={RouteNotFound} />
                                                 </Switch>
-                                            </div>
+                                            </SouseCenterContainer>
                                         </div>
                                     </CardBlock>
                                 </Card>
@@ -248,7 +249,7 @@ class MainSource extends Component {
                                         <div class="row h-100 m-0 p-0">
                                         <Navbar 
                                             souseUserData={souseUsers} />
-                                            <div class="my-auto mx-auto col-12">
+                                            <SouseCenterContainer>
                                                 <Switch>
                                                     <Route exact path="/" 
                                                     render={
@@ -288,7 +289,7 @@ class MainSource extends Component {
                                                     <Route exact path="/c/delete/:id" component={CommentDelete}/>
                                                     <Route component={RouteNotFound} />
                                                 </Switch>
-                                            </div>
+                                            </SouseCenterContainer>
                                         </div>
                                     </CardBlock>
                                 </Card>

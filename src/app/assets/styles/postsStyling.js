@@ -1,7 +1,13 @@
 import styled from 'styled-components';
 import { Close } from 'styled-icons/material/Close';
 import { Edit } from 'styled-icons/feather/Edit';
-import { souseMediaQueries } from './mainStyling';
+import { Pencil } from 'styled-icons/boxicons-regular/Pencil';
+import { Search } from 'styled-icons/material/Search';
+import { KeyboardBackspace } from 'styled-icons/material/KeyboardBackspace';
+import { souseMediaQueries } from './mediaQueries';
+import { SouseCenterContainer } from '../styles/mainStyling';
+
+export const SousePostMain = styled.div ``;
 
 export const CloseIcon = styled(Close) `
     color: ${props => props.theme.secondaryColor};
@@ -15,10 +21,81 @@ export const EditIcon = styled(Edit) `
     width: 1.5em;
 `;
 
+export const PencilIcon = styled(Pencil) `
+    color: ${props => props.theme.secondaryColor};
+    height: 1.1em;
+    width: 1.5em;
+`;
+
+export const SearchIcon = styled(Search) `
+    color: ${props => props.theme.secondaryColor};
+    height: 1.1em;
+    width: 1.5em;
+`;
+
+export const KeyboardBackspaceIcon = styled(KeyboardBackspace) `
+    color: ${props => props.theme.secondaryColor};
+    height: 1.1em;
+    width: 1.5em;
+`;
+
 export const PreScrollable = styled.div `
     max-height: 31.25em; /* 500px */
     overflow-y: auto;
     overflow-x: hidden !important;
+        /* Media Queries */
+    /* ----------------------------------------- */
+    /* Small Mobile Phones */
+    @media ${souseMediaQueries.mobileS.portrait} {
+       
+    }
+    @media ${souseMediaQueries.mobileS.landscape} {
+        
+    } 
+    /* Medium Mobile Phones */
+    @media ${souseMediaQueries.mobileM.portrait} {
+        max-height: 80vw !important;
+    }
+    @media ${souseMediaQueries.mobileM.landscape} {
+        
+    } 
+    /* Large Mobile Phones */
+    @media ${souseMediaQueries.mobileL.portrait} {
+        max-height: 47vw !important;
+    }
+    @media ${souseMediaQueries.mobileL.landscape} {
+        max-height: 30vw !important;
+    } 
+    /* Large Mobile Phones (Max) */
+    @media ${souseMediaQueries.mobileLMax.portrait} {
+        max-height: 80vw !important;
+    }
+    @media ${souseMediaQueries.mobileLMax.landscape} {
+        max-height: 23vw !important;
+    } 
+    /* Tablets */
+    @media ${souseMediaQueries.tablet.portrait} {
+        
+    }
+    @media ${souseMediaQueries.tablet.landscape} {
+        
+    } 
+    /* Laptops and Large Tablets */
+    @media ${souseMediaQueries.laptop.portrait} {
+        
+    }
+    @media ${souseMediaQueries.laptop.landscape} {
+        
+    } 
+    /* Large Laptops */
+    @media ${souseMediaQueries.laptopL.landscape} {
+       
+    } 
+    /* Desktops */
+    @media ${souseMediaQueries.desktop.landscape} {
+        
+    } 
+    /* ----------------------------------------- */
 `;
 
 // Post Image
@@ -53,6 +130,15 @@ export const PostPageImage = styled.img `
         width: 100vw;
     }
     @media ${souseMediaQueries.mobileL.landscape} {
+        height: 34vw;
+        width: 34vw;
+    } 
+    /* Large Mobile Phones (Max) */
+    @media ${souseMediaQueries.mobileLMax.portrait} {
+        height: 100vw;
+        width: 100vw;
+    }
+    @media ${souseMediaQueries.mobileLMax.landscape} {
         height: 34vw;
         width: 34vw;
     } 
@@ -92,6 +178,8 @@ export const PostPageImage = styled.img `
 /* ---------------------------------------------------- */
 export const PostPageIcon = styled.img `
     border-radius: 50%;
+    border: 0.25em solid ${props => props.theme.secondaryColor};
+    position: relative;
     width: 3vw;
     height: 3vw;
     overflow: hidden;
@@ -134,6 +222,21 @@ export const PostPageIcon = styled.img `
         }
     }
     @media ${souseMediaQueries.mobileL.landscape} {
+        height: 8vw;
+        width: 8vw;
+        ${PreScrollable} {
+            max-height: 9.375em;
+        }
+    } 
+    /* Large Mobile Phones (Max) */
+    @media ${souseMediaQueries.mobileLMax.portrait} {
+        height: 16vw;
+        width: 16vw;
+        ${PreScrollable} {
+            max-height: 14.0625em;
+        }
+    }
+    @media ${souseMediaQueries.mobileLMax.landscape} {
         height: 8vw;
         width: 8vw;
         ${PreScrollable} {
@@ -198,7 +301,7 @@ export const PostLocation = styled.h6 `
 `;
 
 export const SouseDiv = styled.div `
- /* Media Queries */
+    /* Media Queries */
     /* ----------------------------------------- */
     /* Small Mobile Phones */
     @media ${souseMediaQueries.mobileS.portrait} {
@@ -221,6 +324,13 @@ export const SouseDiv = styled.div `
     @media ${souseMediaQueries.mobileL.landscape} {
         width: 50%;
     } 
+    /* Large Mobile Phones (Max) */
+    @media ${souseMediaQueries.mobileLMax.portrait} {
+        width: 100%;
+    }
+    @media ${souseMediaQueries.mobileLMax.landscape} {
+        width: 50%;
+    }
     /* Tablets */
     @media ${souseMediaQueries.tablet.portrait} {
         width: 100%;
@@ -252,36 +362,45 @@ export const CaptionPreScrollable = styled.div `
     /* Media Queries */
     /* ----------------------------------------- */
     /* Small Mobile Phones */
-    @media ${souseMediaQueries.mobileS.portrait} {
-        
-    }
     @media ${souseMediaQueries.mobileS.landscape} {
         max-height: 12vw;
     } 
     /* Medium Mobile Phones */
     @media ${souseMediaQueries.mobileM.portrait} {
-    
+        max-height: 16vw;
+        width: 100%;
     }
     @media ${souseMediaQueries.mobileM.landscape} {
-            max-height: 11vw;
+        max-height: 11vw;
 
     } 
     /* Large Mobile Phones */
     @media ${souseMediaQueries.mobileL.portrait} {
-            max-height: 51vw;
-            width: 100%;
+        max-height: 51vw;
+        width: 100%;
     }
     @media ${souseMediaQueries.mobileL.landscape} {
-            max-height: 12vw;
+        max-height: 12vw !important;
+    } 
+    /* Large Mobile Phones (Max) */
+    @media ${souseMediaQueries.mobileLMax.portrait} {
+        max-height: 51vw;
+        width: 100%;
+    }
+    @media ${souseMediaQueries.mobileLMax.landscape} {
+        max-height: 12vw;
     } 
     /* Tablets */
     @media ${souseMediaQueries.tablet.portrait} {
-        
-
+        max-height: 6vw;
     }
     @media ${souseMediaQueries.tablet.landscape} {
-            max-height: 12vw;
+        max-height: 12vw;
     } 
+    /* Laptops and Large Tablets */
+    @media ${souseMediaQueries.laptop.portrait} {
+        max-height: 8vw;
+    }
 `;
 
 export const CaptionPreScrollableLoggedIn = styled.div `
@@ -291,48 +410,43 @@ export const CaptionPreScrollableLoggedIn = styled.div `
     /* Media Queries */
     /* ----------------------------------------- */
     /* Small Mobile Phones */
-    @media ${souseMediaQueries.mobileS.portrait} {
-        
-    }
     @media ${souseMediaQueries.mobileS.landscape} {
-        max-height: 6.875em;
+        max-height: 12vw;
     } 
     /* Medium Mobile Phones */
     @media ${souseMediaQueries.mobileM.portrait} {
-    
+        max-height: 16vw;
+        width: 100%;
     }
     @media ${souseMediaQueries.mobileM.landscape} {
-            max-height: 8.375em;
+        max-height: 11vw;
+
     } 
     /* Large Mobile Phones */
     @media ${souseMediaQueries.mobileL.portrait} {
-            max-height: 3em;
-            width: 100%;
+        max-height: 51vw;
+        width: 100%;
     }
     @media ${souseMediaQueries.mobileL.landscape} {
-            max-height: 3.5em
+        max-height: 12vw !important;
+    } 
+    /* Large Mobile Phones (Max) */
+    @media ${souseMediaQueries.mobileLMax.portrait} {
+        max-height: 51vw;
+        width: 100%;
+    }
+    @media ${souseMediaQueries.mobileLMax.landscape} {
+        max-height: 12vw;
     } 
     /* Tablets */
     @media ${souseMediaQueries.tablet.portrait} {
-        
-
+        max-height: 6vw;
     }
     @media ${souseMediaQueries.tablet.landscape} {
-        
+        max-height: 12vw;
     } 
     /* Laptops and Large Tablets */
     @media ${souseMediaQueries.laptop.portrait} {
-        
+        max-height: 8vw;
     }
-    @media ${souseMediaQueries.laptop.landscape} {
-        
-    } 
-    /* Large Laptops */
-    @media ${souseMediaQueries.laptopL.landscape} {
-        
-    } 
-    /* Desktops */
-    @media ${souseMediaQueries.desktop.landscape} {
-        
-    } 
 `;

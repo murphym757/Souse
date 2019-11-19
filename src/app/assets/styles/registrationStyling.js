@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { souseMediaQueries } from './mainStyling';
+import { souseMediaQueries } from './mediaQueries';
 
 export const IphoneContainer = styled.div `
         /* my-auto */
@@ -35,6 +35,13 @@ export const IphoneContainer = styled.div `
         padding-top: 14vw;
     }
     @media ${souseMediaQueries.mobileL.landscape} {
+        height: 30vw;
+    } 
+    /* Large Mobile Phones (Max) */
+    @media ${souseMediaQueries.mobileLMax.portrait} {
+        padding-top: 14vw;
+    }
+    @media ${souseMediaQueries.mobileLMax.landscape} {
         height: 30vw;
     } 
     /* Tablets */
@@ -91,6 +98,13 @@ export const IphoneOuterImage = styled.img `
     }
     @media ${souseMediaQueries.mobileL.landscape} {
         height: 30vw;
+    }
+     /* Large Mobile Phones (Max) */
+    @media ${souseMediaQueries.mobileLMax.portrait} {
+        height: 60vw;
+    }
+    @media ${souseMediaQueries.mobileLMax.landscape} {
+        height: 30vw;
     } 
     /* Tablets */
     @media ${souseMediaQueries.tablet.portrait} {
@@ -136,6 +150,13 @@ export const FormContainer = styled.div `
     @media ${souseMediaQueries.mobileL.landscape} {
         height: 30vw;
     } 
+    /* Large Mobile Phones (Max) */
+    @media ${souseMediaQueries.mobileLMax.portrait} {
+        height: 90vw;
+    }
+    @media ${souseMediaQueries.mobileLMax.landscape} {
+        height: 30vw;
+    } 
     /* Tablets */
     @media ${souseMediaQueries.tablet.portrait} {
         margin-top: auto !important;
@@ -168,7 +189,8 @@ export const FormContainer = styled.div `
     /* Large Mobile Phones */
     @media ${souseMediaQueries.mobileS.portrait},
         ${souseMediaQueries.mobileM.portrait},
-        ${souseMediaQueries.mobileL.portrait}
+        ${souseMediaQueries.mobileL.portrait},
+        ${souseMediaQueries.mobileLMax.portrait},
         ${souseMediaQueries.tablet.portrait} {
         padding: 0px !important;
         margin-right: 0px !important;
@@ -180,6 +202,7 @@ export const FormContainer = styled.div `
         margin-left: 0px !important;
     }
     @media ${souseMediaQueries.mobileL.landscape},
+            ${souseMediaQueries.mobileLMax.landscape},
             ${souseMediaQueries.mobileS.landscape} {
         margin-top: auto !important;
         margin-bottom: auto !important;
@@ -190,7 +213,8 @@ export const SouseColumn = styled.div `
     /* Col-12 */
     @media ${souseMediaQueries.mobileS.portrait},
         ${souseMediaQueries.mobileM.portrait},
-        ${souseMediaQueries.mobileL.portrait}
+        ${souseMediaQueries.mobileL.portrait},
+        ${souseMediaQueries.mobileLMax.portrait},
         ${souseMediaQueries.tablet.portrait},
         ${souseMediaQueries.laptop.portrait} {
             -ms-flex: 0 0 100%;
@@ -200,7 +224,8 @@ export const SouseColumn = styled.div `
     /* Col-4 */
     @media ${souseMediaQueries.mobileS.landscape},
         ${souseMediaQueries.mobileM.landscape},
-        ${souseMediaQueries.mobileL.landscape}
+        ${souseMediaQueries.mobileL.landscape},
+        ${souseMediaQueries.mobileLMax.landscape},
         ${souseMediaQueries.tablet.landscape},
         ${souseMediaQueries.laptop.landscape},
         ${souseMediaQueries.laptopL.landscape},

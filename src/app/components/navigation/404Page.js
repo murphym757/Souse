@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import {
+  ErrorFont
+} from '../../assets/styles/404Styling';
 
 export default class RouteNotFound extends Component {
     render() {
@@ -9,7 +12,8 @@ export default class RouteNotFound extends Component {
       );
         return (
             <div class="container">
-                <h2>404</h2>
+                <ErrorFont class="d-flex justify-content-center">404</ErrorFont>
+                {Page404}
             </div>
           );
       }

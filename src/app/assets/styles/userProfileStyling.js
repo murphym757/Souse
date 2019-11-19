@@ -6,7 +6,7 @@ import { InvertColors } from 'styled-icons/material/InvertColors';
 import { Sun } from 'styled-icons/fa-regular/Sun';
 import { Moon } from 'styled-icons/fa-regular/Moon';
 import styled from 'styled-components';
-import { souseMediaQueries } from './mainStyling';
+import { souseMediaQueries } from './mediaQueries';
 
 // Username and General Info
 /* ---------------------------------------------------- */
@@ -43,40 +43,53 @@ export const SouseUserPageIcon = styled.div `
     /* Small Mobile Phones */
     @media ${souseMediaQueries.mobileS.portrait} {
         .souseUserPageImage {
-            height: 100vw;
-            width: 100vw;
+            height: 42vw;
+            width: 42vw;
         }
     }
     @media ${souseMediaQueries.mobileS.landscape} {
         .souseUserPageImage {
-            height: 36vw;
-            width: 36vw;
+            height: 15vw;
+            width: 15vw;
         }
     } 
     /* Medium Mobile Phones */
     @media ${souseMediaQueries.mobileM.portrait} {
         .souseUserPageImage {
-            height: 100vw;
-            width: 100vw;
+            height: 42vw;
+            width: 42vw;
         }
     }
     @media ${souseMediaQueries.mobileM.landscape} {
         .souseUserPageImage {
-            height: 36vw;
-            width: 36vw;
+            height: 15vw;
+            width: 15vw;
         }
     } 
     /* Large Mobile Phones */
     @media ${souseMediaQueries.mobileL.portrait} {
         .souseUserPageImage {
-            height: 100vw;
-            width: 100vw;
+            height: 42vw;
+            width: 42vw;
         }
     }
     @media ${souseMediaQueries.mobileL.landscape} {
         .souseUserPageImage {
-            height: 47vw;
-            width: 47vw;
+            height: 20vw !important; 
+            width: 20vw !important;
+        }
+    }
+     /* Large Mobile Phones (Max) */
+    @media ${souseMediaQueries.mobileLMax.portrait} {
+        .souseUserPageImage {
+            height: 42vw;
+            width: 42vw;
+        }
+    }
+    @media ${souseMediaQueries.mobileLMax.landscape} {
+        .souseUserPageImage {
+            height: 20vw !important; 
+            width: 20vw !important;
         }
     } 
     /* Tablets */
@@ -137,7 +150,8 @@ export const SouseUserPageIconLanding = styled.div `
     }
     @media ${souseMediaQueries.mobileS.portrait},
         ${souseMediaQueries.mobileM.portrait},
-        ${souseMediaQueries.mobileL.portrait}
+        ${souseMediaQueries.mobileL.portrait},
+        ${souseMediaQueries.mobileLMax.portrait},
         ${souseMediaQueries.tablet.portrait},
         ${souseMediaQueries.laptop.portrait} {
             height: 50vw;
@@ -149,7 +163,8 @@ export const SouseUserPageIconLanding = styled.div `
     }
     @media ${souseMediaQueries.mobileS.landscape},
         ${souseMediaQueries.mobileM.landscape},
-        ${souseMediaQueries.mobileL.landscape}
+        ${souseMediaQueries.mobileL.landscape},
+        ${souseMediaQueries.mobileLMax.landscape},
         ${souseMediaQueries.tablet.landscape},
         ${souseMediaQueries.laptop.landscape},
         ${souseMediaQueries.laptopL.landscape},
@@ -170,7 +185,8 @@ export const SouseColumnLanding = styled.div `
     /* Col-12 */
     @media ${souseMediaQueries.mobileS.portrait},
         ${souseMediaQueries.mobileM.portrait},
-        ${souseMediaQueries.mobileL.portrait}
+        ${souseMediaQueries.mobileL.portrait},
+        ${souseMediaQueries.mobileLMax.portrait}
         ${souseMediaQueries.tablet.portrait},
         ${souseMediaQueries.laptop.portrait} {
             -ms-flex: 0 0 100%;
@@ -184,7 +200,8 @@ export const SouseColumnLanding = styled.div `
     /* Col-6 */
     @media ${souseMediaQueries.mobileS.landscape},
         ${souseMediaQueries.mobileM.landscape},
-        ${souseMediaQueries.mobileL.landscape}
+        ${souseMediaQueries.mobileL.landscape},
+        ${souseMediaQueries.mobileLMax.landscape},
         ${souseMediaQueries.tablet.landscape},
         ${souseMediaQueries.laptop.landscape},
         ${souseMediaQueries.laptopL.landscape},
@@ -205,6 +222,7 @@ export const SouseColumnLanding = styled.div `
             }
     }
     @media ${souseMediaQueries.mobileL.landscape},
+        ${souseMediaQueries.mobileLMax.landscape},
         ${souseMediaQueries.mobileM.landscape},
         ${souseMediaQueries.tablet.landscape}{
         h5 {
@@ -212,6 +230,7 @@ export const SouseColumnLanding = styled.div `
         }
     }
     @media ${souseMediaQueries.mobileL.portrait},
+        ${souseMediaQueries.mobileLMax.portrait},
         ${souseMediaQueries.mobileM.portrait} {
          h5 {
             font-size: 1rem;
@@ -262,6 +281,7 @@ export const UserPostIcons = styled.img `
         object-fit: cover;
         width: 14vw;
         height: 14vw;
+        border: 0.25em solid ${props => props.theme.primaryColor};
     &:hover {
         border: 0.25em solid ${props => props.theme.secondaryColor};
     }
@@ -269,39 +289,54 @@ export const UserPostIcons = styled.img `
     /* ----------------------------------------- */
     /* Small Mobile Phones */
     @media ${souseMediaQueries.mobileS.portrait} {
-        height: 100vw;
-        width: 100vw;
+        height: 25vw;
+        width: 25vw;
     }
     @media ${souseMediaQueries.mobileS.landscape} {
-        height: 36vw;
-        width: 36vw;
+        height: 9vw;
+        width: 9vw;
     } 
     /* Medium Mobile Phones */
     @media ${souseMediaQueries.mobileM.portrait} {
-        height: 100vw;
-        width: 100vw;
+        height: 25vw;
+        width: 25vw;
     }
     @media ${souseMediaQueries.mobileM.landscape} {
-        height: 36vw;
-        width: 36vw;
+        height: 9vw;
+        width: 9vw;
     } 
     /* Large Mobile Phones */
     @media ${souseMediaQueries.mobileL.portrait} {
-        height: 100vw;
-        width: 100vw;
+        height: 25vw;
+        width: 25vw;
+        border: 0.05em solid ${props => props.theme.primaryColor};
     }
     @media ${souseMediaQueries.mobileL.landscape} {
-        height: 47vw;
-        width: 47vw;
+        height: 12vw !important;
+        width: 12vw !important;
+        padding-bottom: 0.25rem !important;
+        border: 0em solid ${props => props.theme.primaryColor};
+    } 
+    /* Large Mobile Phones (Max) */
+    @media ${souseMediaQueries.mobileLMax.portrait} {
+        height: 25vw;
+        width: 25vw;
+        border: 0.05em solid ${props => props.theme.primaryColor};
+    }
+    @media ${souseMediaQueries.mobileLMax.landscape} {
+        height: 12vw !important;
+        width: 12vw !important;
+        padding-bottom: 0.25rem !important;
+        border: 0em solid ${props => props.theme.primaryColor};
     } 
     /* Tablets */
     @media ${souseMediaQueries.tablet.portrait} {
-        height: 40vw;
-        width: 40vw;
+        height: 25vw;
+        width: 25vw;
     }
     @media ${souseMediaQueries.tablet.landscape} {
-        height: 40vw;
-        width: 40vw;
+        height: 12vw;
+        width: 12vw;
     } 
     /* Laptops and Large Tablets */
     @media ${souseMediaQueries.laptop.portrait} {
@@ -311,13 +346,13 @@ export const UserPostIcons = styled.img `
         }
     }
     @media ${souseMediaQueries.laptop.landscape} {
-        height: 15vw;
-        width: 15vw;
+        height: 19vw;
+        width: 19vw;
     } 
     /* Large Laptops */
     @media ${souseMediaQueries.laptopL.landscape} {
-        height: 12vw;
-        width: 12vw;
+        height: 17vw;
+        width: 17vw;
     } 
     /* Desktops */
     @media ${souseMediaQueries.desktop.landscape} {
@@ -389,18 +424,39 @@ export const UserPageOptionsLink = styled.a `
 export const SouseSearchUserIcon = styled.div `
     .souseUserSearchImage {
         border-radius: 50%;
+        border: 0.25em solid ${props => props.theme.secondaryColor};
+        position: relative;
         height: 4vw;
         width: 4vw;
         overflow: hidden;
         display: flex;
         justify-content: center;
         align-items: center;
+        /* Media Queries */
+        /* ----------------------------------------- */
+        /* Small Mobile Phones */
+        @media ${souseMediaQueries.mobileS.portrait},
+            ${souseMediaQueries.mobileM.portrait},
+            ${souseMediaQueries.mobileL.portrait},
+            ${souseMediaQueries.mobileLMax.portrait} {
+                height: 16vw;
+                width: 16vw;
+        }
+        @media ${souseMediaQueries.mobileS.landscape},
+            ${souseMediaQueries.mobileM.landscape},
+            ${souseMediaQueries.mobileL.landscape},
+            ${souseMediaQueries.mobileLMax.landscape},
+            ${souseMediaQueries.tablet.landscape},
+            ${souseMediaQueries.tablet.portrait} {
+                width: 12vw;
+                height: 12vw;
+        }    
     }
 
     .userHomeSearchImageBorder {
         padding: 0rem;
         border: 0.1rem solid ${props => props.theme.secondaryColor};
-    }            
+    }       
 `;
 /* ---------------------------------------------------- */
 
@@ -529,6 +585,19 @@ export const SouseStyleSelectorIcon = styled.div `
             width: 20vw;
         }
     } 
+     /* Large Mobile Phones (Max) */
+    @media ${souseMediaQueries.mobileLMax.portrait} {
+        .souseStyleImage {
+            height: 20vw;
+            width: 20vw;
+        }
+    }
+    @media ${souseMediaQueries.mobileLMax.landscape} {
+        .souseStyleImage {
+            height: 20vw;
+            width: 20vw;
+        }
+    } 
     /* Tablets */
     @media ${souseMediaQueries.tablet.portrait} {
         .souseStyleImage {
@@ -571,6 +640,61 @@ export const SouseStyleSelectorIcon = styled.div `
     } 
 `
 /* ----------------------------------------- */
+
+export const ProfilePreScrollable = styled.div `
+    max-height: 31.25em; /* 500px */
+    overflow-y: auto;
+    overflow-x: hidden !important;
+    /* Media Queries */
+    /* ----------------------------------------- */
+    /* Small Mobile Phones */
+    @media ${souseMediaQueries.mobileS.portrait} {
+        max-height: 70vw;
+    }
+    @media ${souseMediaQueries.mobileS.landscape} {
+        max-height: 11vw;
+    } 
+    /* Medium Mobile Phones */
+    @media ${souseMediaQueries.mobileM.portrait} {
+        max-height: 83vw;    
+    }
+    @media ${souseMediaQueries.mobileM.landscape} {
+        max-height: 11vw;
+    } 
+    /* Large Mobile Phones */
+    @media ${souseMediaQueries.mobileL.portrait} {
+        max-height: 108vw;
+        width: 100%;
+    }
+    @media ${souseMediaQueries.mobileL.landscape} {
+        max-height: 32vw !important;
+    } 
+    /* Large Mobile Phones (Max) */
+    @media ${souseMediaQueries.mobileLMax.portrait} {
+        max-height: 108vw;
+        width: 100%;
+    }
+    @media ${souseMediaQueries.mobileLMax.landscape} {
+        max-height: 32vw !important;
+    } 
+    /* Tablets */
+    @media ${souseMediaQueries.tablet.portrait},
+     ${souseMediaQueries.tablet.landscape},
+     ${souseMediaQueries.laptop.portrait} {
+        max-height: 64vw;
+    }
+     @media ${souseMediaQueries.laptop.landscape} {
+        max-height: 15vw;
+    } 
+    /* Large Laptops */
+    @media ${souseMediaQueries.laptopL.landscape} {
+        max-height: 20vw;
+    } 
+    /* Desktops */
+    @media ${souseMediaQueries.desktop.landscape} {
+        max-height: 17vw;
+    } 
+`;
 
 // Theme Selector Chips
 /* ---------------------------------------------------- */

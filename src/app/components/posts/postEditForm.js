@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect, withRouter } fr
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import RouteNotFound from '../navigation/404Page';
 import styled from 'styled-components';
 import {
     SouseButton,
@@ -190,9 +191,9 @@ class PostEdit extends Component {
             <div>
                 {isAuthenticated && postCreatorId == loggedInUser
                     ? <div class="container-fluid">
-                            <SouseForm onSubmit={this.onSubmit}>
+                            <SouseForm className="pt-5" onSubmit={this.onSubmit}>
                                 <div class="row container mx-auto pt-5">
-                                    <div class="col-sm-6">
+                                    <div class="col-lg-6 pt-5">
                                         <div class="input-field pb-5">
                                             <textarea 
                                                 class="materialize-textarea editText"
@@ -216,8 +217,8 @@ class PostEdit extends Component {
                                             <label class="active" for="souseLocationPost">Location</label>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <div class="row justify-content-end">
+                                    <div class="col-lg-6 pt-5">
+                                        <div class="row justify-content-center h-100">
                                         {this.state.deleteButtonClicked == false
                                             ?   <div 
                                                     data-toggle="collapse" 
@@ -226,7 +227,7 @@ class PostEdit extends Component {
                                                     aria-expanded="false" 
                                                     aria-controls="postDeleteCollapse"
                                                     onClick={this.optionClicked = (e) => {this.setState({deleteButtonClicked: true})}}
-                                                    class="form-group col-6 d-flex justify-content-end pt-3">
+                                                    class="form-group col-6 d-flex justify-content-center mx-auto my-auto">
                                                         <DeleteIcon />
                                                 </div>
                                             :   <div 
@@ -236,12 +237,14 @@ class PostEdit extends Component {
                                                     aria-expanded="false" 
                                                     aria-controls="postDeleteCollapse"
                                                     onClick={this.optionClicked = (e) => {this.setState({deleteButtonClicked: false})}}
-                                                    class="form-group col-6 d-flex justify-content-end pt-3">
+                                                    class="form-group col-6 d-flex justify-content-center mx-auto my-auto">
                                                         <DeleteIcon />
                                                 </div>
                                         }
                                         </div>
-                                        <div class="row justify-content-center">
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
                                             <div class="form-group col d-flex justify-content-center">
                                             {this.state.deleteButtonClicked == false
                                                 ?   <div class="row justify-content-center col-12">
@@ -289,11 +292,9 @@ class PostEdit extends Component {
                                             }
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
                             </SouseForm>
                     </div>
-                    : <div></div>
+                    : <RouteNotFound />
                 }
             </div>
             

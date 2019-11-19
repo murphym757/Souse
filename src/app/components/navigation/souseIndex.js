@@ -10,6 +10,11 @@ import {
     SouseForm
 } from '../../assets/styles/mainStyling';
 
+import {
+    PencilIcon,
+    SearchIcon
+} from '../../assets/styles/postsStyling';
+
 import M from 'materialize-css';
 class SouseIndex extends Component {
     constructor(props) {
@@ -103,7 +108,7 @@ class SouseIndex extends Component {
         const switchHandleColor = this.state.switchHandleColor;
         
         return (
-            <div>
+            <div class="col-12 m-0 p-0">
                 <div class="collapse" id="postCreateCollapse">
                     <div class="postCreateCollapse">
                         <div class="container">
@@ -123,7 +128,7 @@ class SouseIndex extends Component {
                                                     </div>
                                                     <div class="col-2">
                                                         <label>
-                                                                Off
+                                                                <h6 class="d-flex justify-content-start"><PencilIcon/></h6>
                                                             <Switch
                                                                 checked={this.state.checked}
                                                                 onChange={this.handleThemeChange}
@@ -139,12 +144,12 @@ class SouseIndex extends Component {
                                                                 className="react-switch"
                                                                 id="material-switch"
                                                             />
-                                                                On
+                                                                <h6 class="d-flex justify-content-end"><SearchIcon/></h6>
                                                         </label>
                                                     </div>
                                                 </div>
                                             :   <div class="row">
-                                                    <div class="col-12">
+                                                    <div class="col-12 m-0 p-0">
                                                         <SouseSearch 
                                                             souseSearchedUsers={this.state.filteredUsers} 
                                                             match={this.props.match} 
@@ -154,7 +159,7 @@ class SouseIndex extends Component {
                                         } 
                                     </div>      
                                 :   <div class="row">
-                                        <div class="col-12">
+                                        <div class="col-12 m-0 p-0">
                                                 <SouseSearch 
                                                     souseSearchedUsers={this.state.filteredUsers} 
                                                     match={this.props.match} 

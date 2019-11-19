@@ -15,6 +15,8 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _reactRedux = require("react-redux");
 
+var _Page = _interopRequireDefault(require("../navigation/404Page"));
+
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
 var _mainStyling = require("../../assets/styles/mainStyling");
@@ -248,11 +250,12 @@ function (_Component) {
       return _react["default"].createElement("div", null, isAuthenticated && postCreatorId == loggedInUser ? _react["default"].createElement("div", {
         "class": "container-fluid"
       }, _react["default"].createElement(_mainStyling.SouseForm, {
+        className: "pt-5",
         onSubmit: this.onSubmit
       }, _react["default"].createElement("div", {
         "class": "row container mx-auto pt-5"
       }, _react["default"].createElement("div", {
-        "class": "col-sm-6"
+        "class": "col-lg-6 pt-5"
       }, _react["default"].createElement("div", {
         "class": "input-field pb-5"
       }, _react["default"].createElement("textarea", {
@@ -279,9 +282,9 @@ function (_Component) {
         "class": "active",
         "for": "souseLocationPost"
       }, "Location"))), _react["default"].createElement("div", {
-        "class": "col-sm-6"
+        "class": "col-lg-6 pt-5"
       }, _react["default"].createElement("div", {
-        "class": "row justify-content-end"
+        "class": "row justify-content-center h-100"
       }, this.state.deleteButtonClicked == false ? _react["default"].createElement("div", {
         "data-toggle": "collapse",
         href: "#postDeleteCollapse",
@@ -293,7 +296,7 @@ function (_Component) {
             deleteButtonClicked: true
           });
         },
-        "class": "form-group col-6 d-flex justify-content-end pt-3"
+        "class": "form-group col-6 d-flex justify-content-center mx-auto my-auto"
       }, _react["default"].createElement(_userProfileStyling.DeleteIcon, null)) : _react["default"].createElement("div", {
         "data-toggle": "collapse",
         href: "#postDeleteCollapse",
@@ -305,8 +308,8 @@ function (_Component) {
             deleteButtonClicked: false
           });
         },
-        "class": "form-group col-6 d-flex justify-content-end pt-3"
-      }, _react["default"].createElement(_userProfileStyling.DeleteIcon, null))), _react["default"].createElement("div", {
+        "class": "form-group col-6 d-flex justify-content-center mx-auto my-auto"
+      }, _react["default"].createElement(_userProfileStyling.DeleteIcon, null))))), _react["default"].createElement("div", {
         "class": "row justify-content-center"
       }, _react["default"].createElement("div", {
         "class": "form-group col d-flex justify-content-center"
@@ -358,7 +361,7 @@ function (_Component) {
         className: "waves-effect waves-light btn-large"
       }, _react["default"].createElement("p", {
         "class": "lead buttonFont"
-      }, "Delete")))))))) : _react["default"].createElement("div", null));
+      }, "Delete")))))) : _react["default"].createElement(_Page["default"], null));
     }
   }]);
 
