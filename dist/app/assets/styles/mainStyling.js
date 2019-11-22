@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.SouseForm = exports.SouseButton = exports.ConnectionOptionsLink = exports.CreateIconLink = exports.LinkFontH6 = exports.SouseLink = exports.CreateIcon = exports.SouseLoadingIcon3 = exports.SouseLoadingIcon2 = exports.SouseLoadingIcon = exports.SouseStyledLink = exports.SouseCenterContainer = void 0;
+exports.SouseForm = exports.SouseButton = exports.ErrorFont = exports.ConnectionOptionsLink = exports.CreateIconLink = exports.LinkFontH6 = exports.SouseLink = exports.CreateIcon = exports.SouseLoadingIcon3 = exports.SouseLoadingIcon2 = exports.SouseLoadingIcon = exports.SouseStyledLink = exports.SouseCenterContainer = void 0;
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
@@ -119,16 +119,25 @@ var ConnectionOptionsLink = _styledComponents["default"].h6.withConfig({
   return props.theme.secondaryColor;
 }, function (props) {
   return props.theme.secondaryColor;
+});
+
+exports.ConnectionOptionsLink = ConnectionOptionsLink;
+
+var ErrorFont = _styledComponents["default"].h6.withConfig({
+  displayName: "mainStyling__ErrorFont",
+  componentId: "sc-1816ehk-10"
+})(["color:", ";"], function (props) {
+  return props.theme.white;
 }); //Souse Button
 
 /* ---------------------------------------------------- */
 
 
-exports.ConnectionOptionsLink = ConnectionOptionsLink;
+exports.ErrorFont = ErrorFont;
 
 var SouseButton = _styledComponents["default"].button.withConfig({
   displayName: "mainStyling__SouseButton",
-  componentId: "sc-1816ehk-10"
+  componentId: "sc-1816ehk-11"
 })(["background-color:", " !important;&:hover{background-color:", " !important;}.buttonFont{text-transform:uppercase;font-size:0.696em;color:", " !important;}"], function (props) {
   return props.theme.secondaryColor;
 }, function (props) {
@@ -146,13 +155,17 @@ exports.SouseButton = SouseButton;
 
 var SouseForm = _styledComponents["default"].form.withConfig({
   displayName: "mainStyling__SouseForm",
-  componentId: "sc-1816ehk-11"
-})([".input-field input:focus+label{color:", " !important;}.form-control{color:", " !important;}.materialize-textarea{background-color:", " !important;}.row .input-field input:focus{border-bottom:1px solid ", " !important;box-shadow:0 1px 0 0 ", " !important;color:", " !important;}input:not([type]),input[type=text]:not(.browser-default),input[type=password]:not(.browser-default),input[type=email]:not(.browser-default),input[type=url]:not(.browser-default),input[type=time]:not(.browser-default),input[type=date]:not(.browser-default),input[type=datetime]:not(.browser-default),input[type=datetime-local]:not(.browser-default),input[type=tel]:not(.browser-default),input[type=number]:not(.browser-default),input[type=search]:not(.browser-default),textarea.materialize-textarea{&:focus:not([readonly]){border-bottom:1px solid ", ";box-shadow:0 1px 0 0 ", ";color:", ";}&:focus:not([readonly])+label{color:", ";}}input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus,input:-webkit-autofill:active{-webkit-animation:autofill 0s forwards;animation:autofill 0s forwards;}@keyframes autofill{100%{background:transparent;color:inherit;}}@-webkit-keyframes autofill{100%{background:transparent;color:inherit;}}"], function (props) {
+  componentId: "sc-1816ehk-12"
+})([".input-field>label{color:", " !important;}.input-field input:focus+label{color:", " !important;}.form-control{color:", " !important;}.materialize-textarea{background-color:", " !important;}.row .input-field input:focus{border-bottom:1px solid ", " !important;box-shadow:0 1px 0 0 ", " !important;color:", " !important;}input:not([type]),input[type=text]:not(.browser-default),input[type=password]:not(.browser-default),input[type=email]:not(.browser-default),input[type=url]:not(.browser-default),input[type=time]:not(.browser-default),input[type=date]:not(.browser-default),input[type=datetime]:not(.browser-default),input[type=datetime-local]:not(.browser-default),input[type=tel]:not(.browser-default),input[type=number]:not(.browser-default),input[type=search]:not(.browser-default),textarea.materialize-textarea{border-bottom:1px solid ", ";&:focus:not([readonly]){border-bottom:1px solid ", ";box-shadow:0 1px 0 0 ", ";color:", ";}&:focus:not([readonly])+label{color:", ";}}input:-webkit-autofill,input:-webkit-autofill:hover,input:-webkit-autofill:focus,input:-webkit-autofill:active{-webkit-animation:autofill 0s forwards;animation:autofill 0s forwards;}@keyframes autofill{100%{background:transparent;color:inherit;}}@-webkit-keyframes autofill{100%{background:transparent;color:inherit;}}"], function (props) {
+  return props.theme.secondaryColor;
+}, function (props) {
   return props.theme.secondaryColor;
 }, function (props) {
   return props.theme.secondaryColor;
 }, function (props) {
   return props.theme.primaryColor;
+}, function (props) {
+  return props.theme.secondaryColor;
 }, function (props) {
   return props.theme.secondaryColor;
 }, function (props) {

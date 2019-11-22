@@ -29,12 +29,12 @@ const whiteVice = 'rgb(255, 255, 255)';
 const blackVice = 'rgb(0, 0, 0)';
 
 // Souse Vaporwave Color Scheme
-const primaryVapeColorAlt = 'rgb(167, 209, 197)';
+const primaryVapeColorAlt = 'rgb(155, 204, 190)';
 const secondaryVapeColor = 'rgb(100, 195, 167)';
 const secondaryVapeColorDark = 'rgb(55, 105, 90)';
 const primaryVapeColor = 'rgb(255, 181, 198)';
 const whiteVape = 'rgb(255, 255, 255)';
-const greyVape = 'rgb(226, 226, 226)';
+const greyVape = 'rgb(255, 236, 236)';
 
 export const souseDefaultTheme = {
     primaryColorAlt: primaryColorAlt,

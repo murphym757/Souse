@@ -31,12 +31,12 @@ var primaryViceColor = 'rgb(255, 255, 255)';
 var whiteVice = 'rgb(255, 255, 255)';
 var blackVice = 'rgb(0, 0, 0)'; // Souse Vaporwave Color Scheme
 
-var primaryVapeColorAlt = 'rgb(167, 209, 197)';
+var primaryVapeColorAlt = 'rgb(155, 204, 190)';
 var secondaryVapeColor = 'rgb(100, 195, 167)';
 var secondaryVapeColorDark = 'rgb(55, 105, 90)';
 var primaryVapeColor = 'rgb(255, 181, 198)';
 var whiteVape = 'rgb(255, 255, 255)';
-var greyVape = 'rgb(226, 226, 226)';
+var greyVape = 'rgb(255, 236, 236)';
 var souseDefaultTheme = {
   primaryColorAlt: primaryColorAlt,
   secondaryColor: secondaryColor,

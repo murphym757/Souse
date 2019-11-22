@@ -104,6 +104,10 @@ export const ConnectionOptionsLink = styled.h6 `
         }
 `;
 
+export const ErrorFont = styled.h6 `
+    color: ${props => props.theme.white};
+`;
+
 //Souse Button
 /* ---------------------------------------------------- */
 export const SouseButton = styled.button `
@@ -126,6 +130,9 @@ export const SouseButton = styled.button `
 //Souse Form
 /* ---------------------------------------------------- */
 export const SouseForm = styled.form `
+    .input-field>label {
+        color: ${props => props.theme.secondaryColor} !important;
+    }
     .input-field input:focus+label {
         color: ${props => props.theme.secondaryColor} !important;
     }
@@ -157,6 +164,7 @@ export const SouseForm = styled.form `
     input[type=number]:not(.browser-default),
     input[type=search]:not(.browser-default),
     textarea.materialize-textarea {
+        border-bottom: 1px solid ${props => props.theme.secondaryColor};
 
         // Focused input style
         &:focus:not([readonly]) {

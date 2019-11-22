@@ -14,6 +14,7 @@ souseRouter.route('/u/account').get(userController.user_account);
 souseRouter.route('/u').get(userController.find_user);
 souseRouter.route('/u/edit/:id').get(userController.edit_user);
 souseRouter.route('/u/update/:id').post(userController.update_user);
+souseRouter.route('/u/update/nopassword/:id').post(userController.update_user_nopassword);
 souseRouter.route('/u/delete/:id').get(userController.delete_user);
 souseRouter.route('/u/p/delete/:id').get(userController.delete_posts);
 souseRouter.route('/u/c/delete/:id').get(userController.delete_comments);

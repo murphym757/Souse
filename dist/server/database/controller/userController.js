@@ -121,10 +121,10 @@ exports.edit_user = function (req, res, next) {
   User.findById(userId, function (err, user) {
     res.json(user);
   });
-}; // Update User
+}; // Update User (User Chooses To Not Change Password)
 
 
-exports.update_user = function (req, res, next) {
+exports.update_user_nopassword = function (req, res, next) {
   var newerUser = {
     username: req.body.username,
     firstName: req.body.firstName,
@@ -148,6 +148,48 @@ exports.update_user = function (req, res, next) {
         res.json('Update complete');
       })["catch"](function (err) {
         res.status(400).send("Unable to update user");
+      });
+    }
+  });
+}; // Update User (User Inputs Password)
+
+
+exports.update_user = function (req, res, next) {
+  var newerUser = {
+    username: req.body.username,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    password: req.body.password,
+    confirmedNewPassword: req.body.confirmedNewPassword,
+    userImage: req.body.userImage,
+    userTheme: req.body.userTheme,
+    userThemeType: req.body.userThemeType,
+    userInstagram: req.body.userInstagram,
+    userFacebook: req.body.userFacebook,
+    userTwitter: req.body.userTwitter,
+    userLocation: req.body.userLocation,
+    userBio: req.body.userBio
+  };
+  var updateuser = {
+    "new": true
+  };
+  User.findByIdAndUpdate(req.params.id, newerUser, updateuser, function (err, user) {
+    if (!user) res.status(404).send("User could not be found");else {
+      bcrypt.genSalt(10, function (err, salt) {
+        // Password field
+        if (err) console.error('There was an error', err);else {
+          bcrypt.hash(user.password, salt, function (err, hash) {
+            if (err) console.error('There was an error', err);else {
+              user.password = hash;
+              user.save().then(function (user) {
+                res.json('Update complete');
+              })["catch"](function (err) {
+                res.status(400).send("Unable to update user");
+              });
+            }
+          });
+        }
       });
     }
   });

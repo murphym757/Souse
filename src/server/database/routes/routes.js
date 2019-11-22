@@ -24,6 +24,9 @@ souseRouter.route('/u/edit/:id')
 souseRouter.route('/u/update/:id')
     .post(userController.update_user);
 
+souseRouter.route('/u/update/nopassword/:id')
+    .post(userController.update_user_nopassword);
+
 souseRouter.route('/u/delete/:id')
     .get(userController.delete_user);
 

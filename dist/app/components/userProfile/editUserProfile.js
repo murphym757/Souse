@@ -101,6 +101,12 @@ function (_Component) {
       });
     };
 
+    _this.onUpdateConfirmPassword = function (e) {
+      _this.setState({
+        newPassword: e.target.value
+      });
+    };
+
     _this.onUpdateUserInstagram = function (e) {
       _this.setState({
         userInstagram: e.target.value
@@ -197,43 +203,70 @@ function (_Component) {
 
     _this.onSubmit = function (e) {
       e.preventDefault();
-      var _this$props$auth = _this.props.auth,
-          isAuthenticated = _this$props$auth.isAuthenticated,
-          user = _this$props$auth.user;
-      var loggedinUsername = user.username;
-      var userData = {
-        username: _this.state.username,
-        firstName: _this.state.firstName,
-        lastName: _this.state.lastName,
-        email: _this.state.email,
-        userImage: _this.state.userImage,
-        userTheme: _this.state.userTheme,
-        userThemeType: _this.state.userThemeType,
-        userInstagram: _this.state.userInstagram,
-        userFacebook: _this.state.userFacebook,
-        userTwitter: _this.state.userTwitter,
-        userLocation: _this.state.userLocation,
-        userBio: _this.state.userBio
-      };
-      var apiRoute = "/souseAPI";
-      var updateRoute = "/u/update";
-      var userId = _this.state.userId;
-      var username = _this.state.username;
 
-      _axios["default"].post(apiRoute + updateRoute + "/" + userId, userData).then(function (res) {
-        return console.log(res.data);
-      });
+      if (_this.state.password.length <= 0) {
+        var userDataWithoutPasswordChange = {
+          username: _this.state.username,
+          firstName: _this.state.firstName,
+          lastName: _this.state.lastName,
+          email: _this.state.email,
+          userImage: _this.state.userImage,
+          userTheme: _this.state.userTheme,
+          userThemeType: _this.state.userThemeType,
+          userInstagram: _this.state.userInstagram,
+          userFacebook: _this.state.userFacebook,
+          userTwitter: _this.state.userTwitter,
+          userLocation: _this.state.userLocation,
+          userBio: _this.state.userBio
+        };
+        var apiRoute = "/souseAPI";
+        var userWithoutPasswordChangeRoute = "/u/update/nopassword";
+        var userId = _this.state.userId;
 
-      _this.props.history.push("/");
+        _axios["default"].post(apiRoute + userWithoutPasswordChangeRoute + "/" + userId, userDataWithoutPasswordChange).then(function (res) {
+          return console.log(res.data);
+        });
 
-      window.location.reload();
+        _this.props.history.push("/");
+
+        window.location.reload();
+      } else {
+        if (_this.state.password.length >= 6) {
+          var userDataWithPasswordChange = {
+            username: _this.state.username,
+            firstName: _this.state.firstName,
+            lastName: _this.state.lastName,
+            email: _this.state.email,
+            password: _this.state.password,
+            userImage: _this.state.userImage,
+            userTheme: _this.state.userTheme,
+            userThemeType: _this.state.userThemeType,
+            userInstagram: _this.state.userInstagram,
+            userFacebook: _this.state.userFacebook,
+            userTwitter: _this.state.userTwitter,
+            userLocation: _this.state.userLocation,
+            userBio: _this.state.userBio
+          };
+          var _apiRoute = "/souseAPI";
+          var userWithPasswordChangeRoute = "/u/update";
+          var _userId = _this.state.userId;
+
+          _axios["default"].post(_apiRoute + userWithPasswordChangeRoute + "/" + _userId, userDataWithPasswordChange).then(function (res) {
+            return console.log(res.data);
+          });
+
+          _this.props.history.push("/");
+
+          window.location.reload();
+        } else {}
+      }
     };
 
-    var _this$props$auth2 = _this.props.auth,
-        isAuthenticated = _this$props$auth2.isAuthenticated,
-        _user = _this$props$auth2.user;
-    var loggedinUser = _user.id;
-    var loggedinUsername = _user.username;
+    var _this$props$auth = _this.props.auth,
+        isAuthenticated = _this$props$auth.isAuthenticated,
+        user = _this$props$auth.user;
+    var loggedinUser = user.id;
+    var loggedinUsername = user.username;
     var _this$props$location$ = _this.props.location.state,
         creatorId = _this$props$location$.creatorId,
         creatorUsername = _this$props$location$.creatorUsername,
@@ -256,7 +289,9 @@ function (_Component) {
       firstName: creatorFirstName,
       lastName: creatorLastName,
       email: creatorEmail,
-      password: creatorPassword,
+      password: "",
+      newPassword: "",
+      // Will change if user types something new
       signUpDate: creatorSignUpDate,
       unixTimestamp: creatorUnixTimestamp,
       userImage: creatorImage,
@@ -282,6 +317,7 @@ function (_Component) {
     _this.onUpdateLastName = _this.onUpdateLastName.bind(_assertThisInitialized(_this));
     _this.onUpdateEmail = _this.onUpdateEmail.bind(_assertThisInitialized(_this));
     _this.onUpdatePassword = _this.onUpdatePassword.bind(_assertThisInitialized(_this));
+    _this.onUpdateConfirmPassword = _this.onUpdateConfirmPassword.bind(_assertThisInitialized(_this));
     _this.onUpdateUserInstagram = _this.onUpdateUserInstagram.bind(_assertThisInitialized(_this));
     _this.onUpdateUserFacebook = _this.onUpdateUserFacebook.bind(_assertThisInitialized(_this));
     _this.onUpdateUserTwitter = _this.onUpdateUserTwitter.bind(_assertThisInitialized(_this));
@@ -308,9 +344,9 @@ function (_Component) {
       {
         /* Theme Finder */
       }
-      var _this$props$auth3 = this.props.auth,
-          isAuthenticated = _this$props$auth3.isAuthenticated,
-          user = _this$props$auth3.user;
+      var _this$props$auth2 = this.props.auth,
+          isAuthenticated = _this$props$auth2.isAuthenticated,
+          user = _this$props$auth2.user;
       var theme1 = "souseDefaultTheme";
       var theme2 = "souseIMTheme";
       var theme3 = "souseFPTheme";
@@ -382,9 +418,9 @@ function (_Component) {
     value: function render() {
       var _this3 = this;
 
-      var _this$props$auth4 = this.props.auth,
-          isAuthenticated = _this$props$auth4.isAuthenticated,
-          user = _this$props$auth4.user;
+      var _this$props$auth3 = this.props.auth,
+          isAuthenticated = _this$props$auth3.isAuthenticated,
+          user = _this$props$auth3.user;
       var loggedinUserImage = user.userImage;
       var loggedinUserId = user.id;
       var errors = this.state.errors;
@@ -481,6 +517,40 @@ function (_Component) {
       }, "Last Name  (", this.state.lastName.length, "/30)"), errors.lastName && _react["default"].createElement("div", {
         "class": "invalid-feedback"
       }, errors.lastName)))), _react["default"].createElement("div", {
+        "class": "row"
+      }, " ", _react["default"].createElement("div", {
+        "class": "col-12 col-lg-6"
+      }, _react["default"].createElement("div", {
+        "class": "input-field"
+      }, " ", _react["default"].createElement("input", {
+        type: "password",
+        name: "newPassword",
+        className: "form-control",
+        id: "souseNewPassword",
+        minValue: 6,
+        onChange: this.onUpdatePassword
+      }), _react["default"].createElement("label", {
+        "class": "active",
+        "for": "souseNewPassword"
+      }, "New Password"), this.state.password.length <= 0 ? _react["default"].createElement("div", null) : _react["default"].createElement("div", {
+        "class": "m-0 p-0"
+      }, this.state.password.length >= 6 ? _react["default"].createElement("div", null, this.state.password != this.state.newPassword ? _react["default"].createElement("div", null, this.state.newPassword.length <= 0 ? _react["default"].createElement(_mainStyling.ErrorFont, null, "Password meets requirements") : _react["default"].createElement(_mainStyling.ErrorFont, null, "Must match confirm password")) : _react["default"].createElement(_mainStyling.ErrorFont, null, "Password meets requirements")) : _react["default"].createElement(_mainStyling.ErrorFont, null, "Password must be at least 6 characters long")))), _react["default"].createElement("div", {
+        "class": "col-12 col-lg-6"
+      }, _react["default"].createElement("div", {
+        "class": "input-field"
+      }, " ", _react["default"].createElement("input", {
+        type: "password",
+        name: "confirmPassword",
+        className: "form-control",
+        id: "souseConfirmPassword",
+        minValue: 6,
+        onChange: this.onUpdateConfirmPassword
+      }), _react["default"].createElement("label", {
+        "class": "active",
+        "for": "souseConfirmPassword"
+      }, "Confirm Password"), this.state.password.length <= 0 ? _react["default"].createElement("div", null) : _react["default"].createElement("div", {
+        "class": "m-0 p-0"
+      }, this.state.newPassword.length >= 6 ? _react["default"].createElement(_mainStyling.ErrorFont, null, "Password meets requirements") : _react["default"].createElement("div", null, this.state.newPassword != this.state.password ? _react["default"].createElement(_mainStyling.ErrorFont, null, "Must match new password") : _react["default"].createElement(_mainStyling.ErrorFont, null, "Password must be at least 6 characters long")))))), _react["default"].createElement("div", {
         "class": "row"
       }, _react["default"].createElement("div", {
         "class": "col-12 col-lg-4"

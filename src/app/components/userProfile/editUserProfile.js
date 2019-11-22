@@ -16,7 +16,8 @@ import {
     SouseLoadingIcon2,
     SouseLoadingIcon3,
     SouseButton,
-    SouseForm
+    SouseForm,
+    ErrorFont
 } from '../../assets/styles/mainStyling';
 import { 
     DeleteIcon,
@@ -61,7 +62,8 @@ class EditUserProfile extends Component {
             firstName: creatorFirstName,
             lastName: creatorLastName,
             email: creatorEmail,
-            password: creatorPassword,
+            password: "",
+            newPassword: "", // Will change if user types something new
             signUpDate: creatorSignUpDate,
             unixTimestamp: creatorUnixTimestamp,
             userImage: creatorImage,
@@ -86,6 +88,7 @@ class EditUserProfile extends Component {
         this.onUpdateLastName = this.onUpdateLastName.bind(this);
         this.onUpdateEmail = this.onUpdateEmail.bind(this);
         this.onUpdatePassword = this.onUpdatePassword.bind(this);
+        this.onUpdateConfirmPassword = this.onUpdateConfirmPassword.bind(this);
         this.onUpdateUserInstagram = this.onUpdateUserInstagram.bind(this);
         this.onUpdateUserFacebook = this.onUpdateUserFacebook.bind(this);
         this.onUpdateUserTwitter = this.onUpdateUserTwitter.bind(this);
@@ -130,6 +133,12 @@ class EditUserProfile extends Component {
             password: e.target.value
         });
     }
+
+    onUpdateConfirmPassword = (e) => {
+         this.setState({
+             newPassword: e.target.value
+         });
+     }
 
     onUpdateUserInstagram = (e) => {
         this.setState({
@@ -289,31 +298,59 @@ class EditUserProfile extends Component {
     
     onSubmit = (e) => {
         e.preventDefault();
-        const {isAuthenticated, user} = this.props.auth;
-        const loggedinUsername = user.username;
-        const userData = {
-            username: this.state.username,
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            email: this.state.email,
-            userImage: this.state.userImage,
-            userTheme: this.state.userTheme,
-            userThemeType: this.state.userThemeType,
-            userInstagram: this.state.userInstagram,
-            userFacebook: this.state.userFacebook,
-            userTwitter: this.state.userTwitter,
-            userLocation: this.state.userLocation,
-            userBio: this.state.userBio
-        };
-        const apiRoute = "/souseAPI";
-        const updateRoute = "/u/update";
-        const userId = this.state.userId;
-        const username = this.state.username;
+        if (this.state.password.length <= 0) {
+            const userDataWithoutPasswordChange = {
+                username: this.state.username,
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                email: this.state.email,
+                userImage: this.state.userImage,
+                userTheme: this.state.userTheme,
+                userThemeType: this.state.userThemeType,
+                userInstagram: this.state.userInstagram,
+                userFacebook: this.state.userFacebook,
+                userTwitter: this.state.userTwitter,
+                userLocation: this.state.userLocation,
+                userBio: this.state.userBio
+            };
+            const apiRoute = "/souseAPI";
+            const userWithoutPasswordChangeRoute = "/u/update/nopassword";
+            const userId = this.state.userId;
 
-        axios.post(apiRoute + updateRoute + "/" + userId, userData)
-            .then(res => console.log(res.data));
-        this.props.history.push("/");
-        window.location.reload();
+            axios.post(apiRoute + userWithoutPasswordChangeRoute + "/" + userId, userDataWithoutPasswordChange)
+                .then(res => console.log(res.data));
+            this.props.history.push("/");
+            window.location.reload();
+        } else {
+            if (this.state.password.length >= 6) {
+                const userDataWithPasswordChange = {
+                    username: this.state.username,
+                    firstName: this.state.firstName,
+                    lastName: this.state.lastName,
+                    email: this.state.email,
+                    password: this.state.password,
+                    userImage: this.state.userImage,
+                    userTheme: this.state.userTheme,
+                    userThemeType: this.state.userThemeType,
+                    userInstagram: this.state.userInstagram,
+                    userFacebook: this.state.userFacebook,
+                    userTwitter: this.state.userTwitter,
+                    userLocation: this.state.userLocation,
+                    userBio: this.state.userBio
+                };
+                const apiRoute = "/souseAPI";
+                const userWithPasswordChangeRoute = "/u/update";
+                const userId = this.state.userId;
+
+                axios.post(apiRoute + userWithPasswordChangeRoute + "/" + userId, userDataWithPasswordChange)
+                    .then(res => console.log(res.data));
+                this.props.history.push("/");
+                window.location.reload();
+
+            } else {
+
+            }
+        }
     }
 
     render() {
@@ -399,6 +436,67 @@ class EditUserProfile extends Component {
                                                     />
                                                     <label class="active" for="souseLastName">Last Name  ({this.state.lastName.length}/30)</label>
                                                     {errors.lastName && (<div class="invalid-feedback">{errors.lastName}</div>)}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row"> {/* Row 3 */}
+                                            <div class="col-12 col-lg-6">
+                                                <div class="input-field"> {/* New Password Field */}
+                                                    <input 
+                                                        type="password"
+                                                        name="newPassword" 
+                                                        className="form-control"
+                                                        id="souseNewPassword"
+                                                        minValue={6}
+                                                        onChange={this.onUpdatePassword}
+                                                    />
+                                                    <label class="active" for="souseNewPassword">New Password</label>
+                                                    {this.state.password.length <= 0
+                                                        ?   <div></div>
+                                                        :   <div class="m-0 p-0">
+                                                                {this.state.password.length >= 6
+                                                                    ?   <div>
+                                                                            {this.state.password != this.state.newPassword
+                                                                                ?   <div>
+                                                                                        {this.state.newPassword.length <= 0
+                                                                                            ?   <ErrorFont>Password meets requirements</ErrorFont>
+                                                                                            :   <ErrorFont>Must match confirm password</ErrorFont>
+                                                                                        }
+                                                                                    </div>
+                                                                                :   <ErrorFont>Password meets requirements</ErrorFont>
+                                                                            }
+                                                                        </div>   
+                                                                    :   <ErrorFont>Password must be at least 6 characters long</ErrorFont>
+                                                                }
+                                                            </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-lg-6">
+                                                <div class="input-field"> {/* Confirm Password Field */}
+                                                    <input 
+                                                        type="password"
+                                                        name="confirmPassword" 
+                                                        className="form-control"
+                                                        id="souseConfirmPassword"
+                                                        minValue={6}
+                                                        onChange={this.onUpdateConfirmPassword}
+                                                    />
+                                                    <label class="active" for="souseConfirmPassword">Confirm Password</label>
+                                                    {this.state.password.length <= 0
+                                                        ?   <div></div>
+                                                        :   <div class="m-0 p-0">
+                                                                {this.state.newPassword.length >= 6
+                                                                    ?   <ErrorFont>Password meets requirements</ErrorFont>
+                                                                    :   <div>
+                                                                            {this.state.newPassword != this.state.password
+                                                                                ?   <ErrorFont>Must match new password</ErrorFont>
+                                                                                :   <ErrorFont>Password must be at least 6 characters long</ErrorFont>
+                                                                            }
+                                                                        </div>
+                                                                }
+                                                            </div>
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
