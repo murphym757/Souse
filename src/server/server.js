@@ -19,7 +19,10 @@ const express = require('express'),
 ));
 
 mongoose.Promise = global.Promise;
-mongoose.connect(config.DATABASE_URL, { useNewUrlParser: true }).then(
+mongoose.connect(config.DATABASE_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    }).then(
     () => {console.log('Database is connected')},
     err => {console.log('Cannot connect to the database '+ err)}
 );
