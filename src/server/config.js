@@ -1,7 +1,7 @@
 const dotenv = require('dotenv');
 dotenv.config();
 module.exports = {
-    DATABASE_URL: process.env.DATABASE_URL,
+    MONGODB_URI: process.env.MONGODB_URI,
     DATABASE_LOCAL: process.env.DATABASE_LOCAL,
     AWS_BUCKET_NAME: process.env.AWS_BUCKET_NAME,
     AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,

@@ -19,7 +19,7 @@ const express = require('express'),
 ));
 
 mongoose.Promise = global.Promise;
-mongoose.connect(config.DATABASE_URL, {
+mongoose.connect(config.MONGODB_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     }).then(
