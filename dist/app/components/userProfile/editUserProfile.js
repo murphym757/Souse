@@ -253,6 +253,8 @@ function (_Component) {
 
           _axios["default"].post(_apiRoute + userWithPasswordChangeRoute + "/" + _userId, userDataWithPasswordChange).then(function (res) {
             return console.log(res.data);
+          })["catch"](function (error) {
+            console.log(error);
           });
 
           _this.props.history.push("/");

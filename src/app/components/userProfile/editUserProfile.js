@@ -343,7 +343,10 @@ class EditUserProfile extends Component {
                 const userId = this.state.userId;
 
                 axios.post(apiRoute + userWithPasswordChangeRoute + "/" + userId, userDataWithPasswordChange)
-                    .then(res => console.log(res.data));
+                    .then(res => console.log(res.data))
+                    .catch(function (error) {
+                        console.log(error);
+                    });
                 this.props.history.push("/");
                 window.location.reload();
 
