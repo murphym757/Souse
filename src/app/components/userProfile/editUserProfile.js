@@ -205,27 +205,6 @@ class EditUserProfile extends Component {
     /*-----------------------------*/
 
     onImageUpload = (e) => {
-        const config = {
-            bucketName: awsConfig.AWS_BUCKET_NAME,
-            dirName: "users/" + "" + this.state.userId + "",
-            region: awsConfig.AWS_REGION,
-            accessKeyId: awsConfig.AWS_ACCESS_KEY_ID,
-            secretAccessKey: awsConfig.AWS_SECRET_ACCESS_KEY,
-            s3Url: awsConfig.AWS_Uploaded_File_URL_LINK /* Required */
-        }
-        const S3Client = new S3(config);
-        const newFileName = "" + this.state.unixTimestamp + "";
-        S3Client.uploadFile(e.target.files[0], newFileName)
-            .then((data) => {
-                console.log(data.location);
-                this.setState({
-                    userImage: data.location,
-                    isLoading: true
-                });
-            })
-            .catch((err) => {
-                alert(err);
-            })
         this.setState({
             fullPostUploadLoader: true
         });

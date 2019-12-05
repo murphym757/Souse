@@ -173,29 +173,6 @@ function (_Component) {
     };
 
     _this.onImageUpload = function (e) {
-      var config = {
-        bucketName: _config["default"].AWS_BUCKET_NAME,
-        dirName: "users/" + "" + _this.state.userId + "",
-        region: _config["default"].AWS_REGION,
-        accessKeyId: _config["default"].AWS_ACCESS_KEY_ID,
-        secretAccessKey: _config["default"].AWS_SECRET_ACCESS_KEY,
-        s3Url: _config["default"].AWS_Uploaded_File_URL_LINK
-        /* Required */
-
-      };
-      var S3Client = new _awsS["default"](config);
-      var newFileName = "" + _this.state.unixTimestamp + "";
-      S3Client.uploadFile(e.target.files[0], newFileName).then(function (data) {
-        console.log(data.location);
-
-        _this.setState({
-          userImage: data.location,
-          isLoading: true
-        });
-      })["catch"](function (err) {
-        alert(err);
-      });
-
       _this.setState({
         fullPostUploadLoader: true
       });
