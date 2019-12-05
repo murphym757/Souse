@@ -22,6 +22,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect(config.MONGODB_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        useFindAndModify: false
     }).then(
     () => {console.log('Database is connected')},
     err => {console.log('Cannot connect to the database '+ err)}
