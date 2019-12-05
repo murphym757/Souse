@@ -318,9 +318,11 @@ class EditUserProfile extends Component {
             const userId = this.state.userId;
 
             axios.post(apiRoute + userWithoutPasswordChangeRoute + "/" + userId, userDataWithoutPasswordChange)
-                .then(res => console.log(res.data));
+                .then(res => console.log(res.data))
+                .catch(function (error) {
+                    console.log(error);
+                });
             this.props.history.push("/");
-            window.location.reload();
         } else {
             if (this.state.password.length >= 6) {
                 const userDataWithPasswordChange = {
@@ -348,7 +350,6 @@ class EditUserProfile extends Component {
                         console.log(error);
                     });
                 this.props.history.push("/");
-                window.location.reload();
 
             } else {
 

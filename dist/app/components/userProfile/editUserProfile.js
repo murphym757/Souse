@@ -225,11 +225,11 @@ function (_Component) {
 
         _axios["default"].post(apiRoute + userWithoutPasswordChangeRoute + "/" + userId, userDataWithoutPasswordChange).then(function (res) {
           return console.log(res.data);
+        })["catch"](function (error) {
+          console.log(error);
         });
 
         _this.props.history.push("/");
-
-        window.location.reload();
       } else {
         if (_this.state.password.length >= 6) {
           var userDataWithPasswordChange = {
@@ -258,8 +258,6 @@ function (_Component) {
           });
 
           _this.props.history.push("/");
-
-          window.location.reload();
         } else {}
       }
     };
