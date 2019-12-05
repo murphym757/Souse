@@ -297,7 +297,6 @@ class EditUserProfile extends Component {
     }
     
     onSubmit = (e) => {
-        e.preventDefault();
         if (this.state.password.length <= 0) {
             const userDataWithoutPasswordChange = {
                 username: this.state.username,
@@ -322,6 +321,8 @@ class EditUserProfile extends Component {
                 .catch(function (error) {
                     console.log(error);
                 });
+            this.props.history.push("/");
+            window.location.reload();
         } else {
             if (this.state.password.length >= 6) {
                 const userDataWithPasswordChange = {
@@ -348,6 +349,9 @@ class EditUserProfile extends Component {
                     .catch(function (error) {
                         console.log(error);
                     });
+                this.props.history.push("/");
+                window.location.reload();
+
             } else {
 
             }

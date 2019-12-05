@@ -202,8 +202,6 @@ function (_Component) {
     };
 
     _this.onSubmit = function (e) {
-      e.preventDefault();
-
       if (_this.state.password.length <= 0) {
         var userDataWithoutPasswordChange = {
           username: _this.state.username,
@@ -228,6 +226,10 @@ function (_Component) {
         })["catch"](function (error) {
           console.log(error);
         });
+
+        _this.props.history.push("/");
+
+        window.location.reload();
       } else {
         if (_this.state.password.length >= 6) {
           var userDataWithPasswordChange = {
@@ -254,6 +256,10 @@ function (_Component) {
           })["catch"](function (error) {
             console.log(error);
           });
+
+          _this.props.history.push("/");
+
+          window.location.reload();
         } else {}
       }
     };
