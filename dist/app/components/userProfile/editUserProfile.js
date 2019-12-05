@@ -228,8 +228,6 @@ function (_Component) {
         })["catch"](function (error) {
           console.log(error);
         });
-
-        _this.props.history.push("/");
       } else {
         if (_this.state.password.length >= 6) {
           var userDataWithPasswordChange = {
@@ -256,8 +254,6 @@ function (_Component) {
           })["catch"](function (error) {
             console.log(error);
           });
-
-          _this.props.history.push("/");
         } else {}
       }
     };

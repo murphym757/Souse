@@ -322,7 +322,6 @@ class EditUserProfile extends Component {
                 .catch(function (error) {
                     console.log(error);
                 });
-            this.props.history.push("/");
         } else {
             if (this.state.password.length >= 6) {
                 const userDataWithPasswordChange = {
@@ -349,8 +348,6 @@ class EditUserProfile extends Component {
                     .catch(function (error) {
                         console.log(error);
                     });
-                this.props.history.push("/");
-
             } else {
 
             }
