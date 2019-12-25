@@ -382,7 +382,7 @@ class EditUserProfile extends Component {
             const userWithoutPasswordChangeRoute = "/u/update/nopassword";
             const userId = this.state.userId;
 
-            this.deleteImageUpload();
+            //this.deleteImageUpload();
             this.onImageUpload(event);
             axios.post(apiRoute + userWithoutPasswordChangeRoute + "/" + userId, userDataWithoutPasswordChange)
                 .then(res => console.log(res.data))
@@ -413,7 +413,7 @@ class EditUserProfile extends Component {
                 const userWithPasswordChangeRoute = "/u/update";
                 const userId = this.state.userId;
 
-                this.deleteImageUpload();
+                //this.deleteImageUpload();
                 this.onImageUpload(event);
                 axios.post(apiRoute + userWithPasswordChangeRoute + "/" + userId, userDataWithPasswordChange)
                     .then(res => console.log(res.data))

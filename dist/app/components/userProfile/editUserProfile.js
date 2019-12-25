@@ -250,9 +250,7 @@ function (_Component) {
         };
         var apiRoute = "/souseAPI";
         var userWithoutPasswordChangeRoute = "/u/update/nopassword";
-        var userId = _this.state.userId;
-
-        _this.deleteImageUpload();
+        var userId = _this.state.userId; //this.deleteImageUpload();
 
         _this.onImageUpload(event);
 
@@ -285,9 +283,7 @@ function (_Component) {
           };
           var _apiRoute = "/souseAPI";
           var userWithPasswordChangeRoute = "/u/update";
-          var _userId = _this.state.userId;
-
-          _this.deleteImageUpload();
+          var _userId = _this.state.userId; //this.deleteImageUpload();
 
           _this.onImageUpload(event);
 
