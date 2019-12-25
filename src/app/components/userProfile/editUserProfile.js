@@ -7,7 +7,9 @@ import { logoutUser } from '../../../server/actions/authentication';
 import RouteNotFound from '../navigation/404Page';
 import SwitchThemeType from "react-switch";
 import classnames from 'classnames';
+import $ from 'jquery';
 import S3 from 'aws-s3';
+import aws from 'aws-sdk';
 import awsConfig from '../../../server/config';
 import DeleteUserProfile from './deleteUserProfile';
 import M from 'materialize-css';
@@ -53,7 +55,8 @@ class EditUserProfile extends Component {
             creatorFacebook,
             creatorInstagram,
             creatorLocation,
-            creatorBio
+            creatorBio,
+            souseNewUserImageSetup
         } = this.props.location.state;
 
         this.state = {
@@ -75,6 +78,8 @@ class EditUserProfile extends Component {
             userBio: creatorBio,
             isLoading: false,
             fullPostUploadLoader: false,
+            newUserImageSetup: souseNewUserImageSetup,
+            selectedFileType: null,
             userOptionsDisplay: "",
             switchColor: "",
             switchHandleColor: "",
@@ -99,7 +104,10 @@ class EditUserProfile extends Component {
         this.onUpdateUserFPTheme = this.onUpdateUserFPTheme.bind(this);
         this.onUpdateUserViceTheme = this.onUpdateUserViceTheme.bind(this);
         this.onUpdateUserVapeTheme = this.onUpdateUserVapeTheme.bind(this);
+        this.handleSelectedImage = this.handleSelectedImage.bind(this);
         this.onImageUpload = this.onImageUpload.bind(this);
+        this.deleteImageUpload = this.deleteImageUpload.bind(this);
+        this.onChangeUserData = this.onChangeUserData.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.handleThemeTypeChange = this.handleThemeTypeChange.bind(this);
     }
@@ -203,14 +211,6 @@ class EditUserProfile extends Component {
         });
     }
     /*-----------------------------*/
-
-    onImageUpload = (e) => {
-        this.setState({
-            fullPostUploadLoader: true
-        });
-    }
-
-
     componentDidMount() {
         M.AutoInit();
         { /* Theme Finder */}
@@ -254,13 +254,13 @@ class EditUserProfile extends Component {
         console.log(userId);
         axios.get(apiRoute + editRoute + "/" + userId)
           .then(res => {
-              this.setState({ 
-                userTwitter: res.data.userTwitter,
-                userFacebook: res.data.userFacebook,
-                userInstagram: res.data.userInstagram,
-                userLocation: res.data.userLocation,
-                userBio: res.data.userBio,
-                userImage: res.data.userImage
+                this.setState({ 
+                    userTwitter: res.data.userTwitter,
+                    userFacebook: res.data.userFacebook,
+                    userInstagram: res.data.userInstagram,
+                    userLocation: res.data.userLocation,
+                    userBio: res.data.userBio,
+                    userImage: res.data.userImage
                 });
           })
           .catch(function (error) {
@@ -274,8 +274,96 @@ class EditUserProfile extends Component {
             userThemeType: "Dark"
         });
     }
-    
-    onSubmit = (e) => {
+    handleSelectedImage = (event) => { // Indentifies image change
+        const {isAuthenticated, user} = this.props.auth; 
+        const loggedinUserId = user.id;
+        const selectedFile = event.target.files[0];
+        event.preventDefault();
+        //jpeg|jpg|png|gif
+        // JPEG to JPG
+        if (selectedFile.type == "image/jpeg") {
+            this.setState({
+                selectedFileType: selectedFile,
+                newUserImageSetup: true,
+                userId: loggedinUserId,
+                userImage: "https://souse.s3.amazonaws.com/users/" + "" + this.state.userId + "" + "/" + this.state.userId + ".jpg"
+            });
+        } else if (selectedFile.type !== "image/jpeg") {
+            this.setState({
+                selectedFileType: selectedFile,
+                newUserImageSetup: true,
+                userId: loggedinUserId,
+                userImage: "https://souse.s3.amazonaws.com/users/" + "" + this.state.userId + "" + "/" + this.state.userId + "." + selectedFile.type.slice(6).toLowerCase()
+            });
+        }
+        console.log(selectedFile.type + " and " + loggedinUserId);
+    }
+    onImageUpload = (event) => { // Submits image change
+        event.preventDefault();
+        const {isAuthenticated, user} = this.props.auth; 
+        const loggedinUserId = user.id;
+        const apiRoute = "/souseAPI";
+        const uploadRoute = "/u/upload";
+        const uploadData = new FormData(event.target);
+        uploadData.append("image", this.state.selectedFileType, this.state.selectedFileType.name);
+
+        axios.post(apiRoute + uploadRoute + "/" + loggedinUserId, uploadData, {
+            headers: {
+                'accept': 'application/json',
+                'Accept-Language': 'en-US,en;q=0.8',
+                'Content-Type': `multipart/form-data; boundary=${uploadData._boundary}`,
+            }
+        })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    deleteImageUpload() {
+        const {isAuthenticated, user} = this.props.auth; 
+        const loggedinUserId = user.id;
+         let s3bucket = new aws.S3({
+             accessKeyId: awsConfig.AWS_ACCESS_KEY_ID,
+             secretAccessKey: awsConfig.AWS_SECRET_ACCESS_KEY,
+             region: awsConfig.AWS_REGION
+         });
+
+         var params = {
+             Bucket: awsConfig.AWS_BUCKET_NAME,
+             Prefix: 'users/' + "" + loggedinUserId + "/"
+         };
+
+
+         s3bucket.listObjects(params, function (err, data, cb) {
+             if (err) return cb(err);
+
+             if (data.Deleted.length == 0) return cb();
+
+             params = {
+                 Bucket: awsConfig.AWS_BUCKET_NAME
+             };
+             params.Delete = {
+                 Objects: []
+             };
+
+             data.Deleted.forEach(function (content) {
+                 params.Delete.Objects.push({
+                     Key: content.Key
+                 });
+             });
+
+             s3bucket.deleteObjects(params, function (err, data, cb) {
+                 if (err) return cb(err);
+                 if (data.Deleted.length == 1000) emptyBucket(awsConfig.AWS_BUCKET_NAME, cb);
+                 else cb();
+             });
+         });
+         this.props.history.push("/");
+         window.location.reload(true);
+    }
+
+    onChangeUserData = (event) => { // Submits any changes (besides images changes)
+        event.preventDefault();
         if (this.state.password.length <= 0) {
             const userDataWithoutPasswordChange = {
                 username: this.state.username,
@@ -289,19 +377,22 @@ class EditUserProfile extends Component {
                 userFacebook: this.state.userFacebook,
                 userTwitter: this.state.userTwitter,
                 userLocation: this.state.userLocation,
-                userBio: this.state.userBio
+                userBio: this.state.userBio,
+                newUserImageSetup: this.state.newUserImageSetup
             };
             const apiRoute = "/souseAPI";
             const userWithoutPasswordChangeRoute = "/u/update/nopassword";
             const userId = this.state.userId;
 
+            this.deleteImageUpload();
+            this.onImageUpload(event);
             axios.post(apiRoute + userWithoutPasswordChangeRoute + "/" + userId, userDataWithoutPasswordChange)
                 .then(res => console.log(res.data))
                 .catch(function (error) {
                     console.log(error);
                 });
             this.props.history.push("/");
-            window.location.reload();
+            window.location.reload(true);
         } else {
             if (this.state.password.length >= 6) {
                 const userDataWithPasswordChange = {
@@ -317,24 +408,31 @@ class EditUserProfile extends Component {
                     userFacebook: this.state.userFacebook,
                     userTwitter: this.state.userTwitter,
                     userLocation: this.state.userLocation,
-                    userBio: this.state.userBio
+                    userBio: this.state.userBio,
+                    newUserImageSetup: this.state.newUserImageSetup
                 };
                 const apiRoute = "/souseAPI";
                 const userWithPasswordChangeRoute = "/u/update";
                 const userId = this.state.userId;
 
+                this.deleteImageUpload();
+                this.onImageUpload(event);
                 axios.post(apiRoute + userWithPasswordChangeRoute + "/" + userId, userDataWithPasswordChange)
                     .then(res => console.log(res.data))
                     .catch(function (error) {
                         console.log(error);
                     });
                 this.props.history.push("/");
-                window.location.reload();
+                window.location.reload(true);
 
             } else {
 
             }
         }
+    }
+
+    onSubmit = (event) => { // Submits all changes
+        this.deleteImageUpload();
     }
 
     render() {
@@ -645,7 +743,7 @@ class EditUserProfile extends Component {
                                                                     </SouseButton>
                                                                 </div>
                                                             </div>
-                                                    :   <div class="row d-flex justify-content-center col-12"> {/* Custom Loader */}
+                                                        :   <div class="row d-flex justify-content-center col-12"> {/* Custom Loader */}
                                                                 <SouseLoadingIcon className="spinner-grow" role="status">
                                                                     <span class="sr-only">Loading...</span>
                                                                 </SouseLoadingIcon>
@@ -664,17 +762,22 @@ class EditUserProfile extends Component {
                                                             <p class="lead buttonFont">Upload</p>
                                                             <input 
                                                                 type="file" 
-                                                                name="userImage"
-                                                                id="souseUserImage"
-                                                                onChange={this.onImageUpload}
+                                                                name=""
+                                                                id=""
+                                                                onChange={this.handleSelectedImage}
                                                             />
                                                         </SouseButton>
                                                         <div class="file-path-wrapper">
                                                             <input class="file-path validate" type="text" />
                                                         </div>
+                                                        <span 
+                                                            class="helper-text d-flex justify-content-center" 
+                                                            data-error="wrong" data-success="right">
+                                                                {"Currently, Souse cannot upload images with capitalized file extensions (JPEG, PNG, and GIF). Please ensure that your file extensions are lowercase."}
+                                                        </span>
                                                     </div>
                                                     <div class="form-group col-12">
-                                                        {loggedinUserImage == ""
+                                                        {this.state.newUserImageSetup != true
                                                             ?   <h4 class="d-flex justify-content-center">Please upload a profile image to complete the setup process</h4>
                                                             :   <SouseButton type="submit" className="waves-effect waves-light btn-large d-block mx-auto">
                                                                     <p class="lead buttonFont">Update User</p>

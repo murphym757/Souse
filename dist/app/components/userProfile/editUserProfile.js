@@ -23,7 +23,11 @@ var _reactSwitch = _interopRequireDefault(require("react-switch"));
 
 var _classnames = _interopRequireDefault(require("classnames"));
 
+var _jquery = _interopRequireDefault(require("jquery"));
+
 var _awsS = _interopRequireDefault(require("aws-s3"));
+
+var _awsSdk = _interopRequireDefault(require("aws-sdk"));
 
 var _config = _interopRequireDefault(require("../../../server/config"));
 
@@ -172,13 +176,62 @@ function (_Component) {
       });
     };
 
-    _this.onImageUpload = function (e) {
-      _this.setState({
-        fullPostUploadLoader: true
+    _this.handleSelectedImage = function (event) {
+      // Indentifies image change
+      var _this$props$auth = _this.props.auth,
+          isAuthenticated = _this$props$auth.isAuthenticated,
+          user = _this$props$auth.user;
+      var loggedinUserId = user.id;
+      var selectedFile = event.target.files[0];
+      event.preventDefault(); //jpeg|jpg|png|gif
+      // JPEG to JPG
+
+      if (selectedFile.type == "image/jpeg") {
+        _this.setState({
+          selectedFileType: selectedFile,
+          newUserImageSetup: true,
+          userId: loggedinUserId,
+          userImage: "https://souse.s3.amazonaws.com/users/" + "" + _this.state.userId + "" + "/" + _this.state.userId + ".jpg"
+        });
+      } else if (selectedFile.type !== "image/jpeg") {
+        _this.setState({
+          selectedFileType: selectedFile,
+          newUserImageSetup: true,
+          userId: loggedinUserId,
+          userImage: "https://souse.s3.amazonaws.com/users/" + "" + _this.state.userId + "" + "/" + _this.state.userId + "." + selectedFile.type.slice(6).toLowerCase()
+        });
+      }
+
+      console.log(selectedFile.type + " and " + loggedinUserId);
+    };
+
+    _this.onImageUpload = function (event) {
+      // Submits image change
+      event.preventDefault();
+      var _this$props$auth2 = _this.props.auth,
+          isAuthenticated = _this$props$auth2.isAuthenticated,
+          user = _this$props$auth2.user;
+      var loggedinUserId = user.id;
+      var apiRoute = "/souseAPI";
+      var uploadRoute = "/u/upload";
+      var uploadData = new FormData(event.target);
+      uploadData.append("image", _this.state.selectedFileType, _this.state.selectedFileType.name);
+
+      _axios["default"].post(apiRoute + uploadRoute + "/" + loggedinUserId, uploadData, {
+        headers: {
+          'accept': 'application/json',
+          'Accept-Language': 'en-US,en;q=0.8',
+          'Content-Type': "multipart/form-data; boundary=".concat(uploadData._boundary)
+        }
+      })["catch"](function (error) {
+        console.log(error);
       });
     };
 
-    _this.onSubmit = function (e) {
+    _this.onChangeUserData = function (event) {
+      // Submits any changes (besides images changes)
+      event.preventDefault();
+
       if (_this.state.password.length <= 0) {
         var userDataWithoutPasswordChange = {
           username: _this.state.username,
@@ -192,11 +245,16 @@ function (_Component) {
           userFacebook: _this.state.userFacebook,
           userTwitter: _this.state.userTwitter,
           userLocation: _this.state.userLocation,
-          userBio: _this.state.userBio
+          userBio: _this.state.userBio,
+          newUserImageSetup: _this.state.newUserImageSetup
         };
         var apiRoute = "/souseAPI";
         var userWithoutPasswordChangeRoute = "/u/update/nopassword";
         var userId = _this.state.userId;
+
+        _this.deleteImageUpload();
+
+        _this.onImageUpload(event);
 
         _axios["default"].post(apiRoute + userWithoutPasswordChangeRoute + "/" + userId, userDataWithoutPasswordChange).then(function (res) {
           return console.log(res.data);
@@ -206,7 +264,7 @@ function (_Component) {
 
         _this.props.history.push("/");
 
-        window.location.reload();
+        window.location.reload(true);
       } else {
         if (_this.state.password.length >= 6) {
           var userDataWithPasswordChange = {
@@ -222,11 +280,16 @@ function (_Component) {
             userFacebook: _this.state.userFacebook,
             userTwitter: _this.state.userTwitter,
             userLocation: _this.state.userLocation,
-            userBio: _this.state.userBio
+            userBio: _this.state.userBio,
+            newUserImageSetup: _this.state.newUserImageSetup
           };
           var _apiRoute = "/souseAPI";
           var userWithPasswordChangeRoute = "/u/update";
           var _userId = _this.state.userId;
+
+          _this.deleteImageUpload();
+
+          _this.onImageUpload(event);
 
           _axios["default"].post(_apiRoute + userWithPasswordChangeRoute + "/" + _userId, userDataWithPasswordChange).then(function (res) {
             return console.log(res.data);
@@ -236,16 +299,21 @@ function (_Component) {
 
           _this.props.history.push("/");
 
-          window.location.reload();
+          window.location.reload(true);
         } else {}
       }
     };
 
-    var _this$props$auth = _this.props.auth,
-        isAuthenticated = _this$props$auth.isAuthenticated,
-        user = _this$props$auth.user;
-    var loggedinUser = user.id;
-    var loggedinUsername = user.username;
+    _this.onSubmit = function (event) {
+      // Submits all changes
+      _this.deleteImageUpload();
+    };
+
+    var _this$props$auth3 = _this.props.auth,
+        isAuthenticated = _this$props$auth3.isAuthenticated,
+        _user = _this$props$auth3.user;
+    var loggedinUser = _user.id;
+    var loggedinUsername = _user.username;
     var _this$props$location$ = _this.props.location.state,
         creatorId = _this$props$location$.creatorId,
         creatorUsername = _this$props$location$.creatorUsername,
@@ -261,7 +329,8 @@ function (_Component) {
         creatorFacebook = _this$props$location$.creatorFacebook,
         creatorInstagram = _this$props$location$.creatorInstagram,
         creatorLocation = _this$props$location$.creatorLocation,
-        creatorBio = _this$props$location$.creatorBio;
+        creatorBio = _this$props$location$.creatorBio,
+        souseNewUserImageSetup = _this$props$location$.souseNewUserImageSetup;
     _this.state = {
       userId: creatorId,
       username: creatorUsername,
@@ -282,6 +351,8 @@ function (_Component) {
       userBio: creatorBio,
       isLoading: false,
       fullPostUploadLoader: false,
+      newUserImageSetup: souseNewUserImageSetup,
+      selectedFileType: null,
       userOptionsDisplay: "",
       switchColor: "",
       switchHandleColor: "",
@@ -307,7 +378,10 @@ function (_Component) {
     _this.onUpdateUserFPTheme = _this.onUpdateUserFPTheme.bind(_assertThisInitialized(_this));
     _this.onUpdateUserViceTheme = _this.onUpdateUserViceTheme.bind(_assertThisInitialized(_this));
     _this.onUpdateUserVapeTheme = _this.onUpdateUserVapeTheme.bind(_assertThisInitialized(_this));
+    _this.handleSelectedImage = _this.handleSelectedImage.bind(_assertThisInitialized(_this));
     _this.onImageUpload = _this.onImageUpload.bind(_assertThisInitialized(_this));
+    _this.deleteImageUpload = _this.deleteImageUpload.bind(_assertThisInitialized(_this));
+    _this.onChangeUserData = _this.onChangeUserData.bind(_assertThisInitialized(_this));
     _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
     _this.handleThemeTypeChange = _this.handleThemeTypeChange.bind(_assertThisInitialized(_this));
     return _this;
@@ -315,6 +389,8 @@ function (_Component) {
 
   _createClass(EditUserProfile, [{
     key: "componentDidMount",
+
+    /*-----------------------------*/
     value: function componentDidMount() {
       var _this2 = this;
 
@@ -323,9 +399,9 @@ function (_Component) {
       {
         /* Theme Finder */
       }
-      var _this$props$auth2 = this.props.auth,
-          isAuthenticated = _this$props$auth2.isAuthenticated,
-          user = _this$props$auth2.user;
+      var _this$props$auth4 = this.props.auth,
+          isAuthenticated = _this$props$auth4.isAuthenticated,
+          user = _this$props$auth4.user;
       var theme1 = "souseDefaultTheme";
       var theme2 = "souseIMTheme";
       var theme3 = "souseFPTheme";
@@ -393,13 +469,51 @@ function (_Component) {
       });
     }
   }, {
+    key: "deleteImageUpload",
+    value: function deleteImageUpload() {
+      var _this$props$auth5 = this.props.auth,
+          isAuthenticated = _this$props$auth5.isAuthenticated,
+          user = _this$props$auth5.user;
+      var loggedinUserId = user.id;
+      var s3bucket = new _awsSdk["default"].S3({
+        accessKeyId: _config["default"].AWS_ACCESS_KEY_ID,
+        secretAccessKey: _config["default"].AWS_SECRET_ACCESS_KEY,
+        region: _config["default"].AWS_REGION
+      });
+      var params = {
+        Bucket: _config["default"].AWS_BUCKET_NAME,
+        Prefix: 'users/' + "" + loggedinUserId + "/"
+      };
+      s3bucket.listObjects(params, function (err, data, cb) {
+        if (err) return cb(err);
+        if (data.Deleted.length == 0) return cb();
+        params = {
+          Bucket: _config["default"].AWS_BUCKET_NAME
+        };
+        params.Delete = {
+          Objects: []
+        };
+        data.Deleted.forEach(function (content) {
+          params.Delete.Objects.push({
+            Key: content.Key
+          });
+        });
+        s3bucket.deleteObjects(params, function (err, data, cb) {
+          if (err) return cb(err);
+          if (data.Deleted.length == 1000) emptyBucket(_config["default"].AWS_BUCKET_NAME, cb);else cb();
+        });
+      });
+      this.props.history.push("/");
+      window.location.reload(true);
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
 
-      var _this$props$auth3 = this.props.auth,
-          isAuthenticated = _this$props$auth3.isAuthenticated,
-          user = _this$props$auth3.user;
+      var _this$props$auth6 = this.props.auth,
+          isAuthenticated = _this$props$auth6.isAuthenticated,
+          user = _this$props$auth6.user;
       var loggedinUserImage = user.userImage;
       var loggedinUserId = user.id;
       var errors = this.state.errors;
@@ -737,17 +851,21 @@ function (_Component) {
         "class": "lead buttonFont"
       }, "Upload"), _react["default"].createElement("input", {
         type: "file",
-        name: "userImage",
-        id: "souseUserImage",
-        onChange: this.onImageUpload
+        name: "",
+        id: "",
+        onChange: this.handleSelectedImage
       })), _react["default"].createElement("div", {
         "class": "file-path-wrapper"
       }, _react["default"].createElement("input", {
         "class": "file-path validate",
         type: "text"
-      }))), _react["default"].createElement("div", {
+      })), _react["default"].createElement("span", {
+        "class": "helper-text d-flex justify-content-center",
+        "data-error": "wrong",
+        "data-success": "right"
+      }, "Currently, Souse cannot upload images with capitalized file extensions (JPEG, PNG, and GIF). Please ensure that your file extensions are lowercase.")), _react["default"].createElement("div", {
         "class": "form-group col-12"
-      }, loggedinUserImage == "" ? _react["default"].createElement("h4", {
+      }, this.state.newUserImageSetup != true ? _react["default"].createElement("h4", {
         "class": "d-flex justify-content-center"
       }, "Please upload a profile image to complete the setup process") : _react["default"].createElement(_mainStyling.SouseButton, {
         type: "submit",

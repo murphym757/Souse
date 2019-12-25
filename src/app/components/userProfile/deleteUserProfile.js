@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../../server/actions/authentication';
 import SwitchTheme from "react-switch";
+import aws from 'aws-sdk';
+import awsConfig from '../../../server/config';
 import M from 'materialize-css';
 import {
     EditUserProfileOptionsFont
@@ -24,6 +26,7 @@ class DeleteUserProfile extends Component {
             switchHandleColor: ""
         };
         this.deleteUser = this.deleteUser.bind(this);
+        this.deleteImageUpload = this.deleteImageUpload.bind(this);
         this.deleteUserPosts = this.deleteUserPosts.bind(this);
         this.deleteUserComments = this.deleteUserComments.bind(this);
         this.deleteUserFollowers = this.deleteUserFollowers.bind(this);
@@ -74,13 +77,11 @@ class DeleteUserProfile extends Component {
         this.deleteUserFollowers();
         this.deleteUserFollows();
         this.deleteUserComments();
+        this.deleteImageUpload();
         this.deleteUser();
-        this.props.history.push("/");
-        this.props.logoutUser(this.props.history);
-        window.location.reload();
     }
 
-    deleteUserPosts(){
+    deleteUserPosts() {
         const userId = this.state.userId;
         const apiRoute = "/souseAPI";
         const deleteRoute = "/u/p/delete";
@@ -125,6 +126,47 @@ class DeleteUserProfile extends Component {
             .catch(err => console.log(err));
     }
 
+    deleteImageUpload() {
+        const {isAuthenticated, user} = this.props.auth; 
+        const loggedinUserId = user.id;
+            let s3bucket = new aws.S3({
+                accessKeyId: awsConfig.AWS_ACCESS_KEY_ID,
+                secretAccessKey: awsConfig.AWS_SECRET_ACCESS_KEY,
+                region: awsConfig.AWS_REGION
+            });
+
+            var params = {
+                Bucket: awsConfig.AWS_BUCKET_NAME,
+                Prefix: 'users/' + "" + loggedinUserId + "/"
+            };
+
+
+            s3bucket.listObjects(params, function (err, data) {
+                if (err) return callback(err);
+
+                if (data.Contents.length == 0) return callback();
+
+                params = {
+                    Bucket: awsConfig.AWS_BUCKET_NAME
+                };
+                params.Delete = {
+                    Objects: []
+                };
+
+                data.Contents.forEach(function (content) {
+                    params.Delete.Objects.push({
+                        Key: content.Key
+                    });
+                });
+
+                s3bucket.deleteObjects(params, function (err, data) {
+                    if (err) return callback(err);
+                    if (data.Contents.length == 1000) emptyBucket(awsConfig.AWS_BUCKET_NAME, callback);
+                    else callback();
+                });
+            });
+    }
+
     handleChangeDelete(deleteUser) {
         this.setState({ deleteUser });
     }
@@ -132,6 +174,9 @@ class DeleteUserProfile extends Component {
     handleChangeDeleteConfirm(deleteUserConfirm) {
         this.setState({ deleteUserConfirm });
         this.deleteProfile();
+        this.props.history.push("/");
+        this.props.logoutUser(this.props.history);
+        window.location.reload(true);
     }
 
     render() {

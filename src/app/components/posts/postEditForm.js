@@ -280,6 +280,11 @@ class PostEdit extends Component {
                                                                 <div class="file-path-wrapper">
                                                                     <input class="file-path validate" type="text" />
                                                                 </div>
+                                                                <span 
+                                                                    class="helper-text d-flex justify-content-center" 
+                                                                    data-error="wrong" data-success="right">
+                                                                        {"Currently, Souse cannot upload images with capitalized file extensions (JPEG, PNG, and GIF). Please ensure that your file extensions are lowercase."}
+                                                                </span>
                                                             </div>
                                                     }
                                                         <SouseButton onClick={this.onUpdateImageDelete} type="submit" className="waves-effect waves-light btn-large">

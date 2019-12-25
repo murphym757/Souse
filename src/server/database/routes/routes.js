@@ -18,6 +18,9 @@ souseRouter.route('/u/account')
 souseRouter.route('/u')
     .get(userController.find_user);
 
+souseRouter.route('/u/upload/:id')
+    .post(userController.upload_user_image);
+
 souseRouter.route('/u/edit/:id')
     .get(userController.edit_user);
 

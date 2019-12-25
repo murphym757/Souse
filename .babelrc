@@ -11,5 +11,5 @@
       "babel-plugin-styled-components"
     ]
   ],
-  "compact": false,
+  "compact": false
 }

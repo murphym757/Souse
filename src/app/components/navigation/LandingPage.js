@@ -124,6 +124,7 @@ class LandingPage extends Component {
                                                             souseUserPassword: this.userFinder()[i].password,
                                                             souseUserSignUpDate: this.userFinder()[i].signUpDate,
                                                             souseUserImage: this.userFinder()[i].userImage,
+                                                            souseNewUserImageSetup: this.userFinder()[i].newUserImageSetup,
                                                             souseUserTwitter: this.userFinder()[i].userTwitter,
                                                             souseUserFacebook: this.userFinder()[i].userFacebook,
                                                             souseUserInstagram: this.userFinder()[i].userInstagram,

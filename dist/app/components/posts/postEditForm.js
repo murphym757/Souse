@@ -350,7 +350,11 @@ function (_Component) {
       }, _react["default"].createElement("input", {
         "class": "file-path validate",
         type: "text"
-      }))), _react["default"].createElement(_mainStyling.SouseButton, {
+      })), _react["default"].createElement("span", {
+        "class": "helper-text d-flex justify-content-center",
+        "data-error": "wrong",
+        "data-success": "right"
+      }, "Currently, Souse cannot upload images with capitalized file extensions (JPEG, PNG, and GIF). Please ensure that your file extensions are lowercase.")), _react["default"].createElement(_mainStyling.SouseButton, {
         onClick: this.onUpdateImageDelete,
         type: "submit",
         className: "waves-effect waves-light btn-large"

@@ -181,6 +181,7 @@ function (_Component) {
                 souseUserPassword: _this2.userFinder()[i].password,
                 souseUserSignUpDate: _this2.userFinder()[i].signUpDate,
                 souseUserImage: _this2.userFinder()[i].userImage,
+                souseNewUserImageSetup: _this2.userFinder()[i].newUserImageSetup,
                 souseUserTwitter: _this2.userFinder()[i].userTwitter,
                 souseUserFacebook: _this2.userFinder()[i].userFacebook,
                 souseUserInstagram: _this2.userFinder()[i].userInstagram,

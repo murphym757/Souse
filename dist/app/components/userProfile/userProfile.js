@@ -171,6 +171,7 @@ function (_Component) {
     var souseUserPassword = _this.props.obj.password;
     var souseUserSignUpDate = _this.props.obj.signUpDate;
     var souseUserImage = _this.props.obj.userImage;
+    var souseNewUserImageSetup = _this.props.obj.newUserImageSetup;
     var souseUserTheme = _this.props.obj.userTheme;
     var souseUserTwitter = _this.props.obj.userTwitter;
     var souseUserFacebook = _this.props.obj.userFacebook;
@@ -211,6 +212,7 @@ function (_Component) {
       creatorInstagramURL: instagramUsernameURL,
       creatorLocation: souseUserLocation,
       creatorBio: souseUserBio,
+      souseNewUserImageSetup: souseNewUserImageSetup,
       followerUserId: "",
       // This is the user who received the follow
       initiatedFollowinguserId: "",
@@ -303,6 +305,7 @@ function (_Component) {
       var creatorInstagram = this.state.creatorInstagram;
       var creatorLocation = this.state.creatorLocation;
       var creatorBio = this.state.creatorBio;
+      var souseNewUserImageSetup = this.state.souseNewUserImageSetup;
       var userPageDisplay = this.state.userPageDisplay;
       var postsTotal = "" + this.postFinder().length + "";
       var followersTotal = "" + this.followerFinder().length + "";
@@ -439,7 +442,8 @@ function (_Component) {
             creatorFacebook: creatorFacebook,
             creatorInstagram: creatorInstagram,
             creatorLocation: creatorLocation,
-            creatorBio: creatorBio
+            creatorBio: creatorBio,
+            souseNewUserImageSetup: souseNewUserImageSetup
           }
         }
       }, _react["default"].createElement(_mainStyling.SouseButton, {

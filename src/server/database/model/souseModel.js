@@ -40,6 +40,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    newUserImageSetup: {
+        type: Boolean,
+        default: false
+    },
     userBio: {
         type: String,
         default: ""

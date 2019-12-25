@@ -45,6 +45,7 @@ class UserProfile extends Component {
         const souseUserPassword = this.props.obj.password;
         const souseUserSignUpDate = this.props.obj.signUpDate;
         const souseUserImage = this.props.obj.userImage;
+        const souseNewUserImageSetup = this.props.obj.newUserImageSetup;
         const souseUserTheme = this.props.obj.userTheme;
         const souseUserTwitter = this.props.obj.userTwitter;
         const souseUserFacebook = this.props.obj.userFacebook;
@@ -86,6 +87,7 @@ class UserProfile extends Component {
             creatorInstagramURL: instagramUsernameURL,
             creatorLocation: souseUserLocation,
             creatorBio: souseUserBio,
+            souseNewUserImageSetup: souseNewUserImageSetup,
             followerUserId: "", // This is the user who received the follow
             initiatedFollowinguserId: "", // This is the user who pressed "Follow"
             followingUserId: "", // This is the user who pressed "Follow"
@@ -233,6 +235,7 @@ class UserProfile extends Component {
         const creatorInstagram = this.state.creatorInstagram;
         const creatorLocation = this.state.creatorLocation;
         const creatorBio = this.state.creatorBio;
+        const souseNewUserImageSetup = this.state.souseNewUserImageSetup;
         const userPageDisplay = this.state.userPageDisplay;
         const postsTotal = "" + this.postFinder().length + "";
         const followersTotal = "" + this.followerFinder().length + "";
@@ -345,7 +348,8 @@ class UserProfile extends Component {
                                                                                         creatorFacebook: creatorFacebook,
                                                                                         creatorInstagram: creatorInstagram,
                                                                                         creatorLocation: creatorLocation,
-                                                                                        creatorBio: creatorBio
+                                                                                        creatorBio: creatorBio,
+                                                                                        souseNewUserImageSetup: souseNewUserImageSetup
                                                                                     }
                                                                                 }
                                                                             }>

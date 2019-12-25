@@ -6,6 +6,11 @@ const mongoose = require('mongoose'),
     Follower = mongoose.model('Followers'),
     bcrypt = require('bcryptjs'),
     jwt = require('jsonwebtoken'),
+    aws = require('aws-sdk'),
+    multer = require('multer'),
+    multerS3 = require('multer-s3'),
+    path = require('path'),
+    config = require('../../config'),
     passport = require('passport'),
     validateRegisterInput = require('../../validation/register'),
     validateLoginInput = require('../../validation/login');
@@ -129,12 +134,11 @@ const mongoose = require('mongoose'),
              userFacebook: req.body.userFacebook,
              userTwitter: req.body.userTwitter,
              userLocation: req.body.userLocation,
-             userBio: req.body.userBio
+             userBio: req.body.userBio,
+             newUserImageSetup: req.body.newUserImageSetup
          }
 
-         const updateuser = {
-             new: true
-         };
+         const updateuser = {new: true};
          User.findByIdAndUpdate(req.params.id, newerUser, updateuser, (err, user) => {
              if (!user)
                  res.status(404).send("User could not be found");
@@ -165,7 +169,8 @@ const mongoose = require('mongoose'),
             userFacebook: req.body.userFacebook,
             userTwitter: req.body.userTwitter,
             userLocation: req.body.userLocation,
-            userBio: req.body.userBio
+            userBio: req.body.userBio,
+            newUserImageSetup: req.body.newUserImageSetup
             }
 
         const updateuser = {new: true};
@@ -194,6 +199,69 @@ const mongoose = require('mongoose'),
         });
     }
 
+    // Upload Image
+    exports.upload_user_image = (req, res, next) => {
+        const userId = req.params.id;
+        console.log("this should be the userId: " + userId )
+        User.findById(userId, (err, user) => {
+            aws.config.update({
+                accessKeyId: config.AWS_ACCESS_KEY_ID,
+                secretAccessKey: config.AWS_SECRET_ACCESS_KEY,
+                region: config.AWS_REGION
+            })
+
+            const s3 = new aws.S3();
+
+            const fileFilter = (req, file, cb) => {
+                if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/gif') {
+                    cb(null, true)
+                } else {
+                    cb(new Error('Invalid Mime Type, only JPEG/JPG, PNG, ang GIF'), false)
+                }
+            }
+
+            const userImageUpload = multer({
+                fileFilter,
+                storage: multerS3({
+                    s3,
+                    bucket: config.AWS_BUCKET_NAME,
+                    acl: 'public-read',
+                    serverSideEncryption: 'AES256',
+                    contentType: multerS3.AUTO_CONTENT_TYPE,
+                    metadata: function (req, file, cb) {
+                        const extname = path.extname(file.originalname).toLowerCase();
+                        cb(null, {
+                            fieldName: "This image: " + userId + extname + " was uploaded to Souse"
+                        });
+                    },
+                    key: function (req, file, cb) {
+                        const filetypes = /jpeg|jpg|png|gif/;
+                        const extname = path.extname(file.originalname).toLowerCase();
+                        console.log(extname);
+                        const extNameTest = filetypes.test(path.extname(file.originalname).toLowerCase());
+                        const mimeTypeTest = filetypes.test(file.mimetype);
+                        const newFileName = Date.now().toString();
+                        const fullPath = 'users/' + "" + userId + "" + '/' + userId + extname;
+                        if (mimeTypeTest && extNameTest) {
+                            return cb(null, fullPath);
+                        } else {
+                            cb('Error: Images Only!');
+                        }
+                    }
+                })
+            })
+
+            const singleUpload = userImageUpload.single('image');
+            singleUpload(req, res, (err) => {
+                if (err) res.json(err);
+                else res.json({
+                    'imageName': req.file.key,
+                    'imageUrl': req.file.location
+                });
+            });
+        })
+    }
+
     // Delete User
     exports.delete_user = (req, res, next) => {
         User.findByIdAndRemove({_id: req.params.id}, (err, user) => {
@@ -207,7 +275,7 @@ const mongoose = require('mongoose'),
         const postCreatorId = req.params.id;
         User.findById(postCreatorId, (err, user) => { 
             if (err) throw new Error(err);
-            
+
             Post.deleteMany({postCreator: [postCreatorId]}, (err, post) => {
                 if(err) {
                     res.json(err);

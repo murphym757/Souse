@@ -19,6 +19,10 @@ var _authentication = require("../../../server/actions/authentication");
 
 var _reactSwitch = _interopRequireDefault(require("react-switch"));
 
+var _awsSdk = _interopRequireDefault(require("aws-sdk"));
+
+var _config = _interopRequireDefault(require("../../../server/config"));
+
 var _materializeCss = _interopRequireDefault(require("materialize-css"));
 
 var _userProfileStyling = require("../../assets/styles/userProfileStyling");
@@ -71,6 +75,7 @@ function (_Component) {
       switchHandleColor: ""
     };
     _this.deleteUser = _this.deleteUser.bind(_assertThisInitialized(_this));
+    _this.deleteImageUpload = _this.deleteImageUpload.bind(_assertThisInitialized(_this));
     _this.deleteUserPosts = _this.deleteUserPosts.bind(_assertThisInitialized(_this));
     _this.deleteUserComments = _this.deleteUserComments.bind(_assertThisInitialized(_this));
     _this.deleteUserFollowers = _this.deleteUserFollowers.bind(_assertThisInitialized(_this));
@@ -132,10 +137,8 @@ function (_Component) {
       this.deleteUserFollowers();
       this.deleteUserFollows();
       this.deleteUserComments();
+      this.deleteImageUpload();
       this.deleteUser();
-      this.props.history.push("/");
-      this.props.logoutUser(this.props.history);
-      window.location.reload();
     }
   }, {
     key: "deleteUserPosts",
@@ -193,6 +196,42 @@ function (_Component) {
       });
     }
   }, {
+    key: "deleteImageUpload",
+    value: function deleteImageUpload() {
+      var _this$props$auth3 = this.props.auth,
+          isAuthenticated = _this$props$auth3.isAuthenticated,
+          user = _this$props$auth3.user;
+      var loggedinUserId = user.id;
+      var s3bucket = new _awsSdk["default"].S3({
+        accessKeyId: _config["default"].AWS_ACCESS_KEY_ID,
+        secretAccessKey: _config["default"].AWS_SECRET_ACCESS_KEY,
+        region: _config["default"].AWS_REGION
+      });
+      var params = {
+        Bucket: _config["default"].AWS_BUCKET_NAME,
+        Prefix: 'users/' + "" + loggedinUserId + "/"
+      };
+      s3bucket.listObjects(params, function (err, data) {
+        if (err) return callback(err);
+        if (data.Contents.length == 0) return callback();
+        params = {
+          Bucket: _config["default"].AWS_BUCKET_NAME
+        };
+        params.Delete = {
+          Objects: []
+        };
+        data.Contents.forEach(function (content) {
+          params.Delete.Objects.push({
+            Key: content.Key
+          });
+        });
+        s3bucket.deleteObjects(params, function (err, data) {
+          if (err) return callback(err);
+          if (data.Contents.length == 1000) emptyBucket(_config["default"].AWS_BUCKET_NAME, callback);else callback();
+        });
+      });
+    }
+  }, {
     key: "handleChangeDelete",
     value: function handleChangeDelete(deleteUser) {
       this.setState({
@@ -206,6 +245,9 @@ function (_Component) {
         deleteUserConfirm: deleteUserConfirm
       });
       this.deleteProfile();
+      this.props.history.push("/");
+      this.props.logoutUser(this.props.history);
+      window.location.reload(true);
     }
   }, {
     key: "render",
