@@ -129,42 +129,44 @@ class DeleteUserProfile extends Component {
     deleteImageUpload() {
         const {isAuthenticated, user} = this.props.auth; 
         const loggedinUserId = user.id;
-            let s3bucket = new aws.S3({
-                accessKeyId: awsConfig.AWS_ACCESS_KEY_ID,
-                secretAccessKey: awsConfig.AWS_SECRET_ACCESS_KEY,
-                region: awsConfig.AWS_REGION
-            });
+         let s3bucket = new aws.S3({
+             accessKeyId: awsConfig.AWS_ACCESS_KEY_ID,
+             secretAccessKey: awsConfig.AWS_SECRET_ACCESS_KEY,
+             region: awsConfig.AWS_REGION
+         });
 
-            var params = {
-                Bucket: awsConfig.AWS_BUCKET_NAME,
-                Prefix: 'users/' + "" + loggedinUserId + "/"
-            };
+         var params = {
+             Bucket: awsConfig.AWS_BUCKET_NAME,
+             Prefix: 'users/' + "" + loggedinUserId + "/"
+         };
 
 
-            s3bucket.listObjects(params, function (err, data) {
-                if (err) return callback(err);
+         s3bucket.listObjects(params, function (err, data, cb) {
+             if (err) return cb(err);
 
-                if (data.Contents.length == 0) return callback();
+             if (data.Deleted.length == 0) return cb();
 
-                params = {
-                    Bucket: awsConfig.AWS_BUCKET_NAME
-                };
-                params.Delete = {
-                    Objects: []
-                };
+             params = {
+                 Bucket: awsConfig.AWS_BUCKET_NAME
+             };
+             params.Delete = {
+                 Objects: []
+             };
 
-                data.Contents.forEach(function (content) {
-                    params.Delete.Objects.push({
-                        Key: content.Key
-                    });
-                });
+             data.Deleted.forEach(function (content) {
+                 params.Delete.Objects.push({
+                     Key: content.Key
+                 });
+             });
 
-                s3bucket.deleteObjects(params, function (err, data) {
-                    if (err) return callback(err);
-                    if (data.Contents.length == 1000) emptyBucket(awsConfig.AWS_BUCKET_NAME, callback);
-                    else callback();
-                });
-            });
+             s3bucket.deleteObjects(params, function (err, data, cb) {
+                 if (err) return cb(err);
+                 if (data.Deleted.length == 1000) emptyBucket(awsConfig.AWS_BUCKET_NAME, cb);
+                 else cb();
+             });
+         });
+         this.props.history.push("/");
+         window.location.reload(true);
     }
 
     handleChangeDelete(deleteUser) {

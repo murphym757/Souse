@@ -211,25 +211,27 @@ function (_Component) {
         Bucket: _config["default"].AWS_BUCKET_NAME,
         Prefix: 'users/' + "" + loggedinUserId + "/"
       };
-      s3bucket.listObjects(params, function (err, data) {
-        if (err) return callback(err);
-        if (data.Contents.length == 0) return callback();
+      s3bucket.listObjects(params, function (err, data, cb) {
+        if (err) return cb(err);
+        if (data.Deleted.length == 0) return cb();
         params = {
           Bucket: _config["default"].AWS_BUCKET_NAME
         };
         params.Delete = {
           Objects: []
         };
-        data.Contents.forEach(function (content) {
+        data.Deleted.forEach(function (content) {
           params.Delete.Objects.push({
             Key: content.Key
           });
         });
-        s3bucket.deleteObjects(params, function (err, data) {
-          if (err) return callback(err);
-          if (data.Contents.length == 1000) emptyBucket(_config["default"].AWS_BUCKET_NAME, callback);else callback();
+        s3bucket.deleteObjects(params, function (err, data, cb) {
+          if (err) return cb(err);
+          if (data.Deleted.length == 1000) emptyBucket(_config["default"].AWS_BUCKET_NAME, cb);else cb();
         });
       });
+      this.props.history.push("/");
+      window.location.reload(true);
     }
   }, {
     key: "handleChangeDelete",
