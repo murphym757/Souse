@@ -230,8 +230,6 @@ function (_Component) {
           if (data.Deleted.length == 1000) emptyBucket(_config["default"].AWS_BUCKET_NAME, cb);else cb();
         });
       });
-      this.props.history.push("/");
-      window.location.reload(true);
     }
   }, {
     key: "handleChangeDelete",

@@ -165,8 +165,6 @@ class DeleteUserProfile extends Component {
                  else cb();
              });
          });
-         this.props.history.push("/");
-         window.location.reload(true);
     }
 
     handleChangeDelete(deleteUser) {

@@ -358,8 +358,6 @@ class EditUserProfile extends Component {
                  else cb();
              });
          });
-         this.props.history.push("/");
-         window.location.reload(true);
     }
 
     onChangeUserData = (event) => { // Submits any changes (besides images changes)
