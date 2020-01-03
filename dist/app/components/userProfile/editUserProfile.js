@@ -239,7 +239,9 @@ function (_Component) {
 
     _this.onSubmitWithUploadedImage = function (e) {
       // Submits all changes
-      e.preventDefault(); //this.deleteImageUpload();
+      e.preventDefault();
+
+      _this.deleteImageUpload();
 
       _this.onImageUpload(e);
 

@@ -436,7 +436,7 @@ class EditUserProfile extends Component {
 
     onSubmitWithUploadedImage = (e) => { // Submits all changes
         e.preventDefault();
-        //this.deleteImageUpload();
+        this.deleteImageUpload();
         this.onImageUpload(e);
         this.onChangeUserData();
     }
