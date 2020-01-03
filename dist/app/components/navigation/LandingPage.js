@@ -176,7 +176,7 @@ function (_Component) {
                 souseUserId: _this2.userFinder()[i]._id,
                 souseUserUsername: _this2.userFinder()[i].username,
                 souseUserFirstName: _this2.userFinder()[i].firstName,
-                souseUserLastName: souseUserData[i].lastName,
+                souseUserLastName: _this2.userFinder()[i].lastName,
                 souseUserEmail: _this2.userFinder()[i].email,
                 souseUserPassword: _this2.userFinder()[i].password,
                 souseUserSignUpDate: _this2.userFinder()[i].signUpDate,

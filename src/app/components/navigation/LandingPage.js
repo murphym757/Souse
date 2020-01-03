@@ -119,7 +119,7 @@ class LandingPage extends Component {
                                                             souseUserId: this.userFinder()[i]._id,
                                                             souseUserUsername: this.userFinder()[i].username,
                                                             souseUserFirstName: this.userFinder()[i].firstName,
-                                                            souseUserLastName: souseUserData[i].lastName,
+                                                            souseUserLastName: this.userFinder()[i].lastName,
                                                             souseUserEmail: this.userFinder()[i].email,
                                                             souseUserPassword: this.userFinder()[i].password,
                                                             souseUserSignUpDate: this.userFinder()[i].signUpDate,

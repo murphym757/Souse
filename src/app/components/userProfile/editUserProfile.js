@@ -80,6 +80,7 @@ class EditUserProfile extends Component {
             fullPostUploadLoader: false,
             newUserImageSetup: souseNewUserImageSetup,
             selectedFileType: null,
+            uploadButtonClicked: false,
             userOptionsDisplay: "",
             switchColor: "",
             switchHandleColor: "",
@@ -109,6 +110,7 @@ class EditUserProfile extends Component {
         this.deleteImageUpload = this.deleteImageUpload.bind(this);
         this.onChangeUserData = this.onChangeUserData.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onSubmitWithUploadedImage = this.onSubmitWithUploadedImage.bind(this);
         this.handleThemeTypeChange = this.handleThemeTypeChange.bind(this);
     }
 
@@ -274,16 +276,17 @@ class EditUserProfile extends Component {
             userThemeType: "Dark"
         });
     }
-    handleSelectedImage = (event) => { // Indentifies image change
+    handleSelectedImage = (e) => { // Indentifies image change
         const {isAuthenticated, user} = this.props.auth; 
         const loggedinUserId = user.id;
-        const selectedFile = event.target.files[0];
-        event.preventDefault();
+        const selectedFile = e.target.files[0];
+        e.preventDefault();
         //jpeg|jpg|png|gif
         // JPEG to JPG
         if (selectedFile.type == "image/jpeg") {
             this.setState({
                 selectedFileType: selectedFile,
+                uploadButtonClicked: true,
                 newUserImageSetup: true,
                 userId: loggedinUserId,
                 userImage: "https://souse.s3.amazonaws.com/users/" + "" + this.state.userId + "" + "/" + this.state.userId + ".jpg"
@@ -291,6 +294,7 @@ class EditUserProfile extends Component {
         } else if (selectedFile.type !== "image/jpeg") {
             this.setState({
                 selectedFileType: selectedFile,
+                uploadButtonClicked: true,
                 newUserImageSetup: true,
                 userId: loggedinUserId,
                 userImage: "https://souse.s3.amazonaws.com/users/" + "" + this.state.userId + "" + "/" + this.state.userId + "." + selectedFile.type.slice(6).toLowerCase()
@@ -298,16 +302,16 @@ class EditUserProfile extends Component {
         }
         console.log(selectedFile.type + " and " + loggedinUserId);
     }
-    onImageUpload = (event) => { // Submits image change
-        event.preventDefault();
+    onImageUpload = (e) => { // Submits image change
         const {isAuthenticated, user} = this.props.auth; 
         const loggedinUserId = user.id;
+        const userId = this.state.userId;
         const apiRoute = "/souseAPI";
         const uploadRoute = "/u/upload";
-        const uploadData = new FormData(event.target);
+        const uploadData = new FormData(e.target);
         uploadData.append("image", this.state.selectedFileType, this.state.selectedFileType.name);
 
-        axios.post(apiRoute + uploadRoute + "/" + loggedinUserId, uploadData, {
+        axios.post(apiRoute + uploadRoute + "/" + userId, uploadData, {
             headers: {
                 'accept': 'application/json',
                 'Accept-Language': 'en-US,en;q=0.8',
@@ -360,8 +364,7 @@ class EditUserProfile extends Component {
          });
     }
 
-    onChangeUserData = (event) => { // Submits any changes (besides images changes)
-        event.preventDefault();
+    onChangeUserData() { // Submits any changes (besides images changes)
         if (this.state.password.length <= 0) {
             const userDataWithoutPasswordChange = {
                 username: this.state.username,
@@ -382,8 +385,6 @@ class EditUserProfile extends Component {
             const userWithoutPasswordChangeRoute = "/u/update/nopassword";
             const userId = this.state.userId;
 
-            //this.deleteImageUpload();
-            this.onImageUpload(event);
             axios.post(apiRoute + userWithoutPasswordChangeRoute + "/" + userId, userDataWithoutPasswordChange)
                 .then(res => console.log(res.data))
                 .catch(function (error) {
@@ -413,8 +414,6 @@ class EditUserProfile extends Component {
                 const userWithPasswordChangeRoute = "/u/update";
                 const userId = this.state.userId;
 
-                //this.deleteImageUpload();
-                this.onImageUpload(event);
                 axios.post(apiRoute + userWithPasswordChangeRoute + "/" + userId, userDataWithPasswordChange)
                     .then(res => console.log(res.data))
                     .catch(function (error) {
@@ -429,8 +428,17 @@ class EditUserProfile extends Component {
         }
     }
 
-    onSubmit = (event) => { // Submits all changes
+    onSubmit = (e) => { // Submits all changes
+        e.preventDefault();
+        this.onChangeUserData();
+    }
+
+
+    onSubmitWithUploadedImage = (e) => { // Submits all changes
+        e.preventDefault();
         this.deleteImageUpload();
+        this.onImageUpload(e);
+        this.onChangeUserData();
     }
 
     render() {
@@ -443,11 +451,13 @@ class EditUserProfile extends Component {
         const userOptionsDisplay = this.state.userOptionsDisplay;
         const userIdPathname = window.location.pathname;
         const userIdFound = userIdPathname.slice(8);
+
+        
         return (
             <div class="pt-5">
                 {isAuthenticated && loggedinUserId == userIdFound
                     ?   <div class="container-fluid pt-5">
-                            <SouseForm onSubmit={this.onSubmit}>
+                            <SouseForm onSubmit={this.onSubmitWithUploadedImage}>
                                 <div class="row">
                                     <div class="col-12 col-lg-6">
                                         <div class="row"> {/* Row 1 */}
@@ -475,7 +485,7 @@ class EditUserProfile extends Component {
                                                         class={classnames('form-control', {
                                                             'is-invalid': errors.username
                                                         })} 
-                                                        id = "souseUsername"
+                                                        id="souseUsername"
                                                         maxLength={30}
                                                         value={this.state.username}
                                                         onChange={this.onUpdateUsername} 
@@ -494,7 +504,7 @@ class EditUserProfile extends Component {
                                                         class={classnames('form-control', {
                                                             'is-invalid': errors.firstName
                                                         })} 
-                                                        id = "souseFirstName"
+                                                        id="souseFirstName"
                                                         value={this.state.firstName}
                                                         onChange={this.onUpdateFirstName}
                                                     />
@@ -580,7 +590,7 @@ class EditUserProfile extends Component {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row"> {/* Row 4 */}
                                             <div class="col-12 col-lg-4">
                                                 <div class="input-field"> {/* Twitter Field */}
                                                     <input 
@@ -621,28 +631,36 @@ class EditUserProfile extends Component {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="input-field"> {/* Location Field */}
-                                            <input 
-                                                type="text"
-                                                name="userLocation" 
-                                                className="form-control"
-                                                id="souseUserLocation"
-                                                value={this.state.userLocation}
-                                                onChange={this.onUpdateUserLocation} 
-                                            />
-                                            <label class="active" for="souseUserLocation">Location</label>
+                                        <div class="row"> {/* Row 5 */}
+                                            <div class="col-12">
+                                                <div class="input-field"> {/* Location Field */}
+                                                    <input 
+                                                        type="text"
+                                                        name="userLocation" 
+                                                        className="form-control"
+                                                        id="souseUserLocation"
+                                                        value={this.state.userLocation}
+                                                        onChange={this.onUpdateUserLocation} 
+                                                    />
+                                                    <label class="active" for="souseUserLocation">Location</label>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="input-field"> {/* Bio Field */}
-                                            <textarea 
-                                                id = "souseUserBio"
-                                                className="materialize-textarea form-control"
-                                                name = "userBio"
-                                                maxLength={150}
-                                                rows="2"
-                                                value={this.state.userBio}
-                                                onChange={this.onUpdateUserBio}>
-                                            </textarea>
-                                            <label class="active" for="souseUserBio">Bio ({this.state.userBio.length}/150)</label>
+                                        <div class="row"> {/* Row 6 */}
+                                            <div class="col-12">
+                                                <div class="input-field"> {/* Bio Field */}
+                                                    <textarea 
+                                                        id="souseUserBio"
+                                                        className="materialize-textarea form-control"
+                                                        name = "userBio"
+                                                        maxLength={150}
+                                                        rows="2"
+                                                        value={this.state.userBio}
+                                                        onChange={this.onUpdateUserBio}>
+                                                    </textarea>
+                                                    <label class="active" for="souseUserBio">Bio ({this.state.userBio.length}/150)</label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-12 col-lg-6">
@@ -654,19 +672,19 @@ class EditUserProfile extends Component {
                                                                 <div class="optionSelectionCollapse1">
                                                                     <div class="row d-flex justify-content-center"> 
                                                                         <div class="col-12"> {/* For Larger Screens */}
-                                                                            <SouseDefaultChip className="chip col-12 h-100 d-flex justify-content-center" onClick={this.onUpdateUserDefaultTheme}>
+                                                                            <SouseDefaultChip className="chip col-12 h-18 d-flex justify-content-center" onClick={this.onUpdateUserDefaultTheme}>
                                                                                 <div className="chipFont">Official</div>
                                                                             </SouseDefaultChip>
-                                                                            <SouseIMChip className="chip col-12 h-100 d-flex justify-content-center" onClick={this.onUpdateUserIMTheme}>
+                                                                            <SouseIMChip className="chip col-12 h-18 d-flex justify-content-center" onClick={this.onUpdateUserIMTheme}>
                                                                                 <div className="chipFont">Inter Miami</div>
                                                                             </SouseIMChip>
-                                                                            <SouseFPChip className="chip col-12 h-100 d-flex justify-content-center" onClick={this.onUpdateUserFPTheme}>
+                                                                            <SouseFPChip className="chip col-12 h-18 d-flex justify-content-center" onClick={this.onUpdateUserFPTheme}>
                                                                                 <div className="chipFont">FIU Panthers</div>
                                                                             </SouseFPChip>
-                                                                            <SouseViceChip className="chip col-12 h-100 d-flex justify-content-center" onClick={this.onUpdateUserViceTheme}>
+                                                                            <SouseViceChip className="chip col-12 h-18 d-flex justify-content-center" onClick={this.onUpdateUserViceTheme}>
                                                                                 <div className="chipFont">Miami Heat (Vice)</div>
                                                                             </SouseViceChip>
-                                                                            <SouseVapeChip className="chip col-12 h-100 d-flex justify-content-center" onClick={this.onUpdateUserVapeTheme}>
+                                                                            <SouseVapeChip className="chip col-12 h-18 d-flex justify-content-center" onClick={this.onUpdateUserVapeTheme}>
                                                                                 <div className="chipFont">Vaporwave</div>
                                                                             </SouseVapeChip>
                                                                             {this.state.themeSelected
@@ -760,8 +778,7 @@ class EditUserProfile extends Component {
                                                             <p class="lead buttonFont">Upload</p>
                                                             <input 
                                                                 type="file" 
-                                                                name=""
-                                                                id=""
+                                                                id="image"
                                                                 onChange={this.handleSelectedImage}
                                                             />
                                                         </SouseButton>
@@ -777,9 +794,19 @@ class EditUserProfile extends Component {
                                                     <div class="form-group col-12">
                                                         {this.state.newUserImageSetup != true
                                                             ?   <h4 class="d-flex justify-content-center">Please upload a profile image to complete the setup process</h4>
-                                                            :   <SouseButton type="submit" className="waves-effect waves-light btn-large d-block mx-auto">
-                                                                    <p class="lead buttonFont">Update User</p>
-                                                                </SouseButton>
+                                                            :   <div>
+                                                                {this.state.uploadButtonClicked == false
+                                                                    ?   <SouseButton 
+                                                                            type="submit" 
+                                                                            className="waves-effect waves-light btn-large d-block mx-auto" 
+                                                                            onClick={this.onSubmit}>
+                                                                                <p class="lead buttonFont">Update User</p>
+                                                                        </SouseButton>
+                                                                    :   <SouseButton type="submit" className="waves-effect waves-light btn-large d-block mx-auto">
+                                                                            <p class="lead buttonFont">Update User</p>
+                                                                        </SouseButton>
+                                                                }
+                                                            </div>  
                                                         }
                                                         
                                                     </div>
@@ -805,4 +832,4 @@ const mapStateToProps = (state) => ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps, { logoutUser })(EditUserProfile)
+export default connect(mapStateToProps, { logoutUser })(withRouter (EditUserProfile))
