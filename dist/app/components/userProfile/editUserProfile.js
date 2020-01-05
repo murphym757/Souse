@@ -190,7 +190,7 @@ function (_Component) {
         _this.setState({
           selectedFileType: selectedFile,
           uploadButtonClicked: true,
-          newUserImageSetup: true,
+          newUserImageSetup: false,
           userId: loggedinUserId,
           userImage: "https://souse.s3.amazonaws.com/users/" + "" + _this.state.userId + "" + "/" + _this.state.userId + ".jpg"
         });
@@ -198,7 +198,7 @@ function (_Component) {
         _this.setState({
           selectedFileType: selectedFile,
           uploadButtonClicked: true,
-          newUserImageSetup: true,
+          newUserImageSetup: false,
           userId: loggedinUserId,
           userImage: "https://souse.s3.amazonaws.com/users/" + "" + _this.state.userId + "" + "/" + _this.state.userId + "." + selectedFile.type.slice(6).toLowerCase()
         });
@@ -216,7 +216,7 @@ function (_Component) {
       var userId = _this.state.userId;
       var apiRoute = "/souseAPI";
       var uploadRoute = "/u/upload";
-      var uploadData = new FormData(e.target);
+      var uploadData = new FormData();
       uploadData.append("image", _this.state.selectedFileType, _this.state.selectedFileType.name);
 
       _axios["default"].post(apiRoute + uploadRoute + "/" + userId, uploadData, {
@@ -237,15 +237,25 @@ function (_Component) {
       _this.onChangeUserData();
     };
 
-    _this.onSubmitWithUploadedImage = function (e) {
+    _this.onSubmitNewUser = function (e) {
       // Submits all changes
       e.preventDefault();
-
-      _this.deleteImageUpload();
 
       _this.onImageUpload(e);
 
       _this.onChangeUserData();
+    };
+
+    _this.onSubmitWithUploadedImage = function (e) {
+      // Submits all changes
+      var awsBucketName = _config["default"].AWS_BUCKET_NAME;
+      e.preventDefault();
+      var promise = new Promise(function () {
+        setTimeout(function () {
+          _this.deleteImageUpload(awsBucketName);
+        }, 2000);
+      });
+      promise.then(_this.onImageUpload(e), _this.onChangeUserData());
     };
 
     var _this$props$auth3 = _this.props.auth,
@@ -290,7 +300,7 @@ function (_Component) {
       userBio: creatorBio,
       isLoading: false,
       fullPostUploadLoader: false,
-      newUserImageSetup: souseNewUserImageSetup,
+      newUserImageSetup: true,
       selectedFileType: null,
       uploadButtonClicked: false,
       userOptionsDisplay: "",
@@ -323,6 +333,7 @@ function (_Component) {
     _this.deleteImageUpload = _this.deleteImageUpload.bind(_assertThisInitialized(_this));
     _this.onChangeUserData = _this.onChangeUserData.bind(_assertThisInitialized(_this));
     _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
+    _this.onSubmitNewUser = _this.onSubmitNewUser.bind(_assertThisInitialized(_this));
     _this.onSubmitWithUploadedImage = _this.onSubmitWithUploadedImage.bind(_assertThisInitialized(_this));
     _this.handleThemeTypeChange = _this.handleThemeTypeChange.bind(_assertThisInitialized(_this));
     return _this;
@@ -411,7 +422,7 @@ function (_Component) {
     }
   }, {
     key: "deleteImageUpload",
-    value: function deleteImageUpload() {
+    value: function deleteImageUpload(awsBucketName, cb) {
       var _this$props$auth5 = this.props.auth,
           isAuthenticated = _this$props$auth5.isAuthenticated,
           user = _this$props$auth5.user;
@@ -422,26 +433,26 @@ function (_Component) {
         region: _config["default"].AWS_REGION
       });
       var params = {
-        Bucket: _config["default"].AWS_BUCKET_NAME,
+        Bucket: awsBucketName,
         Prefix: 'users/' + "" + loggedinUserId + "/"
       };
-      s3bucket.listObjects(params, function (err, data, cb) {
+      s3bucket.listObjects(params, function (err, data) {
         if (err) return cb(err);
-        if (data.Deleted.length == 0) return cb();
+        if (data.Contents.length == 0) return cb();
         params = {
           Bucket: _config["default"].AWS_BUCKET_NAME
         };
         params.Delete = {
           Objects: []
         };
-        data.Deleted.forEach(function (content) {
+        data.Contents.forEach(function (content) {
           params.Delete.Objects.push({
             Key: content.Key
           });
         });
-        s3bucket.deleteObjects(params, function (err, data, cb) {
+        s3bucket.deleteObjects(params, function (err, data) {
           if (err) return cb(err);
-          if (data.Deleted.length == 1000) emptyBucket(_config["default"].AWS_BUCKET_NAME, cb);else cb();
+          if (data.Contents.length == 1000) emptyBucket(awsBucketName, cb);else cb();
         });
       });
     }
@@ -876,12 +887,18 @@ function (_Component) {
         "data-success": "right"
       }, "Currently, Souse cannot upload images with capitalized file extensions (JPEG, PNG, and GIF). Please ensure that your file extensions are lowercase.")), _react["default"].createElement("div", {
         "class": "form-group col-12"
-      }, this.state.newUserImageSetup != true ? _react["default"].createElement("h4", {
+      }, this.state.newUserImageSetup == true ? _react["default"].createElement("h4", {
         "class": "d-flex justify-content-center"
       }, "Please upload a profile image to complete the setup process") : _react["default"].createElement("div", null, this.state.uploadButtonClicked == false ? _react["default"].createElement(_mainStyling.SouseButton, {
-        type: "submit",
+        type: "button",
         className: "waves-effect waves-light btn-large d-block mx-auto",
         onClick: this.onSubmit
+      }, _react["default"].createElement("p", {
+        "class": "lead buttonFont"
+      }, "Update User")) : _react["default"].createElement("div", null, loggedinUserImage == "" ? _react["default"].createElement(_mainStyling.SouseButton, {
+        type: "button",
+        className: "waves-effect waves-light btn-large d-block mx-auto",
+        onClick: this.onSubmitNewUser
       }, _react["default"].createElement("p", {
         "class": "lead buttonFont"
       }, "Update User")) : _react["default"].createElement(_mainStyling.SouseButton, {
@@ -889,7 +906,7 @@ function (_Component) {
         className: "waves-effect waves-light btn-large d-block mx-auto"
       }, _react["default"].createElement("p", {
         "class": "lead buttonFont"
-      }, "Update User")))))))))) : _react["default"].createElement(_Page["default"], null));
+      }, "Update User"))))))))))) : _react["default"].createElement(_Page["default"], null));
     }
   }]);
 

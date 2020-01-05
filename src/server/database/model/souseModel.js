@@ -42,7 +42,7 @@ const UserSchema = new mongoose.Schema({
     },
     newUserImageSetup: {
         type: Boolean,
-        default: false
+        default: true
     },
     userBio: {
         type: String,

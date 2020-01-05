@@ -78,7 +78,7 @@ class EditUserProfile extends Component {
             userBio: creatorBio,
             isLoading: false,
             fullPostUploadLoader: false,
-            newUserImageSetup: souseNewUserImageSetup,
+            newUserImageSetup: true,
             selectedFileType: null,
             uploadButtonClicked: false,
             userOptionsDisplay: "",
@@ -110,6 +110,7 @@ class EditUserProfile extends Component {
         this.deleteImageUpload = this.deleteImageUpload.bind(this);
         this.onChangeUserData = this.onChangeUserData.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onSubmitNewUser = this.onSubmitNewUser.bind(this);
         this.onSubmitWithUploadedImage = this.onSubmitWithUploadedImage.bind(this);
         this.handleThemeTypeChange = this.handleThemeTypeChange.bind(this);
     }
@@ -287,7 +288,7 @@ class EditUserProfile extends Component {
             this.setState({
                 selectedFileType: selectedFile,
                 uploadButtonClicked: true,
-                newUserImageSetup: true,
+                newUserImageSetup: false,
                 userId: loggedinUserId,
                 userImage: "https://souse.s3.amazonaws.com/users/" + "" + this.state.userId + "" + "/" + this.state.userId + ".jpg"
             });
@@ -295,7 +296,7 @@ class EditUserProfile extends Component {
             this.setState({
                 selectedFileType: selectedFile,
                 uploadButtonClicked: true,
-                newUserImageSetup: true,
+                newUserImageSetup: false,
                 userId: loggedinUserId,
                 userImage: "https://souse.s3.amazonaws.com/users/" + "" + this.state.userId + "" + "/" + this.state.userId + "." + selectedFile.type.slice(6).toLowerCase()
             });
@@ -308,7 +309,7 @@ class EditUserProfile extends Component {
         const userId = this.state.userId;
         const apiRoute = "/souseAPI";
         const uploadRoute = "/u/upload";
-        const uploadData = new FormData(e.target);
+        const uploadData = new FormData();
         uploadData.append("image", this.state.selectedFileType, this.state.selectedFileType.name);
 
         axios.post(apiRoute + uploadRoute + "/" + userId, uploadData, {
@@ -323,7 +324,7 @@ class EditUserProfile extends Component {
             });
     }
 
-    deleteImageUpload() {
+    deleteImageUpload(awsBucketName, cb) {
         const {isAuthenticated, user} = this.props.auth; 
         const loggedinUserId = user.id;
          let s3bucket = new aws.S3({
@@ -333,15 +334,15 @@ class EditUserProfile extends Component {
          });
 
          var params = {
-             Bucket: awsConfig.AWS_BUCKET_NAME,
+             Bucket: awsBucketName,
              Prefix: 'users/' + "" + loggedinUserId + "/"
          };
 
 
-         s3bucket.listObjects(params, function (err, data, cb) {
+         s3bucket.listObjects(params, function (err, data) {
              if (err) return cb(err);
 
-             if (data.Deleted.length == 0) return cb();
+             if (data.Contents.length == 0) return cb();
 
              params = {
                  Bucket: awsConfig.AWS_BUCKET_NAME
@@ -350,15 +351,15 @@ class EditUserProfile extends Component {
                  Objects: []
              };
 
-             data.Deleted.forEach(function (content) {
+             data.Contents.forEach(function (content) {
                  params.Delete.Objects.push({
                      Key: content.Key
                  });
              });
 
-             s3bucket.deleteObjects(params, function (err, data, cb) {
+             s3bucket.deleteObjects(params, function (err, data) {
                  if (err) return cb(err);
-                 if (data.Deleted.length == 1000) emptyBucket(awsConfig.AWS_BUCKET_NAME, cb);
+                 if (data.Contents.length == 1000) emptyBucket(awsBucketName, cb);
                  else cb();
              });
          });
@@ -433,12 +434,24 @@ class EditUserProfile extends Component {
         this.onChangeUserData();
     }
 
-
-    onSubmitWithUploadedImage = (e) => { // Submits all changes
+    onSubmitNewUser = (e) => { // Submits all changes
         e.preventDefault();
-        this.deleteImageUpload();
         this.onImageUpload(e);
         this.onChangeUserData();
+    }
+
+    onSubmitWithUploadedImage = (e) => { // Submits all changes
+        const awsBucketName = awsConfig.AWS_BUCKET_NAME;
+        e.preventDefault();
+        const promise = new Promise(() => {
+            setTimeout (() => {
+                this.deleteImageUpload(awsBucketName);
+            }, 2000)
+        });
+        promise.then(
+            this.onImageUpload(e),
+            this.onChangeUserData()
+        );
     }
 
     render() {
@@ -792,19 +805,29 @@ class EditUserProfile extends Component {
                                                         </span>
                                                     </div>
                                                     <div class="form-group col-12">
-                                                        {this.state.newUserImageSetup != true
+                                                        {this.state.newUserImageSetup == true
                                                             ?   <h4 class="d-flex justify-content-center">Please upload a profile image to complete the setup process</h4>
                                                             :   <div>
                                                                 {this.state.uploadButtonClicked == false
                                                                     ?   <SouseButton 
-                                                                            type="submit" 
+                                                                            type="button" 
                                                                             className="waves-effect waves-light btn-large d-block mx-auto" 
                                                                             onClick={this.onSubmit}>
                                                                                 <p class="lead buttonFont">Update User</p>
                                                                         </SouseButton>
-                                                                    :   <SouseButton type="submit" className="waves-effect waves-light btn-large d-block mx-auto">
-                                                                            <p class="lead buttonFont">Update User</p>
-                                                                        </SouseButton>
+                                                                    :   <div>
+                                                                        {loggedinUserImage == ""
+                                                                            ?   <SouseButton 
+                                                                                    type="button" 
+                                                                                    className="waves-effect waves-light btn-large d-block mx-auto" 
+                                                                                    onClick={this.onSubmitNewUser}>
+                                                                                        <p class="lead buttonFont">Update User</p>
+                                                                                </SouseButton>
+                                                                            :   <SouseButton type="submit" className="waves-effect waves-light btn-large d-block mx-auto">
+                                                                                    <p class="lead buttonFont">Update User</p>
+                                                                                </SouseButton>
+                                                                        }
+                                                                        </div>
                                                                 }
                                                             </div>  
                                                         }

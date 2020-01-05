@@ -77,7 +77,6 @@ class DeleteUserProfile extends Component {
         this.deleteUserFollowers();
         this.deleteUserFollows();
         this.deleteUserComments();
-        this.deleteImageUpload();
         this.deleteUser();
     }
 
@@ -126,7 +125,7 @@ class DeleteUserProfile extends Component {
             .catch(err => console.log(err));
     }
 
-    deleteImageUpload() {
+    deleteImageUpload(awsBucketName, cb) {
         const {isAuthenticated, user} = this.props.auth; 
         const loggedinUserId = user.id;
          let s3bucket = new aws.S3({
@@ -136,15 +135,15 @@ class DeleteUserProfile extends Component {
          });
 
          var params = {
-             Bucket: awsConfig.AWS_BUCKET_NAME,
+             Bucket: awsBucketName,
              Prefix: 'users/' + "" + loggedinUserId + "/"
          };
 
 
-         s3bucket.listObjects(params, function (err, data, cb) {
+         s3bucket.listObjects(params, function (err, data) {
              if (err) return cb(err);
 
-             if (data.Deleted.length == 0) return cb();
+             if (data.Contents.length == 0) return cb();
 
              params = {
                  Bucket: awsConfig.AWS_BUCKET_NAME
@@ -153,15 +152,15 @@ class DeleteUserProfile extends Component {
                  Objects: []
              };
 
-             data.Deleted.forEach(function (content) {
+             data.Contents.forEach(function (content) {
                  params.Delete.Objects.push({
                      Key: content.Key
                  });
              });
 
-             s3bucket.deleteObjects(params, function (err, data, cb) {
+             s3bucket.deleteObjects(params, function (err, data) {
                  if (err) return cb(err);
-                 if (data.Deleted.length == 1000) emptyBucket(awsConfig.AWS_BUCKET_NAME, cb);
+                 if (data.Contents.length == 1000) emptyBucket(awsBucketName, cb);
                  else cb();
              });
          });
@@ -172,11 +171,17 @@ class DeleteUserProfile extends Component {
     }
 
     handleChangeDeleteConfirm(deleteUserConfirm) {
-        this.setState({ deleteUserConfirm });
-        this.deleteProfile();
-        this.props.history.push("/");
-        this.props.logoutUser(this.props.history);
-        window.location.reload(true);
+        const awsBucketName = awsConfig.AWS_BUCKET_NAME;
+        const promise = new Promise(() => {
+            setTimeout(() => {
+                this.deleteImageUpload(awsBucketName);
+            }, 5000)
+        });
+        promise.then(
+            this.deleteProfile(),
+            this.setState({ deleteUserConfirm }),
+            this.props.logoutUser(this.props.history)
+        );
     }
 
     render() {
