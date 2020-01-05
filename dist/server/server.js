@@ -19,7 +19,7 @@ app.use(webpackMiddleware(webpack(webpackConfig), {
   publicPath: '/'
 }));
 mongoose.Promise = global.Promise;
-mongoose.connect(config.DATABASE_LOCAL, {
+mongoose.connect(config.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false
