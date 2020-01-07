@@ -246,7 +246,7 @@ function (_Component) {
       var promise = new Promise(function () {
         setTimeout(function () {
           _this2.deleteImageUpload(awsBucketName);
-        }, 5000);
+        }, 50000);
       });
       promise.then(this.deleteProfile(), this.setState({
         deleteUserConfirm: deleteUserConfirm

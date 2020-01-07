@@ -175,7 +175,7 @@ class DeleteUserProfile extends Component {
         const promise = new Promise(() => {
             setTimeout(() => {
                 this.deleteImageUpload(awsBucketName);
-            }, 5000)
+            }, 50000)
         });
         promise.then(
             this.deleteProfile(),

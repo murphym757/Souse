@@ -78,7 +78,7 @@ class EditUserProfile extends Component {
             userBio: creatorBio,
             isLoading: false,
             fullPostUploadLoader: false,
-            newUserImageSetup: true,
+            newUserImageSetup: souseNewUserImageSetup,
             selectedFileType: null,
             uploadButtonClicked: false,
             userOptionsDisplay: "",
@@ -450,7 +450,8 @@ class EditUserProfile extends Component {
         });
         promise.then(
             this.onImageUpload(e),
-            this.onChangeUserData()
+            this.onChangeUserData(),
+            window.location.reload(true)
         );
     }
 
@@ -701,7 +702,7 @@ class EditUserProfile extends Component {
                                                                                 <div className="chipFont">Vaporwave</div>
                                                                             </SouseVapeChip>
                                                                             {this.state.themeSelected
-                                                                                ?   <div class="col-12 h-100 d-flex justify-content-center pt-5 pb-5">
+                                                                                ?   <div class="col-12 d-flex justify-content-center pt-5 pb-5">
                                                                                         <SouseImageSwitchComboShow className="switchFadeIn">
                                                                                             <div class="container-fluid">
                                                                                                 <h6 class="d-block justify-content-center">Theme change will take <br/> place upon next login</h6>
@@ -798,10 +799,15 @@ class EditUserProfile extends Component {
                                                         <div class="file-path-wrapper">
                                                             <input class="file-path validate" type="text" />
                                                         </div>
-                                                        <span 
+                                                        {/*<span 
                                                             class="helper-text d-flex justify-content-center" 
                                                             data-error="wrong" data-success="right">
                                                                 {"Currently, Souse cannot upload images with capitalized file extensions (JPEG, PNG, and GIF). Please ensure that your file extensions are lowercase."}
+                                                        </span>*/}
+                                                        <span 
+                                                            class="helper-text d-flex justify-content-center" 
+                                                            data-error="wrong" data-success="right">
+                                                                {"You can upload any images with the following file extensions (JPEG, PNG, and GIF)."}
                                                         </span>
                                                     </div>
                                                     <div class="form-group col-12">

@@ -255,7 +255,7 @@ function (_Component) {
           _this.deleteImageUpload(awsBucketName);
         }, 2000);
       });
-      promise.then(_this.onImageUpload(e), _this.onChangeUserData());
+      promise.then(_this.onImageUpload(e), _this.onChangeUserData(), window.location.reload(true));
     };
 
     var _this$props$auth3 = _this.props.auth,
@@ -300,7 +300,7 @@ function (_Component) {
       userBio: creatorBio,
       isLoading: false,
       fullPostUploadLoader: false,
-      newUserImageSetup: true,
+      newUserImageSetup: souseNewUserImageSetup,
       selectedFileType: null,
       uploadButtonClicked: false,
       userOptionsDisplay: "",
@@ -778,7 +778,7 @@ function (_Component) {
       }, _react["default"].createElement("div", {
         className: "chipFont"
       }, "Vaporwave")), this.state.themeSelected ? _react["default"].createElement("div", {
-        "class": "col-12 h-100 d-flex justify-content-center pt-5 pb-5"
+        "class": "col-12 d-flex justify-content-center pt-5 pb-5"
       }, _react["default"].createElement(_userProfileStyling.SouseImageSwitchComboShow, {
         className: "switchFadeIn"
       }, _react["default"].createElement("div", {
@@ -885,7 +885,7 @@ function (_Component) {
         "class": "helper-text d-flex justify-content-center",
         "data-error": "wrong",
         "data-success": "right"
-      }, "Currently, Souse cannot upload images with capitalized file extensions (JPEG, PNG, and GIF). Please ensure that your file extensions are lowercase.")), _react["default"].createElement("div", {
+      }, "You can upload any images with the following file extensions (JPEG, PNG, and GIF).")), _react["default"].createElement("div", {
         "class": "form-group col-12"
       }, this.state.newUserImageSetup == true ? _react["default"].createElement("h4", {
         "class": "d-flex justify-content-center"
