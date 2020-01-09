@@ -12,7 +12,7 @@ export default class RouteNotFound extends Component {
       );
         return (
             <div class="container">
-                <ErrorFont class="d-flex justify-content-center">404</ErrorFont>
+                <ErrorFont class="d-flex justify-content-center fadeInError">404</ErrorFont>
                 {Page404}
             </div>
           );

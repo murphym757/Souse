@@ -53,7 +53,7 @@ function (_Component) {
       return _react["default"].createElement("div", {
         "class": "container"
       }, _react["default"].createElement(_Styling.ErrorFont, {
-        "class": "d-flex justify-content-center"
+        "class": "d-flex justify-content-center fadeInError"
       }, "404"), Page404);
     }
   }]);

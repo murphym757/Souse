@@ -851,7 +851,7 @@ class UserProfile extends Component {
                                 </div>
                             </div>
                         </div>
-                }
+                }   
             </div>
         );
     }

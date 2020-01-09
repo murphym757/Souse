@@ -33,4 +33,54 @@ export const ErrorFont = styled.h1 `
         18px 9px 1px ${props => props.theme.secondaryColor},
         19px 10px 1px ${props => props.theme.secondaryColor},
         20px 10px 1px ${props => props.theme.secondaryColor};
+
+        animation: fadeIn ease 10s;
+        -webkit-animation: fadeIn ease 10s;
+        -moz-animation: fadeIn ease 10s;
+        -o-animation: fadeIn ease 10s;
+        -ms-animation: fadeIn ease 10s;
+        @keyframes fadeIn {
+                0% {
+                    opacity:0;
+                }
+                100% {
+                    opacity:1;
+                }
+            }
+
+            @-moz-keyframes fadeIn {
+                0% {
+                    opacity:0;
+                }
+                100% {
+                    opacity:1;
+                }
+            }
+
+            @-webkit-keyframes fadeIn {
+                0% {
+                    opacity:0;
+                }
+                100% {
+                    opacity:1;
+                }
+            }
+
+            @-o-keyframes fadeIn {
+                0% {
+                    opacity:0;
+                }
+                100% {
+                    opacity:1;
+                }
+            }
+
+            @-ms-keyframes fadeIn {
+                0% {
+                    opacity:0;
+                }
+                100% {
+                    opacity:1;
+                }
+            }
 `;

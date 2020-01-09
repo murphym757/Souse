@@ -4,6 +4,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import PostsGrid from '../posts/postsGrid';
+import RouteNotFound from '../navigation/404Page';
 
 class PostPage extends Component {
     constructor(props) {
@@ -87,17 +88,19 @@ class PostPage extends Component {
       return userData;
     }
 
+    postNotFound() {
+        const errorRoute = < RouteNotFound / >
+            return errorRoute;
+    }
+
     render() {
         const {isAuthenticated, user} = this.props.auth;
+        const sousePostData = this.props.sousePostData;
         return (
             <div>
-            {isAuthenticated 
-                    ? <div>
-                        {this.foundUserData()}
-                    </div>
-                    : <div>
-                        {this.foundUserData()}
-                    </div>
+                {sousePostData.filter(i => i._id === "" + this.state.originalPostId + "").length > 0
+                    ?   <div>{this.foundUserData()}</div>
+                    :   <div>{this.postNotFound()}</div>
                 }
             </div>
           );

@@ -4,6 +4,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import UserProfile from '../userProfile/userProfile';
+import RouteNotFound from '../navigation/404Page';
 
 class UserPage extends Component {
     constructor(props) {
@@ -15,7 +16,8 @@ class UserPage extends Component {
         const usernameFound = usernameFinder.slice(1);
         
         this.state = {
-            postCreatorUsername: usernameFound
+            postCreatorUsername: usernameFound,
+            creatorUserId: "",
         };
     }
 
@@ -48,17 +50,19 @@ class UserPage extends Component {
         return userData;
     }
 
+    userNotFound() {
+        const errorRoute = <RouteNotFound/>
+        return errorRoute;
+    }
+
     render() {
         const {isAuthenticated, user} = this.props.auth;
+        const souseUserData = this.props.souseUserData;
         return (
             <div>
-            {isAuthenticated 
-                    ?   <div>
-                            {this.userFinder()}
-                        </div>
-                    :   <div>
-                            {this.userFinder()}
-                        </div>
+                {souseUserData.filter(i => i.username === "" + this.state.postCreatorUsername + "").length > 0
+                    ?   <div>{this.userFinder()}</div>
+                    :   <div>{this.userNotFound()}</div>
                 }
             </div>
           );
