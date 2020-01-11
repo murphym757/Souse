@@ -33,6 +33,9 @@ souseRouter.route('/u/update/nopassword/:id')
 souseRouter.route('/u/delete/:id')
     .get(userController.delete_user);
 
+souseRouter.route('/u/delete/userimage/:id')
+    .get(userController.delete_user_image);
+
 souseRouter.route('/u/p/delete/:id')
     .get(userController.delete_posts);
 

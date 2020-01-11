@@ -228,13 +228,13 @@ const mongoose = require('mongoose'),
                     acl: 'public-read',
                     serverSideEncryption: 'AES256',
                     contentType: multerS3.AUTO_CONTENT_TYPE,
-                    metadata: function (req, file, cb) {
+                    metadata: (req, file, cb) => {
                         const extname = path.extname(file.originalname).toLowerCase();
                         cb(null, {
                             fieldName: "This image: " + userId + extname + " was uploaded to Souse"
                         });
                     },
-                    key: function (req, file, cb) {
+                    key: (req, file, cb) => {
                         const filetypes = /jpeg|jpg|png|gif/;
                         const extname = path.extname(file.originalname).toLowerCase();
                         console.log(extname);
@@ -267,6 +267,47 @@ const mongoose = require('mongoose'),
         User.findByIdAndRemove({_id: req.params.id}, (err, user) => {
             if(err) res.json(err);
             else res.json('User ', {_id: req.params.id}, ' was successfully removed');
+        });
+    }
+
+    // Delete User's Image
+    exports.delete_user_image = (req, res, next) => {
+        const loggedinUserId = req.params.id;
+        const awsBucketName = config.AWS_BUCKET_NAME;
+        let s3bucket = new aws.S3({
+            accessKeyId: config.AWS_ACCESS_KEY_ID,
+            secretAccessKey: config.AWS_SECRET_ACCESS_KEY,
+            region: config.AWS_REGION
+        });
+
+        var params = {
+            Bucket: awsBucketName,
+            Prefix: 'users/' + "" + loggedinUserId + "/"
+        };
+
+        s3bucket.listObjects(params, (err, data, cb) => {
+            if (err);
+
+            if (data.Contents.length == 0);
+
+            params = {
+                Bucket: config.AWS_BUCKET_NAME
+            };
+            params.Delete = {
+                Objects: []
+            };
+
+            data.Contents.forEach((content) => {
+                params.Delete.Objects.push({
+                    Key: content.Key
+                });
+            });
+            s3bucket.deleteObjects(params, (err, data, cb) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                }
+            });
         });
     }
 
