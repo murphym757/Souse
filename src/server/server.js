@@ -19,7 +19,7 @@ const express = require('express'),
 ));
 
 mongoose.Promise = global.Promise;
-mongoose.connect(config.MONGODB_URI, {
+mongoose.connect(config.DATABASE_LOCAL, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useFindAndModify: false

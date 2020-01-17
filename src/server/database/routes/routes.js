@@ -1,4 +1,4 @@
-const souseRouter = require('express').Router(),
+const souseRouter = require('express').Router({mergeParams: true}),
     userController = require('../controller/userController'),
     postController = require('../controller/postController'),
     commentController = require('../controller/commentController'),
@@ -55,6 +55,9 @@ souseRouter.route('/p/add')
 souseRouter.route('/p')
     .get(postController.find_post);
 
+souseRouter.route('/p/upload/:id')
+    .post(postController.upload_post_image);
+
 souseRouter.route('/p/edit/:id')
     .get(postController.edit_post);
 
@@ -63,6 +66,9 @@ souseRouter.route('/p/update/:id')
 
 souseRouter.route('/p/delete/:id')
     .get(postController.delete_post);
+
+souseRouter.route('/p/delete/postimage/:id')
+    .get(postController.delete_post_image);
 
 // Routes for Comments
 souseRouter.route('/c/add')

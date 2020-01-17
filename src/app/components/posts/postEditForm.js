@@ -4,7 +4,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import RouteNotFound from '../navigation/404Page';
-import styled from 'styled-components';
+import SwitchTheme from "react-switch";
 import {
     SouseButton,
     SouseForm,
@@ -18,9 +18,10 @@ import {
 import {
     DeleteIcon
 } from '../../assets/styles/userProfileStyling';
-
+import PostDelete from './postDelete';
 import { WaveLoading } from 'styled-spinkit';
 import S3 from 'aws-s3';
+import aws from 'aws-sdk';
 import awsConfig from '../../../server/config';
 
 class PostEdit extends Component {
@@ -37,13 +38,14 @@ class PostEdit extends Component {
             posts: [],
             users: [],
             originalPostId: postIdFound,
-            postCreatorId: '',
             postCaption: '',
             postLocation: '',
             postImageURL: '',
             updateImage: false,
             updatedImage: false,
             isLoading: false,
+            selectedFileType: null,
+            uploadButtonClicked: false,
             postCreatorId: loggedInUserId,
             postUnixTimestamp: postTimestamp,
             postImageFileType: '',
@@ -51,80 +53,18 @@ class PostEdit extends Component {
             newPostImageFileName: '',
             username: loggedInUsername,
             fullPostUploadLoader: false,
-            deleteButtonClicked: false
+            deleteButtonClicked: false,
+            userOptionsDisplay: '1'
         };
         this.onChangepostCaption = this.onChangepostCaption.bind(this);
         this.onChangepostLocation = this.onChangepostLocation.bind(this);
         this.onUpdateImage = this.onUpdateImage.bind(this);
+        this.handleSelectedImage = this.handleSelectedImage.bind(this);  
         this.onImageUpload = this.onImageUpload.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        this.onUpdateImageDelete = this.onUpdateImageDelete.bind(this);
-        this.delete = this.delete.bind(this);
-    }
-
-    onChangepostCaption = (e) => {
-        this.setState({
-            postCaption: e.target.value
-        });
-    }
-
-    onChangepostLocation = (e) => {
-        this.setState({
-            postLocation: e.target.value
-        });
-    }
-
-    onUpdateImage = (e) => {
-        this.setState({
-            updateImage: true
-        });
-    }
-
-     onImageUpload = (e) => {
-         const config = {
-             bucketName: awsConfig.AWS_BUCKET_NAME,
-             dirName: "posts/" + "" + this.state.postCreatorId + "",
-             region: awsConfig.AWS_REGION,
-             accessKeyId: awsConfig.AWS_ACCESS_KEY_ID,
-             secretAccessKey: awsConfig.AWS_SECRET_ACCESS_KEY,
-             s3Url: awsConfig.AWS_Uploaded_File_URL_LINK /* Required */
-         }
-         const S3Client = new S3(config);
-         const newFileName = "" + this.state.postUnixTimestamp + "";
-         S3Client.uploadFile(e.target.files[0], newFileName)
-             .then((data) => {
-                 console.log(data.location);
-                 this.setState({
-                     postImageURL: data.location,
-                     isLoading: true
-                 });
-             })
-             .catch((err) => {
-                 alert(err);
-             })
-         this.setState({
-             postImageFileType: e.target.files[0].type.slice(6),
-             newPostImageFileName: this.state.postUnixTimestamp + "." + e.target.files[0].type.slice(6),
-             fullPostUploadLoader: true
-         });
-     }
-
-     onUpdateImageDelete = (e) => {
-        const config = {
-             bucketName: awsConfig.AWS_BUCKET_NAME,
-             dirName: "posts/" + "" + this.state.postCreatorId + "",
-             region: awsConfig.AWS_REGION,
-             accessKeyId: awsConfig.AWS_ACCESS_KEY_ID,
-             secretAccessKey: awsConfig.AWS_SECRET_ACCESS_KEY,
-             s3Url: awsConfig.AWS_Uploaded_File_URL_LINK /* Required */
-         }
-
-        const S3Client = new S3(config);
-        const filename = "1561781587964.jpeg";
-        S3Client
-            .deleteFile(filename)
-            .then(res => console.log(res))
-            .catch(err => console.error(err))
+        this.onSubmitWithUploadedImage = this.onSubmitWithUploadedImage.bind(this);
+        this.deleteImageUpload = this.deleteImageUpload.bind(this);
+        this.deletePost = this.deletePost.bind(this);
     }
 
     componentDidMount() {
@@ -146,7 +86,111 @@ class PostEdit extends Component {
           })
     }
 
-    delete() {
+    onChangepostCaption = (e) => {
+        this.setState({
+            postCaption: e.target.value
+        });
+    }
+
+    onChangepostLocation = (e) => {
+        this.setState({
+            postLocation: e.target.value
+        });
+    }
+
+    onUpdateImage = (e) => {
+        this.setState({
+            updateImage: true
+        });
+    }
+
+    handleSelectedImage = (e) => { // Indentifies image change
+        const {isAuthenticated, user} = this.props.auth; 
+        const loggedinUserId = user.id;
+        const selectedFile = e.target.files[0];
+        e.preventDefault();
+        //jpeg|jpg|png|gif
+        // JPEG to JPG
+        if (selectedFile.type == "image/jpeg") {
+            this.setState({
+                selectedFileType: selectedFile,
+                uploadButtonClicked: true,
+                postCreatorId: loggedinUserId,
+                postImageURL: "https://souse.s3.amazonaws.com/posts/" + this.state.originalPostId + '/' + this.state.originalPostId + ".jpg"
+            });
+        } else if (selectedFile.type !== "image/jpeg") {
+            this.setState({
+                selectedFileType: selectedFile,
+                uploadButtonClicked: true,
+                postCreatorId: loggedinUserId,
+                postImageURL: "https://souse.s3.amazonaws.com/posts/" + this.state.originalPostId + '/' + this.state.originalPostId + "." + selectedFile.type.slice(6).toLowerCase()
+            });
+        }
+        console.log(selectedFile.type + " and " + loggedinUserId);
+    }
+
+    onImageUpload = (e) => { // Submits image change
+        const {isAuthenticated, user} = this.props.auth;
+        const loggedInUser = user.id;
+        const postId = this.state.originalPostId;
+        const apiRoute = "/souseAPI";
+        const uploadRoute = "/p/upload";
+        const uploadData = new FormData();
+        uploadData.append("image", this.state.selectedFileType, this.state.selectedFileType.name);
+
+        axios.post(apiRoute + uploadRoute + "/" + postId, uploadData, {
+            headers: {
+                'accept': 'application/json',
+                'Accept-Language': 'en-US,en;q=0.8',
+                'Content-Type': `multipart/form-data; boundary=${uploadData._boundary}`,
+            }
+        })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    deleteImageUpload(awsBucketName, cb) {
+        const postId = this.state.originalPostId;
+        let s3bucket = new aws.S3({
+            accessKeyId: awsConfig.AWS_ACCESS_KEY_ID,
+            secretAccessKey: awsConfig.AWS_SECRET_ACCESS_KEY,
+            region: awsConfig.AWS_REGION
+        });
+
+        var params = {
+            Bucket: awsBucketName,
+            Prefix: 'posts/' + "" + postId + "/"
+        };
+
+
+        s3bucket.listObjects(params, function (err, data) {
+            if (err) return cb(err);
+
+            if (data.Contents.length == 0) return cb();
+
+            params = {
+                Bucket: awsConfig.AWS_BUCKET_NAME
+            };
+            params.Delete = {
+                Objects: []
+            };
+
+            data.Contents.forEach(function (content) {
+                params.Delete.Objects.push({
+                    Key: content.Key
+                });
+            });
+
+            s3bucket.deleteObjects(params, function (err, data) {
+                if (err) return cb(err);
+                if (data.Contents.length == 1000) emptyBucket(awsBucketName, cb);
+                else cb();
+            });
+        });
+    }
+
+    deletePost() {
         const {isAuthenticated, user} = this.props.auth;
         const userName = user.username;
         const postId = this.state.originalPostId;
@@ -155,8 +199,24 @@ class PostEdit extends Component {
         axios.get(apiRoute + deleteRoute + "/" + postId)
             .then(console.log('Deleted'))
             .catch(err => console.log(err));
+        this.deleteImageUpload();
         this.props.history.push("/" + userName);
         window.location.reload();
+    }
+
+    onSubmitWithUploadedImage = (e) => { // Submits all changes
+        const awsBucketName = awsConfig.AWS_BUCKET_NAME;
+        e.preventDefault();
+        const promise = new Promise(() => {
+            setTimeout(() => {
+                this.deleteImageUpload(awsBucketName);
+            }, 2000)
+        });
+        promise.then(
+            this.onImageUpload(e),
+            this.onSubmit(e),
+            window.location.reload(true)
+        );
     }
 
     onSubmit = (e) => {
@@ -185,15 +245,15 @@ class PostEdit extends Component {
         const loggedInUser = "" + user.id + "";
         const postCreatorId = this.state.postCreatorId;
         const updateImage = this.state.updateImage;
-        const updatedImage = this.state.updatedImage;
+        const userOptionsDisplay = this.state.userOptionsDisplay;
         
         return (
             <div>
                 {isAuthenticated && postCreatorId == loggedInUser
                     ? <div class="container-fluid">
-                            <SouseForm className="pt-5" onSubmit={this.onSubmit}>
-                                <div class="row container mx-auto pt-5">
-                                    <div class="col-lg-6 pt-5">
+                            <SouseForm className="pt-5" onSubmit={this.onSubmitWithUploadedImage}>
+                                <div class="row container mx-auto">
+                                    <div class="col-lg-6">
                                         <div class="input-field pb-5">
                                             <textarea 
                                                 class="materialize-textarea editText"
@@ -217,16 +277,16 @@ class PostEdit extends Component {
                                             <label class="active" for="souseLocationPost">Location</label>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 pt-5">
-                                        <div class="row justify-content-center h-100">
-                                        {this.state.deleteButtonClicked == false
+                                    <div class="col-lg-6">
+                                        <div class="row justify-content-center">
+                                        {userOptionsDisplay == "1"
                                             ?   <div 
                                                     data-toggle="collapse" 
-                                                    href="#postDeleteCollapse" 
+                                                    href="#postDeleteCollapse2" 
                                                     role="button" 
                                                     aria-expanded="false" 
-                                                    aria-controls="postDeleteCollapse"
-                                                    onClick={this.optionClicked = (e) => {this.setState({deleteButtonClicked: true})}}
+                                                    aria-controls="postDeleteCollapse2"
+                                                    onClick={this.optionClicked = (e) => {this.setState({userOptionsDisplay: '2'})}}
                                                     class="form-group col-6 d-flex justify-content-center mx-auto my-auto">
                                                         <DeleteIcon />
                                                 </div>
@@ -236,67 +296,52 @@ class PostEdit extends Component {
                                                     role="button" 
                                                     aria-expanded="false" 
                                                     aria-controls="postDeleteCollapse"
-                                                    onClick={this.optionClicked = (e) => {this.setState({deleteButtonClicked: false})}}
+                                                    onClick={this.optionClicked = (e) => {this.setState({userOptionsDisplay: '1'})}}
                                                     class="form-group col-6 d-flex justify-content-center mx-auto my-auto">
                                                         <DeleteIcon />
                                                 </div>
                                         }
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row justify-content-center">
-                                            <div class="form-group col d-flex justify-content-center">
-                                            {this.state.deleteButtonClicked == false
-                                                ?   <div class="row justify-content-center col-12">
-                                                    {this.state.fullPostUploadLoader
-                                                        ?   <div>
-                                                                {this.state.isLoading
-                                                                    ?   <div>
-                                                                            <h4 class="d-flex justify-content-center pb-2">User Image Updated</h4>
-                                                                        </div>
-                                                                    :   <div class="row d-flex justify-content-center">
-                                                                            <SouseLoadingIcon className="spinner-grow" role="status">
-                                                                                <span class="sr-only">Loading...</span>
-                                                                            </SouseLoadingIcon>
-                                                                            <SouseLoadingIcon2 className="spinner-grow" role="status">
-                                                                                <span class="sr-only">Loading...</span>
-                                                                            </SouseLoadingIcon2>
-                                                                            <SouseLoadingIcon3 className="spinner-grow" role="status">
-                                                                                <span class="sr-only">Loading...</span>
-                                                                            </SouseLoadingIcon3>
-                                                                        </div>
-                                                                }
-                                                            </div>
-                                                        :   <div class="file-field input-field col-12">
-                                                                <SouseButton className="btn-large">
-                                                                    <p class="lead buttonFont">Upload</p>
-                                                                    <input 
-                                                                        type="file" 
-                                                                        name="souseImage"
-                                                                        id="souseImagePost"
-                                                                        onChange={this.onImageUpload}
-                                                                    />
-                                                                </SouseButton>
-                                                                <div class="file-path-wrapper">
-                                                                    <input class="file-path validate" type="text" />
+                                        <div class="row">
+                                            <div class="row justify-content-center">
+                                                <div class="form-group col d-flex justify-content-center">
+                                                    {userOptionsDisplay == "1"
+                                                        ?   <div class="row justify-content-center col-12">
+                                                                <div class="file-field input-field col-12">
+                                                                    <SouseButton className="btn-large">
+                                                                        <p class="lead buttonFont">Upload</p>
+                                                                        <input 
+                                                                            type="file" 
+                                                                            id="image"
+                                                                            onChange={this.handleSelectedImage}
+                                                                        />
+                                                                    </SouseButton>
+                                                                    <div class="file-path-wrapper">
+                                                                        <input class="file-path validate" type="text" />
+                                                                    </div>
+                                                                    <span 
+                                                                        class="helper-text d-flex justify-content-center" 
+                                                                        data-error="wrong" data-success="right">
+                                                                            {"Currently, Souse cannot upload images with capitalized file extensions (JPEG, PNG, and GIF). Please ensure that your file extensions are lowercase."}
+                                                                    </span>
                                                                 </div>
-                                                                <span 
-                                                                    class="helper-text d-flex justify-content-center" 
-                                                                    data-error="wrong" data-success="right">
-                                                                        {"Currently, Souse cannot upload images with capitalized file extensions (JPEG, PNG, and GIF). Please ensure that your file extensions are lowercase."}
-                                                                </span>
+                                                                {this.state.uploadButtonClicked == false
+                                                                    ?   <SouseButton onClick={this.onSubmit} type="button" className="waves-effect waves-light btn-large"> {/* Update post w/o updating image */}
+                                                                            <p class="lead buttonFont">Update post no image</p>
+                                                                        </SouseButton>
+                                                                    :   <SouseButton type="submit" className="waves-effect waves-light btn-large"> {/* Update post and image */}
+                                                                            <p class="lead buttonFont">Update image</p>
+                                                                        </SouseButton>
+                                                                }
+
                                                             </div>
+                                                        :   <PostDelete />
                                                     }
-                                                        <SouseButton onClick={this.onUpdateImageDelete} type="submit" className="waves-effect waves-light btn-large">
-                                                            <p class="lead buttonFont">Update</p>
-                                                        </SouseButton>
-                                                    </div>
-                                                :   <SouseButton onClick={this.delete} className="waves-effect waves-light btn-large">
-                                                        <p class="lead buttonFont">Delete</p>
-                                                    </SouseButton>
-                                            }
+                                                </div>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
                             </SouseForm>
                     </div>
                     : <RouteNotFound />

@@ -422,7 +422,6 @@ class EditUserProfile extends Component {
                     });
                 this.props.history.push("/");
                 window.location.reload(true);
-
             } else {
 
             }

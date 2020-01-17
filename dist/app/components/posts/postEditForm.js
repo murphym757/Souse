@@ -17,7 +17,7 @@ var _reactRedux = require("react-redux");
 
 var _Page = _interopRequireDefault(require("../navigation/404Page"));
 
-var _styledComponents = _interopRequireDefault(require("styled-components"));
+var _reactSwitch = _interopRequireDefault(require("react-switch"));
 
 var _mainStyling = require("../../assets/styles/mainStyling");
 
@@ -25,9 +25,13 @@ var _postsStyling = require("../../assets/styles/postsStyling");
 
 var _userProfileStyling = require("../../assets/styles/userProfileStyling");
 
+var _postDelete = _interopRequireDefault(require("./postDelete"));
+
 var _styledSpinkit = require("styled-spinkit");
 
 var _awsS = _interopRequireDefault(require("aws-s3"));
+
+var _awsSdk = _interopRequireDefault(require("aws-sdk"));
 
 var _config = _interopRequireDefault(require("../../../server/config"));
 
@@ -38,8 +42,6 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -63,8 +65,6 @@ function (_Component) {
   _inherits(PostEdit, _Component);
 
   function PostEdit(props) {
-    var _this$state;
-
     var _this;
 
     _classCallCheck(this, PostEdit);
@@ -89,55 +89,68 @@ function (_Component) {
       });
     };
 
-    _this.onImageUpload = function (e) {
-      var config = {
-        bucketName: _config["default"].AWS_BUCKET_NAME,
-        dirName: "posts/" + "" + _this.state.postCreatorId + "",
-        region: _config["default"].AWS_REGION,
-        accessKeyId: _config["default"].AWS_ACCESS_KEY_ID,
-        secretAccessKey: _config["default"].AWS_SECRET_ACCESS_KEY,
-        s3Url: _config["default"].AWS_Uploaded_File_URL_LINK
-        /* Required */
+    _this.handleSelectedImage = function (e) {
+      // Indentifies image change
+      var _this$props$auth = _this.props.auth,
+          isAuthenticated = _this$props$auth.isAuthenticated,
+          user = _this$props$auth.user;
+      var loggedinUserId = user.id;
+      var selectedFile = e.target.files[0];
+      e.preventDefault(); //jpeg|jpg|png|gif
+      // JPEG to JPG
 
-      };
-      var S3Client = new _awsS["default"](config);
-      var newFileName = "" + _this.state.postUnixTimestamp + "";
-      S3Client.uploadFile(e.target.files[0], newFileName).then(function (data) {
-        console.log(data.location);
-
+      if (selectedFile.type == "image/jpeg") {
         _this.setState({
-          postImageURL: data.location,
-          isLoading: true
+          selectedFileType: selectedFile,
+          uploadButtonClicked: true,
+          postCreatorId: loggedinUserId,
+          postImageURL: "https://souse.s3.amazonaws.com/posts/" + _this.state.originalPostId + '/' + _this.state.originalPostId + ".jpg"
         });
-      })["catch"](function (err) {
-        alert(err);
-      });
+      } else if (selectedFile.type !== "image/jpeg") {
+        _this.setState({
+          selectedFileType: selectedFile,
+          uploadButtonClicked: true,
+          postCreatorId: loggedinUserId,
+          postImageURL: "https://souse.s3.amazonaws.com/posts/" + _this.state.originalPostId + '/' + _this.state.originalPostId + "." + selectedFile.type.slice(6).toLowerCase()
+        });
+      }
 
-      _this.setState({
-        postImageFileType: e.target.files[0].type.slice(6),
-        newPostImageFileName: _this.state.postUnixTimestamp + "." + e.target.files[0].type.slice(6),
-        fullPostUploadLoader: true
+      console.log(selectedFile.type + " and " + loggedinUserId);
+    };
+
+    _this.onImageUpload = function (e) {
+      // Submits image change
+      var _this$props$auth2 = _this.props.auth,
+          isAuthenticated = _this$props$auth2.isAuthenticated,
+          user = _this$props$auth2.user;
+      var loggedInUser = user.id;
+      var postId = _this.state.originalPostId;
+      var apiRoute = "/souseAPI";
+      var uploadRoute = "/p/upload";
+      var uploadData = new FormData();
+      uploadData.append("image", _this.state.selectedFileType, _this.state.selectedFileType.name);
+
+      _axios["default"].post(apiRoute + uploadRoute + "/" + postId, uploadData, {
+        headers: {
+          'accept': 'application/json',
+          'Accept-Language': 'en-US,en;q=0.8',
+          'Content-Type': "multipart/form-data; boundary=".concat(uploadData._boundary)
+        }
+      })["catch"](function (error) {
+        console.log(error);
       });
     };
 
-    _this.onUpdateImageDelete = function (e) {
-      var config = {
-        bucketName: _config["default"].AWS_BUCKET_NAME,
-        dirName: "posts/" + "" + _this.state.postCreatorId + "",
-        region: _config["default"].AWS_REGION,
-        accessKeyId: _config["default"].AWS_ACCESS_KEY_ID,
-        secretAccessKey: _config["default"].AWS_SECRET_ACCESS_KEY,
-        s3Url: _config["default"].AWS_Uploaded_File_URL_LINK
-        /* Required */
-
-      };
-      var S3Client = new _awsS["default"](config);
-      var filename = "1561781587964.jpeg";
-      S3Client.deleteFile(filename).then(function (res) {
-        return console.log(res);
-      })["catch"](function (err) {
-        return console.error(err);
+    _this.onSubmitWithUploadedImage = function (e) {
+      // Submits all changes
+      var awsBucketName = _config["default"].AWS_BUCKET_NAME;
+      e.preventDefault();
+      var promise = new Promise(function () {
+        setTimeout(function () {
+          _this.deleteImageUpload(awsBucketName);
+        }, 2000);
       });
+      promise.then(_this.onImageUpload(e), _this.onSubmit(e), window.location.reload(true));
     };
 
     _this.onSubmit = function (e) {
@@ -164,33 +177,45 @@ function (_Component) {
       window.location.reload();
     };
 
-    var _this$props$auth = _this.props.auth,
-        isAuthenticated = _this$props$auth.isAuthenticated,
-        user = _this$props$auth.user;
+    var _this$props$auth3 = _this.props.auth,
+        isAuthenticated = _this$props$auth3.isAuthenticated,
+        _user = _this$props$auth3.user;
     var postTimestamp = _this.props.location.state.postTimestamp;
-    var loggedInUsername = user.username;
-    var loggedInUserId = user.id;
+    var loggedInUsername = _user.username;
+    var loggedInUserId = _user.id;
     var postIdPathname = window.location.pathname;
     var postIdFound = postIdPathname.slice(8);
-    _this.state = (_this$state = {
+    _this.state = {
       posts: [],
       users: [],
       originalPostId: postIdFound,
-      postCreatorId: '',
       postCaption: '',
       postLocation: '',
       postImageURL: '',
       updateImage: false,
       updatedImage: false,
-      isLoading: false
-    }, _defineProperty(_this$state, "postCreatorId", loggedInUserId), _defineProperty(_this$state, "postUnixTimestamp", postTimestamp), _defineProperty(_this$state, "postImageFileType", ''), _defineProperty(_this$state, "postImageFileName", ''), _defineProperty(_this$state, "newPostImageFileName", ''), _defineProperty(_this$state, "username", loggedInUsername), _defineProperty(_this$state, "fullPostUploadLoader", false), _defineProperty(_this$state, "deleteButtonClicked", false), _this$state);
+      isLoading: false,
+      selectedFileType: null,
+      uploadButtonClicked: false,
+      postCreatorId: loggedInUserId,
+      postUnixTimestamp: postTimestamp,
+      postImageFileType: '',
+      postImageFileName: '',
+      newPostImageFileName: '',
+      username: loggedInUsername,
+      fullPostUploadLoader: false,
+      deleteButtonClicked: false,
+      userOptionsDisplay: '1'
+    };
     _this.onChangepostCaption = _this.onChangepostCaption.bind(_assertThisInitialized(_this));
     _this.onChangepostLocation = _this.onChangepostLocation.bind(_assertThisInitialized(_this));
     _this.onUpdateImage = _this.onUpdateImage.bind(_assertThisInitialized(_this));
+    _this.handleSelectedImage = _this.handleSelectedImage.bind(_assertThisInitialized(_this));
     _this.onImageUpload = _this.onImageUpload.bind(_assertThisInitialized(_this));
     _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
-    _this.onUpdateImageDelete = _this.onUpdateImageDelete.bind(_assertThisInitialized(_this));
-    _this["delete"] = _this["delete"].bind(_assertThisInitialized(_this));
+    _this.onSubmitWithUploadedImage = _this.onSubmitWithUploadedImage.bind(_assertThisInitialized(_this));
+    _this.deleteImageUpload = _this.deleteImageUpload.bind(_assertThisInitialized(_this));
+    _this.deletePost = _this.deletePost.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -218,11 +243,44 @@ function (_Component) {
       });
     }
   }, {
-    key: "delete",
-    value: function _delete() {
-      var _this$props$auth2 = this.props.auth,
-          isAuthenticated = _this$props$auth2.isAuthenticated,
-          user = _this$props$auth2.user;
+    key: "deleteImageUpload",
+    value: function deleteImageUpload(awsBucketName, cb) {
+      var postId = this.state.originalPostId;
+      var s3bucket = new _awsSdk["default"].S3({
+        accessKeyId: _config["default"].AWS_ACCESS_KEY_ID,
+        secretAccessKey: _config["default"].AWS_SECRET_ACCESS_KEY,
+        region: _config["default"].AWS_REGION
+      });
+      var params = {
+        Bucket: awsBucketName,
+        Prefix: 'posts/' + "" + postId + "/"
+      };
+      s3bucket.listObjects(params, function (err, data) {
+        if (err) return cb(err);
+        if (data.Contents.length == 0) return cb();
+        params = {
+          Bucket: _config["default"].AWS_BUCKET_NAME
+        };
+        params.Delete = {
+          Objects: []
+        };
+        data.Contents.forEach(function (content) {
+          params.Delete.Objects.push({
+            Key: content.Key
+          });
+        });
+        s3bucket.deleteObjects(params, function (err, data) {
+          if (err) return cb(err);
+          if (data.Contents.length == 1000) emptyBucket(awsBucketName, cb);else cb();
+        });
+      });
+    }
+  }, {
+    key: "deletePost",
+    value: function deletePost() {
+      var _this$props$auth4 = this.props.auth,
+          isAuthenticated = _this$props$auth4.isAuthenticated,
+          user = _this$props$auth4.user;
       var userName = user.username;
       var postId = this.state.originalPostId;
       var apiRoute = "/souseAPI";
@@ -232,6 +290,7 @@ function (_Component) {
         return console.log(err);
       });
 
+      this.deleteImageUpload();
       this.props.history.push("/" + userName);
       window.location.reload();
     }
@@ -240,22 +299,22 @@ function (_Component) {
     value: function render() {
       var _this3 = this;
 
-      var _this$props$auth3 = this.props.auth,
-          isAuthenticated = _this$props$auth3.isAuthenticated,
-          user = _this$props$auth3.user;
+      var _this$props$auth5 = this.props.auth,
+          isAuthenticated = _this$props$auth5.isAuthenticated,
+          user = _this$props$auth5.user;
       var loggedInUser = "" + user.id + "";
       var postCreatorId = this.state.postCreatorId;
       var updateImage = this.state.updateImage;
-      var updatedImage = this.state.updatedImage;
+      var userOptionsDisplay = this.state.userOptionsDisplay;
       return _react["default"].createElement("div", null, isAuthenticated && postCreatorId == loggedInUser ? _react["default"].createElement("div", {
         "class": "container-fluid"
       }, _react["default"].createElement(_mainStyling.SouseForm, {
         className: "pt-5",
-        onSubmit: this.onSubmit
+        onSubmit: this.onSubmitWithUploadedImage
       }, _react["default"].createElement("div", {
-        "class": "row container mx-auto pt-5"
+        "class": "row container mx-auto"
       }, _react["default"].createElement("div", {
-        "class": "col-lg-6 pt-5"
+        "class": "col-lg-6"
       }, _react["default"].createElement("div", {
         "class": "input-field pb-5"
       }, _react["default"].createElement("textarea", {
@@ -282,18 +341,18 @@ function (_Component) {
         "class": "active",
         "for": "souseLocationPost"
       }, "Location"))), _react["default"].createElement("div", {
-        "class": "col-lg-6 pt-5"
+        "class": "col-lg-6"
       }, _react["default"].createElement("div", {
-        "class": "row justify-content-center h-100"
-      }, this.state.deleteButtonClicked == false ? _react["default"].createElement("div", {
+        "class": "row justify-content-center"
+      }, userOptionsDisplay == "1" ? _react["default"].createElement("div", {
         "data-toggle": "collapse",
-        href: "#postDeleteCollapse",
+        href: "#postDeleteCollapse2",
         role: "button",
         "aria-expanded": "false",
-        "aria-controls": "postDeleteCollapse",
+        "aria-controls": "postDeleteCollapse2",
         onClick: this.optionClicked = function (e) {
           _this3.setState({
-            deleteButtonClicked: true
+            userOptionsDisplay: '2'
           });
         },
         "class": "form-group col-6 d-flex justify-content-center mx-auto my-auto"
@@ -305,36 +364,19 @@ function (_Component) {
         "aria-controls": "postDeleteCollapse",
         onClick: this.optionClicked = function (e) {
           _this3.setState({
-            deleteButtonClicked: false
+            userOptionsDisplay: '1'
           });
         },
         "class": "form-group col-6 d-flex justify-content-center mx-auto my-auto"
-      }, _react["default"].createElement(_userProfileStyling.DeleteIcon, null))))), _react["default"].createElement("div", {
+      }, _react["default"].createElement(_userProfileStyling.DeleteIcon, null))), _react["default"].createElement("div", {
+        "class": "row"
+      }, _react["default"].createElement("div", {
         "class": "row justify-content-center"
       }, _react["default"].createElement("div", {
         "class": "form-group col d-flex justify-content-center"
-      }, this.state.deleteButtonClicked == false ? _react["default"].createElement("div", {
+      }, userOptionsDisplay == "1" ? _react["default"].createElement("div", {
         "class": "row justify-content-center col-12"
-      }, this.state.fullPostUploadLoader ? _react["default"].createElement("div", null, this.state.isLoading ? _react["default"].createElement("div", null, _react["default"].createElement("h4", {
-        "class": "d-flex justify-content-center pb-2"
-      }, "User Image Updated")) : _react["default"].createElement("div", {
-        "class": "row d-flex justify-content-center"
-      }, _react["default"].createElement(_mainStyling.SouseLoadingIcon, {
-        className: "spinner-grow",
-        role: "status"
-      }, _react["default"].createElement("span", {
-        "class": "sr-only"
-      }, "Loading...")), _react["default"].createElement(_mainStyling.SouseLoadingIcon2, {
-        className: "spinner-grow",
-        role: "status"
-      }, _react["default"].createElement("span", {
-        "class": "sr-only"
-      }, "Loading...")), _react["default"].createElement(_mainStyling.SouseLoadingIcon3, {
-        className: "spinner-grow",
-        role: "status"
-      }, _react["default"].createElement("span", {
-        "class": "sr-only"
-      }, "Loading...")))) : _react["default"].createElement("div", {
+      }, _react["default"].createElement("div", {
         "class": "file-field input-field col-12"
       }, _react["default"].createElement(_mainStyling.SouseButton, {
         className: "btn-large"
@@ -342,9 +384,8 @@ function (_Component) {
         "class": "lead buttonFont"
       }, "Upload"), _react["default"].createElement("input", {
         type: "file",
-        name: "souseImage",
-        id: "souseImagePost",
-        onChange: this.onImageUpload
+        id: "image",
+        onChange: this.handleSelectedImage
       })), _react["default"].createElement("div", {
         "class": "file-path-wrapper"
       }, _react["default"].createElement("input", {
@@ -354,18 +395,18 @@ function (_Component) {
         "class": "helper-text d-flex justify-content-center",
         "data-error": "wrong",
         "data-success": "right"
-      }, "Currently, Souse cannot upload images with capitalized file extensions (JPEG, PNG, and GIF). Please ensure that your file extensions are lowercase.")), _react["default"].createElement(_mainStyling.SouseButton, {
-        onClick: this.onUpdateImageDelete,
+      }, "Currently, Souse cannot upload images with capitalized file extensions (JPEG, PNG, and GIF). Please ensure that your file extensions are lowercase.")), this.state.uploadButtonClicked == false ? _react["default"].createElement(_mainStyling.SouseButton, {
+        onClick: this.onSubmit,
+        type: "button",
+        className: "waves-effect waves-light btn-large"
+      }, " ", _react["default"].createElement("p", {
+        "class": "lead buttonFont"
+      }, "Update post no image")) : _react["default"].createElement(_mainStyling.SouseButton, {
         type: "submit",
         className: "waves-effect waves-light btn-large"
-      }, _react["default"].createElement("p", {
+      }, " ", _react["default"].createElement("p", {
         "class": "lead buttonFont"
-      }, "Update"))) : _react["default"].createElement(_mainStyling.SouseButton, {
-        onClick: this["delete"],
-        className: "waves-effect waves-light btn-large"
-      }, _react["default"].createElement("p", {
-        "class": "lead buttonFont"
-      }, "Delete")))))) : _react["default"].createElement(_Page["default"], null));
+      }, "Update image"))) : _react["default"].createElement(_postDelete["default"], null)))))))) : _react["default"].createElement(_Page["default"], null));
     }
   }]);
 
