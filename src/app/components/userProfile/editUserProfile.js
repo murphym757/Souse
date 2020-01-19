@@ -265,7 +265,7 @@ class EditUserProfile extends Component {
                     userImage: res.data.userImage
                 });
           })
-          .catch(function (error) {
+          .catch((error) => {
               console.log(error);
           })
     }
@@ -317,7 +317,7 @@ class EditUserProfile extends Component {
                 'Content-Type': `multipart/form-data; boundary=${uploadData._boundary}`,
             }
         })
-            .catch(function (error) {
+            .catch((error) => {
                 console.log(error);
             });
     }
@@ -337,7 +337,7 @@ class EditUserProfile extends Component {
          };
 
 
-         s3bucket.listObjects(params, function (err, data) {
+         s3bucket.listObjects(params, (err, data) => {
              if (err) return cb(err);
 
              if (data.Contents.length == 0) return cb();
@@ -349,13 +349,13 @@ class EditUserProfile extends Component {
                  Objects: []
              };
 
-             data.Contents.forEach(function (content) {
+             data.Contents.forEach((content) => {
                  params.Delete.Objects.push({
                      Key: content.Key
                  });
              });
 
-             s3bucket.deleteObjects(params, function (err, data) {
+             s3bucket.deleteObjects(params, (err, data) => {
                  if (err) return cb(err);
                  if (data.Contents.length == 1000) emptyBucket(awsBucketName, cb);
                  else cb();
@@ -385,7 +385,7 @@ class EditUserProfile extends Component {
             const userId = this.state.userId;
 
             axios.post(apiRoute + userWithoutPasswordChangeRoute + "/" + userId, userDataWithoutPasswordChange)
-                .catch(function (error) {
+                .catch((error) => {
                     console.log(error);
                 });
             this.props.history.push("/");
@@ -413,7 +413,7 @@ class EditUserProfile extends Component {
                 const userId = this.state.userId;
 
                 axios.post(apiRoute + userWithPasswordChangeRoute + "/" + userId, userDataWithPasswordChange)
-                    .catch(function (error) {
+                    .catch((error) => {
                         console.log(error);
                     });
                 this.props.history.push("/");

@@ -55,12 +55,11 @@ class MainSource extends Component {
         axios.get(apiRoute + findPostRoute)
             .then(res => {
                 const posts = res.data;
-                console.log(posts);
                 this.setState({
                     posts: posts
                 });
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.log(error);
             })
         { /* Users Collection */ }
@@ -72,7 +71,7 @@ class MainSource extends Component {
                     users: users
                 });
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.log(error);
             })
         { /* Comments Collection */ }
@@ -84,7 +83,7 @@ class MainSource extends Component {
                     comments: comments
                 });
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.log(error);
             })
         { /* Followers Collection */ }
@@ -96,7 +95,7 @@ class MainSource extends Component {
                     followers: followers
                 });
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.log(error);
             })
         { /* Follow Collection */ }
@@ -108,7 +107,7 @@ class MainSource extends Component {
                     follows: follows
                 });
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.log(error);
             })
         { /* Theme Finder */}

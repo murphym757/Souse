@@ -49,7 +49,7 @@ souseRouter.route('/u/followers/delete/:id')
     .get(userController.delete_followers);
 
 // Routes for Posts
-souseRouter.route('/p/add')
+souseRouter.route('/p/add/:postCreator')
     .post(postController.create_post);
 
 souseRouter.route('/p')

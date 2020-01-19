@@ -103,7 +103,7 @@ const mongoose = require('mongoose'),
     }
     // Get User
     exports.find_user = (req, res, next) => {
-        User.find(function (err, users) {
+        User.find((err, users) => {
             if (err) {
                 console.log(err);
             } else {

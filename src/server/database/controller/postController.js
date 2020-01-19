@@ -12,12 +12,12 @@ const mongoose = require('mongoose'),
 
 // Create Post
 exports.create_post = (req, res, next) => {
-    const postCreatorId = req.body.postCreatorId; // This is needed to find the postCreatorId
-    User.findById(postCreatorId, (err, user) => { // Post Caption Upload
+    const postCreator = req.params.postCreator; // This is needed to find the postCreatorId
+    User.findById(postCreator, (err, user) => { // Post Caption Upload
         if (err) throw new Error(err);
 
         const newPost = new Post({
-            postCreator: postCreatorId,
+            postCreator: postCreator,
             sousePosts: {
                 postCaption: req.body.postCaption,
                 postLocation: req.body.postLocation,
@@ -37,7 +37,7 @@ exports.create_post = (req, res, next) => {
         
     });
 
-    User.findById(postCreatorId).populate({ // Sends Data to User Database
+    User.findById(postCreator).populate({ // Sends Data to User Database
             path: 'posts',
             model: 'Users'
         }).exec((err, user) => {})

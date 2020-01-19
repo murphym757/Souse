@@ -113,7 +113,6 @@ function (_Component) {
 
       _axios["default"].get(apiRoute + findPostRoute).then(function (res) {
         var posts = res.data;
-        console.log(posts);
 
         _this2.setState({
           posts: posts

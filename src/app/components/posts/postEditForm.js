@@ -69,7 +69,7 @@ class PostEdit extends Component {
                 postImageURL: res.data.sousePosts.postImageURL
                 });
           })
-          .catch(function (error) {
+          .catch((error) => {
               console.log(error);
           })
     }
@@ -136,7 +136,7 @@ class PostEdit extends Component {
                 'Content-Type': `multipart/form-data; boundary=${uploadData._boundary}`,
             }
         })
-            .catch(function (error) {
+            .catch((error) => {
                 console.log(error);
             });
     }

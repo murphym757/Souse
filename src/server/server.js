@@ -19,7 +19,7 @@ const express = require('express'),
 ));
 
 mongoose.Promise = global.Promise;
-mongoose.connect(config.DATABASE_LOCAL, {
+mongoose.connect(config.MONGODB_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useFindAndModify: false
@@ -38,7 +38,7 @@ app.use(bodyParser.json());
 app.use('/souseAPI', routes);
 
 app.use(express.static(path.join(__dirname + './../../')));
-app.get('*', function (req, res) {
+app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname + './../../src/index.html'));
 });
 

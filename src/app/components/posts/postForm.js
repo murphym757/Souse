@@ -102,15 +102,16 @@ class PostCreate extends Component {
                     'Content-Type': `multipart/form-data; boundary=${uploadData._boundary}`,
                 }
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.log(error);
             });
     }
 
     onSubmit = (e) => {
         e.preventDefault();
+        const postCreator = this.state.postCreatorId;
         const postData = {
-            postCreatorId: this.state.postCreatorId,
+            postCreator: this.state.postCreatorId,
             postCaption: this.state.postCaption,
             postLocation: this.state.postLocation,
             postUnixTimestamp: this.state.postUnixTimestamp,
@@ -120,8 +121,7 @@ class PostCreate extends Component {
         const apiRoute = "/souseAPI";
         const createRoute = "/p/add";
 
-        axios.post(apiRoute + createRoute, postData)
-            .then(res => console.log(res.data));
+        axios.post(apiRoute + createRoute + "/" + postCreator, postData);
 
         this.setState({
             postCreatorId: '',
