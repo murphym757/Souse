@@ -150,8 +150,7 @@ class UserProfile extends Component {
         const apiRoute = "/souseAPI";
         const createRoute = "/follows/add";
 
-        axios.post(apiRoute + createRoute, followData)
-            .then(res => console.log(res.data));
+        axios.post(apiRoute + createRoute, followData);
 
         this.setState({
             followUserId: '',
@@ -175,8 +174,7 @@ class UserProfile extends Component {
         const apiRoute = "/souseAPI";
         const createRoute = "/followers/add";
 
-        axios.post(apiRoute + createRoute, followerData)
-            .then(res => console.log(res.data));
+        axios.post(apiRoute + createRoute, followerData);
 
         this.setState({
             followerUserId: '',

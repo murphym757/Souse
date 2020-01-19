@@ -203,7 +203,6 @@ const mongoose = require('mongoose'),
     exports.upload_user_image = (req, res, next) => {
         const userName = req.params.username;
         const postTimestamp = req.params.timestamp;
-        console.log("this should be the userId: " + userName)
         User.findOne({username: "" + userName + ""}).select("_id username").exec((err, user) => {
             const userData = {
                 _id: user._id,
@@ -242,7 +241,6 @@ const mongoose = require('mongoose'),
                     key: (req, file, cb) => {
                         const filetypes = /jpeg|jpg|png|gif/;
                         const extname = path.extname(file.originalname).toLowerCase();
-                        console.log(extname);
                         const extNameTest = filetypes.test(path.extname(file.originalname).toLowerCase());
                         const mimeTypeTest = filetypes.test(file.mimetype);
                         const newFileName = Date.now().toString();

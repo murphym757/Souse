@@ -49,7 +49,6 @@ class SouseIndex extends Component {
                 this.setState({
                     filteredUsers
                 });
-        console.log(filteredUsers);
   }
 
     componentWillMount() {

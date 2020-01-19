@@ -116,7 +116,6 @@ class PostEdit extends Component {
                 postImageURL: "https://souse.s3.amazonaws.com/users/" + loggedinUserId + '/posts/' + postCreatedDate + '/' + loggedinUserId + "." + selectedFile.type.slice(6).toLowerCase()
             });
         }
-        console.log(selectedFile.type + " and " + loggedinUserId);
     }
 
     onImageUpload = (e) => { // Submits image change
@@ -196,8 +195,7 @@ class PostEdit extends Component {
         const updateRoute = "/p/update";
         const postId = this.state.originalPostId;
 
-        axios.post(apiRoute + updateRoute + "/" + postId, postData)
-            .then(res => console.log(res.data));
+        axios.post(apiRoute + updateRoute + "/" + postId, postData);
         this.props.history.push("/p/" +  postId);
         window.location.reload();
     }

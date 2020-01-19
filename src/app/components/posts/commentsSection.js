@@ -86,8 +86,7 @@ class CommentsSection extends Component {
         const apiRoute = "/souseAPI";
         const createRoute = "/c/add";
 
-        axios.post(apiRoute + createRoute, postData)
-            .then(res => console.log(res.data));
+        axios.post(apiRoute + createRoute, postData);
 
         this.setState({
             commentCreatorId: '',

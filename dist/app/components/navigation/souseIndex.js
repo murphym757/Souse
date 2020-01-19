@@ -69,8 +69,6 @@ function (_Component) {
       _this.setState({
         filteredUsers: filteredUsers
       });
-
-      console.log(filteredUsers);
     };
 
     var _this$props$auth = _this.props.auth,

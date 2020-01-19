@@ -254,7 +254,6 @@ class EditUserProfile extends Component {
         const apiRoute = "/souseAPI";
         const editRoute = "/u/edit";
         const userId = this.state.userId;
-        console.log(userId);
         axios.get(apiRoute + editRoute + "/" + userId)
           .then(res => {
                 this.setState({ 
@@ -301,7 +300,6 @@ class EditUserProfile extends Component {
                 userImage: "https://souse.s3.amazonaws.com/users/" + "" + this.state.userId + "" + "/" + this.state.userId + "." + selectedFile.type.slice(6).toLowerCase()
             });
         }
-        console.log(selectedFile.type + " and " + loggedinUserId);
     }
     onImageUpload = (e) => { // Submits image change
         const {isAuthenticated, user} = this.props.auth; 
@@ -387,7 +385,6 @@ class EditUserProfile extends Component {
             const userId = this.state.userId;
 
             axios.post(apiRoute + userWithoutPasswordChangeRoute + "/" + userId, userDataWithoutPasswordChange)
-                .then(res => console.log(res.data))
                 .catch(function (error) {
                     console.log(error);
                 });
@@ -416,7 +413,6 @@ class EditUserProfile extends Component {
                 const userId = this.state.userId;
 
                 axios.post(apiRoute + userWithPasswordChangeRoute + "/" + userId, userDataWithPasswordChange)
-                    .then(res => console.log(res.data))
                     .catch(function (error) {
                         console.log(error);
                     });

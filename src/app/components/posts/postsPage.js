@@ -72,7 +72,6 @@ class PostPage extends Component {
         const postId = this.state.originalPostId;
         const sousePostCreatorName = this.postCreatorUsernameFinder();
         const sousePostCreatorImage = this.postCreatorImageFinder();
-        console.log(sousePostCreatorImage);
         const sousePostList = ["" + postId + ""],
             sousePostsList = new Set(sousePostList),
             souseFilterPosts = sousePostData.filter(sousePostData => sousePostsList.has(sousePostData._id));

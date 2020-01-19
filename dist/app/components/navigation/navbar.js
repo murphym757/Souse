@@ -73,7 +73,6 @@ function (_Component) {
     var loggedinUser = user.id;
     var loggedinUsername = user.username;
     var loggedinUserTheme = user.userTheme;
-    console.log(loggedinUserTheme);
     _this.state = {
       navbarImage: "",
       currentTheme: "souseDefaultTheme"

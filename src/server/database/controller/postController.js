@@ -40,9 +40,7 @@ exports.create_post = (req, res, next) => {
     User.findById(postCreatorId).populate({ // Sends Data to User Database
             path: 'posts',
             model: 'Users'
-        }).exec((err, user) => {
-        console.log(user.posts);
-    })
+        }).exec((err, user) => {})
 }
 
 // Upload Image

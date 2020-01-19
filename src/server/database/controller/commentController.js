@@ -39,9 +39,7 @@ const mongoose = require('mongoose'),
          User.findById(commentCreatorId).populate({ // Sends Data to User Database
                 path: 'comments',
                 model: 'Users'
-            }).exec((err, user) => {
-            console.log(user.comments);
-        })
+            }).exec((err, user) => {})
     }
 
     // Get Comment

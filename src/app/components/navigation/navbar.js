@@ -26,7 +26,6 @@ class Navbar extends Component {
         const loggedinUser = user.id;
         const loggedinUsername = user.username;
         const loggedinUserTheme = user.userTheme;
-        console.log(loggedinUserTheme);
         this.state = {
             navbarImage: "",
             currentTheme: "souseDefaultTheme"

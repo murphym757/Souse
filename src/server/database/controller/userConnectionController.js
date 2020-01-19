@@ -60,9 +60,7 @@ exports.follows = (req, res, next) => {
     User.findById(followUserId).populate({ // Sends Data to User Database
         path: 'follows',
         model: 'Users'
-    }).exec((err, user) => {
-        console.log(user.follows);
-    })
+    }).exec((err, user) => {})
 }
 
 // Create Follower
@@ -94,9 +92,7 @@ exports.add_follower = (req, res, next) => {
     User.findById(followerUserId).populate({ // Sends Data to User Database
         path: 'followers',
         model: 'Users'
-    }).exec((err, user) => {
-        console.log(user.followers);
-    })
+    }).exec((err, user) => {})
 }
 
 // Delete Follow   "Unfollow"
