@@ -74,9 +74,11 @@ class DeletePost extends Component {
 
     deletePostImage() {
         const postId = this.state.originalPostId;
+        const postCreatorId = this.props.postCreatorId;
+        const postUnixTimestamp = this.props.postUnixTimestamp;
         const apiRoute = "/souseAPI";
         const deleteRoute = "/p/delete/postimage";
-        axios.get(apiRoute + deleteRoute + "/" + postId)
+        axios.get(apiRoute + deleteRoute + "/" + postId + "/" + postCreatorId + "/" + postUnixTimestamp)
             .then(console.log('Post Image Deleted'))
             .catch(err => console.log(err));
     }

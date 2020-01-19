@@ -22,8 +22,6 @@ exports.create_post = (req, res, next) => {
                 postCaption: req.body.postCaption,
                 postLocation: req.body.postLocation,
                 postUnixTimestamp: req.body.postUnixTimestamp,
-                postImageFileType: req.body.postImageFileType,
-                postImageFileName: req.body.postImageFileName,
                 postImageURL: req.body.postImageURL
             }
         });
@@ -50,7 +48,8 @@ exports.create_post = (req, res, next) => {
 // Upload Image
 exports.upload_post_image = (req, res, next) => {
     const postId = req.params.id;
-    const postCreatorId = req.body.postCreatorId;
+    const postCreator = req.params.postCreator;
+    const postUnixTimestamp = req.params.postUnixTimestamp;
     console.log("this should be the postCreatorId: " + postCreatorId)
     Post.findById(postId, (err, post) => {
         aws.config.update({
@@ -90,7 +89,7 @@ exports.upload_post_image = (req, res, next) => {
                     const extNameTest = filetypes.test(path.extname(file.originalname).toLowerCase());
                     const mimeTypeTest = filetypes.test(file.mimetype);
                     const newFileName = Date.now().toString();
-                    const fullPath = 'posts/' + "" + postId + "" + '/' + postId + extname;
+                    const fullPath = 'users/' + "" + postCreator + "" + '/posts/' + postUnixTimestamp + '/' + postCreator + extname;
                     if (mimeTypeTest && extNameTest) {
                         return cb(null, fullPath);
                     } else {
@@ -114,40 +113,43 @@ exports.upload_post_image = (req, res, next) => {
 // Delete User's Image
 exports.delete_post_image = (req, res, next) => {
     const postId = req.params.id;
-    const postCreatorId = req.body.postCreatorId;
-    const awsBucketName = config.AWS_BUCKET_NAME;
-    let s3bucket = new aws.S3({
-        accessKeyId: config.AWS_ACCESS_KEY_ID,
-        secretAccessKey: config.AWS_SECRET_ACCESS_KEY,
-        region: config.AWS_REGION
-    });
-
-    var params = {
-        Bucket: awsBucketName,
-        Prefix: 'posts/' + "" + postId + "/"
-    };
-
-    s3bucket.listObjects(params, (err, data, cb) => {
-        if (err);
-
-        if (data.Contents.length == 0);
-
-        params = {
-            Bucket: config.AWS_BUCKET_NAME
-        };
-        params.Delete = {
-            Objects: []
-        };
-
-        data.Contents.forEach((content) => {
-            params.Delete.Objects.push({
-                Key: content.Key
-            });
+    const postCreator = req.params.postCreator;
+    const postUnixTimestamp = req.params.postUnixTimestamp;
+    Post.findById(postId, (err, post) => {
+        const awsBucketName = config.AWS_BUCKET_NAME;
+        let s3bucket = new aws.S3({
+            accessKeyId: config.AWS_ACCESS_KEY_ID,
+            secretAccessKey: config.AWS_SECRET_ACCESS_KEY,
+            region: config.AWS_REGION
         });
-        s3bucket.deleteObjects(params, (err, data, cb) => {
-            if (err) {
-                console.log(err);
-            } else {}
+
+        var params = {
+            Bucket: awsBucketName,
+            Prefix: 'users/' + "" + postCreator + "" + '/posts/' + postUnixTimestamp + '/'
+        };
+
+        s3bucket.listObjects(params, (err, data, cb) => {
+            if (err);
+
+            if (data.Contents.length == 0);
+
+            params = {
+                Bucket: config.AWS_BUCKET_NAME
+            };
+            params.Delete = {
+                Objects: []
+            };
+
+            data.Contents.forEach((content) => {
+                params.Delete.Objects.push({
+                    Key: content.Key
+                });
+            });
+            s3bucket.deleteObjects(params, (err, data, cb) => {
+                if (err) {
+                    console.log(err);
+                } else {}
+            });
         });
     });
 }
@@ -180,8 +182,6 @@ exports.update_post = (req, res, next) => {
             postCaption: req.body.postCaption,
             postLocation: req.body.postLocation,
             postUnixTimestamp: req.body.postUnixTimestamp,
-            postImageFileType: req.body.postImageFileType,
-            postImageFileName: req.body.postImageFileName,
             postImageURL: req.body.postImageURL
         }
     };

@@ -13,7 +13,7 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _reactRedux = require("react-redux");
 
-var _awsS = _interopRequireDefault(require("aws-s3"));
+var _awsSdk = _interopRequireDefault(require("aws-sdk"));
 
 var _config = _interopRequireDefault(require("../../../server/config"));
 
@@ -69,40 +69,65 @@ function (_Component) {
       });
     };
 
-    _this.onImageUpload = function (e) {
-      var config = {
-        bucketName: _config["default"].AWS_BUCKET_NAME,
-        dirName: "posts/" + "" + _this.state.postCreatorId + "",
-        region: _config["default"].AWS_REGION,
-        accessKeyId: _config["default"].AWS_ACCESS_KEY_ID,
-        secretAccessKey: _config["default"].AWS_SECRET_ACCESS_KEY,
-        s3Url: _config["default"].AWS_Uploaded_File_URL_LINK
-        /* Required */
-
-      };
-      var S3Client = new _awsS["default"](config);
-      var newFileName = "" + _this.state.postUnixTimestamp + "";
-      S3Client.uploadFile(e.target.files[0], newFileName).then(function (data) {
-        _this.setState({
-          postImageURL: data.location,
-          isLoading: false
-        });
-      })["catch"](function (err) {
-        alert(err);
-      });
-
-      _this.setState({
-        postImageFileType: e.target.files[0].type.slice(6),
-        postImageFileName: _this.state.postUnixTimestamp + "." + e.target.files[0].type.slice(6),
-        fullPostUploadLoader: false
-      });
-    };
-
     _this.fullPostUpload = function (e) {
       e.preventDefault();
 
       _this.setState({
         imageUploadOption: false
+      });
+    };
+
+    _this.handleSelectedImage = function (e) {
+      // Indentifies image change
+      var _this$props$auth = _this.props.auth,
+          isAuthenticated = _this$props$auth.isAuthenticated,
+          user = _this$props$auth.user;
+      var loggedinUserId = user.id;
+      var loggedInUsername = user.username;
+      var postCreatedDate = _this.state.postUnixTimestamp;
+      var selectedFile = e.target.files[0];
+      e.preventDefault(); //jpeg|jpg|png|gif
+      // JPEG to JPG
+
+      if (selectedFile.type == "image/jpeg") {
+        _this.setState({
+          selectedFileType: selectedFile,
+          uploadButtonClicked: true,
+          postCreatorId: loggedinUserId,
+          postImageURL: "https://souse.s3.amazonaws.com/users/" + loggedinUserId + '/posts/' + postCreatedDate + '/' + loggedinUserId + ".jpg"
+        });
+      } else if (selectedFile.type !== "image/jpeg") {
+        _this.setState({
+          selectedFileType: selectedFile,
+          uploadButtonClicked: true,
+          postCreatorId: loggedinUserId,
+          postImageURL: "https://souse.s3.amazonaws.com/users/" + loggedinUserId + '/posts/' + postCreatedDate + '/' + loggedinUserId + "." + selectedFile.type.slice(6).toLowerCase()
+        });
+      }
+
+      console.log(selectedFile.type + " and " + loggedinUserId);
+    };
+
+    _this.onImageUpload = function (e) {
+      // Submits image change
+      var _this$props$auth2 = _this.props.auth,
+          isAuthenticated = _this$props$auth2.isAuthenticated,
+          user = _this$props$auth2.user;
+      var loggedInUsername = user.username;
+      var postCreatedDate = _this.state.postUnixTimestamp;
+      var apiRoute = "/souseAPI";
+      var uploadRoute = "/u/upload";
+      var uploadData = new FormData();
+      uploadData.append("image", _this.state.selectedFileType, _this.state.selectedFileType.name);
+
+      _axios["default"].post(apiRoute + uploadRoute + "/" + loggedInUsername + "/" + postCreatedDate, uploadData, {
+        headers: {
+          'accept': 'application/json',
+          'Accept-Language': 'en-US,en;q=0.8',
+          'Content-Type': "multipart/form-data; boundary=".concat(uploadData._boundary)
+        }
+      })["catch"](function (error) {
+        console.log(error);
       });
     };
 
@@ -113,8 +138,6 @@ function (_Component) {
         postCaption: _this.state.postCaption,
         postLocation: _this.state.postLocation,
         postUnixTimestamp: _this.state.postUnixTimestamp,
-        postImageFileType: _this.state.postImageFileType,
-        postImageFileName: _this.state.postImageFileName,
         postImageURL: _this.state.postImageURL
       };
       var apiRoute = "/souseAPI";
@@ -129,36 +152,46 @@ function (_Component) {
         postCaption: '',
         postLocation: '',
         postUnixTimestamp: '',
-        postImageFileType: '',
         postImageURL: ''
       });
 
       window.location.reload();
     };
 
-    var _this$props$auth = _this.props.auth,
-        isAuthenticated = _this$props$auth.isAuthenticated,
-        user = _this$props$auth.user;
-    var loggedinUser = user.id;
-    var loggedinUsername = user.username;
+    _this.onSubmitWithUploadedImage = function (e) {
+      // Submits all changes
+      _this.onImageUpload(e);
+
+      _this.onSubmit(e);
+
+      window.location.reload(true);
+    };
+
+    var _this$props$auth3 = _this.props.auth,
+        isAuthenticated = _this$props$auth3.isAuthenticated,
+        _user = _this$props$auth3.user;
+    var loggedinUser = _user.id;
+    var loggedinUsername = _user.username;
     var postsTotal = _this.props.postsTotal;
     _this.state = {
       postCreatorId: loggedinUser,
       postCaption: '',
       postLocation: '',
       postUnixTimestamp: new Date().valueOf(),
-      postImageFileType: '',
-      postImageFileName: '',
       postImageURL: '',
       username: loggedinUsername,
       imageUploadOption: true,
       isLoading: true,
-      fullPostUploadLoader: true
+      fullPostUploadLoader: true,
+      selectedFileType: null,
+      uploadButtonClicked: false
     };
     _this.onChangepostCaption = _this.onChangepostCaption.bind(_assertThisInitialized(_this));
     _this.onChangepostLocation = _this.onChangepostLocation.bind(_assertThisInitialized(_this));
+    _this.handleSelectedImage = _this.handleSelectedImage.bind(_assertThisInitialized(_this));
     _this.onImageUpload = _this.onImageUpload.bind(_assertThisInitialized(_this));
     _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
+    _this.onSubmitWithUploadedImage = _this.onSubmitWithUploadedImage.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -167,13 +200,13 @@ function (_Component) {
     value: function render() {
       var _React$createElement, _React$createElement2, _React$createElement3, _React$createElement4;
 
-      var _this$props$auth2 = this.props.auth,
-          isAuthenticated = _this$props$auth2.isAuthenticated,
-          user = _this$props$auth2.user;
+      var _this$props$auth4 = this.props.auth,
+          isAuthenticated = _this$props$auth4.isAuthenticated,
+          user = _this$props$auth4.user;
       return _react["default"].createElement("div", {
         "class": "container"
       }, _react["default"].createElement(_mainStyling.SouseForm, {
-        onSubmit: this.onSubmit
+        onSubmit: this.onSubmitWithUploadedImage
       }, this.state.imageUploadOption ? _react["default"].createElement("div", null, _react["default"].createElement("div", {
         "class": "input-field"
       }, _react["default"].createElement("textarea", (_React$createElement = {
@@ -213,7 +246,7 @@ function (_Component) {
         name: "postLocation"
       }, _defineProperty(_React$createElement4, "id", "souseLocationPost"), _defineProperty(_React$createElement4, "rows", "1"), _defineProperty(_React$createElement4, "value", this.state.postLocation), _defineProperty(_React$createElement4, "onChange", this.onChangepostLocation), _React$createElement4)), _react["default"].createElement("label", {
         "for": "souseLocationPost"
-      }, "Location")), _react["default"].createElement("div", null, this.state.fullPostUploadLoader ? _react["default"].createElement("div", {
+      }, "Location")), _react["default"].createElement("div", {
         "class": "file-field input-field"
       }, _react["default"].createElement(_mainStyling.SouseButton, {
         className: "btn-large"
@@ -221,39 +254,21 @@ function (_Component) {
         "class": "lead buttonFont"
       }, "Upload"), _react["default"].createElement("input", {
         type: "file",
-        name: "souseImage",
-        id: "souseImagePost",
-        onChange: this.onImageUpload
+        id: "image",
+        onChange: this.handleSelectedImage
       })), _react["default"].createElement("div", {
         "class": "file-path-wrapper"
       }, _react["default"].createElement("input", {
         "class": "file-path validate",
         type: "text"
-      }))) : _react["default"].createElement("div", null, this.state.isLoading ? _react["default"].createElement("div", {
-        "class": "row d-flex justify-content-center"
-      }, _react["default"].createElement(_mainStyling.SouseLoadingIcon, {
-        className: "spinner-grow",
-        role: "status"
-      }, _react["default"].createElement("span", {
-        "class": "sr-only"
-      }, "Loading...")), _react["default"].createElement(_mainStyling.SouseLoadingIcon2, {
-        className: "spinner-grow",
-        role: "status"
-      }, _react["default"].createElement("span", {
-        "class": "sr-only"
-      }, "Loading...")), _react["default"].createElement(_mainStyling.SouseLoadingIcon3, {
-        className: "spinner-grow",
-        role: "status"
-      }, _react["default"].createElement("span", {
-        "class": "sr-only"
-      }, "Loading..."))) : _react["default"].createElement("div", null, _react["default"].createElement("h6", null, "Image Successfully Uploaded"), _react["default"].createElement("div", {
+      })))), this.state.uploadButtonClicked == false ? _react["default"].createElement("div", null) : _react["default"].createElement("div", {
         "class": "form-group"
       }, _react["default"].createElement(_mainStyling.SouseButton, {
         type: "submit",
         className: "waves-effect waves-light btn-large"
       }, _react["default"].createElement("p", {
         "class": "lead buttonFont"
-      }, "Share")))))))));
+      }, "Share")))));
     }
   }]);
 

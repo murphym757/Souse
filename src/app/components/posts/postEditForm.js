@@ -4,23 +4,14 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import RouteNotFound from '../navigation/404Page';
-import SwitchTheme from "react-switch";
 import {
     SouseButton,
-    SouseForm,
-    SouseLoadingIcon,
-    SouseLoadingIcon2,
-    SouseLoadingIcon3
+    SouseForm
 } from '../../assets/styles/mainStyling';
-import {
-    SouseLabel
-} from '../../assets/styles/postsStyling';
 import {
     DeleteIcon
 } from '../../assets/styles/userProfileStyling';
 import PostDelete from './postDelete';
-import { WaveLoading } from 'styled-spinkit';
-import S3 from 'aws-s3';
 import aws from 'aws-sdk';
 import awsConfig from '../../../server/config';
 
@@ -48,9 +39,6 @@ class PostEdit extends Component {
             uploadButtonClicked: false,
             postCreatorId: loggedInUserId,
             postUnixTimestamp: postTimestamp,
-            postImageFileType: '',
-            postImageFileName: '',
-            newPostImageFileName: '',
             username: loggedInUsername,
             fullPostUploadLoader: false,
             deleteButtonClicked: false,
@@ -107,6 +95,8 @@ class PostEdit extends Component {
     handleSelectedImage = (e) => { // Indentifies image change
         const {isAuthenticated, user} = this.props.auth; 
         const loggedinUserId = user.id;
+        const loggedInUsername = user.username;
+        const postCreatedDate = this.state.postUnixTimestamp;
         const selectedFile = e.target.files[0];
         e.preventDefault();
         //jpeg|jpg|png|gif
@@ -116,14 +106,14 @@ class PostEdit extends Component {
                 selectedFileType: selectedFile,
                 uploadButtonClicked: true,
                 postCreatorId: loggedinUserId,
-                postImageURL: "https://souse.s3.amazonaws.com/posts/" + this.state.originalPostId + '/' + this.state.originalPostId + ".jpg"
+                postImageURL: "https://souse.s3.amazonaws.com/users/" + loggedinUserId + '/posts/' + postCreatedDate + '/' + loggedinUserId + ".jpg"
             });
         } else if (selectedFile.type !== "image/jpeg") {
             this.setState({
                 selectedFileType: selectedFile,
                 uploadButtonClicked: true,
                 postCreatorId: loggedinUserId,
-                postImageURL: "https://souse.s3.amazonaws.com/posts/" + this.state.originalPostId + '/' + this.state.originalPostId + "." + selectedFile.type.slice(6).toLowerCase()
+                postImageURL: "https://souse.s3.amazonaws.com/users/" + loggedinUserId + '/posts/' + postCreatedDate + '/' + loggedinUserId + "." + selectedFile.type.slice(6).toLowerCase()
             });
         }
         console.log(selectedFile.type + " and " + loggedinUserId);
@@ -133,12 +123,14 @@ class PostEdit extends Component {
         const {isAuthenticated, user} = this.props.auth;
         const loggedInUser = user.id;
         const postId = this.state.originalPostId;
+        const postCreatorId = this.state.postCreatorId;
+        const postUnixTimestamp = this.state.postUnixTimestamp;
         const apiRoute = "/souseAPI";
         const uploadRoute = "/p/upload";
         const uploadData = new FormData();
         uploadData.append("image", this.state.selectedFileType, this.state.selectedFileType.name);
 
-        axios.post(apiRoute + uploadRoute + "/" + postId, uploadData, {
+        axios.post(apiRoute + uploadRoute + "/" + postId + "/" + postCreatorId + "/" + postUnixTimestamp, uploadData, {
             headers: {
                 'accept': 'application/json',
                 'Accept-Language': 'en-US,en;q=0.8',
@@ -150,46 +142,18 @@ class PostEdit extends Component {
             });
     }
 
-    deleteImageUpload(awsBucketName, cb) {
+    deleteImageUpload() {
         const postId = this.state.originalPostId;
-        let s3bucket = new aws.S3({
-            accessKeyId: awsConfig.AWS_ACCESS_KEY_ID,
-            secretAccessKey: awsConfig.AWS_SECRET_ACCESS_KEY,
-            region: awsConfig.AWS_REGION
-        });
-
-        var params = {
-            Bucket: awsBucketName,
-            Prefix: 'posts/' + "" + postId + "/"
-        };
-
-
-        s3bucket.listObjects(params, function (err, data) {
-            if (err) return cb(err);
-
-            if (data.Contents.length == 0) return cb();
-
-            params = {
-                Bucket: awsConfig.AWS_BUCKET_NAME
-            };
-            params.Delete = {
-                Objects: []
-            };
-
-            data.Contents.forEach(function (content) {
-                params.Delete.Objects.push({
-                    Key: content.Key
-                });
-            });
-
-            s3bucket.deleteObjects(params, function (err, data) {
-                if (err) return cb(err);
-                if (data.Contents.length == 1000) emptyBucket(awsBucketName, cb);
-                else cb();
-            });
-        });
+        const postCreatorId = this.state.postCreatorId;
+        const postUnixTimestamp = this.state.postUnixTimestamp;
+        const apiRoute = "/souseAPI";
+        const deleteRoute = "/p/delete/postimage";
+        axios.get(apiRoute + deleteRoute + "/" + postId + "/" + postCreatorId + "/" + postUnixTimestamp)
+            .then(console.log('Post Image Deleted'))
+            .catch(err => console.log(err));
     }
 
+    
     deletePost() {
         const {isAuthenticated, user} = this.props.auth;
         const userName = user.username;
@@ -226,8 +190,6 @@ class PostEdit extends Component {
             postCaption: this.state.postCaption,
             postLocation: this.state.postLocation,
             postUnixTimestamp: this.state.postUnixTimestamp,
-            postImageFileType: this.state.postImageFileType,
-            postImageFileName: this.state.newPostImageFileName,
             postImageURL: this.state.postImageURL
         };
         const apiRoute = "/souseAPI";
@@ -244,6 +206,7 @@ class PostEdit extends Component {
         const {isAuthenticated, user} = this.props.auth;
         const loggedInUser = "" + user.id + "";
         const postCreatorId = this.state.postCreatorId;
+        const postUnixTimestamp = this.state.postUnixTimestamp;
         const updateImage = this.state.updateImage;
         const userOptionsDisplay = this.state.userOptionsDisplay;
         
@@ -327,15 +290,17 @@ class PostEdit extends Component {
                                                                 </div>
                                                                 {this.state.uploadButtonClicked == false
                                                                     ?   <SouseButton onClick={this.onSubmit} type="button" className="waves-effect waves-light btn-large"> {/* Update post w/o updating image */}
-                                                                            <p class="lead buttonFont">Update post no image</p>
+                                                                            <p class="lead buttonFont">Update Post</p>
                                                                         </SouseButton>
                                                                     :   <SouseButton type="submit" className="waves-effect waves-light btn-large"> {/* Update post and image */}
-                                                                            <p class="lead buttonFont">Update image</p>
+                                                                            <p class="lead buttonFont">Update Post</p>
                                                                         </SouseButton>
                                                                 }
 
                                                             </div>
-                                                        :   <PostDelete />
+                                                        :   <PostDelete 
+                                                                postUnixTimestamp={postUnixTimestamp}
+                                                                postCreatorId={postCreatorId}/ >
                                                     }
                                                 </div>
                                             </div>

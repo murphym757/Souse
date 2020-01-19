@@ -133,10 +133,12 @@ function (_Component) {
     key: "deletePostImage",
     value: function deletePostImage() {
       var postId = this.state.originalPostId;
+      var postCreatorId = this.props.postCreatorId;
+      var postUnixTimestamp = this.props.postUnixTimestamp;
       var apiRoute = "/souseAPI";
       var deleteRoute = "/p/delete/postimage";
 
-      _axios["default"].get(apiRoute + deleteRoute + "/" + postId).then(console.log('Post Image Deleted'))["catch"](function (err) {
+      _axios["default"].get(apiRoute + deleteRoute + "/" + postId + "/" + postCreatorId + "/" + postUnixTimestamp).then(console.log('Post Image Deleted'))["catch"](function (err) {
         return console.log(err);
       });
     }

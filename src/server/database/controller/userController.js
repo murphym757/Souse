@@ -199,11 +199,16 @@ const mongoose = require('mongoose'),
         });
     }
 
-    // Upload Image
+    // Upload Image (User Page)
     exports.upload_user_image = (req, res, next) => {
-        const userId = req.params.id;
-        console.log("this should be the userId: " + userId )
-        User.findById(userId, (err, user) => {
+        const userName = req.params.username;
+        const postTimestamp = req.params.timestamp;
+        console.log("this should be the userId: " + userName)
+        User.findOne({username: "" + userName + ""}).select("_id username").exec((err, user) => {
+            const userData = {
+                _id: user._id,
+                username: user.username    
+            }
             aws.config.update({
                 accessKeyId: config.AWS_ACCESS_KEY_ID,
                 secretAccessKey: config.AWS_SECRET_ACCESS_KEY,
@@ -231,7 +236,7 @@ const mongoose = require('mongoose'),
                     metadata: (req, file, cb) => {
                         const extname = path.extname(file.originalname).toLowerCase();
                         cb(null, {
-                            fieldName: "This image: " + userId + extname + " was uploaded to Souse"
+                            fieldName: "This image: " + userData.username + extname + " was uploaded to Souse"
                         });
                     },
                     key: (req, file, cb) => {
@@ -241,7 +246,7 @@ const mongoose = require('mongoose'),
                         const extNameTest = filetypes.test(path.extname(file.originalname).toLowerCase());
                         const mimeTypeTest = filetypes.test(file.mimetype);
                         const newFileName = Date.now().toString();
-                        const fullPath = 'users/' + "" + userId + "" + '/' + userId + extname;
+                        const fullPath = 'users/' + "" + userData._id + "" + '/posts/' + postTimestamp + '/' + userData._id + extname;
                         if (mimeTypeTest && extNameTest) {
                             return cb(null, fullPath);
                         } else {

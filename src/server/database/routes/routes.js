@@ -18,7 +18,7 @@ souseRouter.route('/u/account')
 souseRouter.route('/u')
     .get(userController.find_user);
 
-souseRouter.route('/u/upload/:id')
+souseRouter.route('/u/upload/:username/:timestamp')
     .post(userController.upload_user_image);
 
 souseRouter.route('/u/edit/:id')
@@ -55,7 +55,7 @@ souseRouter.route('/p/add')
 souseRouter.route('/p')
     .get(postController.find_post);
 
-souseRouter.route('/p/upload/:id')
+souseRouter.route('/p/upload/:id/:postCreator/:postUnixTimestamp')
     .post(postController.upload_post_image);
 
 souseRouter.route('/p/edit/:id')
@@ -67,7 +67,7 @@ souseRouter.route('/p/update/:id')
 souseRouter.route('/p/delete/:id')
     .get(postController.delete_post);
 
-souseRouter.route('/p/delete/postimage/:id')
+souseRouter.route('/p/delete/postimage/:id/:postCreator/:postUnixTimestamp')
     .get(postController.delete_post_image);
 
 // Routes for Comments

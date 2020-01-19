@@ -17,19 +17,11 @@ var _reactRedux = require("react-redux");
 
 var _Page = _interopRequireDefault(require("../navigation/404Page"));
 
-var _reactSwitch = _interopRequireDefault(require("react-switch"));
-
 var _mainStyling = require("../../assets/styles/mainStyling");
-
-var _postsStyling = require("../../assets/styles/postsStyling");
 
 var _userProfileStyling = require("../../assets/styles/userProfileStyling");
 
 var _postDelete = _interopRequireDefault(require("./postDelete"));
-
-var _styledSpinkit = require("styled-spinkit");
-
-var _awsS = _interopRequireDefault(require("aws-s3"));
 
 var _awsSdk = _interopRequireDefault(require("aws-sdk"));
 
@@ -95,6 +87,8 @@ function (_Component) {
           isAuthenticated = _this$props$auth.isAuthenticated,
           user = _this$props$auth.user;
       var loggedinUserId = user.id;
+      var loggedInUsername = user.username;
+      var postCreatedDate = _this.state.postUnixTimestamp;
       var selectedFile = e.target.files[0];
       e.preventDefault(); //jpeg|jpg|png|gif
       // JPEG to JPG
@@ -104,14 +98,14 @@ function (_Component) {
           selectedFileType: selectedFile,
           uploadButtonClicked: true,
           postCreatorId: loggedinUserId,
-          postImageURL: "https://souse.s3.amazonaws.com/posts/" + _this.state.originalPostId + '/' + _this.state.originalPostId + ".jpg"
+          postImageURL: "https://souse.s3.amazonaws.com/users/" + loggedinUserId + '/posts/' + postCreatedDate + '/' + loggedinUserId + ".jpg"
         });
       } else if (selectedFile.type !== "image/jpeg") {
         _this.setState({
           selectedFileType: selectedFile,
           uploadButtonClicked: true,
           postCreatorId: loggedinUserId,
-          postImageURL: "https://souse.s3.amazonaws.com/posts/" + _this.state.originalPostId + '/' + _this.state.originalPostId + "." + selectedFile.type.slice(6).toLowerCase()
+          postImageURL: "https://souse.s3.amazonaws.com/users/" + loggedinUserId + '/posts/' + postCreatedDate + '/' + loggedinUserId + "." + selectedFile.type.slice(6).toLowerCase()
         });
       }
 
@@ -125,12 +119,14 @@ function (_Component) {
           user = _this$props$auth2.user;
       var loggedInUser = user.id;
       var postId = _this.state.originalPostId;
+      var postCreatorId = _this.state.postCreatorId;
+      var postUnixTimestamp = _this.state.postUnixTimestamp;
       var apiRoute = "/souseAPI";
       var uploadRoute = "/p/upload";
       var uploadData = new FormData();
       uploadData.append("image", _this.state.selectedFileType, _this.state.selectedFileType.name);
 
-      _axios["default"].post(apiRoute + uploadRoute + "/" + postId, uploadData, {
+      _axios["default"].post(apiRoute + uploadRoute + "/" + postId + "/" + postCreatorId + "/" + postUnixTimestamp, uploadData, {
         headers: {
           'accept': 'application/json',
           'Accept-Language': 'en-US,en;q=0.8',
@@ -160,8 +156,6 @@ function (_Component) {
         postCaption: _this.state.postCaption,
         postLocation: _this.state.postLocation,
         postUnixTimestamp: _this.state.postUnixTimestamp,
-        postImageFileType: _this.state.postImageFileType,
-        postImageFileName: _this.state.newPostImageFileName,
         postImageURL: _this.state.postImageURL
       };
       var apiRoute = "/souseAPI";
@@ -199,9 +193,6 @@ function (_Component) {
       uploadButtonClicked: false,
       postCreatorId: loggedInUserId,
       postUnixTimestamp: postTimestamp,
-      postImageFileType: '',
-      postImageFileName: '',
-      newPostImageFileName: '',
       username: loggedInUsername,
       fullPostUploadLoader: false,
       deleteButtonClicked: false,
@@ -244,35 +235,15 @@ function (_Component) {
     }
   }, {
     key: "deleteImageUpload",
-    value: function deleteImageUpload(awsBucketName, cb) {
+    value: function deleteImageUpload() {
       var postId = this.state.originalPostId;
-      var s3bucket = new _awsSdk["default"].S3({
-        accessKeyId: _config["default"].AWS_ACCESS_KEY_ID,
-        secretAccessKey: _config["default"].AWS_SECRET_ACCESS_KEY,
-        region: _config["default"].AWS_REGION
-      });
-      var params = {
-        Bucket: awsBucketName,
-        Prefix: 'posts/' + "" + postId + "/"
-      };
-      s3bucket.listObjects(params, function (err, data) {
-        if (err) return cb(err);
-        if (data.Contents.length == 0) return cb();
-        params = {
-          Bucket: _config["default"].AWS_BUCKET_NAME
-        };
-        params.Delete = {
-          Objects: []
-        };
-        data.Contents.forEach(function (content) {
-          params.Delete.Objects.push({
-            Key: content.Key
-          });
-        });
-        s3bucket.deleteObjects(params, function (err, data) {
-          if (err) return cb(err);
-          if (data.Contents.length == 1000) emptyBucket(awsBucketName, cb);else cb();
-        });
+      var postCreatorId = this.state.postCreatorId;
+      var postUnixTimestamp = this.state.postUnixTimestamp;
+      var apiRoute = "/souseAPI";
+      var deleteRoute = "/p/delete/postimage";
+
+      _axios["default"].get(apiRoute + deleteRoute + "/" + postId + "/" + postCreatorId + "/" + postUnixTimestamp).then(console.log('Post Image Deleted'))["catch"](function (err) {
+        return console.log(err);
       });
     }
   }, {
@@ -304,6 +275,7 @@ function (_Component) {
           user = _this$props$auth5.user;
       var loggedInUser = "" + user.id + "";
       var postCreatorId = this.state.postCreatorId;
+      var postUnixTimestamp = this.state.postUnixTimestamp;
       var updateImage = this.state.updateImage;
       var userOptionsDisplay = this.state.userOptionsDisplay;
       return _react["default"].createElement("div", null, isAuthenticated && postCreatorId == loggedInUser ? _react["default"].createElement("div", {
@@ -401,12 +373,15 @@ function (_Component) {
         className: "waves-effect waves-light btn-large"
       }, " ", _react["default"].createElement("p", {
         "class": "lead buttonFont"
-      }, "Update post no image")) : _react["default"].createElement(_mainStyling.SouseButton, {
+      }, "Update Post")) : _react["default"].createElement(_mainStyling.SouseButton, {
         type: "submit",
         className: "waves-effect waves-light btn-large"
       }, " ", _react["default"].createElement("p", {
         "class": "lead buttonFont"
-      }, "Update image"))) : _react["default"].createElement(_postDelete["default"], null)))))))) : _react["default"].createElement(_Page["default"], null));
+      }, "Update Post"))) : _react["default"].createElement(_postDelete["default"], {
+        postUnixTimestamp: postUnixTimestamp,
+        postCreatorId: postCreatorId
+      })))))))) : _react["default"].createElement(_Page["default"], null));
     }
   }]);
 

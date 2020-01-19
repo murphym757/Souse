@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import S3 from 'aws-s3';
+import aws from 'aws-sdk';
 import awsConfig from '../../../server/config';
 import {
     SouseLoadingIcon,
@@ -24,18 +24,20 @@ class PostCreate extends Component {
             postCaption: '',
             postLocation: '',
             postUnixTimestamp: new Date().valueOf(),
-            postImageFileType: '',
-            postImageFileName: '',
             postImageURL: '',
             username: loggedinUsername,
             imageUploadOption: true,
             isLoading: true,
-            fullPostUploadLoader: true
+            fullPostUploadLoader: true,
+            selectedFileType: null,
+            uploadButtonClicked: false
         };
         this.onChangepostCaption = this.onChangepostCaption.bind(this);
         this.onChangepostLocation = this.onChangepostLocation.bind(this);
+        this.handleSelectedImage = this.handleSelectedImage.bind(this);
         this.onImageUpload = this.onImageUpload.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onSubmitWithUploadedImage = this.onSubmitWithUploadedImage.bind(this);
     }
 
     onChangepostCaption = (e) => {
@@ -50,39 +52,59 @@ class PostCreate extends Component {
         });
     }
 
-    onImageUpload = (e) => {
-        const config = {
-            bucketName: awsConfig.AWS_BUCKET_NAME,
-            dirName: "posts/" + "" + this.state.postCreatorId + "",
-            region: awsConfig.AWS_REGION,
-            accessKeyId: awsConfig.AWS_ACCESS_KEY_ID,
-            secretAccessKey: awsConfig.AWS_SECRET_ACCESS_KEY,
-            s3Url: awsConfig.AWS_Uploaded_File_URL_LINK /* Required */
-        }
-        const S3Client = new S3(config);
-        const newFileName = "" + this.state.postUnixTimestamp + "";
-        S3Client.uploadFile(e.target.files[0], newFileName)
-        .then((data) => {
-            this.setState({
-                postImageURL: data.location,
-                isLoading: false
-            });
-        })
-        .catch((err) => {
-            alert(err);
-        })
-        this.setState({
-            postImageFileType: e.target.files[0].type.slice(6),
-            postImageFileName: this.state.postUnixTimestamp + "." + e.target.files[0].type.slice(6),
-            fullPostUploadLoader: false
-        });
-    }
-
     fullPostUpload = (e) => {
         e.preventDefault();
         this.setState({
             imageUploadOption: false,
         });
+    }
+
+    handleSelectedImage = (e) => { // Indentifies image change
+        const { isAuthenticated, user } = this.props.auth;
+        const loggedinUserId = user.id;
+        const loggedInUsername = user.username;
+        const postCreatedDate = this.state.postUnixTimestamp;
+        const selectedFile = e.target.files[0];
+        e.preventDefault();
+        //jpeg|jpg|png|gif
+        // JPEG to JPG
+        if (selectedFile.type == "image/jpeg") {
+            this.setState({
+                selectedFileType: selectedFile,
+                uploadButtonClicked: true,
+                postCreatorId: loggedinUserId,
+                postImageURL: "https://souse.s3.amazonaws.com/users/" + loggedinUserId + '/posts/' + postCreatedDate + '/' + loggedinUserId + ".jpg"
+            });
+        } else if (selectedFile.type !== "image/jpeg") {
+            this.setState({
+                selectedFileType: selectedFile,
+                uploadButtonClicked: true,
+                postCreatorId: loggedinUserId,
+                postImageURL: "https://souse.s3.amazonaws.com/users/" + loggedinUserId + '/posts/' + postCreatedDate + '/' + loggedinUserId + "." + selectedFile.type.slice(6).toLowerCase()
+            });
+        }
+        console.log(selectedFile.type + " and " + loggedinUserId);
+    }
+
+    onImageUpload = (e) => { // Submits image change
+        const { isAuthenticated, user } = this.props.auth;
+        const loggedInUsername = user.username;  
+        const postCreatedDate = this.state.postUnixTimestamp;
+        const apiRoute = "/souseAPI";
+        const uploadRoute = "/u/upload";
+        const uploadData = new FormData();
+        uploadData.append("image", this.state.selectedFileType, this.state.selectedFileType.name);
+
+        axios.post(apiRoute + uploadRoute + "/" + loggedInUsername + "/" + postCreatedDate, uploadData, {
+                headers: {
+                    'accept': 'application/json',
+                    'Accept-Language': 'en-US,en;q=0.8',
+                    'Content-Type': `multipart/form-data; boundary=${uploadData._boundary}`,
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     onSubmit = (e) => {
@@ -92,8 +114,6 @@ class PostCreate extends Component {
             postCaption: this.state.postCaption,
             postLocation: this.state.postLocation,
             postUnixTimestamp: this.state.postUnixTimestamp,
-            postImageFileType: this.state.postImageFileType,
-            postImageFileName: this.state.postImageFileName,
             postImageURL: this.state.postImageURL
 
         };
@@ -108,17 +128,24 @@ class PostCreate extends Component {
             postCaption: '',
             postLocation: '',
             postUnixTimestamp: '',
-            postImageFileType: '',
             postImageURL: ''
         });
         window.location.reload();
     }
 
+
+    onSubmitWithUploadedImage = (e) => { // Submits all changes
+        this.onImageUpload(e);
+        this.onSubmit(e);
+        window.location.reload(true);
+    }
+    
+
     render() {
         const {isAuthenticated, user} = this.props.auth;
         return (
             <div class="container">
-                <SouseForm onSubmit={this.onSubmit}>
+                <SouseForm onSubmit={this.onSubmitWithUploadedImage}>
                 {this.state.imageUploadOption 
                     ?   <div>
                             <div class="input-field">
@@ -179,49 +206,29 @@ class PostCreate extends Component {
                             </textarea>
                             <label for="souseLocationPost">Location</label>
                         </div>
-                        <div>
-                            {this.state.fullPostUploadLoader
-                                ?   <div class="file-field input-field">
-                                        <SouseButton className="btn-large">
-                                            <p class="lead buttonFont">Upload</p>
-                                            <input 
-                                                type="file" 
-                                                name="souseImage"
-                                                id="souseImagePost"
-                                                onChange={this.onImageUpload}
-                                            />
-                                        </SouseButton>
-                                        <div class="file-path-wrapper">
-                                            <input class="file-path validate" type="text" />
-                                        </div>
-                                    </div>
-                                :   <div>
-                                        {this.state.isLoading
-                                            ?    <div class="row d-flex justify-content-center">
-                                                    <SouseLoadingIcon className="spinner-grow" role="status">
-                                                        <span class="sr-only">Loading...</span>
-                                                    </SouseLoadingIcon>
-                                                    <SouseLoadingIcon2 className="spinner-grow" role="status">
-                                                        <span class="sr-only">Loading...</span>
-                                                    </SouseLoadingIcon2>
-                                                    <SouseLoadingIcon3 className="spinner-grow" role="status">
-                                                        <span class="sr-only">Loading...</span>
-                                                    </SouseLoadingIcon3>
-                                                </div>
-                                            :   <div>
-                                                    <h6>Image Successfully Uploaded</h6>
-                                                    <div class="form-group">
-                                                        <SouseButton type="submit" className="waves-effect waves-light btn-large">
-                                                            <p class="lead buttonFont">Share</p>
-                                                        </SouseButton>
-                                                    </div>
-                                                </div>   
-                                        }
-                                    </div>
-                            }
+                        <div class="file-field input-field">
+                            <SouseButton className="btn-large">
+                                <p class="lead buttonFont">Upload</p>
+                                    <input 
+                                        type="file" 
+                                        id="image"
+                                        onChange={this.handleSelectedImage}
+                                    />
+                            </SouseButton>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text" />
+                            </div>
                         </div>
                     </div>
                 } 
+                {this.state.uploadButtonClicked == false
+                    ?   <div></div>
+                    :   <div class="form-group">
+                            <SouseButton type="submit" className="waves-effect waves-light btn-large">
+                                <p class="lead buttonFont">Share</p>
+                            </SouseButton>
+                        </div>
+                }
                 </SouseForm>
             </div>
           );
