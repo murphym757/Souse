@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { Close } from 'styled-icons/material/Close';
 import { souseMediaQueries } from './mediaQueries';
 
 export const CommentsUserIcon = styled.img `
@@ -94,4 +95,10 @@ export const CommentCreatorFont = styled(Link) `
 
 export const CommentCaptionFont = styled.h6 `
     font-size: 1em;
+`;
+
+export const CommentDeleteIcon = styled(Close) `
+    color: ${props => props.theme.secondaryColor};
+    height: 1.1em;
+    width: 1.5em;
 `;

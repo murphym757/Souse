@@ -420,7 +420,7 @@ class UserProfile extends Component {
                                                     <SouseIndex 
                                                         userPageCreatorUsername={creatorUsername}
                                                         loggedInUsername={loggedInUsername}
-                                                        souseUserData={souseUserData}/ >
+                                                        souseUserData={souseUserData} />
                                                 </div>
                                             </div>
                                             <div class="row d-flex justify-content-center"> {/* Bottom content row */}

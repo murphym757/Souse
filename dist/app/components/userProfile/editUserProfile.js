@@ -25,8 +25,6 @@ var _classnames = _interopRequireDefault(require("classnames"));
 
 var _jquery = _interopRequireDefault(require("jquery"));
 
-var _awsS = _interopRequireDefault(require("aws-s3"));
-
 var _awsSdk = _interopRequireDefault(require("aws-sdk"));
 
 var _config = _interopRequireDefault(require("../../../server/config"));

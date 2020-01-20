@@ -3,11 +3,13 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.CommentCaptionFont = exports.CommentCreatorFont = exports.CommentsUserIcon = void 0;
+exports.CommentDeleteIcon = exports.CommentCaptionFont = exports.CommentCreatorFont = exports.CommentsUserIcon = void 0;
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
 var _reactRouterDom = require("react-router-dom");
+
+var _Close = require("styled-icons/material/Close");
 
 var _mediaQueries = require("./mediaQueries");
 
@@ -35,3 +37,10 @@ var CommentCaptionFont = _styledComponents["default"].h6.withConfig({
 })(["font-size:1em;"]);
 
 exports.CommentCaptionFont = CommentCaptionFont;
+var CommentDeleteIcon = (0, _styledComponents["default"])(_Close.Close).withConfig({
+  displayName: "commentStyling__CommentDeleteIcon",
+  componentId: "d2ntyw-3"
+})(["color:", ";height:1.1em;width:1.5em;"], function (props) {
+  return props.theme.secondaryColor;
+});
+exports.CommentDeleteIcon = CommentDeleteIcon;

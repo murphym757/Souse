@@ -37,6 +37,8 @@ var _commentStyling = require("../../assets/styles/commentStyling");
 
 var _postsStyling = require("../../assets/styles/postsStyling");
 
+var _userProfileStyling = require("../../assets/styles/userProfileStyling");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -169,23 +171,8 @@ function (_Component) {
           isAuthenticated = _this$props$auth3.isAuthenticated,
           user = _this$props$auth3.user;
       var loggedinUser = user.username;
+      var loggedinUserId = user.id;
       var originalPostId = this.props.originalPostData._id;
-      var DeleteIcon = (0, _styledComponents["default"])(_Delete.Delete).withConfig({
-        displayName: "commentsSection__DeleteIcon",
-        componentId: "wmizgj-0"
-      })(["color:#C45758;height:1.1em;width:1.5em;"]);
-      var DotsHorizontalRoundedIcon = (0, _styledComponents["default"])(_DotsHorizontalRounded.DotsHorizontalRounded).withConfig({
-        displayName: "commentsSection__DotsHorizontalRoundedIcon",
-        componentId: "wmizgj-1"
-      })(["color:#C45758;height:1.1em;width:1.5em;"]);
-      var ThumbsOkIcon = (0, _styledComponents["default"])(_ThumbsOk.ThumbsOk).withConfig({
-        displayName: "commentsSection__ThumbsOkIcon",
-        componentId: "wmizgj-2"
-      })(["color:#C45758;height:1.1em;width:1.5em;"]);
-      var ThumbsDownIcon = (0, _styledComponents["default"])(_ThumbsDown.ThumbsDown).withConfig({
-        displayName: "commentsSection__ThumbsDownIcon",
-        componentId: "wmizgj-3"
-      })(["color:#C45758;height:1.1em;width:1.5em;"]);
       return _react["default"].createElement(_postsStyling.SouseDiv, {
         className: "container-fluid"
       }, _react["default"].createElement("div", {
@@ -221,7 +208,10 @@ function (_Component) {
           relative: true,
           time: Date,
           relativeTo: _this2.commentsFinder()[i].commentCreatedDate
-        }))), _react["default"].createElement("div", {
+        })), loggedinUserId == _this2.commentsFinder()[i].commentCreatorId ? _react["default"].createElement(_commentDeleteSection["default"], {
+          commentId: _this2.commentsFinder()[i]._id,
+          originalPostId: originalPostId
+        }) : _react["default"].createElement("div", null)), _react["default"].createElement("div", {
           "class": "row"
         }, " "))));
       }))), isAuthenticated ? _react["default"].createElement("div", {

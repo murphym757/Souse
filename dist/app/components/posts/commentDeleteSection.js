@@ -17,9 +17,7 @@ var _reactRedux = require("react-redux");
 
 var _styledComponents = _interopRequireDefault(require("styled-components"));
 
-var _ThumbsOk = require("styled-icons/typicons/ThumbsOk");
-
-var _ThumbsDown = require("styled-icons/typicons/ThumbsDown");
+var _commentStyling = require("../../assets/styles/commentStyling");
 
 var _postsStyling = require("../../assets/styles/postsStyling");
 
@@ -63,14 +61,13 @@ function (_Component) {
         user = _this$props$auth.user;
     var loggedinUser = user.id;
     var loggedinUsername = user.username;
-    var originalPostId = _this.props.location.state.originalPostId;
-    var commentIdFinder = window.location.pathname;
-    var commentIdFound = commentIdFinder.slice(10);
+    var originalPostId = _this.props.originalPostId;
+    var commentId = _this.props.commentId;
     _this.state = {
       commentCreatorId: loggedinUser,
       commentCreatorUsername: loggedinUsername,
-      commentId: commentIdFound,
-      originalPostId: originalPostId.originalPostId
+      commentId: commentId,
+      originalPostId: originalPostId
     };
     _this["delete"] = _this["delete"].bind(_assertThisInitialized(_this));
     return _this;
@@ -102,14 +99,6 @@ function (_Component) {
           isAuthenticated = _this$props$auth3.isAuthenticated,
           user = _this$props$auth3.user;
       var loggedinUser = user.username;
-      var ThumbsOkIcon = (0, _styledComponents["default"])(_ThumbsOk.ThumbsOk).withConfig({
-        displayName: "commentDeleteSection__ThumbsOkIcon",
-        componentId: "sc-1vwvo78-0"
-      })(["color:#C45758;height:1.1em;width:1.5em;"]);
-      var ThumbsDownIcon = (0, _styledComponents["default"])(_ThumbsDown.ThumbsDown).withConfig({
-        displayName: "commentDeleteSection__ThumbsDownIcon",
-        componentId: "sc-1vwvo78-1"
-      })(["color:#C45758;height:1.1em;width:1.5em;"]);
       return _react["default"].createElement("div", null, _react["default"].createElement("div", {
         "class": "souseCommentInput"
       }, " ", _react["default"].createElement("div", {
@@ -117,27 +106,15 @@ function (_Component) {
       }, _react["default"].createElement(_postsStyling.PreScrollable, null, _react["default"].createElement("div", {
         "class": "row no-gutters commentsSectionBody"
       }, _react["default"].createElement("div", {
-        "class": "col-2"
-      }, _react["default"].createElement(PostPageIcon, {
-        className: "souseUserIconComments",
-        src: "http://www.venmond.com/demo/vendroid/img/avatar/big.jpg",
-        alt: "souseUserIconComments",
-        width: "25px",
-        height: "25px"
-      })), _react["default"].createElement("div", {
         "class": "col-10"
       }, _react["default"].createElement("h6", {
         "class": "souseCommentsCaption"
       }, _react["default"].createElement("div", {
         "class": "row optionRow"
       }, _react["default"].createElement("div", {
-        "class": "col-6"
-      }, _react["default"].createElement(_reactRouterDom.Link, {
-        to: "/p/".concat(this.state.originalPostId)
-      }, _react["default"].createElement(ThumbsDownIcon, null))), _react["default"].createElement("div", {
         "class": "col-6",
         onClick: this["delete"]
-      }, _react["default"].createElement(ThumbsOkIcon, null))))))))));
+      }, _react["default"].createElement(_commentStyling.CommentDeleteIcon, null))))))))));
     }
   }]);
 

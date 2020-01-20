@@ -23,6 +23,9 @@ import {
     PreScrollable,
     SouseDiv
 } from '../../assets/styles/postsStyling';
+import {
+    DeleteIcon
+} from '../../assets/styles/userProfileStyling';
 
 class CommentsSection extends Component {
     constructor(props) {
@@ -103,31 +106,8 @@ class CommentsSection extends Component {
     render() {
         const {isAuthenticated, user} = this.props.auth;
         const loggedinUser = user.username;
+        const loggedinUserId = user.id;
         const originalPostId = this.props.originalPostData._id;
-        const DeleteIcon = styled(Delete)
-        `
-            color: #C45758;
-            height: 1.1em;
-            width: 1.5em;
-        `;
-        const DotsHorizontalRoundedIcon = styled(DotsHorizontalRounded)
-        `
-            color: #C45758;
-            height: 1.1em;
-            width: 1.5em;
-        `;
-        const ThumbsOkIcon = styled(ThumbsOk)
-        `
-            color: #C45758;
-            height: 1.1em;
-            width: 1.5em;
-        `;
-        const ThumbsDownIcon = styled(ThumbsDown)
-        `
-            color: #C45758;
-            height: 1.1em;
-            width: 1.5em;
-        `;
         return (
             <SouseDiv className="container-fluid">
                 <div class="souseCommentInput"> {/* Should go on seperate comments page */}
@@ -154,6 +134,12 @@ class CommentsSection extends Component {
                                                 </CommentCaptionFont>
                                                 <div class="row souseCommentsDataReply no-gutters">
                                                     <h6 class="col-3 commentTime"><Timestamp relative time={Date} relativeTo={this.commentsFinder()[i].commentCreatedDate} /></h6>
+                                                    {loggedinUserId == this.commentsFinder()[i].commentCreatorId 
+                                                        ?   <CommentDelete 
+                                                                commentId={this.commentsFinder()[i]._id}
+                                                                originalPostId={originalPostId} />
+                                                        :   <div></div>
+                                                    }
                                                 </div>
                                                 <div class="row"> {/* Comment Edit Options */}
                                                 </div>

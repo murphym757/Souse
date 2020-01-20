@@ -8,7 +8,6 @@ import RouteNotFound from '../navigation/404Page';
 import SwitchThemeType from "react-switch";
 import classnames from 'classnames';
 import $ from 'jquery';
-import S3 from 'aws-s3';
 import aws from 'aws-sdk';
 import awsConfig from '../../../server/config';
 import DeleteUserProfile from './deleteUserProfile';

@@ -225,7 +225,8 @@ function (_Component) {
       }, sousePostCaption))), _react["default"].createElement("div", {
         "class": "col-12 no-gutters sousePostUserCommentsLink"
       }, commentsTotal == 0 ? _react["default"].createElement(_postsStyling.CommentsLinkFont, {
-        className: "pt-3 pb-3 m-0"
+        className: "pt-3 pb-3 m-0",
+        onClick: this.displayComments
       }, "This post has ", commentsTotal, " comments") : _react["default"].createElement(_postsStyling.CommentsLinkFont, {
         className: "pt-3 pb-3 m-0",
         onClick: this.displayComments

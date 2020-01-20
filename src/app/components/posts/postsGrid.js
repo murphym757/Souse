@@ -177,7 +177,7 @@ class PostsGrid extends Component {
                                                 </CaptionPreScrollable>
                                                 <div class="col-12 no-gutters sousePostUserCommentsLink">
                                                     {commentsTotal == 0
-                                                        ?   <CommentsLinkFont className="pt-3 pb-3 m-0">This post has {commentsTotal} comments</CommentsLinkFont>
+                                                        ?   <CommentsLinkFont className="pt-3 pb-3 m-0" onClick={this.displayComments}>This post has {commentsTotal} comments</CommentsLinkFont>
                                                         :   <CommentsLinkFont className="pt-3 pb-3 m-0" onClick={this.displayComments}>View all {commentsTotal} comments</CommentsLinkFont>
                                                         
                                                     }              
