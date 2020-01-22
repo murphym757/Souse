@@ -18,7 +18,7 @@ souseRouter.route('/u/account')
 souseRouter.route('/u')
     .get(userController.find_user);
 
-souseRouter.route('/u/upload/:username/:timestamp')
+souseRouter.route('/u/upload/:id')
     .post(userController.upload_user_image);
 
 souseRouter.route('/u/edit/:id')
@@ -35,6 +35,9 @@ souseRouter.route('/u/delete/:id')
 
 souseRouter.route('/u/delete/userimage/:id')
     .get(userController.delete_user_image);
+
+souseRouter.route('/u/delete/all/userimage/:id')
+    .get(userController.delete_all_user_images);
 
 souseRouter.route('/u/p/delete/:id')
     .get(userController.delete_posts);

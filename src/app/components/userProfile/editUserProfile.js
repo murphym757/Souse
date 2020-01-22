@@ -288,7 +288,7 @@ class EditUserProfile extends Component {
                 uploadButtonClicked: true,
                 newUserImageSetup: false,
                 userId: loggedinUserId,
-                userImage: "https://souse.s3.amazonaws.com/users/" + "" + this.state.userId + "" + "/" + this.state.userId + ".jpg"
+                userImage: "https://souse.s3.amazonaws.com/users/" + "" + this.state.userId + "" + "/userimage/" + this.state.userId + ".jpg"
             });
         } else if (selectedFile.type !== "image/jpeg") {
             this.setState({
@@ -296,7 +296,7 @@ class EditUserProfile extends Component {
                 uploadButtonClicked: true,
                 newUserImageSetup: false,
                 userId: loggedinUserId,
-                userImage: "https://souse.s3.amazonaws.com/users/" + "" + this.state.userId + "" + "/" + this.state.userId + "." + selectedFile.type.slice(6).toLowerCase()
+                userImage: "https://souse.s3.amazonaws.com/users/" + "" + this.state.userId + "" + "/userimage/" + this.state.userId + "." + selectedFile.type.slice(6).toLowerCase()
             });
         }
     }
@@ -332,7 +332,7 @@ class EditUserProfile extends Component {
 
          var params = {
              Bucket: awsBucketName,
-             Prefix: 'users/' + "" + loggedinUserId + "/"
+             Prefix: 'users/' + "" + loggedinUserId + "" + '/userimage/'
          };
 
 

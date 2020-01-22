@@ -21,7 +21,7 @@ exports.IphoneContainer = IphoneContainer;
 var IphoneOuterImage = _styledComponents["default"].img.withConfig({
   displayName: "registrationStyling__IphoneOuterImage",
   componentId: "sc-4brijw-1"
-})(["z-index:2;@media ", "{height:60vw;}@media ", "{height:60vw;}@media ", "{height:60vw;}@media ", "{height:30vw;}@media ", "{height:60vw;}@media ", "{height:30vw;}@media ", "{height:60vw;}"], _mediaQueries.souseMediaQueries.mobileS.portrait, _mediaQueries.souseMediaQueries.mobileM.portrait, _mediaQueries.souseMediaQueries.mobileL.portrait, _mediaQueries.souseMediaQueries.mobileL.landscape, _mediaQueries.souseMediaQueries.mobileLMax.portrait, _mediaQueries.souseMediaQueries.mobileLMax.landscape, _mediaQueries.souseMediaQueries.tablet.portrait);
+})(["z-index:2;height:30em;@media ", "{height:60vw;}@media ", "{height:70vw;}@media ", "{height:110vw;}@media ", "{height:30vw;}@media ", "{height:110vw;}@media ", "{height:30vw;}@media ", "{height:60vw;}"], _mediaQueries.souseMediaQueries.mobileS.portrait, _mediaQueries.souseMediaQueries.mobileM.portrait, _mediaQueries.souseMediaQueries.mobileL.portrait, _mediaQueries.souseMediaQueries.mobileL.landscape, _mediaQueries.souseMediaQueries.mobileLMax.portrait, _mediaQueries.souseMediaQueries.mobileLMax.landscape, _mediaQueries.souseMediaQueries.tablet.portrait);
 
 exports.IphoneOuterImage = IphoneOuterImage;
 

@@ -48,7 +48,6 @@ exports.upload_post_image = (req, res, next) => {
     const postId = req.params.id;
     const postCreator = req.params.postCreator;
     const postUnixTimestamp = req.params.postUnixTimestamp;
-    console.log("this should be the postCreatorId: " + postCreatorId)
     Post.findById(postId, (err, post) => {
         aws.config.update({
             accessKeyId: config.AWS_ACCESS_KEY_ID,

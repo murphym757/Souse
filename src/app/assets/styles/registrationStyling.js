@@ -82,6 +82,7 @@ export const IphoneContainer = styled.div `
 
 export const IphoneOuterImage = styled.img `
     z-index: 2;
+    height: 30em;
     /* Media Queries */
     /* ----------------------------------------- */
     /* Small Mobile Phones */
@@ -90,18 +91,18 @@ export const IphoneOuterImage = styled.img `
     } 
     /* Medium Mobile Phones */
     @media ${souseMediaQueries.mobileM.portrait} {
-        height: 60vw;
+        height: 70vw;
     } 
     /* Large Mobile Phones */
     @media ${souseMediaQueries.mobileL.portrait} {
-        height: 60vw;
+        height: 110vw;
     }
     @media ${souseMediaQueries.mobileL.landscape} {
         height: 30vw;
     }
      /* Large Mobile Phones (Max) */
     @media ${souseMediaQueries.mobileLMax.portrait} {
-        height: 60vw;
+        height: 110vw;
     }
     @media ${souseMediaQueries.mobileLMax.landscape} {
         height: 30vw;

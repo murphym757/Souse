@@ -190,7 +190,7 @@ function (_Component) {
           uploadButtonClicked: true,
           newUserImageSetup: false,
           userId: loggedinUserId,
-          userImage: "https://souse.s3.amazonaws.com/users/" + "" + _this.state.userId + "" + "/" + _this.state.userId + ".jpg"
+          userImage: "https://souse.s3.amazonaws.com/users/" + "" + _this.state.userId + "" + "/userimage/" + _this.state.userId + ".jpg"
         });
       } else if (selectedFile.type !== "image/jpeg") {
         _this.setState({
@@ -198,7 +198,7 @@ function (_Component) {
           uploadButtonClicked: true,
           newUserImageSetup: false,
           userId: loggedinUserId,
-          userImage: "https://souse.s3.amazonaws.com/users/" + "" + _this.state.userId + "" + "/" + _this.state.userId + "." + selectedFile.type.slice(6).toLowerCase()
+          userImage: "https://souse.s3.amazonaws.com/users/" + "" + _this.state.userId + "" + "/userimage/" + _this.state.userId + "." + selectedFile.type.slice(6).toLowerCase()
         });
       }
     };
@@ -429,7 +429,7 @@ function (_Component) {
       });
       var params = {
         Bucket: awsBucketName,
-        Prefix: 'users/' + "" + loggedinUserId + "/"
+        Prefix: 'users/' + "" + loggedinUserId + "" + '/userimage/'
       };
       s3bucket.listObjects(params, function (err, data) {
         if (err) return cb(err);

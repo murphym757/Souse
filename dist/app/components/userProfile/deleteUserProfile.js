@@ -75,7 +75,7 @@ function (_Component) {
       switchHandleColor: ""
     };
     _this.deleteUser = _this.deleteUser.bind(_assertThisInitialized(_this));
-    _this.deleteUserImage = _this.deleteUserImage.bind(_assertThisInitialized(_this));
+    _this.deleteUserAWSFolder = _this.deleteUserAWSFolder.bind(_assertThisInitialized(_this));
     _this.deleteUserPosts = _this.deleteUserPosts.bind(_assertThisInitialized(_this));
     _this.deleteUserComments = _this.deleteUserComments.bind(_assertThisInitialized(_this));
     _this.deleteUserFollowers = _this.deleteUserFollowers.bind(_assertThisInitialized(_this));
@@ -175,11 +175,11 @@ function (_Component) {
       });
     }
   }, {
-    key: "deleteUserImage",
-    value: function deleteUserImage() {
+    key: "deleteUserAWSFolder",
+    value: function deleteUserAWSFolder() {
       var userId = this.state.userId;
       var apiRoute = "/souseAPI";
-      var deleteRoute = "/u/delete/userimage";
+      var deleteRoute = "/u/delete/all/userimage";
 
       _axios["default"].get(apiRoute + deleteRoute + "/" + userId).then(console.log('User Image Deleted'))["catch"](function (err) {
         return console.log(err);
@@ -203,7 +203,7 @@ function (_Component) {
       this.deleteUserFollowers();
       this.deleteUserFollows();
       this.deleteUserComments();
-      this.deleteUserImage();
+      this.deleteUserAWSFolder();
       this.deleteUser();
     }
   }, {

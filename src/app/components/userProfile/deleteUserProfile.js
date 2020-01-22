@@ -26,7 +26,7 @@ class DeleteUserProfile extends Component {
             switchHandleColor: ""
         };
         this.deleteUser = this.deleteUser.bind(this);
-        this.deleteUserImage = this.deleteUserImage.bind(this);
+        this.deleteUserAWSFolder = this.deleteUserAWSFolder.bind(this);
         this.deleteUserPosts = this.deleteUserPosts.bind(this);
         this.deleteUserComments = this.deleteUserComments.bind(this);
         this.deleteUserFollowers = this.deleteUserFollowers.bind(this);
@@ -108,10 +108,10 @@ class DeleteUserProfile extends Component {
             .catch(err => console.log(err));
     }
 
-    deleteUserImage() {
+    deleteUserAWSFolder() {
         const userId = this.state.userId;
         const apiRoute = "/souseAPI";
-        const deleteRoute = "/u/delete/userimage";
+        const deleteRoute = "/u/delete/all/userimage";
         axios.get(apiRoute + deleteRoute + "/" + userId)
             .then(console.log('User Image Deleted'))
             .catch(err => console.log(err));
@@ -131,7 +131,7 @@ class DeleteUserProfile extends Component {
         this.deleteUserFollowers();
         this.deleteUserFollows();
         this.deleteUserComments();
-        this.deleteUserImage();
+        this.deleteUserAWSFolder();
         this.deleteUser();
     }
 

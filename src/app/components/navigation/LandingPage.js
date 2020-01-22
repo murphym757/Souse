@@ -161,7 +161,16 @@ class LandingPage extends Component {
                                                 <div class="my-auto">
                                                     <LoginForm />
                                                 </div>
-                                                <ConnectionOptionsLink className="pt-2 d-flex justify-content-center" onClick={this.optionClicked = (e) => {this.setState({connectionOption: '2'})}}>Sign Up</ConnectionOptionsLink>
+                                                <div class="d-none d-xl-block"> {/* For larger Sceens */}
+                                                    <div class="col-12">
+                                                        <ConnectionOptionsLink className="pt-2 d-flex justify-content-center" onClick={this.optionClicked = (e) => {this.setState({connectionOption: '2'})}}>Sign Up</ConnectionOptionsLink>
+                                                    </div>
+                                                </div>
+                                                <div class="d-xl-none"> {/* For smaller Sceens */}
+                                                    <div class="col-12">
+                                                        <ConnectionOptionsLink className="pt-2 d-flex justify-content-center" onClick={this.optionClicked = (e) => {this.setState({connectionOption: '2'})}}>Sign Up</ConnectionOptionsLink>
+                                                    </div>
+                                                </div>
                                             </FormContainer>  
                                         </div>
                                     :   <div class="row h-100 m-0 p-0">

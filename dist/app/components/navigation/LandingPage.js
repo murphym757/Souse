@@ -213,14 +213,29 @@ function (_Component) {
         className: "col-sm-6"
       }, _react["default"].createElement("div", {
         "class": "my-auto"
-      }, _react["default"].createElement(_loginForm["default"], null)), _react["default"].createElement(_mainStyling.ConnectionOptionsLink, {
+      }, _react["default"].createElement(_loginForm["default"], null)), _react["default"].createElement("div", {
+        "class": "d-none d-xl-block"
+      }, " ", _react["default"].createElement("div", {
+        "class": "col-12"
+      }, _react["default"].createElement(_mainStyling.ConnectionOptionsLink, {
         className: "pt-2 d-flex justify-content-center",
         onClick: this.optionClicked = function (e) {
           _this2.setState({
             connectionOption: '2'
           });
         }
-      }, "Sign Up"))) : _react["default"].createElement("div", {
+      }, "Sign Up"))), _react["default"].createElement("div", {
+        "class": "d-xl-none"
+      }, " ", _react["default"].createElement("div", {
+        "class": "col-12"
+      }, _react["default"].createElement(_mainStyling.ConnectionOptionsLink, {
+        className: "pt-2 d-flex justify-content-center",
+        onClick: this.optionClicked = function (e) {
+          _this2.setState({
+            connectionOption: '2'
+          });
+        }
+      }, "Sign Up"))))) : _react["default"].createElement("div", {
         "class": "row h-100 m-0 p-0"
       }, _react["default"].createElement("div", {
         "class": "col-sm-12 mx-auto my-auto"
