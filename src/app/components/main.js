@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { createBrowserHistory } from "history";
 import { BrowserRouter as Router, Route, Link, Switch, Redirect, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import PropTypes from 'prop-types';
@@ -186,7 +187,7 @@ class MainSource extends Component {
     `;
 
         return (
-            <Router>
+            <Router history={history}>
                 <div class="container-fluid entireProjectContainer">
                 {isAuthenticated
                     ?   <BootstrapProvider theme={this.state.currentTheme}>

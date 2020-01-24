@@ -7,6 +7,8 @@ exports["default"] = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _history = require("history");
+
 var _reactRouterDom = require("react-router-dom");
 
 var _axios = _interopRequireDefault(require("axios"));
@@ -281,7 +283,9 @@ function (_Component) {
         return props.theme.secondaryColor;
       });
 
-      return _react["default"].createElement(_reactRouterDom.BrowserRouter, null, _react["default"].createElement("div", {
+      return _react["default"].createElement(_reactRouterDom.BrowserRouter, {
+        history: history
+      }, _react["default"].createElement("div", {
         "class": "container-fluid entireProjectContainer"
       }, isAuthenticated ? _react["default"].createElement(_provider["default"], {
         theme: this.state.currentTheme
