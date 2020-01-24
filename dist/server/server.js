@@ -40,7 +40,13 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use('/souseAPI', routes);
 app.get('*', function (req, res) {
-  res.sendFile(path.resolve(__dirname + './../../src/index.html'));
+  res.sendFile(path.resolve(__dirname + '../../dist/index.html'));
+});
+app.get('/*', function (req, res) {
+  var url = path.join(__dirname, '../../dist', 'index.html');
+  if (!url.startsWith('/app/')) // we're on local windows
+    url = url.substring(1);
+  res.sendFile(url);
 });
 app.listen(port, function () {
   console.log('Server started on port ' + port);

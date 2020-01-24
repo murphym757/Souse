@@ -39,7 +39,14 @@ app.use(bodyParser.json());
 app.use('/souseAPI', routes);
 
 app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname + './../../src/index.html'));
+    res.sendFile(path.resolve(__dirname + '../../dist/index.html'));
+});
+
+app.get('/*', (req, res) => {
+    let url = path.join(__dirname, '../../dist', 'index.html');
+    if (!url.startsWith('/app/')) // we're on local windows
+        url = url.substring(1);
+    res.sendFile(url);
 });
 
 app.listen(port, () => {
