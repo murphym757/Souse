@@ -208,9 +208,9 @@ class MainSource extends Component {
                                                         souseFollowerData={souseFollowers}
                                                         souseFollowData={souseFollows} />
                                                     }/>
-                                                    <Route exact path="/signup" component={SignUpForm}/>
-                                                    <Route exact path="/login" component={LoginForm}/>
-                                                    <Route exact path="/:username" 
+                                                    <Route path="/signup" component={SignUpForm}/>
+                                                    <Route path="/login" component={LoginForm}/>
+                                                    <Route path="/:username" 
                                                     render={
                                                         (props) => <UserPage {...props} 
                                                         souseUserData={souseUsers} 
@@ -218,7 +218,7 @@ class MainSource extends Component {
                                                         souseFollowerData={souseFollowers} 
                                                         souseFollowData={souseFollows}/>
                                                         }/>
-                                                    <Route exact path="/u/edit/:id" 
+                                                    <Route path="/u/edit/:id" 
                                                     render={
                                                         (props) => <EditUserProfile {...props} 
                                                         sousePostData={sousePosts} 
@@ -226,15 +226,15 @@ class MainSource extends Component {
                                                         souseFollowerData={souseFollowers} 
                                                         souseFollowData={souseFollows}/>
                                                         }/>
-                                                    <Route exact path="/p/:id" 
+                                                    <Route path="/p/:id" 
                                                     render={
                                                         (props) => <PostPage {...props} 
                                                         souseUserData={souseUsers} 
                                                         sousePostData={sousePosts} 
                                                         souseCommentData={souseComments} />
                                                     }/>
-                                                    <Route exact path="/p/edit/:id" component={PostEdit}/>
-                                                    <Route exact path="/c/delete/:id" component={CommentDelete}/>
+                                                    <Route path="/p/edit/:id" component={PostEdit}/>
+                                                    <Route path="/c/delete/:id" component={CommentDelete}/>
                                                     <Route component={RouteNotFound} />
                                                 </Switch>
                                             </SouseCenterContainer>
@@ -260,9 +260,9 @@ class MainSource extends Component {
                                                         souseFollowerData={souseFollowers}
                                                         souseFollowData={souseFollows} />
                                                     }/>
-                                                    <Route exact path="/signup" component={SignUpForm}/>
-                                                    <Route exact path="/login" component={LoginForm}/>
-                                                    <Route exact path="/:username" 
+                                                    <Route path="/signup" component={SignUpForm}/>
+                                                    <Route path="/login" component={LoginForm}/>
+                                                    <Route path="/:username" 
                                                     render={
                                                         (props) => <UserPage {...props} 
                                                         souseUserData={souseUsers} 
@@ -270,7 +270,7 @@ class MainSource extends Component {
                                                         souseFollowerData={souseFollowers} 
                                                         souseFollowData={souseFollows}/>
                                                         }/>
-                                                    <Route exact path="/u/edit/:id" 
+                                                    <Route path="/u/edit/:id" 
                                                     render={
                                                         (props) => <EditUserProfile {...props} 
                                                         sousePostData={sousePosts} 
@@ -278,15 +278,15 @@ class MainSource extends Component {
                                                         souseFollowerData={souseFollowers} 
                                                         souseFollowData={souseFollows}/>
                                                         }/>
-                                                    <Route exact path="/p/:id" 
+                                                    <Route path="/p/:id" 
                                                     render={
                                                         (props) => <PostPage {...props} 
                                                         souseUserData={souseUsers} 
                                                         sousePostData={sousePosts} 
                                                         souseCommentData={souseComments} />
                                                     }/>
-                                                    <Route exact path="/p/edit/:id" component={PostEdit}/>
-                                                    <Route exact path="/c/delete/:id" component={CommentDelete}/>
+                                                    <Route path="/p/edit/:id" component={PostEdit}/>
+                                                    <Route path="/c/delete/:id" component={CommentDelete}/>
                                                     <Route component={RouteNotFound} />
                                                 </Switch>
                                             </SouseCenterContainer>
