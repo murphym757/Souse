@@ -28,7 +28,6 @@ mongoose.connect(config.DATABASE_LOCAL, {
     err => {console.log('Cannot connect to the database '+ err)}
 );
 
-app.use(express.static(path.join(__dirname + './../../')));
 app.use(passport.initialize());
 require('./passport')(passport);
 
@@ -38,6 +37,7 @@ app.use(bodyParser.json());
 
 app.use('/souseAPI', routes);
 
+app.use(express.static(path.join(__dirname + './../../')));
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname + './../../src/index.html'));
 });
