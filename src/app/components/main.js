@@ -187,7 +187,7 @@ class MainSource extends Component {
     `;
 
         return (
-            <Router history={history}>
+            <Router history={createBrowserHistory}>
                 <div class="container-fluid entireProjectContainer">
                 {isAuthenticated
                     ?   <BootstrapProvider theme={this.state.currentTheme}>
