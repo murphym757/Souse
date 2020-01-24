@@ -314,6 +314,7 @@ function (_Component) {
         path: "/login",
         component: _loginForm["default"]
       }), _react["default"].createElement(_reactRouterDom.Route, {
+        exact: true,
         path: "/:username",
         render: function render(props) {
           return _react["default"].createElement(_usersPage["default"], _extends({}, props, {
@@ -324,6 +325,7 @@ function (_Component) {
           }));
         }
       }), _react["default"].createElement(_reactRouterDom.Route, {
+        exact: true,
         path: "/u/edit/:id",
         render: function render(props) {
           return _react["default"].createElement(_editUserProfile["default"], _extends({}, props, {
@@ -334,6 +336,7 @@ function (_Component) {
           }));
         }
       }), _react["default"].createElement(_reactRouterDom.Route, {
+        exact: true,
         path: "/p/:id",
         render: function render(props) {
           return _react["default"].createElement(_postsPage["default"], _extends({}, props, {
@@ -343,9 +346,11 @@ function (_Component) {
           }));
         }
       }), _react["default"].createElement(_reactRouterDom.Route, {
+        exact: true,
         path: "/p/edit/:id",
         component: _postEditForm["default"]
       }), _react["default"].createElement(_reactRouterDom.Route, {
+        exact: true,
         path: "/c/delete/:id",
         component: _commentDeleteSection["default"]
       }), _react["default"].createElement(_reactRouterDom.Route, {
@@ -377,6 +382,7 @@ function (_Component) {
         path: "/login",
         component: _loginForm["default"]
       }), _react["default"].createElement(_reactRouterDom.Route, {
+        exact: true,
         path: "/:username",
         render: function render(props) {
           return _react["default"].createElement(_usersPage["default"], _extends({}, props, {
@@ -387,6 +393,7 @@ function (_Component) {
           }));
         }
       }), _react["default"].createElement(_reactRouterDom.Route, {
+        exact: true,
         path: "/u/edit/:id",
         render: function render(props) {
           return _react["default"].createElement(_editUserProfile["default"], _extends({}, props, {
@@ -397,6 +404,7 @@ function (_Component) {
           }));
         }
       }), _react["default"].createElement(_reactRouterDom.Route, {
+        exact: true,
         path: "/p/:id",
         render: function render(props) {
           return _react["default"].createElement(_postsPage["default"], _extends({}, props, {
@@ -406,9 +414,11 @@ function (_Component) {
           }));
         }
       }), _react["default"].createElement(_reactRouterDom.Route, {
+        exact: true,
         path: "/p/edit/:id",
         component: _postEditForm["default"]
       }), _react["default"].createElement(_reactRouterDom.Route, {
+        exact: true,
         path: "/c/delete/:id",
         component: _commentDeleteSection["default"]
       }), _react["default"].createElement(_reactRouterDom.Route, {
