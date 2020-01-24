@@ -1,8 +1,8 @@
 {
-    "root": "dist/",
+    "root": "src/dist",
     "clean_urls": false,
     "routes": {
-        "/**": "index.html"
+        "/**": "src/index.html"
     },
     "headers": {
         "/**": {
