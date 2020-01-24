@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import PostsGrid from '../posts/postsGrid';
 import RouteNotFound from '../navigation/404Page';
+import {
+    SouseSpinner
+} from '../../assets/styles/mainStyling';
 
 class PostPage extends Component {
     constructor(props) {
@@ -18,7 +21,8 @@ class PostPage extends Component {
         this.state = {
             originalPostId: postIdFound,
             postCreatorId: '',
-            postCreatorImage: ''
+            postCreatorImage: '',
+            isLoading: true
         };
     }
 
@@ -88,19 +92,36 @@ class PostPage extends Component {
     }
 
     postNotFound() {
-        const errorRoute = < RouteNotFound / >
+        const errorRoute = <RouteNotFound />
             return errorRoute;
+    }
+
+    pageLoader() {
+        setTimeout(() => {
+            this.setState({
+                isLoading: false
+            });
+        }, 2500)
     }
 
     render() {
         const {isAuthenticated, user} = this.props.auth;
         const sousePostData = this.props.sousePostData;
+        const isLoading = this.state.isLoading;
         return (
             <div>
-                {sousePostData.filter(i => i._id === "" + this.state.originalPostId + "").length > 0
-                    ?   <div>{this.foundUserData()}</div>
-                    :   <div>{this.postNotFound()}</div>
+                {isLoading == true
+                    ?   <div class="d-flex justify-content-center">
+                            <SouseSpinner />
+                        </div>
+                    :   <div>
+                            {sousePostData.filter(i => i._id === "" + this.state.originalPostId + "").length > 0
+                                ?   <div>{this.foundUserData()}</div>
+                                :   <div>{this.postNotFound()}</div>
+                            }
+                        </div>
                 }
+                {this.pageLoader()}
             </div>
           );
       }

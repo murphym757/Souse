@@ -13,10 +13,6 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _reactRedux = require("react-redux");
 
-var _awsSdk = _interopRequireDefault(require("aws-sdk"));
-
-var _config = _interopRequireDefault(require("../../../server/config"));
-
 var _mainStyling = require("../../assets/styles/mainStyling");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -154,16 +150,26 @@ function (_Component) {
         postImageURL: ''
       });
 
-      window.location.reload();
+      _this.setState({
+        isLoading: true
+      });
     };
 
     _this.onSubmitWithUploadedImage = function (e) {
       // Submits all changes
+      e.preventDefault();
+
       _this.onImageUpload(e);
 
       _this.onSubmit(e);
 
-      window.location.reload(true);
+      setTimeout(function () {
+        _this.setState({
+          isLoading: false
+        });
+
+        window.location.reload(true);
+      }, 10000);
     };
 
     var _this$props$auth3 = _this.props.auth,
@@ -180,7 +186,7 @@ function (_Component) {
       postImageURL: '',
       username: loggedinUsername,
       imageUploadOption: true,
-      isLoading: true,
+      isLoading: false,
       fullPostUploadLoader: true,
       selectedFileType: null,
       uploadButtonClicked: false
@@ -202,9 +208,12 @@ function (_Component) {
       var _this$props$auth4 = this.props.auth,
           isAuthenticated = _this$props$auth4.isAuthenticated,
           user = _this$props$auth4.user;
+      var isLoading = this.state.isLoading;
       return _react["default"].createElement("div", {
         "class": "container"
-      }, _react["default"].createElement(_mainStyling.SouseForm, {
+      }, isLoading == true ? _react["default"].createElement("div", {
+        "class": "d-flex justify-content-center"
+      }, _react["default"].createElement(_mainStyling.SouseSpinner, null)) : _react["default"].createElement(_mainStyling.SouseForm, {
         onSubmit: this.onSubmitWithUploadedImage
       }, this.state.imageUploadOption ? _react["default"].createElement("div", null, _react["default"].createElement("div", {
         "class": "input-field"

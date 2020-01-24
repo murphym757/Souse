@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import UserProfile from '../userProfile/userProfile';
 import RouteNotFound from '../navigation/404Page';
+import {
+    SouseSpinner
+} from '../../assets/styles/mainStyling';
 
 class UserPage extends Component {
     constructor(props) {
@@ -18,6 +21,7 @@ class UserPage extends Component {
         this.state = {
             postCreatorUsername: usernameFound,
             creatorUserId: "",
+            isLoading: true
         };
     }
 
@@ -54,16 +58,33 @@ class UserPage extends Component {
         const errorRoute = <RouteNotFound/>
         return errorRoute;
     }
+    
+    pageLoader() {
+        setTimeout(() => {
+            this.setState({
+                isLoading: false
+            });
+        }, 2500)
+    }
 
     render() {
         const {isAuthenticated, user} = this.props.auth;
         const souseUserData = this.props.souseUserData;
+        const isLoading = this.state.isLoading;
         return (
             <div>
-                {souseUserData.filter(i => i.username === "" + this.state.postCreatorUsername + "").length > 0
-                    ?   <div>{this.userFinder()}</div>
-                    :   <div>{this.userNotFound()}</div>
+                {isLoading == true
+                        ?   <div class="d-flex justify-content-center">
+                                <SouseSpinner />
+                            </div>
+                        :   <div>
+                                {souseUserData.filter(i => i.username === "" + this.state.postCreatorUsername + "").length > 0
+                                    ?   <div>{this.userFinder()}</div>
+                                    :   <div>{this.userNotFound()}</div>
+                                }
+                            </div>
                 }
+                {this.pageLoader()}
             </div>
           );
       }

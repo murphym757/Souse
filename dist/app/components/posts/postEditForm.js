@@ -144,7 +144,15 @@ function (_Component) {
           _this.deleteImageUpload(awsBucketName);
         }, 2000);
       });
-      promise.then(_this.onImageUpload(e), _this.onSubmit(e), window.location.reload(true));
+      promise.then(_this.onImageUpload(e), _this.onSubmit(e), setTimeout(function () {
+        _this.setState({
+          isLoading: false
+        });
+
+        _this.props.history.push("/");
+
+        window.location.reload(true);
+      }, 10000));
     };
 
     _this.onSubmit = function (e) {
@@ -162,9 +170,9 @@ function (_Component) {
 
       _axios["default"].post(apiRoute + updateRoute + "/" + postId, postData);
 
-      _this.props.history.push("/p/" + postId);
-
-      window.location.reload();
+      _this.setState({
+        isLoading: true
+      });
     };
 
     var _this$props$auth3 = _this.props.auth,
@@ -274,7 +282,10 @@ function (_Component) {
       var postUnixTimestamp = this.state.postUnixTimestamp;
       var updateImage = this.state.updateImage;
       var userOptionsDisplay = this.state.userOptionsDisplay;
-      return _react["default"].createElement("div", null, isAuthenticated && postCreatorId == loggedInUser ? _react["default"].createElement("div", {
+      var isLoading = this.state.isLoading;
+      return _react["default"].createElement("div", null, isLoading == true ? _react["default"].createElement("div", {
+        "class": "d-flex justify-content-center"
+      }, _react["default"].createElement(_mainStyling.SouseSpinner, null)) : _react["default"].createElement("div", null, isAuthenticated && postCreatorId == loggedInUser ? _react["default"].createElement("div", {
         "class": "container-fluid"
       }, _react["default"].createElement(_mainStyling.SouseForm, {
         className: "pt-5",
@@ -377,7 +388,7 @@ function (_Component) {
       }, "Update Post"))) : _react["default"].createElement(_postDelete["default"], {
         postUnixTimestamp: postUnixTimestamp,
         postCreatorId: postCreatorId
-      })))))))) : _react["default"].createElement(_Page["default"], null));
+      })))))))) : _react["default"].createElement(_Page["default"], null)));
     }
   }]);
 

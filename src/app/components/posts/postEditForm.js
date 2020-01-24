@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import RouteNotFound from '../navigation/404Page';
 import {
+    SouseSpinner,
     SouseButton,
     SouseForm
 } from '../../assets/styles/mainStyling';
@@ -178,7 +179,13 @@ class PostEdit extends Component {
         promise.then(
             this.onImageUpload(e),
             this.onSubmit(e),
-            window.location.reload(true)
+            setTimeout(() => {
+                this.setState({
+                    isLoading: false
+                });
+                this.props.history.push("/");
+                window.location.reload(true);
+            }, 10000)
         );
     }
 
@@ -196,8 +203,9 @@ class PostEdit extends Component {
         const postId = this.state.originalPostId;
 
         axios.post(apiRoute + updateRoute + "/" + postId, postData);
-        this.props.history.push("/p/" +  postId);
-        window.location.reload();
+        this.setState({
+            isLoading: true
+        });
     }
 
     render() {
@@ -207,107 +215,115 @@ class PostEdit extends Component {
         const postUnixTimestamp = this.state.postUnixTimestamp;
         const updateImage = this.state.updateImage;
         const userOptionsDisplay = this.state.userOptionsDisplay;
+        const isLoading = this.state.isLoading;
         
         return (
             <div>
-                {isAuthenticated && postCreatorId == loggedInUser
-                    ? <div class="container-fluid">
-                            <SouseForm className="pt-5" onSubmit={this.onSubmitWithUploadedImage}>
-                                <div class="row container mx-auto">
-                                    <div class="col-lg-6">
-                                        <div class="input-field pb-5">
-                                            <textarea 
-                                                class="materialize-textarea editText"
-                                                name="postCaption"
-                                                id="souseCaptionPost"  
-                                                rows="1"
-                                                maxLength={1000} 
-                                                value={this.state.postCaption}
-                                                onChange={this.onChangepostCaption}></textarea>
-                                            <label class="active" for="souseCaptionPost">Caption ({this.state.postCaption.length}/1000)</label>
-                                        </div>
-                                        <div class="input-field">
-                                            <input 
-                                                type="text"
-                                                name="postLocation" 
-                                                className="form-control"
-                                                id="souseLocationPost"
-                                                value={this.state.postLocation}
-                                                onChange={this.onChangepostLocation} 
-                                            />
-                                            <label class="active" for="souseLocationPost">Location</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="row justify-content-center">
-                                        {userOptionsDisplay == "1"
-                                            ?   <div 
-                                                    data-toggle="collapse" 
-                                                    href="#postDeleteCollapse2" 
-                                                    role="button" 
-                                                    aria-expanded="false" 
-                                                    aria-controls="postDeleteCollapse2"
-                                                    onClick={this.optionClicked = (e) => {this.setState({userOptionsDisplay: '2'})}}
-                                                    class="form-group col-6 d-flex justify-content-center mx-auto my-auto">
-                                                        <DeleteIcon />
+            {isLoading == true
+                ?   <div class="d-flex justify-content-center">
+                        <SouseSpinner />
+                    </div>
+                :   <div>
+                        {isAuthenticated && postCreatorId == loggedInUser
+                            ? <div class="container-fluid">
+                                    <SouseForm className="pt-5" onSubmit={this.onSubmitWithUploadedImage}>
+                                        <div class="row container mx-auto">
+                                            <div class="col-lg-6">
+                                                <div class="input-field pb-5">
+                                                    <textarea 
+                                                        class="materialize-textarea editText"
+                                                        name="postCaption"
+                                                        id="souseCaptionPost"  
+                                                        rows="1"
+                                                        maxLength={1000} 
+                                                        value={this.state.postCaption}
+                                                        onChange={this.onChangepostCaption}></textarea>
+                                                    <label class="active" for="souseCaptionPost">Caption ({this.state.postCaption.length}/1000)</label>
                                                 </div>
-                                            :   <div 
-                                                    data-toggle="collapse" 
-                                                    href="#postDeleteCollapse" 
-                                                    role="button" 
-                                                    aria-expanded="false" 
-                                                    aria-controls="postDeleteCollapse"
-                                                    onClick={this.optionClicked = (e) => {this.setState({userOptionsDisplay: '1'})}}
-                                                    class="form-group col-6 d-flex justify-content-center mx-auto my-auto">
-                                                        <DeleteIcon />
+                                                <div class="input-field">
+                                                    <input 
+                                                        type="text"
+                                                        name="postLocation" 
+                                                        className="form-control"
+                                                        id="souseLocationPost"
+                                                        value={this.state.postLocation}
+                                                        onChange={this.onChangepostLocation} 
+                                                    />
+                                                    <label class="active" for="souseLocationPost">Location</label>
                                                 </div>
-                                        }
-                                        </div>
-                                        <div class="row">
-                                            <div class="row justify-content-center">
-                                                <div class="form-group col d-flex justify-content-center">
-                                                    {userOptionsDisplay == "1"
-                                                        ?   <div class="row justify-content-center col-12">
-                                                                <div class="file-field input-field col-12">
-                                                                    <SouseButton className="btn-large">
-                                                                        <p class="lead buttonFont">Upload</p>
-                                                                        <input 
-                                                                            type="file" 
-                                                                            id="image"
-                                                                            onChange={this.handleSelectedImage}
-                                                                        />
-                                                                    </SouseButton>
-                                                                    <div class="file-path-wrapper">
-                                                                        <input class="file-path validate" type="text" />
-                                                                    </div>
-                                                                    <span 
-                                                                        class="helper-text d-flex justify-content-center" 
-                                                                        data-error="wrong" data-success="right">
-                                                                            {"Currently, Souse cannot upload images with capitalized file extensions (JPEG, PNG, and GIF). Please ensure that your file extensions are lowercase."}
-                                                                    </span>
-                                                                </div>
-                                                                {this.state.uploadButtonClicked == false
-                                                                    ?   <SouseButton onClick={this.onSubmit} type="button" className="waves-effect waves-light btn-large"> {/* Update post w/o updating image */}
-                                                                            <p class="lead buttonFont">Update Post</p>
-                                                                        </SouseButton>
-                                                                    :   <SouseButton type="submit" className="waves-effect waves-light btn-large"> {/* Update post and image */}
-                                                                            <p class="lead buttonFont">Update Post</p>
-                                                                        </SouseButton>
-                                                                }
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="row justify-content-center">
+                                                {userOptionsDisplay == "1"
+                                                    ?   <div 
+                                                            data-toggle="collapse" 
+                                                            href="#postDeleteCollapse2" 
+                                                            role="button" 
+                                                            aria-expanded="false" 
+                                                            aria-controls="postDeleteCollapse2"
+                                                            onClick={this.optionClicked = (e) => {this.setState({userOptionsDisplay: '2'})}}
+                                                            class="form-group col-6 d-flex justify-content-center mx-auto my-auto">
+                                                                <DeleteIcon />
+                                                        </div>
+                                                    :   <div 
+                                                            data-toggle="collapse" 
+                                                            href="#postDeleteCollapse" 
+                                                            role="button" 
+                                                            aria-expanded="false" 
+                                                            aria-controls="postDeleteCollapse"
+                                                            onClick={this.optionClicked = (e) => {this.setState({userOptionsDisplay: '1'})}}
+                                                            class="form-group col-6 d-flex justify-content-center mx-auto my-auto">
+                                                                <DeleteIcon />
+                                                        </div>
+                                                }
+                                                </div>
+                                                <div class="row">
+                                                    <div class="row justify-content-center">
+                                                        <div class="form-group col d-flex justify-content-center">
+                                                            {userOptionsDisplay == "1"
+                                                                ?   <div class="row justify-content-center col-12">
+                                                                        <div class="file-field input-field col-12">
+                                                                            <SouseButton className="btn-large">
+                                                                                <p class="lead buttonFont">Upload</p>
+                                                                                <input 
+                                                                                    type="file" 
+                                                                                    id="image"
+                                                                                    onChange={this.handleSelectedImage}
+                                                                                />
+                                                                            </SouseButton>
+                                                                            <div class="file-path-wrapper">
+                                                                                <input class="file-path validate" type="text" />
+                                                                            </div>
+                                                                            <span 
+                                                                                class="helper-text d-flex justify-content-center" 
+                                                                                data-error="wrong" data-success="right">
+                                                                                    {"Currently, Souse cannot upload images with capitalized file extensions (JPEG, PNG, and GIF). Please ensure that your file extensions are lowercase."}
+                                                                            </span>
+                                                                        </div>
+                                                                        {this.state.uploadButtonClicked == false
+                                                                            ?   <SouseButton onClick={this.onSubmit} type="button" className="waves-effect waves-light btn-large"> {/* Update post w/o updating image */}
+                                                                                    <p class="lead buttonFont">Update Post</p>
+                                                                                </SouseButton>
+                                                                            :   <SouseButton type="submit" className="waves-effect waves-light btn-large"> {/* Update post and image */}
+                                                                                    <p class="lead buttonFont">Update Post</p>
+                                                                                </SouseButton>
+                                                                        }
 
-                                                            </div>
-                                                        :   <PostDelete 
-                                                                postUnixTimestamp={postUnixTimestamp}
-                                                                postCreatorId={postCreatorId}/ >
-                                                    }
+                                                                    </div>
+                                                                :   <PostDelete 
+                                                                        postUnixTimestamp={postUnixTimestamp}
+                                                                        postCreatorId={postCreatorId}/ >
+                                                            }
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </SouseForm>
+                                    </SouseForm>
+                            </div>
+                            : <RouteNotFound />
+                        }
                     </div>
-                    : <RouteNotFound />
                 }
             </div>
             

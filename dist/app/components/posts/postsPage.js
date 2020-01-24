@@ -19,6 +19,8 @@ var _postsGrid = _interopRequireDefault(require("../posts/postsGrid"));
 
 var _Page = _interopRequireDefault(require("../navigation/404Page"));
 
+var _mainStyling = require("../../assets/styles/mainStyling");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -64,7 +66,8 @@ function (_Component) {
     _this.state = {
       originalPostId: postIdFound,
       postCreatorId: '',
-      postCreatorImage: ''
+      postCreatorImage: '',
+      isLoading: true
     };
     return _this;
   }
@@ -155,17 +158,31 @@ function (_Component) {
       return errorRoute;
     }
   }, {
+    key: "pageLoader",
+    value: function pageLoader() {
+      var _this4 = this;
+
+      setTimeout(function () {
+        _this4.setState({
+          isLoading: false
+        });
+      }, 2500);
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       var _this$props$auth2 = this.props.auth,
           isAuthenticated = _this$props$auth2.isAuthenticated,
           user = _this$props$auth2.user;
       var sousePostData = this.props.sousePostData;
-      return _react["default"].createElement("div", null, sousePostData.filter(function (i) {
-        return i._id === "" + _this4.state.originalPostId + "";
-      }).length > 0 ? _react["default"].createElement("div", null, this.foundUserData()) : _react["default"].createElement("div", null, this.postNotFound()));
+      var isLoading = this.state.isLoading;
+      return _react["default"].createElement("div", null, isLoading == true ? _react["default"].createElement("div", {
+        "class": "d-flex justify-content-center"
+      }, _react["default"].createElement(_mainStyling.SouseSpinner, null)) : _react["default"].createElement("div", null, sousePostData.filter(function (i) {
+        return i._id === "" + _this5.state.originalPostId + "";
+      }).length > 0 ? _react["default"].createElement("div", null, this.foundUserData()) : _react["default"].createElement("div", null, this.postNotFound())), this.pageLoader());
     }
   }]);
 

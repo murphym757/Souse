@@ -21,6 +21,9 @@ souseRouter.route('/u')
 souseRouter.route('/u/upload/:id')
     .post(userController.upload_user_image);
 
+souseRouter.route('/u/upload/:username/:timestamp') // Post Form on Main Page
+    .post(userController.upload_user_image_mainpage);
+
 souseRouter.route('/u/edit/:id')
     .get(userController.edit_user);
 

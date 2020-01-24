@@ -19,6 +19,8 @@ var _userProfile = _interopRequireDefault(require("../userProfile/userProfile"))
 
 var _Page = _interopRequireDefault(require("../navigation/404Page"));
 
+var _mainStyling = require("../../assets/styles/mainStyling");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -63,7 +65,8 @@ function (_Component) {
     var usernameFound = usernameFinder.slice(1);
     _this.state = {
       postCreatorUsername: usernameFound,
-      creatorUserId: ""
+      creatorUserId: "",
+      isLoading: true
     };
     return _this;
   }
@@ -111,17 +114,31 @@ function (_Component) {
       return errorRoute;
     }
   }, {
+    key: "pageLoader",
+    value: function pageLoader() {
+      var _this3 = this;
+
+      setTimeout(function () {
+        _this3.setState({
+          isLoading: false
+        });
+      }, 2500);
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       var _this$props$auth2 = this.props.auth,
           isAuthenticated = _this$props$auth2.isAuthenticated,
           user = _this$props$auth2.user;
       var souseUserData = this.props.souseUserData;
-      return _react["default"].createElement("div", null, souseUserData.filter(function (i) {
-        return i.username === "" + _this3.state.postCreatorUsername + "";
-      }).length > 0 ? _react["default"].createElement("div", null, this.userFinder()) : _react["default"].createElement("div", null, this.userNotFound()));
+      var isLoading = this.state.isLoading;
+      return _react["default"].createElement("div", null, isLoading == true ? _react["default"].createElement("div", {
+        "class": "d-flex justify-content-center"
+      }, _react["default"].createElement(_mainStyling.SouseSpinner, null)) : _react["default"].createElement("div", null, souseUserData.filter(function (i) {
+        return i.username === "" + _this4.state.postCreatorUsername + "";
+      }).length > 0 ? _react["default"].createElement("div", null, this.userFinder()) : _react["default"].createElement("div", null, this.userNotFound())), this.pageLoader());
     }
   }]);
 

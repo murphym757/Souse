@@ -8,6 +8,7 @@ import { SouseUserPageIconLanding } from '../../assets/styles/userProfileStyling
 import SignUpForm from '../registration/signUpForm';
 import LoginForm from '../registration/loginForm';
 import {
+    SouseSpinner,
     ConnectionOptionsLink
 } from '../../assets/styles/mainStyling';
 import {
@@ -24,6 +25,7 @@ class LandingPage extends Component {
         super(props);
         this.state = {
             connectionOption: "1",
+            isLoading: true
         };
         
     }
@@ -68,125 +70,142 @@ class LandingPage extends Component {
         return souseFilterFollowerData;
     }
 
+    pageLoader() {
+        setTimeout(() => {
+            this.setState({
+                isLoading: false
+            });
+        }, 1500)
+    }
+
     render() {
         const {isAuthenticated, user} = this.props.auth;
         const souseUserData = this.props.souseUserData;
         const loggedinUser = user.username;
         const loggedinUserId = user.id;
+        const isLoading = this.state.isLoading;
         const connectionOption = this.state.connectionOption;
         const postsTotal = "" + this.postFinder().length + "";
         const followersTotal = "" + this.followerFinder().length + "";
         const followsTotal = "" + this.followFinder().length + "";
         return (
-            <div>
-                {Object.keys(this.userFinder())
-                    .map((object, i) => (
-                        <div class="container-fluid">
-                            <div class="row mx-auto my-auto">
-                                <SouseColumnLanding className="mx-auto my-auto">
-                                    <div class="row d-flex justify-content-center">   {/* Image Row */}
-                                        <SouseUserPageIconLanding>
-                                            <img className="souseUserPageLandingImage"
-                                                src={this.userFinder()[i].userImage}
-                                                alt="souseUserIcon"
-                                                width="85px" 
-                                                height="85px"/>
-                                        </SouseUserPageIconLanding>
-                                    </div>
-                                </SouseColumnLanding>
-                                <SouseColumnLanding className="mx-auto my-auto">
-                                    <div class="row d-flex justify-content-center">   {/* Username Row */}
-                                        <h2>{this.userFinder()[i].username}</h2>
-                                    </div>
-                                    <div class="row d-flex justify-content-center">   {/* Follow/Follower Row */}
-                                        <div class="col-4 d-flex justify-content-center">
-                                            <h5>{postsTotal} Posts</h5>
-                                        </div>
-                                        <div class="col-4 d-flex justify-content-center">
-                                            <h5>{followersTotal} Followers</h5>
-                                        </div>
-                                        <div class="col-4 d-flex justify-content-center">
-                                            <h5>{followsTotal} Follows</h5>
-                                        </div>
-                                    </div>
-                                    {Object.keys(this.userFinder())
-                                        .map((object, i) => (
-                                            <div>
-                                                <Link to={
-                                                    {
-                                                        pathname: `/${this.userFinder()[i].username}`,
-                                                        state: {
-                                                            souseUserId: this.userFinder()[i]._id,
-                                                            souseUserUsername: this.userFinder()[i].username,
-                                                            souseUserFirstName: this.userFinder()[i].firstName,
-                                                            souseUserLastName: this.userFinder()[i].lastName,
-                                                            souseUserEmail: this.userFinder()[i].email,
-                                                            souseUserPassword: this.userFinder()[i].password,
-                                                            souseUserSignUpDate: this.userFinder()[i].signUpDate,
-                                                            souseUserImage: this.userFinder()[i].userImage,
-                                                            souseNewUserImageSetup: this.userFinder()[i].newUserImageSetup,
-                                                            souseUserTwitter: this.userFinder()[i].userTwitter,
-                                                            souseUserFacebook: this.userFinder()[i].userFacebook,
-                                                            souseUserInstagram: this.userFinder()[i].userInstagram,
-                                                            souseUserLocation: this.userFinder()[i].userLocation,
-                                                            souseUserBio: this.userFinder()[i].userBio
-                                                        }
-                                                    }
-                                                }>
-                                                    <div class="row d-flex justify-content-center">   {/* Confirmation Button Row */}
-                                                        <SouseButton type="submit" className="waves-effect waves-light btn-large"><p class="lead buttonFont">Confirm</p></SouseButton>
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        ))
-                                    }
-                                </SouseColumnLanding>
+                <div>
+                    {isLoading == true
+                        ?   <div class="d-flex justify-content-center">
+                                <SouseSpinner />
                             </div>
-                        </div>
-                    ))}
-                    {isAuthenticated 
-                        ?   <div></div>
-                        :   <div class="container-fluid">
-                                {connectionOption == '1'
-                                    ?   <div class="row h-100 m-0 p-0">
-                                            <IphoneContainer className="col-sm-6">
-                                                <IphoneOuterImage 
-                                                    class="souseHomeLogo-navbar d-block justify-content-center pt-5" 
-                                                    src = "../../src/app/assets/images/iPhoneXSMaxSouse.svg"
-                                                    width="450" 
-                                                    alt="logo" 
-                                                />
-                                            </IphoneContainer>
-                                            <FormContainer className="col-sm-6">
-                                                <div class="my-auto">
-                                                    <LoginForm />
+                        :   <div>
+                                {Object.keys(this.userFinder())
+                                .map((object, i) => (
+                                    <div class="container-fluid">
+                                        <div class="row mx-auto my-auto">
+                                            <SouseColumnLanding className="mx-auto my-auto">
+                                                <div class="row d-flex justify-content-center">   {/* Image Row */}
+                                                    <SouseUserPageIconLanding>
+                                                        <img className="souseUserPageLandingImage"
+                                                            src={this.userFinder()[i].userImage}
+                                                            alt="souseUserIcon"
+                                                            width="85px" 
+                                                            height="85px"/>
+                                                    </SouseUserPageIconLanding>
                                                 </div>
-                                                <div class="d-none d-xl-block"> {/* For larger Sceens */}
-                                                    <div class="col-12">
-                                                        <ConnectionOptionsLink className="pt-2 d-flex justify-content-center" onClick={this.optionClicked = (e) => {this.setState({connectionOption: '2'})}}>Sign Up</ConnectionOptionsLink>
+                                            </SouseColumnLanding>
+                                            <SouseColumnLanding className="mx-auto my-auto">
+                                                <div class="row d-flex justify-content-center">   {/* Username Row */}
+                                                    <h2>{this.userFinder()[i].username}</h2>
+                                                </div>
+                                                <div class="row d-flex justify-content-center">   {/* Follow/Follower Row */}
+                                                    <div class="col-4 d-flex justify-content-center">
+                                                        <h5>{postsTotal} Posts</h5>
+                                                    </div>
+                                                    <div class="col-4 d-flex justify-content-center">
+                                                        <h5>{followersTotal} Followers</h5>
+                                                    </div>
+                                                    <div class="col-4 d-flex justify-content-center">
+                                                        <h5>{followsTotal} Follows</h5>
                                                     </div>
                                                 </div>
-                                                <div class="d-xl-none"> {/* For smaller Sceens */}
-                                                    <div class="col-12">
-                                                        <ConnectionOptionsLink className="pt-2 d-flex justify-content-center" onClick={this.optionClicked = (e) => {this.setState({connectionOption: '2'})}}>Sign Up</ConnectionOptionsLink>
+                                                {Object.keys(this.userFinder())
+                                                    .map((object, i) => (
+                                                        <div>
+                                                            <Link to={
+                                                                {
+                                                                    pathname: `/${this.userFinder()[i].username}`,
+                                                                    state: {
+                                                                        souseUserId: this.userFinder()[i]._id,
+                                                                        souseUserUsername: this.userFinder()[i].username,
+                                                                        souseUserFirstName: this.userFinder()[i].firstName,
+                                                                        souseUserLastName: this.userFinder()[i].lastName,
+                                                                        souseUserEmail: this.userFinder()[i].email,
+                                                                        souseUserPassword: this.userFinder()[i].password,
+                                                                        souseUserSignUpDate: this.userFinder()[i].signUpDate,
+                                                                        souseUserImage: this.userFinder()[i].userImage,
+                                                                        souseNewUserImageSetup: this.userFinder()[i].newUserImageSetup,
+                                                                        souseUserTwitter: this.userFinder()[i].userTwitter,
+                                                                        souseUserFacebook: this.userFinder()[i].userFacebook,
+                                                                        souseUserInstagram: this.userFinder()[i].userInstagram,
+                                                                        souseUserLocation: this.userFinder()[i].userLocation,
+                                                                        souseUserBio: this.userFinder()[i].userBio
+                                                                    }
+                                                                }
+                                                            }>
+                                                                <div class="row d-flex justify-content-center">   {/* Confirmation Button Row */}
+                                                                    <SouseButton type="submit" className="waves-effect waves-light btn-large"><p class="lead buttonFont">Confirm</p></SouseButton>
+                                                                </div>
+                                                            </Link>
+                                                        </div>
+                                                    ))
+                                                }
+                                            </SouseColumnLanding>
+                                        </div>
+                                    </div>
+                                ))}
+                                {isAuthenticated 
+                                    ?   <div></div>
+                                    :   <div class="container-fluid">
+                                            {connectionOption == '1'
+                                                ?   <div class="row h-100 m-0 p-0">
+                                                        <IphoneContainer className="col-sm-6">
+                                                            <IphoneOuterImage 
+                                                                class="souseHomeLogo-navbar d-block justify-content-center pt-5" 
+                                                                src = "../../src/app/assets/images/iPhoneXSMaxSouse.svg"
+                                                                width="450" 
+                                                                alt="logo" 
+                                                            />
+                                                        </IphoneContainer>
+                                                        <FormContainer className="col-sm-6">
+                                                            <div class="my-auto">
+                                                                <LoginForm />
+                                                            </div>
+                                                            <div class="d-none d-xl-block"> {/* For larger Sceens */}
+                                                                <div class="col-12">
+                                                                    <ConnectionOptionsLink className="pt-2 d-flex justify-content-center" onClick={this.optionClicked = (e) => {this.setState({connectionOption: '2'})}}>Sign Up</ConnectionOptionsLink>
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-xl-none"> {/* For smaller Sceens */}
+                                                                <div class="col-12">
+                                                                    <ConnectionOptionsLink className="pt-2 d-flex justify-content-center" onClick={this.optionClicked = (e) => {this.setState({connectionOption: '2'})}}>Sign Up</ConnectionOptionsLink>
+                                                                </div>
+                                                            </div>
+                                                        </FormContainer>  
                                                     </div>
-                                                </div>
-                                            </FormContainer>  
-                                        </div>
-                                    :   <div class="row h-100 m-0 p-0">
-                                            <div class="col-sm-12 mx-auto my-auto">
-                                                <div class="container-fluid m-0 p-0">
-                                                    <SignUpForm />
-                                                    <ConnectionOptionsLink className="pt-2 d-flex justify-content-center" onClick={this.optionClicked = (e) => {this.setState({connectionOption: '1'})}}>Log In</ConnectionOptionsLink>
-                                                </div>
-                                            </div> 
-                                        </div>
+                                                :   <div class="row h-100 m-0 p-0">
+                                                        <div class="col-sm-12 mx-auto my-auto">
+                                                            <div class="container-fluid m-0 p-0">
+                                                                <SignUpForm />
+                                                                <ConnectionOptionsLink className="pt-2 d-flex justify-content-center" onClick={this.optionClicked = (e) => {this.setState({connectionOption: '1'})}}>Log In</ConnectionOptionsLink>
+                                                            </div>
+                                                        </div> 
+                                                    </div>
+                                            }
+                                        </div> 
                                 }
-                            </div> 
-                }
-            </div>
-          );
-      }
+                            </div>
+                    }
+                    {this.pageLoader()}
+                </div>
+            );
+        }
 }
 
 LandingPage.propTypes = {

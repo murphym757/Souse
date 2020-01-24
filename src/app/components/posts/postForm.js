@@ -2,12 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import aws from 'aws-sdk';
-import awsConfig from '../../../server/config';
 import {
-    SouseLoadingIcon,
-    SouseLoadingIcon2,
-    SouseLoadingIcon3,
+    SouseSpinner,
     SouseButton,
     SouseForm
 } from '../../assets/styles/mainStyling';
@@ -27,7 +23,7 @@ class PostCreate extends Component {
             postImageURL: '',
             username: loggedinUsername,
             imageUploadOption: true,
-            isLoading: true,
+            isLoading: false,
             fullPostUploadLoader: true,
             selectedFileType: null,
             uploadButtonClicked: false
@@ -122,7 +118,6 @@ class PostCreate extends Component {
         const createRoute = "/p/add";
 
         axios.post(apiRoute + createRoute + "/" + postCreator, postData);
-
         this.setState({
             postCreatorId: '',
             postCaption: '',
@@ -130,106 +125,120 @@ class PostCreate extends Component {
             postUnixTimestamp: '',
             postImageURL: ''
         });
-        window.location.reload();
+        this.setState({
+            isLoading: true
+        });
     }
 
 
     onSubmitWithUploadedImage = (e) => { // Submits all changes
+        e.preventDefault();
         this.onImageUpload(e);
         this.onSubmit(e);
-        window.location.reload(true);
+        setTimeout(() => {
+            this.setState({
+                isLoading: false
+            });
+            window.location.reload(true);
+        }, 10000)
     }
     
 
     render() {
         const {isAuthenticated, user} = this.props.auth;
+        const isLoading = this.state.isLoading;
         return (
             <div class="container">
-                <SouseForm onSubmit={this.onSubmitWithUploadedImage}>
-                {this.state.imageUploadOption 
-                    ?   <div>
-                            <div class="input-field">
-                                <textarea 
-                                    id="souseCaptionPost" 
-                                    class="materialize-textarea"
-                                    name="postCaption"
-                                    id="souseCaptionPost"
-                                    maxLength={1000}  
-                                    rows="1"
-                                    value={this.state.postCaption}
-                                    onChange={this.onChangepostCaption}>
-                                </textarea>
-                                <label for="souseCaptionPost">Caption ({this.state.postCaption.length}/1000)</label>
-                            </div>
-                            <div class="input-field">
-                                <textarea 
-                                    id="souseLocationPost" 
-                                    class="materialize-textarea"
-                                    name="postLocation"
-                                    id="souseLocationPost"  
-                                    rows="1"
-                                    value={this.state.postLocation}
-                                    onChange={this.onChangepostLocation}>
-                                </textarea>
-                                <label for="souseLocationPost">Location</label>
-                            </div>
-                            <div class="mx-auto" onClick={this.fullPostUpload}>
-                                <a class="souseLinkFont">
-                                    <h6>Upload Image Here <i class="fas fa-camera fa-lg"></i></h6>
-                                </a>
-                            </div>
+                {isLoading == true
+                    ?   <div class="d-flex justify-content-center">
+                            <SouseSpinner />
                         </div>
-                    
-                   : <div>
-                        <div class="input-field">
-                            <textarea 
-                                id="souseCaptionPost" 
-                                class="materialize-textarea"
-                                name="postCaption"
-                                id="souseCaptionPost"  
-                                rows="1"
-                                maxLength={1000}
-                                value={this.state.postCaption}
-                                onChange={this.onChangepostCaption}>
-                            </textarea>
-                            <label for="souseCaptionPost">Caption ({this.state.postCaption.length}/1000)</label>
-                        </div>
-                        <div class="input-field">
-                            <textarea 
-                                id="souseLocationPost" 
-                                class="materialize-textarea"
-                                name="postLocation"
-                                id="souseLocationPost"  
-                                rows="1"
-                                value={this.state.postLocation}
-                                onChange={this.onChangepostLocation}>
-                            </textarea>
-                            <label for="souseLocationPost">Location</label>
-                        </div>
-                        <div class="file-field input-field">
-                            <SouseButton className="btn-large">
-                                <p class="lead buttonFont">Upload</p>
-                                    <input 
-                                        type="file" 
-                                        id="image"
-                                        onChange={this.handleSelectedImage}
-                                    />
-                            </SouseButton>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text" />
-                            </div>
-                        </div>
-                    </div>
-                } 
-                {this.state.uploadButtonClicked == false
-                    ?   <div></div>
-                    :   <div class="form-group">
-                            <SouseButton type="submit" className="waves-effect waves-light btn-large">
-                                <p class="lead buttonFont">Share</p>
-                            </SouseButton>
-                        </div>
+                    :   <SouseForm onSubmit={this.onSubmitWithUploadedImage}>
+                            {this.state.imageUploadOption 
+                                ?   <div>
+                                        <div class="input-field">
+                                            <textarea 
+                                                id="souseCaptionPost" 
+                                                class="materialize-textarea"
+                                                name="postCaption"
+                                                id="souseCaptionPost"
+                                                maxLength={1000}  
+                                                rows="1"
+                                                value={this.state.postCaption}
+                                                onChange={this.onChangepostCaption}>
+                                            </textarea>
+                                            <label for="souseCaptionPost">Caption ({this.state.postCaption.length}/1000)</label>
+                                        </div>
+                                        <div class="input-field">
+                                            <textarea 
+                                                id="souseLocationPost" 
+                                                class="materialize-textarea"
+                                                name="postLocation"
+                                                id="souseLocationPost"  
+                                                rows="1"
+                                                value={this.state.postLocation}
+                                                onChange={this.onChangepostLocation}>
+                                            </textarea>
+                                            <label for="souseLocationPost">Location</label>
+                                        </div>
+                                        <div class="mx-auto" onClick={this.fullPostUpload}>
+                                            <a class="souseLinkFont">
+                                                <h6>Upload Image Here <i class="fas fa-camera fa-lg"></i></h6>
+                                            </a>
+                                        </div>
+                                    </div>
+                                
+                            : <div>
+                                    <div class="input-field">
+                                        <textarea 
+                                            id="souseCaptionPost" 
+                                            class="materialize-textarea"
+                                            name="postCaption"
+                                            id="souseCaptionPost"  
+                                            rows="1"
+                                            maxLength={1000}
+                                            value={this.state.postCaption}
+                                            onChange={this.onChangepostCaption}>
+                                        </textarea>
+                                        <label for="souseCaptionPost">Caption ({this.state.postCaption.length}/1000)</label>
+                                    </div>
+                                    <div class="input-field">
+                                        <textarea 
+                                            id="souseLocationPost" 
+                                            class="materialize-textarea"
+                                            name="postLocation"
+                                            id="souseLocationPost"  
+                                            rows="1"
+                                            value={this.state.postLocation}
+                                            onChange={this.onChangepostLocation}>
+                                        </textarea>
+                                        <label for="souseLocationPost">Location</label>
+                                    </div>
+                                    <div class="file-field input-field">
+                                        <SouseButton className="btn-large">
+                                            <p class="lead buttonFont">Upload</p>
+                                                <input 
+                                                    type="file" 
+                                                    id="image"
+                                                    onChange={this.handleSelectedImage}
+                                                />
+                                        </SouseButton>
+                                        <div class="file-path-wrapper">
+                                            <input class="file-path validate" type="text" />
+                                        </div>
+                                    </div>
+                                </div>
+                            } 
+                            {this.state.uploadButtonClicked == false
+                                ?   <div></div>
+                                :   <div class="form-group">
+                                        <SouseButton type="submit" className="waves-effect waves-light btn-large">
+                                            <p class="lead buttonFont">Share</p>
+                                        </SouseButton>
+                                    </div>
+                            }
+                        </SouseForm>
                 }
-                </SouseForm>
             </div>
           );
       }

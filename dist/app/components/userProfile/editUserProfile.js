@@ -231,6 +231,16 @@ function (_Component) {
       e.preventDefault();
 
       _this.onChangeUserData();
+
+      setTimeout(function () {
+        _this.setState({
+          isLoading: false
+        });
+
+        _this.props.history.push("/");
+
+        window.location.reload(true);
+      }, 10000);
     };
 
     _this.onSubmitNewUser = function (e) {
@@ -240,6 +250,16 @@ function (_Component) {
       _this.onImageUpload(e);
 
       _this.onChangeUserData();
+
+      setTimeout(function () {
+        _this.setState({
+          isLoading: false
+        });
+
+        _this.props.history.push("/");
+
+        window.location.reload(true);
+      }, 10000);
     };
 
     _this.onSubmitWithUploadedImage = function (e) {
@@ -251,7 +271,15 @@ function (_Component) {
           _this.deleteImageUpload(awsBucketName);
         }, 2000);
       });
-      promise.then(_this.onImageUpload(e), _this.onChangeUserData(), window.location.reload(true));
+      promise.then(_this.onImageUpload(e), _this.onChangeUserData(), setTimeout(function () {
+        _this.setState({
+          isLoading: false
+        });
+
+        _this.props.history.push("/");
+
+        window.location.reload(true);
+      }, 10000));
     };
 
     var _this$props$auth3 = _this.props.auth,
@@ -478,9 +506,6 @@ function (_Component) {
         _axios["default"].post(apiRoute + userWithoutPasswordChangeRoute + "/" + userId, userDataWithoutPasswordChange)["catch"](function (error) {
           console.log(error);
         });
-
-        this.props.history.push("/");
-        window.location.reload(true);
       } else {
         if (this.state.password.length >= 6) {
           var userDataWithPasswordChange = {
@@ -506,11 +531,12 @@ function (_Component) {
           _axios["default"].post(_apiRoute + userWithPasswordChangeRoute + "/" + _userId, userDataWithPasswordChange)["catch"](function (error) {
             console.log(error);
           });
-
-          this.props.history.push("/");
-          window.location.reload(true);
         } else {}
       }
+
+      this.setState({
+        isLoading: true
+      });
     }
   }, {
     key: "render",
@@ -528,9 +554,12 @@ function (_Component) {
       var userOptionsDisplay = this.state.userOptionsDisplay;
       var userIdPathname = window.location.pathname;
       var userIdFound = userIdPathname.slice(8);
+      var isLoading = this.state.isLoading;
       return _react["default"].createElement("div", {
         "class": "pt-5"
-      }, isAuthenticated && loggedinUserId == userIdFound ? _react["default"].createElement("div", {
+      }, isLoading == true ? _react["default"].createElement("div", {
+        "class": "d-flex justify-content-center"
+      }, _react["default"].createElement(_mainStyling.SouseSpinner, null)) : _react["default"].createElement("div", null, isAuthenticated && loggedinUserId == userIdFound ? _react["default"].createElement("div", {
         "class": "container-fluid pt-5"
       }, _react["default"].createElement(_mainStyling.SouseForm, {
         onSubmit: this.onSubmitWithUploadedImage
@@ -840,17 +869,17 @@ function (_Component) {
         "class": "lead buttonFont"
       }, "Update User")))) : _react["default"].createElement("div", {
         "class": "row d-flex justify-content-center col-12"
-      }, " ", _react["default"].createElement(_mainStyling.SouseLoadingIcon, {
+      }, " ", _react["default"].createElement(SouseLoadingIcon, {
         className: "spinner-grow",
         role: "status"
       }, _react["default"].createElement("span", {
         "class": "sr-only"
-      }, "Loading...")), _react["default"].createElement(_mainStyling.SouseLoadingIcon2, {
+      }, "Loading...")), _react["default"].createElement(SouseLoadingIcon2, {
         className: "spinner-grow",
         role: "status"
       }, _react["default"].createElement("span", {
         "class": "sr-only"
-      }, "Loading...")), _react["default"].createElement(_mainStyling.SouseLoadingIcon3, {
+      }, "Loading...")), _react["default"].createElement(SouseLoadingIcon3, {
         className: "spinner-grow",
         role: "status"
       }, _react["default"].createElement("span", {
@@ -897,7 +926,7 @@ function (_Component) {
         className: "waves-effect waves-light btn-large d-block mx-auto"
       }, _react["default"].createElement("p", {
         "class": "lead buttonFont"
-      }, "Update User"))))))))))) : _react["default"].createElement(_Page["default"], null));
+      }, "Update User"))))))))))) : _react["default"].createElement(_Page["default"], null)));
     }
   }]);
 

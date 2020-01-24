@@ -260,6 +260,72 @@ const mongoose = require('mongoose'),
         })
     }
 
+    // Upload Image (Main Page Post Upload)
+    exports.upload_user_image_mainpage = (req, res, next) => {
+        const userName = req.params.username;
+        const postTimestamp = req.params.timestamp;
+        User.findOne({username: "" + userName + ""}).select("_id username").exec((err, user) => {
+            const userData = {
+                _id: user._id,
+                username: user.username
+            }
+            aws.config.update({
+                accessKeyId: config.AWS_ACCESS_KEY_ID,
+                secretAccessKey: config.AWS_SECRET_ACCESS_KEY,
+                region: config.AWS_REGION
+            })
+
+            const s3 = new aws.S3();
+
+            const fileFilter = (req, file, cb) => {
+                if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/gif') {
+                    cb(null, true)
+                } else {
+                    cb(new Error('Invalid Mime Type, only JPEG/JPG, PNG, ang GIF'), false)
+                }
+            }
+
+            const userImageUpload = multer({
+                fileFilter,
+                storage: multerS3({
+                    s3,
+                    bucket: config.AWS_BUCKET_NAME,
+                    acl: 'public-read',
+                    serverSideEncryption: 'AES256',
+                    contentType: multerS3.AUTO_CONTENT_TYPE,
+                    metadata: (req, file, cb) => {
+                        const extname = path.extname(file.originalname).toLowerCase();
+                        cb(null, {
+                            fieldName: "This image: " + userData.username + extname + " was uploaded to Souse"
+                        });
+                    },
+                    key: (req, file, cb) => {
+                        const filetypes = /jpeg|jpg|png|gif/;
+                        const extname = path.extname(file.originalname).toLowerCase();
+                        const extNameTest = filetypes.test(path.extname(file.originalname).toLowerCase());
+                        const mimeTypeTest = filetypes.test(file.mimetype);
+                        const newFileName = Date.now().toString();
+                        const fullPath = 'users/' + "" + userData._id + "" + '/posts/' + postTimestamp + '/' + userData._id + extname;
+                        if (mimeTypeTest && extNameTest) {
+                            return cb(null, fullPath);
+                        } else {
+                            cb('Error: Images Only!');
+                        }
+                    }
+                })
+            })
+
+            const singleUpload = userImageUpload.single('image');
+            singleUpload(req, res, (err) => {
+                if (err) res.json(err);
+                else res.json({
+                    'imageName': req.file.key,
+                    'imageUrl': req.file.location
+                });
+            });
+        })
+    }
+
     // Delete User
     exports.delete_user = (req, res, next) => {
         User.findByIdAndRemove({_id: req.params.id}, (err, user) => {

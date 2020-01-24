@@ -2,6 +2,13 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { souseMediaQueries } from './mediaQueries';
 import { SousePostMain } from './postsStyling';
+import { ScalingSquaresSpinner } from 'react-epic-spinners';
+
+export const SouseSpinner = styled(ScalingSquaresSpinner) `
+    .square {
+        border: solid ${props => props.theme.secondaryColor}; 
+    }
+`;
 
 export const SouseCenterContainer = styled.div `
     /* col-12 */

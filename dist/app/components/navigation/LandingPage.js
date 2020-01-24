@@ -61,7 +61,8 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(LandingPage).call(this, props));
     _this.state = {
-      connectionOption: "1"
+      connectionOption: "1",
+      isLoading: true
     };
     return _this;
   }
@@ -127,9 +128,20 @@ function (_Component) {
       return souseFilterFollowerData;
     }
   }, {
+    key: "pageLoader",
+    value: function pageLoader() {
+      var _this2 = this;
+
+      setTimeout(function () {
+        _this2.setState({
+          isLoading: false
+        });
+      }, 1500);
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var _this$props$auth5 = this.props.auth,
           isAuthenticated = _this$props$auth5.isAuthenticated,
@@ -137,11 +149,14 @@ function (_Component) {
       var souseUserData = this.props.souseUserData;
       var loggedinUser = user.username;
       var loggedinUserId = user.id;
+      var isLoading = this.state.isLoading;
       var connectionOption = this.state.connectionOption;
       var postsTotal = "" + this.postFinder().length + "";
       var followersTotal = "" + this.followerFinder().length + "";
       var followsTotal = "" + this.followFinder().length + "";
-      return _react["default"].createElement("div", null, Object.keys(this.userFinder()).map(function (object, i) {
+      return _react["default"].createElement("div", null, isLoading == true ? _react["default"].createElement("div", {
+        "class": "d-flex justify-content-center"
+      }, _react["default"].createElement(_mainStyling.SouseSpinner, null)) : _react["default"].createElement("div", null, Object.keys(this.userFinder()).map(function (object, i) {
         return _react["default"].createElement("div", {
           "class": "container-fluid"
         }, _react["default"].createElement("div", {
@@ -152,7 +167,7 @@ function (_Component) {
           "class": "row d-flex justify-content-center"
         }, "   ", _react["default"].createElement(_userProfileStyling.SouseUserPageIconLanding, null, _react["default"].createElement("img", {
           className: "souseUserPageLandingImage",
-          src: _this2.userFinder()[i].userImage,
+          src: _this3.userFinder()[i].userImage,
           alt: "souseUserIcon",
           width: "85px",
           height: "85px"
@@ -160,7 +175,7 @@ function (_Component) {
           className: "mx-auto my-auto"
         }, _react["default"].createElement("div", {
           "class": "row d-flex justify-content-center"
-        }, "   ", _react["default"].createElement("h2", null, _this2.userFinder()[i].username)), _react["default"].createElement("div", {
+        }, "   ", _react["default"].createElement("h2", null, _this3.userFinder()[i].username)), _react["default"].createElement("div", {
           "class": "row d-flex justify-content-center"
         }, "   ", _react["default"].createElement("div", {
           "class": "col-4 d-flex justify-content-center"
@@ -168,25 +183,25 @@ function (_Component) {
           "class": "col-4 d-flex justify-content-center"
         }, _react["default"].createElement("h5", null, followersTotal, " Followers")), _react["default"].createElement("div", {
           "class": "col-4 d-flex justify-content-center"
-        }, _react["default"].createElement("h5", null, followsTotal, " Follows"))), Object.keys(_this2.userFinder()).map(function (object, i) {
+        }, _react["default"].createElement("h5", null, followsTotal, " Follows"))), Object.keys(_this3.userFinder()).map(function (object, i) {
           return _react["default"].createElement("div", null, _react["default"].createElement(_reactRouterDom.Link, {
             to: {
-              pathname: "/".concat(_this2.userFinder()[i].username),
+              pathname: "/".concat(_this3.userFinder()[i].username),
               state: {
-                souseUserId: _this2.userFinder()[i]._id,
-                souseUserUsername: _this2.userFinder()[i].username,
-                souseUserFirstName: _this2.userFinder()[i].firstName,
-                souseUserLastName: _this2.userFinder()[i].lastName,
-                souseUserEmail: _this2.userFinder()[i].email,
-                souseUserPassword: _this2.userFinder()[i].password,
-                souseUserSignUpDate: _this2.userFinder()[i].signUpDate,
-                souseUserImage: _this2.userFinder()[i].userImage,
-                souseNewUserImageSetup: _this2.userFinder()[i].newUserImageSetup,
-                souseUserTwitter: _this2.userFinder()[i].userTwitter,
-                souseUserFacebook: _this2.userFinder()[i].userFacebook,
-                souseUserInstagram: _this2.userFinder()[i].userInstagram,
-                souseUserLocation: _this2.userFinder()[i].userLocation,
-                souseUserBio: _this2.userFinder()[i].userBio
+                souseUserId: _this3.userFinder()[i]._id,
+                souseUserUsername: _this3.userFinder()[i].username,
+                souseUserFirstName: _this3.userFinder()[i].firstName,
+                souseUserLastName: _this3.userFinder()[i].lastName,
+                souseUserEmail: _this3.userFinder()[i].email,
+                souseUserPassword: _this3.userFinder()[i].password,
+                souseUserSignUpDate: _this3.userFinder()[i].signUpDate,
+                souseUserImage: _this3.userFinder()[i].userImage,
+                souseNewUserImageSetup: _this3.userFinder()[i].newUserImageSetup,
+                souseUserTwitter: _this3.userFinder()[i].userTwitter,
+                souseUserFacebook: _this3.userFinder()[i].userFacebook,
+                souseUserInstagram: _this3.userFinder()[i].userInstagram,
+                souseUserLocation: _this3.userFinder()[i].userLocation,
+                souseUserBio: _this3.userFinder()[i].userBio
               }
             }
           }, _react["default"].createElement("div", {
@@ -220,7 +235,7 @@ function (_Component) {
       }, _react["default"].createElement(_mainStyling.ConnectionOptionsLink, {
         className: "pt-2 d-flex justify-content-center",
         onClick: this.optionClicked = function (e) {
-          _this2.setState({
+          _this3.setState({
             connectionOption: '2'
           });
         }
@@ -231,7 +246,7 @@ function (_Component) {
       }, _react["default"].createElement(_mainStyling.ConnectionOptionsLink, {
         className: "pt-2 d-flex justify-content-center",
         onClick: this.optionClicked = function (e) {
-          _this2.setState({
+          _this3.setState({
             connectionOption: '2'
           });
         }
@@ -244,11 +259,11 @@ function (_Component) {
       }, _react["default"].createElement(_signUpForm["default"], null), _react["default"].createElement(_mainStyling.ConnectionOptionsLink, {
         className: "pt-2 d-flex justify-content-center",
         onClick: this.optionClicked = function (e) {
-          _this2.setState({
+          _this3.setState({
             connectionOption: '1'
           });
         }
-      }, "Log In"))))));
+      }, "Log In")))))), this.pageLoader());
     }
   }]);
 
