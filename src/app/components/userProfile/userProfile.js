@@ -210,6 +210,42 @@ class UserProfile extends Component {
         window.location.reload();
     }
 
+    postCountConverter() {
+        let postsTotal = "" + this.postFinder().length + "";
+            if (postsTotal >= 1000000) {
+                postsTotal = ((postsTotal/1000000).toFixed(1)) + "M"
+            } else if (postsTotal >= 1000) {
+                postsTotal = ((postsTotal/1000).toFixed(1)) + "K"
+            } else if (postsTotal <= 999) {
+                postsTotal = postsTotal
+            } 
+            return postsTotal;
+    }
+
+    followerCountConverter() {
+        let followersTotal = "" + this.followerFinder().length + "";
+            if (followersTotal >= 1000000) {
+                followersTotal = ((followersTotal/1000000).toFixed(1)) + "M"
+            } else if (followersTotal >= 1000) {
+                followersTotal = ((followersTotal/1000).toFixed(1)) + "K"
+            } else if (followersTotal <= 999) {
+                followersTotal = followersTotal 
+            } 
+            return followersTotal;
+    }
+
+    followCountConverter() {
+        let followsTotal = "" + this.followFinder().length + "";
+            if (followsTotal >= 1000000) {
+                followsTotal = ((followsTotal / 1000000).toFixed(1)) + "M"
+            } else if (followsTotal >= 1000) {
+                followsTotal = ((followsTotal / 1000).toFixed(1)) + "K"
+            } else if (followsTotal <= 999) {
+                followsTotal = followsTotal
+            } 
+            return followsTotal;
+    }
+
     render() {
         const {isAuthenticated, user} = this.props.auth;
         const loggedInUsername = user.username;
@@ -293,20 +329,20 @@ class UserProfile extends Component {
                                                             <div class="col-12">
                                                             <UserDataUserPage></UserDataUserPage>
                                                                 {this.state.totalDisplayPosts === postsTotal
-                                                                    ?   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Post</UserDataUserPage>
-                                                                    :   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Posts</UserDataUserPage>
+                                                                    ?   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{this.postCountConverter()}</b> Post</UserDataUserPage>
+                                                                    :   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{this.postCountConverter()}</b> Posts</UserDataUserPage>
                                                                 }
                                                             </div>
                                                             <div class="col-12">
                                                                 {this.state.totalDisplayFollowers === followersTotal
-                                                                    ?   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Follower</UserDataUserPage>
-                                                                    :   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Followers</UserDataUserPage>
+                                                                    ?   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{this.followerCountConverter()}</b> Follower</UserDataUserPage>
+                                                                    :   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{this.followerCountConverter()}</b> Followers</UserDataUserPage>
                                                                 }
                                                             </div>
                                                             <div class="col-12">
                                                                 {this.state.totalDisplayFollows === followsTotal
-                                                                    ?   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follow</UserDataUserPage>
-                                                                    :   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follows</UserDataUserPage> 
+                                                                    ?   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{this.followCountConverter()}</b> Follow</UserDataUserPage>
+                                                                    :   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{this.followCountConverter()}</b> Follows</UserDataUserPage> 
                                                                 }
                                                             </div>
                                                         </div>
@@ -424,7 +460,7 @@ class UserProfile extends Component {
                                                 </div>
                                             </div>
                                             <div class="row d-flex justify-content-center"> {/* Bottom content row */}
-                                                <ProfilePreScrollable>
+                                                <ProfilePreScrollable className="col-12">
                                                     {userPageDisplay == '1'
                                                         ?   <div class="row d-flex justify-content-center"> {/* Loads Posts by default */}
                                                                 {Object.keys(this.postFinder()).map((object, i) => {
@@ -634,20 +670,38 @@ class UserProfile extends Component {
                                                                 <div class="col-4 my-auto d-flex justify-content-center">
                                                                 <UserDataUserPage></UserDataUserPage>
                                                                     {this.state.totalDisplayPosts === postsTotal
-                                                                        ?   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Post</UserDataUserPage>
-                                                                        :   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}><b>{postsTotal}</b> Posts</UserDataUserPage>
+                                                                        ?   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}>
+                                                                                <div class="row p-0 m-0">Post</div>
+                                                                                <div class="row p-0 m-0 d-flex justify-content-center"><b>{this.postCountConverter()}</b></div>
+                                                                            </UserDataUserPage>
+                                                                        :   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '1'})}}>
+                                                                                <div class="row p-0 m-0">Posts</div>
+                                                                                <div class="row p-0 m-0 d-flex justify-content-center"><b>{this.postCountConverter()}</b></div>
+                                                                            </UserDataUserPage> 
                                                                     }
                                                                 </div>
                                                                 <div class="col-4 my-auto d-flex justify-content-center">
                                                                     {this.state.totalDisplayFollowers === followersTotal
-                                                                        ?   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Follower</UserDataUserPage>
-                                                                        :   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}><b>{followersTotal}</b> Followers</UserDataUserPage>
+                                                                        ?   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}>
+                                                                                <div class="row p-0 m-0">Follower</div>
+                                                                                <div class="row p-0 m-0 d-flex justify-content-center"><b>{this.followerCountConverter()}</b></div>
+                                                                            </UserDataUserPage>
+                                                                        :   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '3'})}}>
+                                                                                <div class="row p-0 m-0">Followers</div>
+                                                                                <div class="row p-0 m-0 d-flex justify-content-center"><b>{this.followerCountConverter()}</b></div>
+                                                                            </UserDataUserPage>
                                                                     }
                                                                 </div>
                                                                 <div class="col-4 my-auto d-flex justify-content-center">
                                                                     {this.state.totalDisplayFollows === followsTotal
-                                                                        ?   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follow</UserDataUserPage>
-                                                                        :   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}><b>{followsTotal}</b> Follows</UserDataUserPage> 
+                                                                        ?   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}>
+                                                                                <div class="row p-0 m-0">Follow</div>
+                                                                                <div class="row p-0 m-0 d-flex justify-content-center"><b>{this.followCountConverter()}</b> </div>
+                                                                            </UserDataUserPage>
+                                                                        :   <UserDataUserPage onClick={this.listClicked = (e) => {this.setState({userPageDisplay: '4'})}}>
+                                                                                <div class="row p-0 m-0">Follows</div>
+                                                                                <div class="row p-0 m-0 d-flex justify-content-center"><b>{this.followCountConverter()}</b></div>
+                                                                            </UserDataUserPage> 
                                                                     }
                                                                 </div>
                                                             </div>
@@ -717,129 +771,131 @@ class UserProfile extends Component {
                                                     </div>
                                                     <div class="container-fluid">
                                                         <div class="row d-flex justify-content-center"> {/* Bottom content row */}
-                                                            {userPageDisplay == '1'
-                                                            ?   <div class="row d-flex justify-content-center"> {/* Loads Posts by default */}
-                                                                    {Object.keys(this.postFinder()).map((object, i) => {
-                                                                        return <div class="col-3 m-0 p-0" obj={object} key={i}>
-                                                                            <div>
-                                                                                <Link to={`/p/${this.postFinder()[i]._id}`}>
-                                                                                    <div class="souseImageFormat d-flex justify-content-center">
-                                                                                        <UserPostIcons className="souseUserPostsUserHomePage" 
-                                                                                            src={this.postFinder()[i].sousePosts.postImageURL}
-                                                                                            alt="souseUserPosts"
-                                                                                            width="250px" 
-                                                                                            height="250px"/>
-                                                                                    </div>
-                                                                                </Link>
-                                                                            </div>
-                                                                        </div>
-                                                                    })}
-                                                                </div>
-                                                            :   <div> 
-                                                                    {userPageDisplay == '2'
-                                                                        ?   <div class="container-fluid">   {/* Loads Bio*/}
-                                                                                <div class="row">
-                                                                                    <div class="col">
-                                                                                        {this.state.creatorTwitter === ""
-                                                                                            ?   <div></div>
-                                                                                            :   <div class="col-12">
-                                                                                                    <div class="row d-block mx-auto">
-                                                                                                        <h5 class="d-flex justify-content-center m-0">
-                                                                                                        <SouseLink href={this.state.creatorTwitterURL} target="_blank">
-                                                                                                            <TwitterIcon /> {this.state.creatorTwitter}</SouseLink>
-                                                                                                        </h5>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                        }
-                                                                                        {this.state.creatorFacebook === ""
-                                                                                            ?   <div></div>
-                                                                                            :   <div class="col-12">
-                                                                                                    <div class="row d-block mx-auto">
-                                                                                                        <h5 class="d-flex justify-content-center m-0">
-                                                                                                        <SouseLink href={this.state.creatorFacebookURL} target="_blank">
-                                                                                                            <FacebookIcon /> {this.state.creatorFacebook}</SouseLink>
-                                                                                                        </h5>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                        }
-                                                                                        {this.state.creatorInstagram === ""
-                                                                                            ?   <div></div>
-                                                                                            :   <div class="col-12">
-                                                                                                    <div class="row d-block mx-auto">
-                                                                                                        <h5 class="d-flex justify-content-center m-0">
-                                                                                                        <SouseLink href={this.state.creatorInstagramURL} target="_blank">
-                                                                                                            <InstagramIcon /> {this.state.creatorInstagram}</SouseLink>
-                                                                                                        </h5>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                        }  
-                                                                                    </div>
-                                                                                    {creatorBio === ""
-                                                                                        ?   <div></div>
-                                                                                        :   <div class="col">
-                                                                                            <UserBio>{creatorBio}</UserBio>
+                                                            <div class="col-12">
+                                                                {userPageDisplay == '1'
+                                                                ?   <div class="row d-flex justify-content-center"> {/* Loads Posts by default */}
+                                                                        {Object.keys(this.postFinder()).map((object, i) => {
+                                                                            return <div class="col-3 m-0 p-0" obj={object} key={i}>
+                                                                                <div>
+                                                                                    <Link to={`/p/${this.postFinder()[i]._id}`}>
+                                                                                        <div class="souseImageFormat d-flex justify-content-center">
+                                                                                            <UserPostIcons className="souseUserPostsUserHomePage" 
+                                                                                                src={this.postFinder()[i].sousePosts.postImageURL}
+                                                                                                alt="souseUserPosts"
+                                                                                                width="250px" 
+                                                                                                height="250px"/>
                                                                                         </div>
-                                                                                    }
+                                                                                    </Link>
                                                                                 </div>
                                                                             </div>
-                                                                        :   <div></div>
-
-                                                                    }
-                                                                    {userPageDisplay == '3'
-                                                                        ?   <div>   {/* Load Followers */}
-                                                                                {Object.keys(this.followerFinder())
-                                                                                    .map((object, i) => (
-                                                                                        <div class="col-3">
-                                                                                            <Link to={`/${this.followerFinder()[i].followerUsername}`} onClick={() => window.location.refresh()}>
-                                                                                                <div class="container-fluid d-flex justify-content-center">
-                                                                                                    <img class="souseUserIconUserHomePage followIcons"
-                                                                                                        src={this.followerFinder()[i].followerUserImage}
-                                                                                                        alt="souseUserIcon"
-                                                                                                        width="85px"
-                                                                                                        height="85px" />
-                                                                                                </div>
-                                                                                                <div class="row">
-                                                                                                    <h6 class="col-12">{this.followerFinder()[i].followerUsername}</h6>
-                                                                                                </div>
-                                                                                            </Link>
+                                                                        })}
+                                                                    </div>
+                                                                :   <div> 
+                                                                        {userPageDisplay == '2'
+                                                                            ?   <div class="container-fluid">   {/* Loads Bio*/}
+                                                                                    <div class="row">
+                                                                                        <div class="col">
+                                                                                            {this.state.creatorTwitter === ""
+                                                                                                ?   <div></div>
+                                                                                                :   <div class="col-12">
+                                                                                                        <div class="row d-block mx-auto">
+                                                                                                            <h5 class="d-flex justify-content-center m-0">
+                                                                                                            <SouseLink href={this.state.creatorTwitterURL} target="_blank">
+                                                                                                                <TwitterIcon /> {this.state.creatorTwitter}</SouseLink>
+                                                                                                            </h5>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                            }
+                                                                                            {this.state.creatorFacebook === ""
+                                                                                                ?   <div></div>
+                                                                                                :   <div class="col-12">
+                                                                                                        <div class="row d-block mx-auto">
+                                                                                                            <h5 class="d-flex justify-content-center m-0">
+                                                                                                            <SouseLink href={this.state.creatorFacebookURL} target="_blank">
+                                                                                                                <FacebookIcon /> {this.state.creatorFacebook}</SouseLink>
+                                                                                                            </h5>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                            }
+                                                                                            {this.state.creatorInstagram === ""
+                                                                                                ?   <div></div>
+                                                                                                :   <div class="col-12">
+                                                                                                        <div class="row d-block mx-auto">
+                                                                                                            <h5 class="d-flex justify-content-center m-0">
+                                                                                                            <SouseLink href={this.state.creatorInstagramURL} target="_blank">
+                                                                                                                <InstagramIcon /> {this.state.creatorInstagram}</SouseLink>
+                                                                                                            </h5>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                            }  
                                                                                         </div>
-                                                                                    ))}
-                                                                            </div>
-                                                                        :   <div></div>
+                                                                                        {creatorBio === ""
+                                                                                            ?   <div></div>
+                                                                                            :   <div class="col">
+                                                                                                <UserBio>{creatorBio}</UserBio>
+                                                                                            </div>
+                                                                                        }
+                                                                                    </div>
+                                                                                </div>
+                                                                            :   <div></div>
 
-                                                                    }
-                                                                    {userPageDisplay == '4'
-                                                                        ?   <div class="row">   {/* loads Follows */}
-                                                                                {Object.keys(this.followFinder())
-                                                                                    .map((object, i) => (
-                                                                                        <div class="col-3">
-                                                                                            <Link to={`/${this.followFinder()[i].followUsername}`} onClick={() => window.location.refresh()}>
-                                                                                                <div class="container-fluid d-flex justify-content-center">
-                                                                                                    <img class="souseUserIconUserHomePage followIcons"
-                                                                                                        src={this.followFinder()[i].followUserImage}
-                                                                                                        alt="souseUserIcon"
-                                                                                                        width="85px"
-                                                                                                        height="85px" />
-                                                                                                </div>
-                                                                                                <div class="row">
-                                                                                                    <h6 class="col-12">{this.followFinder()[i].followUsername}</h6>
-                                                                                                </div>
-                                                                                            </Link>
-                                                                                        </div>
-                                                                                    ))}
-                                                                            </div>
-                                                                        :   <div></div>
+                                                                        }
+                                                                        {userPageDisplay == '3'
+                                                                            ?   <div>   {/* Load Followers */}
+                                                                                    {Object.keys(this.followerFinder())
+                                                                                        .map((object, i) => (
+                                                                                            <div class="col-3">
+                                                                                                <Link to={`/${this.followerFinder()[i].followerUsername}`} onClick={() => window.location.refresh()}>
+                                                                                                    <div class="container-fluid d-flex justify-content-center">
+                                                                                                        <img class="souseUserIconUserHomePage followIcons"
+                                                                                                            src={this.followerFinder()[i].followerUserImage}
+                                                                                                            alt="souseUserIcon"
+                                                                                                            width="85px"
+                                                                                                            height="85px" />
+                                                                                                    </div>
+                                                                                                    <div class="row">
+                                                                                                        <h6 class="col-12">{this.followerFinder()[i].followerUsername}</h6>
+                                                                                                    </div>
+                                                                                                </Link>
+                                                                                            </div>
+                                                                                        ))}
+                                                                                </div>
+                                                                            :   <div></div>
 
-                                                                    }
-                                                                    { /* 
-                                                                    {userPageDisplay == '5'
-                                                                        ?   <div class="row"> // loads Likes/Favorites
-                                                                            </div>
-                                                                        :   <div></div>
-                                                                    }
-                                                                */}
-                                                                </div>
-                                                        }
+                                                                        }
+                                                                        {userPageDisplay == '4'
+                                                                            ?   <div class="row">   {/* loads Follows */}
+                                                                                    {Object.keys(this.followFinder())
+                                                                                        .map((object, i) => (
+                                                                                            <div class="col-3">
+                                                                                                <Link to={`/${this.followFinder()[i].followUsername}`} onClick={() => window.location.refresh()}>
+                                                                                                    <div class="container-fluid d-flex justify-content-center">
+                                                                                                        <img class="souseUserIconUserHomePage followIcons"
+                                                                                                            src={this.followFinder()[i].followUserImage}
+                                                                                                            alt="souseUserIcon"
+                                                                                                            width="85px"
+                                                                                                            height="85px" />
+                                                                                                    </div>
+                                                                                                    <div class="row">
+                                                                                                        <h6 class="col-12">{this.followFinder()[i].followUsername}</h6>
+                                                                                                    </div>
+                                                                                                </Link>
+                                                                                            </div>
+                                                                                        ))}
+                                                                                </div>
+                                                                            :   <div></div>
+
+                                                                        }
+                                                                        { /* 
+                                                                        {userPageDisplay == '5'
+                                                                            ?   <div class="row"> // loads Likes/Favorites
+                                                                                </div>
+                                                                            :   <div></div>
+                                                                        }
+                                                                    */}
+                                                                    </div>
+                                                            }
+                                                            </div>
                                                         </div>
                                                     </div> 
                                                 </div>

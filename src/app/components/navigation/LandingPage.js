@@ -78,6 +78,42 @@ class LandingPage extends Component {
         }, 1500)
     }
 
+    postCountConverter() {
+        let postsTotal = "" + this.postFinder().length + "";
+            if (postsTotal >= 1000000) {
+                postsTotal = ((postsTotal/1000000).toFixed(1)) + "M"
+            } else if (postsTotal >= 1000) {
+                postsTotal = ((postsTotal/1000).toFixed(1)) + "K"
+            } else if (postsTotal <= 999) {
+                postsTotal = postsTotal
+            } 
+            return postsTotal;
+    }
+
+    followerCountConverter() {
+        let followersTotal = "" + this.followerFinder().length + "";
+            if (followersTotal >= 1000000) {
+                followersTotal = ((followersTotal/1000000).toFixed(1)) + "M"
+            } else if (followersTotal >= 1000) {
+                followersTotal = ((followersTotal/1000).toFixed(1)) + "K"
+            } else if (followersTotal <= 999) {
+                followersTotal = followersTotal 
+            } 
+            return followersTotal;
+    }
+
+    followCountConverter() {
+        let followsTotal = "" + this.followFinder().length + "";
+            if (followsTotal >= 1000000) {
+                followsTotal = ((followsTotal / 1000000).toFixed(1)) + "M"
+            } else if (followsTotal >= 1000) {
+                followsTotal = ((followsTotal / 1000).toFixed(1)) + "K"
+            } else if (followsTotal <= 999) {
+                followsTotal = followsTotal
+            } 
+            return followsTotal;
+    }
+
     render() {
         const {isAuthenticated, user} = this.props.auth;
         const souseUserData = this.props.souseUserData;
@@ -116,13 +152,13 @@ class LandingPage extends Component {
                                                 </div>
                                                 <div class="row d-flex justify-content-center">   {/* Follow/Follower Row */}
                                                     <div class="col-4 d-flex justify-content-center">
-                                                        <h5>{postsTotal} Posts</h5>
+                                                        <h5><b>{this.postCountConverter()}</b> Posts</h5>
                                                     </div>
                                                     <div class="col-4 d-flex justify-content-center">
-                                                        <h5>{followersTotal} Followers</h5>
+                                                        <h5><b>{this.followerCountConverter()}</b> Followers</h5>
                                                     </div>
                                                     <div class="col-4 d-flex justify-content-center">
-                                                        <h5>{followsTotal} Follows</h5>
+                                                        <h5><b>{this.followCountConverter()}</b> Follows</h5>
                                                     </div>
                                                 </div>
                                                 {Object.keys(this.userFinder())

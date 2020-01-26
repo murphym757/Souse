@@ -139,6 +139,51 @@ function (_Component) {
       }, 1500);
     }
   }, {
+    key: "postCountConverter",
+    value: function postCountConverter() {
+      var postsTotal = "" + this.postFinder().length + "";
+
+      if (postsTotal >= 1000000) {
+        postsTotal = (postsTotal / 1000000).toFixed(1) + "M";
+      } else if (postsTotal >= 1000) {
+        postsTotal = (postsTotal / 1000).toFixed(1) + "K";
+      } else if (postsTotal <= 999) {
+        postsTotal = postsTotal;
+      }
+
+      return postsTotal;
+    }
+  }, {
+    key: "followerCountConverter",
+    value: function followerCountConverter() {
+      var followersTotal = "" + this.followerFinder().length + "";
+
+      if (followersTotal >= 1000000) {
+        followersTotal = (followersTotal / 1000000).toFixed(1) + "M";
+      } else if (followersTotal >= 1000) {
+        followersTotal = (followersTotal / 1000).toFixed(1) + "K";
+      } else if (followersTotal <= 999) {
+        followersTotal = followersTotal;
+      }
+
+      return followersTotal;
+    }
+  }, {
+    key: "followCountConverter",
+    value: function followCountConverter() {
+      var followsTotal = "" + this.followFinder().length + "";
+
+      if (followsTotal >= 1000000) {
+        followsTotal = (followsTotal / 1000000).toFixed(1) + "M";
+      } else if (followsTotal >= 1000) {
+        followsTotal = (followsTotal / 1000).toFixed(1) + "K";
+      } else if (followsTotal <= 999) {
+        followsTotal = followsTotal;
+      }
+
+      return followsTotal;
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
@@ -179,11 +224,11 @@ function (_Component) {
           "class": "row d-flex justify-content-center"
         }, "   ", _react["default"].createElement("div", {
           "class": "col-4 d-flex justify-content-center"
-        }, _react["default"].createElement("h5", null, postsTotal, " Posts")), _react["default"].createElement("div", {
+        }, _react["default"].createElement("h5", null, _react["default"].createElement("b", null, _this3.postCountConverter()), " Posts")), _react["default"].createElement("div", {
           "class": "col-4 d-flex justify-content-center"
-        }, _react["default"].createElement("h5", null, followersTotal, " Followers")), _react["default"].createElement("div", {
+        }, _react["default"].createElement("h5", null, _react["default"].createElement("b", null, _this3.followerCountConverter()), " Followers")), _react["default"].createElement("div", {
           "class": "col-4 d-flex justify-content-center"
-        }, _react["default"].createElement("h5", null, followsTotal, " Follows"))), Object.keys(_this3.userFinder()).map(function (object, i) {
+        }, _react["default"].createElement("h5", null, _react["default"].createElement("b", null, _this3.followCountConverter()), " Follows"))), Object.keys(_this3.userFinder()).map(function (object, i) {
           return _react["default"].createElement("div", null, _react["default"].createElement(_reactRouterDom.Link, {
             to: {
               pathname: "/".concat(_this3.userFinder()[i].username),

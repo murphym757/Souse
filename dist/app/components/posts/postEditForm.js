@@ -15,6 +15,10 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _reactRedux = require("react-redux");
 
+var _jquery = _interopRequireDefault(require("jquery"));
+
+var _materializeCss = _interopRequireDefault(require("materialize-css"));
+
 var _Page = _interopRequireDefault(require("../navigation/404Page"));
 
 var _mainStyling = require("../../assets/styles/mainStyling");
@@ -22,8 +26,6 @@ var _mainStyling = require("../../assets/styles/mainStyling");
 var _userProfileStyling = require("../../assets/styles/userProfileStyling");
 
 var _postDelete = _interopRequireDefault(require("./postDelete"));
-
-var _awsSdk = _interopRequireDefault(require("aws-sdk"));
 
 var _config = _interopRequireDefault(require("../../../server/config"));
 
@@ -175,6 +177,23 @@ function (_Component) {
       });
     };
 
+    _this.onSubmitWithoutUploadedImage = function (e) {
+      // Submits all changes
+      e.preventDefault();
+
+      _this.onSubmit(e);
+
+      setTimeout(function () {
+        _this.setState({
+          isLoading: false
+        });
+
+        _this.props.history.push("/");
+
+        window.location.reload(true);
+      }, 10000);
+    };
+
     var _this$props$auth3 = _this.props.auth,
         isAuthenticated = _this$props$auth3.isAuthenticated,
         _user = _this$props$auth3.user;
@@ -208,6 +227,7 @@ function (_Component) {
     _this.handleSelectedImage = _this.handleSelectedImage.bind(_assertThisInitialized(_this));
     _this.onImageUpload = _this.onImageUpload.bind(_assertThisInitialized(_this));
     _this.onSubmit = _this.onSubmit.bind(_assertThisInitialized(_this));
+    _this.onSubmitWithoutUploadedImage = _this.onSubmitWithoutUploadedImage.bind(_assertThisInitialized(_this));
     _this.onSubmitWithUploadedImage = _this.onSubmitWithUploadedImage.bind(_assertThisInitialized(_this));
     _this.deleteImageUpload = _this.deleteImageUpload.bind(_assertThisInitialized(_this));
     _this.deletePost = _this.deletePost.bind(_assertThisInitialized(_this));
@@ -218,6 +238,8 @@ function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       var _this2 = this;
+
+      _materializeCss["default"].textareaAutoResize((0, _jquery["default"])('#souseCaptionPost'));
 
       {
         /* Edit Post Command */
@@ -301,7 +323,6 @@ function (_Component) {
         name: "postCaption",
         id: "souseCaptionPost",
         rows: "1",
-        maxLength: 1000,
         value: this.state.postCaption,
         onChange: this.onChangepostCaption
       }), _react["default"].createElement("label", {
@@ -375,7 +396,7 @@ function (_Component) {
         "data-error": "wrong",
         "data-success": "right"
       }, "Currently, Souse cannot upload images with capitalized file extensions (JPEG, PNG, and GIF). Please ensure that your file extensions are lowercase.")), this.state.uploadButtonClicked == false ? _react["default"].createElement(_mainStyling.SouseButton, {
-        onClick: this.onSubmit,
+        onClick: this.onSubmitWithoutUploadedImage,
         type: "button",
         className: "waves-effect waves-light btn-large"
       }, " ", _react["default"].createElement("p", {

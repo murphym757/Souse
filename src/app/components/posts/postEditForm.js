@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Route, Link, Switch, Redirect, withRouter } fr
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import $ from 'jquery';
+import M from 'materialize-css';
 import RouteNotFound from '../navigation/404Page';
 import {
     SouseSpinner,
@@ -13,7 +15,6 @@ import {
     DeleteIcon
 } from '../../assets/styles/userProfileStyling';
 import PostDelete from './postDelete';
-import aws from 'aws-sdk';
 import awsConfig from '../../../server/config';
 
 class PostEdit extends Component {
@@ -51,12 +52,14 @@ class PostEdit extends Component {
         this.handleSelectedImage = this.handleSelectedImage.bind(this);  
         this.onImageUpload = this.onImageUpload.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onSubmitWithoutUploadedImage = this.onSubmitWithoutUploadedImage.bind(this);
         this.onSubmitWithUploadedImage = this.onSubmitWithUploadedImage.bind(this);
         this.deleteImageUpload = this.deleteImageUpload.bind(this);
         this.deletePost = this.deletePost.bind(this);
     }
 
     componentDidMount() {
+        M.textareaAutoResize($('#souseCaptionPost'));
         { /* Edit Post Command */ }
         const apiRoute = "/souseAPI";
         const editRoute = "/p/edit";
@@ -208,6 +211,18 @@ class PostEdit extends Component {
         });
     }
 
+    onSubmitWithoutUploadedImage = (e) => { // Submits all changes
+        e.preventDefault();
+        this.onSubmit(e);
+        setTimeout(() => {
+            this.setState({
+                isLoading: false
+            });
+            this.props.history.push("/");
+            window.location.reload(true);
+        }, 10000);
+    }
+
     render() {
         const {isAuthenticated, user} = this.props.auth;
         const loggedInUser = "" + user.id + "";
@@ -235,7 +250,6 @@ class PostEdit extends Component {
                                                         name="postCaption"
                                                         id="souseCaptionPost"  
                                                         rows="1"
-                                                        maxLength={1000} 
                                                         value={this.state.postCaption}
                                                         onChange={this.onChangepostCaption}></textarea>
                                                     <label class="active" for="souseCaptionPost">Caption ({this.state.postCaption.length}/1000)</label>
@@ -301,7 +315,7 @@ class PostEdit extends Component {
                                                                             </span>
                                                                         </div>
                                                                         {this.state.uploadButtonClicked == false
-                                                                            ?   <SouseButton onClick={this.onSubmit} type="button" className="waves-effect waves-light btn-large"> {/* Update post w/o updating image */}
+                                                                            ?   <SouseButton onClick={this.onSubmitWithoutUploadedImage} type="button" className="waves-effect waves-light btn-large"> {/* Update post w/o updating image */}
                                                                                     <p class="lead buttonFont">Update Post</p>
                                                                                 </SouseButton>
                                                                             :   <SouseButton type="submit" className="waves-effect waves-light btn-large"> {/* Update post and image */}

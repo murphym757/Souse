@@ -273,6 +273,51 @@ function (_Component) {
       return souseFilterFollowerData;
     }
   }, {
+    key: "postCountConverter",
+    value: function postCountConverter() {
+      var postsTotal = "" + this.postFinder().length + "";
+
+      if (postsTotal >= 1000000) {
+        postsTotal = (postsTotal / 1000000).toFixed(1) + "M";
+      } else if (postsTotal >= 1000) {
+        postsTotal = (postsTotal / 1000).toFixed(1) + "K";
+      } else if (postsTotal <= 999) {
+        postsTotal = postsTotal;
+      }
+
+      return postsTotal;
+    }
+  }, {
+    key: "followerCountConverter",
+    value: function followerCountConverter() {
+      var followersTotal = "" + this.followerFinder().length + "";
+
+      if (followersTotal >= 1000000) {
+        followersTotal = (followersTotal / 1000000).toFixed(1) + "M";
+      } else if (followersTotal >= 1000) {
+        followersTotal = (followersTotal / 1000).toFixed(1) + "K";
+      } else if (followersTotal <= 999) {
+        followersTotal = followersTotal;
+      }
+
+      return followersTotal;
+    }
+  }, {
+    key: "followCountConverter",
+    value: function followCountConverter() {
+      var followsTotal = "" + this.followFinder().length + "";
+
+      if (followsTotal >= 1000000) {
+        followsTotal = (followsTotal / 1000000).toFixed(1) + "M";
+      } else if (followsTotal >= 1000) {
+        followsTotal = (followsTotal / 1000).toFixed(1) + "K";
+      } else if (followsTotal <= 999) {
+        followsTotal = followsTotal;
+      }
+
+      return followsTotal;
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
@@ -365,13 +410,13 @@ function (_Component) {
             userPageDisplay: '1'
           });
         }
-      }, _react["default"].createElement("b", null, postsTotal), " Post") : _react["default"].createElement(_userProfileStyling.UserDataUserPage, {
+      }, _react["default"].createElement("b", null, this.postCountConverter()), " Post") : _react["default"].createElement(_userProfileStyling.UserDataUserPage, {
         onClick: this.listClicked = function (e) {
           _this3.setState({
             userPageDisplay: '1'
           });
         }
-      }, _react["default"].createElement("b", null, postsTotal), " Posts")), _react["default"].createElement("div", {
+      }, _react["default"].createElement("b", null, this.postCountConverter()), " Posts")), _react["default"].createElement("div", {
         "class": "col-12"
       }, this.state.totalDisplayFollowers === followersTotal ? _react["default"].createElement(_userProfileStyling.UserDataUserPage, {
         onClick: this.listClicked = function (e) {
@@ -379,13 +424,13 @@ function (_Component) {
             userPageDisplay: '3'
           });
         }
-      }, _react["default"].createElement("b", null, followersTotal), " Follower") : _react["default"].createElement(_userProfileStyling.UserDataUserPage, {
+      }, _react["default"].createElement("b", null, this.followerCountConverter()), " Follower") : _react["default"].createElement(_userProfileStyling.UserDataUserPage, {
         onClick: this.listClicked = function (e) {
           _this3.setState({
             userPageDisplay: '3'
           });
         }
-      }, _react["default"].createElement("b", null, followersTotal), " Followers")), _react["default"].createElement("div", {
+      }, _react["default"].createElement("b", null, this.followerCountConverter()), " Followers")), _react["default"].createElement("div", {
         "class": "col-12"
       }, this.state.totalDisplayFollows === followsTotal ? _react["default"].createElement(_userProfileStyling.UserDataUserPage, {
         onClick: this.listClicked = function (e) {
@@ -393,13 +438,13 @@ function (_Component) {
             userPageDisplay: '4'
           });
         }
-      }, _react["default"].createElement("b", null, followsTotal), " Follow") : _react["default"].createElement(_userProfileStyling.UserDataUserPage, {
+      }, _react["default"].createElement("b", null, this.followCountConverter()), " Follow") : _react["default"].createElement(_userProfileStyling.UserDataUserPage, {
         onClick: this.listClicked = function (e) {
           _this3.setState({
             userPageDisplay: '4'
           });
         }
-      }, _react["default"].createElement("b", null, followsTotal), " Follows"))), isAuthenticated ? _react["default"].createElement("div", null, creatorId !== loggedInUserId ? _react["default"].createElement("div", null, Array.isArray(this.followerFinder()) && this.followerFinder()[0] ? _react["default"].createElement("div", null, this.followerFinder()[0].followerUserId == loggedInUserId ? _react["default"].createElement("div", null, _react["default"].createElement(_mainStyling.SouseButton, {
+      }, _react["default"].createElement("b", null, this.followCountConverter()), " Follows"))), isAuthenticated ? _react["default"].createElement("div", null, creatorId !== loggedInUserId ? _react["default"].createElement("div", null, Array.isArray(this.followerFinder()) && this.followerFinder()[0] ? _react["default"].createElement("div", null, this.followerFinder()[0].followerUserId == loggedInUserId ? _react["default"].createElement("div", null, _react["default"].createElement(_mainStyling.SouseButton, {
         type: "submit",
         className: "waves-effect waves-light btn-large",
         onClick: function onClick(e) {
@@ -513,7 +558,9 @@ function (_Component) {
         souseUserData: souseUserData
       }))), _react["default"].createElement("div", {
         "class": "row d-flex justify-content-center"
-      }, " ", _react["default"].createElement(_userProfileStyling.ProfilePreScrollable, null, userPageDisplay == '1' ? _react["default"].createElement("div", {
+      }, " ", _react["default"].createElement(_userProfileStyling.ProfilePreScrollable, {
+        className: "col-12"
+      }, userPageDisplay == '1' ? _react["default"].createElement("div", {
         "class": "row d-flex justify-content-center"
       }, " ", Object.keys(this.postFinder()).map(function (object, i) {
         return _react["default"].createElement("div", {
@@ -701,13 +748,21 @@ function (_Component) {
             userPageDisplay: '1'
           });
         }
-      }, _react["default"].createElement("b", null, postsTotal), " Post") : _react["default"].createElement(_userProfileStyling.UserDataUserPage, {
+      }, _react["default"].createElement("div", {
+        "class": "row p-0 m-0"
+      }, "Post"), _react["default"].createElement("div", {
+        "class": "row p-0 m-0 d-flex justify-content-center"
+      }, _react["default"].createElement("b", null, this.postCountConverter()))) : _react["default"].createElement(_userProfileStyling.UserDataUserPage, {
         onClick: this.listClicked = function (e) {
           _this3.setState({
             userPageDisplay: '1'
           });
         }
-      }, _react["default"].createElement("b", null, postsTotal), " Posts")), _react["default"].createElement("div", {
+      }, _react["default"].createElement("div", {
+        "class": "row p-0 m-0"
+      }, "Posts"), _react["default"].createElement("div", {
+        "class": "row p-0 m-0 d-flex justify-content-center"
+      }, _react["default"].createElement("b", null, this.postCountConverter())))), _react["default"].createElement("div", {
         "class": "col-4 my-auto d-flex justify-content-center"
       }, this.state.totalDisplayFollowers === followersTotal ? _react["default"].createElement(_userProfileStyling.UserDataUserPage, {
         onClick: this.listClicked = function (e) {
@@ -715,13 +770,21 @@ function (_Component) {
             userPageDisplay: '3'
           });
         }
-      }, _react["default"].createElement("b", null, followersTotal), " Follower") : _react["default"].createElement(_userProfileStyling.UserDataUserPage, {
+      }, _react["default"].createElement("div", {
+        "class": "row p-0 m-0"
+      }, "Follower"), _react["default"].createElement("div", {
+        "class": "row p-0 m-0 d-flex justify-content-center"
+      }, _react["default"].createElement("b", null, this.followerCountConverter()))) : _react["default"].createElement(_userProfileStyling.UserDataUserPage, {
         onClick: this.listClicked = function (e) {
           _this3.setState({
             userPageDisplay: '3'
           });
         }
-      }, _react["default"].createElement("b", null, followersTotal), " Followers")), _react["default"].createElement("div", {
+      }, _react["default"].createElement("div", {
+        "class": "row p-0 m-0"
+      }, "Followers"), _react["default"].createElement("div", {
+        "class": "row p-0 m-0 d-flex justify-content-center"
+      }, _react["default"].createElement("b", null, this.followerCountConverter())))), _react["default"].createElement("div", {
         "class": "col-4 my-auto d-flex justify-content-center"
       }, this.state.totalDisplayFollows === followsTotal ? _react["default"].createElement(_userProfileStyling.UserDataUserPage, {
         onClick: this.listClicked = function (e) {
@@ -729,13 +792,21 @@ function (_Component) {
             userPageDisplay: '4'
           });
         }
-      }, _react["default"].createElement("b", null, followsTotal), " Follow") : _react["default"].createElement(_userProfileStyling.UserDataUserPage, {
+      }, _react["default"].createElement("div", {
+        "class": "row p-0 m-0"
+      }, "Follow"), _react["default"].createElement("div", {
+        "class": "row p-0 m-0 d-flex justify-content-center"
+      }, _react["default"].createElement("b", null, this.followCountConverter()), " ")) : _react["default"].createElement(_userProfileStyling.UserDataUserPage, {
         onClick: this.listClicked = function (e) {
           _this3.setState({
             userPageDisplay: '4'
           });
         }
-      }, _react["default"].createElement("b", null, followsTotal), " Follows"))))), " ", _react["default"].createElement("div", {
+      }, _react["default"].createElement("div", {
+        "class": "row p-0 m-0"
+      }, "Follows"), _react["default"].createElement("div", {
+        "class": "row p-0 m-0 d-flex justify-content-center"
+      }, _react["default"].createElement("b", null, this.followCountConverter()))))))), " ", _react["default"].createElement("div", {
         "class": "row"
       }, " ", _react["default"].createElement("div", {
         "class": "col-12"
@@ -803,7 +874,9 @@ function (_Component) {
         "class": "container-fluid"
       }, _react["default"].createElement("div", {
         "class": "row d-flex justify-content-center"
-      }, " ", userPageDisplay == '1' ? _react["default"].createElement("div", {
+      }, " ", _react["default"].createElement("div", {
+        "class": "col-12"
+      }, userPageDisplay == '1' ? _react["default"].createElement("div", {
         "class": "row d-flex justify-content-center"
       }, " ", Object.keys(this.postFinder()).map(function (object, i) {
         return _react["default"].createElement("div", {
@@ -900,7 +973,7 @@ function (_Component) {
         }, _react["default"].createElement("h6", {
           "class": "col-12"
         }, _this3.followFinder()[i].followUsername))));
-      })) : _react["default"].createElement("div", null))))))))))));
+      })) : _react["default"].createElement("div", null)))))))))))));
     }
   }]);
 
