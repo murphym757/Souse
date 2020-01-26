@@ -19,30 +19,52 @@ export const IphoneContainer = styled.div `
     /* Small Mobile Phones */
     @media ${souseMediaQueries.mobileS.portrait} {
         padding-top: 14vw;
+        display: flex !important;
+        -webkit-box-pack: center !important;
+        justify-content: center !important;
     }
     @media ${souseMediaQueries.mobileS.landscape} {
-        
+        display: flex !important;
+        -webkit-box-pack: center !important;
+        justify-content: center !important;
     } 
     /* Medium Mobile Phones */
     @media ${souseMediaQueries.mobileM.portrait} {
         padding-top: 4vw;
+        display: flex !important;
+        -webkit-box-pack: center !important;
+        justify-content: center !important;
     }
     @media ${souseMediaQueries.mobileM.landscape} {
-        
+        display: flex !important;
+        -webkit-box-pack: center !important;
+        justify-content: center !important;
     } 
     /* Large Mobile Phones */
     @media ${souseMediaQueries.mobileL.portrait} {
         padding-top: 14vw;
+        display: flex !important;
+        -webkit-box-pack: center !important;
+        justify-content: center !important;
     }
     @media ${souseMediaQueries.mobileL.landscape} {
         height: 30vw;
+        display: flex !important;
+        -webkit-box-pack: center !important;
+        justify-content: center !important;
     } 
     /* Large Mobile Phones (Max) */
     @media ${souseMediaQueries.mobileLMax.portrait} {
         padding-top: 14vw;
+        display: flex !important;
+        -webkit-box-pack: center !important;
+        justify-content: center !important;
     }
     @media ${souseMediaQueries.mobileLMax.landscape} {
         height: 30vw;
+        display: flex !important;
+        -webkit-box-pack: center !important;
+        justify-content: center !important;
     } 
     /* Tablets */
     @media ${souseMediaQueries.tablet.portrait} {
@@ -83,33 +105,41 @@ export const IphoneContainer = styled.div `
 export const IphoneOuterImage = styled.img `
     z-index: 2;
     height: 30em;
+    width: 20em;
     /* Media Queries */
     /* ----------------------------------------- */
     /* Small Mobile Phones */
     @media ${souseMediaQueries.mobileS.portrait} {
         height: 60vw;
+        width: 40vw;
     } 
     /* Medium Mobile Phones */
     @media ${souseMediaQueries.mobileM.portrait} {
         height: 70vw;
+        width: 50vw;
     } 
     /* Large Mobile Phones */
     @media ${souseMediaQueries.mobileL.portrait} {
         height: 110vw;
+        width: 80vw;
     }
     @media ${souseMediaQueries.mobileL.landscape} {
         height: 30vw;
+        width: 20vw;
     }
      /* Large Mobile Phones (Max) */
     @media ${souseMediaQueries.mobileLMax.portrait} {
         height: 110vw;
+        width: 80vw;
     }
     @media ${souseMediaQueries.mobileLMax.landscape} {
         height: 30vw;
+        width: 20vw;
     } 
     /* Tablets */
     @media ${souseMediaQueries.tablet.portrait} {
         height: 60vw;
+        width: 50vw;
 
     }
 `;
@@ -162,6 +192,7 @@ export const FormContainer = styled.div `
     @media ${souseMediaQueries.tablet.portrait} {
         margin-top: auto !important;
         margin-bottom: auto !important;
+        height: 15vw;
     }
     @media ${souseMediaQueries.tablet.landscape} {
         margin-top: auto !important;
@@ -171,6 +202,7 @@ export const FormContainer = styled.div `
     @media ${souseMediaQueries.laptop.portrait} {
         margin-top: auto !important;
         margin-bottom: auto !important;
+        height: 20vw;
     }
     @media ${souseMediaQueries.laptop.landscape} {
         margin-top: auto !important;

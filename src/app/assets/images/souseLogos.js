@@ -10,3 +10,5 @@ export const souseIMSwatch = "https://souse.s3.amazonaws.com/logos/souseSwatchIM
 export const souseFPSwatch = "https://souse.s3.amazonaws.com/logos/souseSwatchFP.svg";
 export const souseViceSwatch = "https://souse.s3.amazonaws.com/logos/souseSwatchVice.svg";
 export const souseVapeSwatch = "https://souse.s3.amazonaws.com/logos/souseSwatchVape.svg";
+// Souse Iphone XS Max Gif
+export const souseiPhoneXSMaxGif = "https://souse.s3.amazonaws.com/logos/iPhoneXSMaxSouse.gif";

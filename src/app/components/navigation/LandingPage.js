@@ -14,12 +14,14 @@ import {
 import {
     SouseColumnLanding
 } from '../../assets/styles/userProfileStyling';
-
 import {
     IphoneContainer,
     IphoneOuterImage,
     FormContainer
 } from '../../assets/styles/registrationStyling';
+import {
+    souseiPhoneXSMaxGif
+} from '../../assets/images/souseLogos';
 class LandingPage extends Component {
     constructor(props) {
         super(props);
@@ -204,7 +206,7 @@ class LandingPage extends Component {
                                                         <IphoneContainer className="col-sm-6">
                                                             <IphoneOuterImage 
                                                                 class="souseHomeLogo-navbar d-block justify-content-center pt-5" 
-                                                                src = "../../src/app/assets/images/iPhoneXSMaxSouse.svg"
+                                                                src = {souseiPhoneXSMaxGif}
                                                                 width="450" 
                                                                 alt="logo" 
                                                             />
