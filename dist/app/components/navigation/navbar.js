@@ -172,34 +172,27 @@ function (_Component) {
         className: "z-depth-0"
       }, _react["default"].createElement("div", {
         "class": "nav-wrapper container"
+      }, _react["default"].createElement("div", {
+        "class": "container"
       }, _react["default"].createElement(_reactRouterDom.Link, {
-        "class": "brand-logo d-md-none py-3",
+        "class": "brand-logo left d-md-none py-3 pl-4",
         to: "/"
       }, _react["default"].createElement("img", {
         "class": "souseHomeLogo-navbar",
         src: navbarImage,
         width: "125",
         alt: "logo"
-      })), _react["default"].createElement(_reactRouterDom.Link, {
-        "class": "brand-logo d-none d-md-block pl-3 py-3 px-4",
+      }))), _react["default"].createElement(_reactRouterDom.Link, {
+        "class": "brand-logo left d-none d-md-block pl-3 py-3 px-4",
         to: "/"
       }, _react["default"].createElement("img", {
         "class": "souseHomeLogo-navbar",
         src: navbarImage,
         width: "125",
         alt: "logo"
-      })), _react["default"].createElement("a", {
-        href: "#",
-        "data-target": "slide-out",
-        "class": "sidenav-trigger"
-      }, _react["default"].createElement("span", null, _react["default"].createElement("i", {
-        "class": "fas fa-ellipsis-h"
-      }))), _react["default"].createElement("ul", {
-        "class": "right hide-on-med-and-down"
-      }, isAuthenticated ? loggedInLinks : guestLinks)))), _react["default"].createElement(_navbarStyling.SouseSideNav, {
-        className: "sidenav",
-        id: "slide-out"
-      }, isAuthenticated ? loggedInLinks : guestLinks));
+      })), _react["default"].createElement("ul", {
+        "class": "right"
+      }, isAuthenticated ? loggedInLinks : guestLinks)))));
     }
   }]);
 

@@ -95,7 +95,17 @@ class Navbar extends Component {
               <div class="navbar-fixed">
                 <SouseNav className="z-depth-0">
                   <div class="nav-wrapper container">
-                    <Link class="brand-logo d-md-none py-3" to="/">
+                    <div class="container">
+                      <Link class="brand-logo left d-md-none py-3 pl-4" to="/">
+                        <img 
+                            class="souseHomeLogo-navbar" 
+                            src={navbarImage}
+                            width="125" 
+                            alt="logo" 
+                        />
+                      </Link>
+                    </div>
+                    <Link class="brand-logo left d-none d-md-block pl-3 py-3 px-4" to="/">
                       <img 
                           class="souseHomeLogo-navbar" 
                           src={navbarImage}
@@ -103,24 +113,12 @@ class Navbar extends Component {
                           alt="logo" 
                       />
                     </Link>
-                    <Link class="brand-logo d-none d-md-block pl-3 py-3 px-4" to="/">
-                      <img 
-                          class="souseHomeLogo-navbar" 
-                          src={navbarImage}
-                          width="125" 
-                          alt="logo" 
-                      />
-                    </Link>
-                    <a href="#" data-target="slide-out" class="sidenav-trigger"><span><i class="fas fa-ellipsis-h"></i></span></a>
-                    <ul class="right hide-on-med-and-down"> 
+                    <ul class="right"> 
                       {isAuthenticated ? loggedInLinks : guestLinks}
                     </ul>
                   </div>
                 </SouseNav>
               </div>
-              <SouseSideNav className="sidenav" id="slide-out">
-                {isAuthenticated ? loggedInLinks : guestLinks}
-              </SouseSideNav>
             </div>
           );
         }
