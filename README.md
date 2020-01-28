@@ -1,18 +1,19 @@
-# Souse
+![Souse Logo](https://souse.s3.amazonaws.com/logos/souseBigLogo.svg)
 
 ### What is Souse?
-An Instagram-like social media experience with an emphasis on style. Souse was created out of my desire to prove to myself that I can create a legit MERN app. Over the course of a year I went from relying (almost entire) on previous projects. To creating and implementing algorithms on the fly without realizing I was doing it. 
+An Instagram-like social media experience with an emphasis on style. Souse was created out of my desire to prove to myself that I can create a legit MERN app. Over the course of a year I went from relying (almost entirely) on previous projects. To creating and implementing algorithms on the fly without realizing I was doing it. 
 
 ### How To Use:
-The user creates an account by signup for one. From there, the user is taken to the login page. Upon logging in, a confirmation screen appears which essentially injects the entire app with users’ data for CRUD capabilities throughout. As previously stated, the user has CRUD control over all of their data for their user profile, posts, and comments.
+The user creates an account. From there, the user is taken to the login page. Upon logging in, a confirmation screen appears which essentially injects the entire app with users’ data for CRUD capabilities throughout. As previously stated, the user has CRUD control over all of their data for their user profile, posts, and comments.
 
 ### Style:
-Souse is more than simply Instagram clone. It does not matter if Souse has a million users or just one, the goal was to create something that can grow with (and around) its users. Similar to Instagram, Souse also has a night mode (with a catch). Souse features five distinctly unique themes, each with their own night mode variant. Each alternate theme is either a tribute to the colorway of a sports franchise, a major university, or an obscure offshoot of electronic music. All of which paying tribute to the city of Miami in their own distinctive ways. Another major difference between Souse and Instagram is grid format for each: Souse is 4x4 and Instagram is 3x3. 
+Souse is more than simply an Instagram clone. It does not matter if Souse has a million users or just one, the goal was to create something that can grow with (and around) its users. Similar to Instagram, Souse also has a night mode (with a catch). Souse features five distinctly unique themes, each with their own night mode variant. Each alternate theme is either a tribute to the colorway of a sports franchise, a major university, or even an obscure offshoot of electronic music. All of which paying tribute to the city of Miami in their own distinctive ways. Another major difference between Souse and Instagram is grid format for each: Souse is 4x4 and Instagram is 3x3. 
 
-(show gif of the numerous themes)🌆
+###### Here are the various Souse themes (Day/Night):
+![Souse Themes](https://souse.s3.amazonaws.com/logos/SouseAllThemes.png)
 
 ### Structure:
-The MERN stack consists of four components: MongoDB (database), Express (routing), React (front-end), and Node (server). While I have created apps with a few combinations of the four, I have never created an app using them all at once. Saying it was a challenge would be an understatement. That being said, there would not be a Souse app without a proper authentication foundation. The combination of Redux and JWT (JSON Web Token) helps insure that no matter the user creates, only they can edit or delete it. In fact, all of Souse’s data inputs are user-protected. User security, as well as, user control is vital to the success of Souse. Souse is built with the Model–View–Controller (MVC) design pattern. This helps separate the front-end from the backend and everything in between.
+The MERN stack consists of four components: MongoDB (database), Express (routing), React (front-end), and Node (server). While I have created apps with a few combinations of the four, I have never created an app using them all at once. Saying it was a challenge would be an understatement. That being said, there would not be a Souse app without a proper authentication foundation. The combination of Redux and JWT (JSON Web Token) helps insure that no matter what the user creates, only they can edit or delete it. In fact, all of Souse’s data inputs are user-protected. User security, as well as, user control is vital to the success of Souse. Souse is built with the Model–View–Controller (MVC) design pattern. This helps separate the front-end from the backend and everything in between.
 
 ## Built With
 

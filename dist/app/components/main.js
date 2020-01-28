@@ -191,6 +191,8 @@ function (_Component) {
           user = _this$props$auth.user;
       var userThemeOG = user.userTheme;
       var themeTypeOG = user.userThemeType;
+      var currentTime = new Date();
+      var time = currentTime.getHours();
       var theme1 = "souseDefaultTheme";
       var theme2 = "souseIMTheme";
       var theme3 = "souseFPTheme";
@@ -203,9 +205,15 @@ function (_Component) {
 
         if (userTheme == theme1) {
           if (themeType == "Light") {
-            this.setState({
-              currentTheme: _globalTheme.souseDefaultTheme
-            });
+            if (time >= 17 || time < 7) {
+              this.setState({
+                currentTheme: _globalTheme.souseDefaultThemeDark
+              });
+            } else {
+              this.setState({
+                currentTheme: _globalTheme.souseDefaultTheme
+              });
+            }
           } else {
             this.setState({
               currentTheme: _globalTheme.souseDefaultThemeDark
@@ -213,9 +221,15 @@ function (_Component) {
           }
         } else if (userTheme == theme2) {
           if (themeType == "Light") {
-            this.setState({
-              currentTheme: _globalTheme.souseIMTheme
-            });
+            if (time >= 17 || time < 7) {
+              this.setState({
+                currentTheme: _globalTheme.souseIMThemeDark
+              });
+            } else {
+              this.setState({
+                currentTheme: _globalTheme.souseIMTheme
+              });
+            }
           } else {
             this.setState({
               currentTheme: _globalTheme.souseIMThemeDark
@@ -223,9 +237,15 @@ function (_Component) {
           }
         } else if (userTheme == theme3) {
           if (themeType == "Light") {
-            this.setState({
-              currentTheme: _globalTheme.souseFPTheme
-            });
+            if (time >= 17 || time < 7) {
+              this.setState({
+                currentTheme: _globalTheme.souseFPThemeDark
+              });
+            } else {
+              this.setState({
+                currentTheme: _globalTheme.souseFPTheme
+              });
+            }
           } else {
             this.setState({
               currentTheme: _globalTheme.souseFPThemeDark
@@ -233,9 +253,15 @@ function (_Component) {
           }
         } else if (userTheme == theme4) {
           if (themeType == "Light") {
-            this.setState({
-              currentTheme: _globalTheme.souseViceTheme
-            });
+            if (time >= 17 || time < 7) {
+              this.setState({
+                currentTheme: _globalTheme.souseViceThemeDark
+              });
+            } else {
+              this.setState({
+                currentTheme: _globalTheme.souseViceTheme
+              });
+            }
           } else {
             this.setState({
               currentTheme: _globalTheme.souseViceThemeDark
@@ -243,9 +269,15 @@ function (_Component) {
           }
         } else if (userTheme == theme5) {
           if (themeType == "Light") {
-            this.setState({
-              currentTheme: _globalTheme.souseVapeTheme
-            });
+            if (time >= 17 || time < 7) {
+              this.setState({
+                currentTheme: _globalTheme.souseVapeThemeDark
+              });
+            } else {
+              this.setState({
+                currentTheme: _globalTheme.souseVapeTheme
+              });
+            }
           } else {
             this.setState({
               currentTheme: _globalTheme.souseVapeThemeDark

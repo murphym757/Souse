@@ -115,6 +115,8 @@ class MainSource extends Component {
         const {isAuthenticated, user} = this.props.auth;
         const userThemeOG = user.userTheme;
         const themeTypeOG = user.userThemeType;
+        let currentTime = new Date();
+        let time = currentTime.getHours();
         let theme1 = "souseDefaultTheme";
         let theme2 = "souseIMTheme";
         let theme3 = "souseFPTheme";
@@ -125,31 +127,52 @@ class MainSource extends Component {
             let themeType = themeTypeOG;
             if (userTheme == theme1) {
                 if (themeType == "Light") {
-                    this.setState({currentTheme: souseDefaultTheme});
+                    if (time >= 17 || time < 7) {
+                        this.setState({currentTheme: souseDefaultThemeDark});
+                    } else {
+                        this.setState({currentTheme: souseDefaultTheme});
+                    }
+                    
                 } else {
                     this.setState({currentTheme: souseDefaultThemeDark});
                 }
             } else if (userTheme == theme2) {
                 if (themeType == "Light") {
-                    this.setState({currentTheme: souseIMTheme});
+                     if (time >= 17 || time < 7) {
+                         this.setState({currentTheme: souseIMThemeDark});
+                     } else {
+                         this.setState({currentTheme: souseIMTheme});
+                     }
                 } else {
                     this.setState({currentTheme: souseIMThemeDark});
                 }
             } else if (userTheme == theme3) {
                 if (themeType == "Light") {
-                    this.setState({currentTheme: souseFPTheme});
+                     if (time >= 17 || time < 7) {
+                         this.setState({currentTheme: souseFPThemeDark});
+                     } else {
+                         this.setState({currentTheme: souseFPTheme});
+                     }
                 } else {
                     this.setState({currentTheme: souseFPThemeDark});
                 }
             } else if (userTheme == theme4) {
                 if (themeType == "Light") {
-                    this.setState({currentTheme: souseViceTheme});
+                     if (time >= 17 || time < 7) {
+                         this.setState({currentTheme: souseViceThemeDark});
+                     } else {
+                         this.setState({currentTheme: souseViceTheme});
+                     }
                 } else {
                     this.setState({currentTheme: souseViceThemeDark});
                 }
             } else if (userTheme == theme5) {
                 if (themeType == "Light") {
-                    this.setState({currentTheme: souseVapeTheme});
+                     if (time >= 17 || time < 7) {
+                         this.setState({currentTheme: souseVapeThemeDark});
+                     } else {
+                         this.setState({currentTheme: souseVapeTheme});
+                     }
                 } else {
                     this.setState({currentTheme: souseVapeThemeDark});
                 }

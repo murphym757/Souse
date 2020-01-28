@@ -50,7 +50,7 @@ var souseDefaultThemeDark = {
   primaryColorAlt: primaryColorAlt,
   secondaryColor: primaryColor,
   primaryColor: primaryColorDark,
-  white: primaryColor,
+  white: primaryColorAlt,
   black: white,
   '$card-bg': primaryColor
 };

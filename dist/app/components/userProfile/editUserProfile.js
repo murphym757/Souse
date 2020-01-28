@@ -901,8 +901,8 @@ function (_Component) {
       }, _react["default"].createElement("input", {
         "class": "file-path validate",
         type: "text"
-      })), _react["default"].createElement("span", {
-        "class": "helper-text d-flex justify-content-center",
+      })), _react["default"].createElement(_userProfileStyling.UploadSpan, {
+        className: "d-flex justify-content-center",
         "data-error": "wrong",
         "data-success": "right"
       }, "You can upload any images with the following file extensions (JPEG, PNG, and GIF).")), _react["default"].createElement("div", {

@@ -801,3 +801,13 @@ export const MoonIcon = styled(Moon) `
         fill: ${props => props.theme.secondaryColor};
     }
 `;
+
+export const UploadSpan = styled.span `
+    .input-field .helper-text {
+        position: relative;
+        min-height: 1em;
+        display: block;
+        font-size: 0.9em;
+        color: ${props => props.theme.secondaryColor};
+    }
+`;

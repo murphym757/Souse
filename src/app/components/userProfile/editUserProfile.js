@@ -29,7 +29,8 @@ import {
     SouseVapeChip,
     SunIcon,
     MoonIcon,
-    SouseImageSwitchComboShow
+    SouseImageSwitchComboShow,
+    UploadSpan
  } from '../../assets/styles/userProfileStyling';
 
 class EditUserProfile extends Component {
@@ -821,11 +822,11 @@ class EditUserProfile extends Component {
                                                                         data-error="wrong" data-success="right">
                                                                             {"Currently, Souse cannot upload images with capitalized file extensions (JPEG, PNG, and GIF). Please ensure that your file extensions are lowercase."}
                                                                     </span>*/}
-                                                                    <span 
-                                                                        class="helper-text d-flex justify-content-center" 
+                                                                    <UploadSpan 
+                                                                        className="d-flex justify-content-center" 
                                                                         data-error="wrong" data-success="right">
                                                                             {"You can upload any images with the following file extensions (JPEG, PNG, and GIF)."}
-                                                                    </span>
+                                                                    </UploadSpan>
                                                                 </div>
                                                                 <div class="form-group col-12">
                                                                     {this.state.newUserImageSetup == true

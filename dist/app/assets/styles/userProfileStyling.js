@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.MoonIcon = exports.SunIcon = exports.SouseImageSwitchComboShow = exports.SouseImageSwitchComboHide = exports.SouseVapeChip = exports.SouseViceChip = exports.SouseFPChip = exports.SouseIMChip = exports.SouseDefaultChip = exports.ProfilePreScrollable = exports.SouseStyleSelectorIcon = exports.InvertColorsIcon = exports.DeleteIcon = exports.EditUserProfileOptionsFont = exports.SouseSearchUserIcon = exports.UserPageOptionsLink = exports.UserPageOptionsLI = exports.UserPageOptionsUL = exports.UserPageOptionsH5Selected = exports.UserPageOptionsH5 = exports.UserPostIcons = exports.UserBio = exports.InstagramIcon = exports.FacebookIcon = exports.TwitterIcon = exports.SouseColumnLanding = exports.SouseUserPageIconLanding = exports.SouseUserPageIcon = exports.UserDataUserPage = exports.UserLocationUserPage = exports.UsernameUserPage = void 0;
+exports.UploadSpan = exports.MoonIcon = exports.SunIcon = exports.SouseImageSwitchComboShow = exports.SouseImageSwitchComboHide = exports.SouseVapeChip = exports.SouseViceChip = exports.SouseFPChip = exports.SouseIMChip = exports.SouseDefaultChip = exports.ProfilePreScrollable = exports.SouseStyleSelectorIcon = exports.InvertColorsIcon = exports.DeleteIcon = exports.EditUserProfileOptionsFont = exports.SouseSearchUserIcon = exports.UserPageOptionsLink = exports.UserPageOptionsLI = exports.UserPageOptionsUL = exports.UserPageOptionsH5Selected = exports.UserPageOptionsH5 = exports.UserPostIcons = exports.UserBio = exports.InstagramIcon = exports.FacebookIcon = exports.TwitterIcon = exports.SouseColumnLanding = exports.SouseUserPageIconLanding = exports.SouseUserPageIcon = exports.UserDataUserPage = exports.UserLocationUserPage = exports.UsernameUserPage = void 0;
 
 var _Twitter = require("styled-icons/feather/Twitter");
 
@@ -340,3 +340,12 @@ var MoonIcon = (0, _styledComponents["default"])(_Moon.Moon).withConfig({
   return props.theme.secondaryColor;
 });
 exports.MoonIcon = MoonIcon;
+
+var UploadSpan = _styledComponents["default"].span.withConfig({
+  displayName: "userProfileStyling__UploadSpan",
+  componentId: "sc-15hi236-31"
+})([".input-field .helper-text{position:relative;min-height:1em;display:block;font-size:0.9em;color:", ";}"], function (props) {
+  return props.theme.secondaryColor;
+});
+
+exports.UploadSpan = UploadSpan;
