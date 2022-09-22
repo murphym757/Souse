@@ -27,7 +27,9 @@
     "babel-plugin-styled-components": "^1.10.6",
     "babel-plugin-transform-es2015-arrow-functions": "^6.22.0",
     "css-loader": "^1.0.1",
-    "rimraf": "^2.7.1"
+    "rimraf": "^2.7.1",
+    "sass": "^1.55.0",
+    "sass-loader": "^10.3.1"
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.6.2",
@@ -58,7 +60,6 @@
     "mongoose": "^5.7.13",
     "multer": "^1.4.2",
     "multer-s3": "^2.9.0",
-    "node-sass": "^4.13.0",
     "npm": "^6.13.1",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
@@ -73,7 +74,6 @@
     "react-timestamp": "^5.1.0",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
-    "sass-loader": "^8.0.0",
     "style-loader": "^1.1.2",
     "styled-components": "^4.4.1",
     "styled-icons": "^7.15.1",
