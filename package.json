@@ -5,6 +5,7 @@
     "node": "16.13.0",
     "npm": "8.19.2"
   },
+  "stack": "heroku-22",
   "description": "A React template for future projects.",
   "main": "dist/index.js",
   "scripts": {
