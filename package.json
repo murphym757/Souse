@@ -2,8 +2,8 @@
   "name": "react-template",
   "version": "1.0.0",
   "engines": {
-    "node": "8.9.0",
-    "npm": "5.6.0"
+    "node": "16.13.0",
+    "npm": "8.19.2"
   },
   "description": "A React template for future projects.",
   "main": "dist/index.js",
