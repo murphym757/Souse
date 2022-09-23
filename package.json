@@ -9,7 +9,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/server/server.js",
+    "start": "node --max-old-space-size=4096 src/server/server.js",
     "build": "webpack --mode production",
     "transpile": "concurrently \"rimraf -r dist\" \"babel src -d dist --copy-files\" \"npm run start\"",
     "deldist": "rimraf -r dist",
