@@ -82,7 +82,7 @@
     "styled-spinkit": "^0.7.4",
     "url-js": "^0.2.5",
     "url-loader": "^3.0.0",
-    "validator": "^10.11.0",
+    "validator": "^13.7.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
     "webpack-dev-middleware": "^3.7.2",
