@@ -5,11 +5,12 @@
     "node": "16.13.0",
     "npm": "8.19.2"
   },
+  "stack": "heroku-22",
   "description": "A React template for future projects.",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --max-old-space-size=4096 src/server/server.js",
+    "start": "node src/server/server.js",
     "build": "webpack --mode production",
     "transpile": "concurrently \"rimraf -r dist\" \"babel src -d dist --copy-files\" \"npm run start\"",
     "deldist": "rimraf -r dist",
