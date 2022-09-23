@@ -1,1 +1,1 @@
-web:/bin/bash -l -c "node src/server/server.js"
+web node src/server/server.js
