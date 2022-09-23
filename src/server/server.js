@@ -11,7 +11,7 @@ const express = require('express'),
   webpack = require('webpack'),
   webpackMiddleware = require('webpack-dev-middleware'),
   webpackConfig = require('../../webpack.config.js'),
-  port = process.env.PORT || 3000;
+  port = process.env.PORT || 3002;
 
   app.use(webpackMiddleware(
     webpack(webpackConfig),
