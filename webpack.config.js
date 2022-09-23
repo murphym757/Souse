@@ -59,6 +59,7 @@ module.exports = {
     plugins: [
         htmlWebpackPlugin,
         new Dotenv({
+            systemvars: true,
             path: path.resolve(__dirname, '.env')
         })
     ],
